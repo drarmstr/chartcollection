@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset='UTF-8'>
+  <title>C3 Documentation</title>
+  <script src='../../javascript/application.js'></script>
+  <script src='../../javascript/search.js'></script>
+  <link rel='stylesheet' href='../../stylesheets/application.css' type='text/css'>
+</head>
+  <body>
+    <div id='base' data-path='../../'></div>
+<div id='header'>
+  <div id='menu'>
+    <a href='../../alphabetical_index.html' title='Index'>
+      Index
+    </a>
+    &raquo;
+    <span class='title'>c3</span>
+    &raquo;
+    <span class='title'>Plot</span>
+    &raquo;
+    <span class='title'>Layer</span>
+    &raquo;
+    <span class='title'>Stackable</span>
+  </div>
+</div>
+    <div id='content'>
+      <h1>
+        Class:
+        c3.Plot.Layer.Stackable
+        <span class='note title'>Abstract</span>
+      </h1>
+      <table class='box'>
+        <tr>
+          <td>Defined in:</td>
+          <td>js\c3-layers.coffee</td>
+        </tr>
+        <tr>
+          <td>Inherits:</td>
+          <td>
+            <a href='../../class/c3/Plot.Layer.html'>c3.Plot.Layer</a>
+          </td>
+        </tr>
+      </table>
+      <h2>Overview</h2>
+      <div class='docstring'>
+  <div class='abstract note'>
+    <strong>
+      This
+      class
+      is abstract.
+    </strong>
+    
+  </div>
+  <div class='note'>
+    <strong>Note:</strong>
+    If stacked, the input datasets may not have duplicate values in the same stack for the same X value.  There are other resitrictions if <code>safe</code> mode is not used. 
+  </div>
+  <div class='note'>
+    <strong>Note:</strong>
+    If you do not provide data elements for all stacks at all x values, then be prepared for your accessor callbacks to be called with <em>null</em> objects. 
+  </div>
+  <p>An <strong>abstract</strong> class for layers that support stacking
+such as <a href='../../class/c3/Plot.Layer.Path.html'>c3.Plot.Layer.Path</a> and <a href='../../class/c3/Plot.Layer.Bar.html'>c3.Plot.Layer.Bar</a>.</p><p><strong>Stacking</strong> allows the user to group their data into different <em>stacks</em>, which are stacked
+on top of each other in the chart.  Stacking is enabled when you define <em>either</em> <code>stack_options.key</code>, <code>stacks</code>,
+or both options.  <code>stack_options</code> allows you to configure how stacking is performed from the layer&#39;s data,
+while <code>stacks</code> allows you to manually configure the exact set of stacks.</p><p>This layer stacking is flexible to support several different ways of organizing the dataset into stacks:</p><ul>
+<li>For normalized datasets you can define a <code>stack_options.key()</code> accessor to provide a key that uniquely  identifies which stack an element belongs to.</li>
+<li>Otherwise, you can manually define the set of <code>stacks</code> and the layer&#39;s <code>data</code> is copied into each.</li>
+<li><ul>
+<li>The layer <code>y</code> accessor will be called with the arguments (<em>datum</em>,<em>index</em>,<em>stack</em>) for you to provide the value for that element for that stack.</li>
+</ul>
+</li>
+<li><ul>
+<li>Or, you can define a <code>y</code> accessor for each stack to get the value for that element for that stack.</li>
+</ul>
+</li>
+<li>You can also directly define <code>data</code> in each stack specified in <code>stacks</code>.</li>
+</ul><p>Please view the examples for more explanation on how to stack data.
+Remember, the set and order or stacks can always be programmatically constructed and dynamically updated.</p><h2 id="extensibility">Extensibility</h2><p>The following <a href='../../class/c3/Selection.html'>c3.Selection</a> members are made available if appropriate:</p><ul>
+<li><strong>groups</strong> - An entry will exist for an svg:g node for each stack in the layer</li>
+</ul>
+
+</div>
+<div class='tags'>
+  <h3>Author:</h3>
+  <ul class='author'>
+    <li>
+      Douglas Armstrong 
+    </li>
+  </ul>
+  <h3>See also:</h3>
+  <ul class='see'>
+    <li>
+      <a href='../../../examples/doc/stack_example.html'>..&#47;..&#47;..&#47;examples&#47;doc&#47;stack_example.html</a>
+    </li>
+  </ul>
+</div>
+      <h2>Direct Known Subclasses</h2>
+      <p class='children'>
+        <a href='../../class/c3/Plot.Layer.Path.html'>c3.Plot.Layer.Path</a>
+        <a href='../../class/c3/Plot.Layer.Bar.html'>c3.Plot.Layer.Bar</a>
+      </p>
+      <h2>Variables Summary</h2>
+      <dl class='constants'>
+  <dt id='version-variable'>
+    version
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>0.2</code></pre>
+    
+  </dd>
+  <dt id='type-variable'>
+    type
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>&#39;stackable&#39;</code></pre>
+    
+  </dd>
+  <dt id='stack_options-variable'>
+    stack_options
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>undefined</code></pre>
+    <div class='docstring'>
+  <p>[<a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a>] Enable stacking and specify stacking options for this layer.
+This provides the normal <a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a> applied to each stack in the layer.  For callbacks,
+the first argument is the stack object and the second argument is the index to the stack
+In addition, the following options control stacking behaviour:</p><ul>
+<li><strong>key</strong> [Function] An accessor you can define to return a key that uniquely identifies which stack a data element belongs to.  If this is specified, then this callback is used to determine which stack each data element is assigned to.  Otherwise, the layer data array is used in full for each stack.</li>
+<li><strong>name</strong> [Function] A callback you define to set the name of a stack that is passed the stack key as an argument.</li>
+<li><strong>offset</strong> [String, Function] The name or a function for the stacking algorithm used to place the data. See <a href='https://github.com/mbostock/d3/wiki/Stack-Layout#wiki-offset'>d3.stack.offset()</a> for details.</li>
+<li><ul>
+<li><code>zero</code> - The default for a zero baseline.</li>
+</ul>
+</li>
+<li><ul>
+<li><code>expand</code> - Normalize all points to range from 0-1.</li>
+</ul>
+</li>
+<li><strong>order</strong> [String] Specify the mechanism to order the stacks. See <a href='https://github.com/mbostock/d3/wiki/Stack-Layout#wiki-order'>d3.stack.order()</a> for details.</li>
+</ul>
+
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='stacks-variable'>
+    stacks
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>undefined</code></pre>
+    <div class='docstring'>
+  <p>[Array&lt;<a href='../../class/c3/Plot.Layer.Stackable.Stack.html'>c3.Plot.Layer.Stackable.Stack</a>&gt;] An array of <a href='../../class/c3/Plot.Layer.Stackable.Stack.html'>stack</a>
+objects that can be used to manually specify the set of stacks.
+Stack objects may contain:</p><ul>
+<li><strong>key</strong> [String] The key for this stack</li>
+<li><strong>y</strong> [Function] A y accessor to use for this stack overriding the one provided by the chart or layer.</li>
+<li><strong>data</strong> [Array] Manually specified dataset for this stack instead of using the layer&#39;s <code>data</code>.</li>
+<li><strong>name</strong> [String] Name for the stack</li>
+<li><strong>options</strong> [<a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a>] Options to manually set the <strong>class</strong>, <strong>classes</strong>,  <strong>styles</strong>, <strong>events</strong>, and <strong>title</strong> of just this stack.</li>
+</ul>
+
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='safe-variable'>
+    safe
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>true</code></pre>
+    <div class='docstring'>
+  <p>[Boolean] Safe Mode.
+Preform additional checks and fix up the data for situations such as:</p><ul>
+<li>Data not sorted along X axis</li>
+<li>Remove data elements where X or Y values are undefined</li>
+<li>Pad missing values where stacks are not defined for all X values.
+Note that this mode may cause the indexes passed to the accessors to match the
+corrected data instead of the original data array.</li>
+</ul>
+
+</div>
+<div class='tags'>
+</div>
+  </dd>
+</dl>
+      <h3 class='inherited'>
+        Variable inherited from
+        <a href='../../class/c3/Plot.Layer.html'>c3.Plot.Layer</a>
+      </h3>
+      <p class='inherited'>
+        <a href='../../class/c3/Plot.Layer.html#version-variable'>version</a>
+        <a href='../../class/c3/Plot.Layer.html#type-variable'>type</a>
+        <a href='../../class/c3/Plot.Layer.html#_next_uid-variable'>_next_uid</a>
+        <a href='../../class/c3/Plot.Layer.html#data-variable'>data</a>
+        <a href='../../class/c3/Plot.Layer.html#name-variable'>name</a>
+        <a href='../../class/c3/Plot.Layer.html#class-variable'>class</a>
+        <a href='../../class/c3/Plot.Layer.html#static_data-variable'>static_data</a>
+        <a href='../../class/c3/Plot.Layer.html#h-variable'>h</a>
+        <a href='../../class/c3/Plot.Layer.html#v-variable'>v</a>
+        <a href='../../class/c3/Plot.Layer.html#x-variable'>x</a>
+        <a href='../../class/c3/Plot.Layer.html#y-variable'>y</a>
+        <a href='../../class/c3/Plot.Layer.html#options-variable'>options</a>
+        <a href='../../class/c3/Plot.Layer.html#handlers-variable'>handlers</a>
+        <a href='../../class/c3/Plot.Layer.html#restyle-variable'>restyle</a>
+      </p>
+      <h2>Instance Method Summary</h2>
+      <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#_stack-dynamic'>
+        #
+(void)
+<b>_stack</b><span>()</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      Restack the data based on the <strong>stack</strong> and <strong>stacks</strong> options. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#_update-dynamic'>
+        #
+(void)
+<b>_update</b><span>()</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#_style-dynamic'>
+        #
+(void)
+<b>_style</b><span>(style_new)</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#min_x-dynamic'>
+        #
+(void)
+<b>min_x</b><span>()</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#max_x-dynamic'>
+        #
+(void)
+<b>max_x</b><span>()</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#min_y-dynamic'>
+        #
+(void)
+<b>min_y</b><span>()</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#max_y-dynamic'>
+        #
+(void)
+<b>max_y</b><span>()</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+    </span>
+  </li>
+</ul>
+      <h2>
+        <small>Inherited Method Summary</small>
+        <h3 class='inherited'>
+          Methods inherited from
+          <a href='../../class/c3/Plot.Layer.html'>c3.Plot.Layer</a>
+        </h3>
+        <p class='inherited'>
+          <a href='../../class/c3/Plot.Layer.html#init-dynamic'>#init</a>
+          <a href='../../class/c3/Plot.Layer.html#size-dynamic'>#size</a>
+          <a href='../../class/c3/Plot.Layer.html#update-dynamic'>#update</a>
+          <a href='../../class/c3/Plot.Layer.html#draw-dynamic'>#draw</a>
+          <a href='../../class/c3/Plot.Layer.html#style-dynamic'>#style</a>
+          <a href='../../class/c3/Plot.Layer.html#zoom-dynamic'>#zoom</a>
+          <a href='../../class/c3/Plot.Layer.html#redraw-dynamic'>#redraw</a>
+          <a href='../../class/c3/Plot.Layer.html#scale-dynamic'>#scale</a>
+          <a href='../../class/c3/Plot.Layer.html#min_x-dynamic'>#min_x</a>
+          <a href='../../class/c3/Plot.Layer.html#max_x-dynamic'>#max_x</a>
+          <a href='../../class/c3/Plot.Layer.html#min_y-dynamic'>#min_y</a>
+          <a href='../../class/c3/Plot.Layer.html#max_y-dynamic'>#max_y</a>
+          <a href='../../class/c3/Plot.Layer.html#on-dynamic'>#on</a>
+        </p>
+      </h2>
+      <h2>Instance Method Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='_stack-dynamic'>
+      #
+(void)
+<b>_stack</b><span>()</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Restack the data based on the <strong>stack</strong> and <strong>stacks</strong> options.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='_update-dynamic'>
+      #
+(void)
+<b>_update</b><span>()</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='_style-dynamic'>
+      #
+(void)
+<b>_style</b><span>(style_new)</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='min_x-dynamic'>
+      #
+(void)
+<b>min_x</b><span>()</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='max_x-dynamic'>
+      #
+(void)
+<b>max_x</b><span>()</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='min_y-dynamic'>
+      #
+(void)
+<b>min_y</b><span>()</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='max_y-dynamic'>
+      #
+(void)
+<b>max_y</b><span>()</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    
+  </div>
+</div>
+    </div>
+    <div id='footer'>
+  March 01, 16 10:15:33 by
+  <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
+    Codo
+  </a>
+  2.0.11
+  &#10034;
+  Press H to see the keyboard shortcuts
+  &#10034;
+  <a href='http://twitter.com/netzpirat' target='_parent'>@netzpirat</a>
+  &#10034;
+  <a href='http://twitter.com/_inossidabile' target='_parent'>@_inossidabile</a>
+</div>
+<iframe id='search_frame'></iframe>
+<div id='fuzzySearch'>
+  <input type='text'>
+  <ol></ol>
+</div>
+<div id='help'>
+  <p>
+    Quickly fuzzy find classes, mixins, methods, file:
+  </p>
+  <ul>
+    <li>
+      <span>T</span>
+      Open fuzzy finder dialog
+    </li>
+  </ul>
+  <p>
+    Control the navigation frame:
+  </p>
+  <ul>
+    <li>
+      <span>L</span>
+      Toggle list view
+    </li>
+    <li>
+      <span>C</span>
+      Show class list
+    </li>
+    <li>
+      <span>I</span>
+      Show mixin list
+    </li>
+    <li>
+      <span>F</span>
+      Show file list
+    </li>
+    <li>
+      <span>M</span>
+      Show method list
+    </li>
+    <li>
+      <span>E</span>
+      Show extras list
+    </li>
+  </ul>
+  <p>
+    You can focus and blur the search input:
+  </p>
+  <ul>
+    <li>
+      <span>S</span>
+      Focus search input
+    </li>
+    <li>
+      <span>Esc</span>
+      Blur search input
+    </li>
+  </ul>
+</div>
+  </body>
+</html>

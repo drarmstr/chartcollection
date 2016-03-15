@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Swimlane Timeline Examples</title>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Dependencies -->
+    <script src="lib/d3.js"></script>
+    <script src="lib/jquery-2.1.1.js"></script>
+    <script src="lib/crossfilter.js"></script>
+
+    <!-- C3 -->
+    <link rel="stylesheet" href="../css/c3.css" />
+    <script src="../js/c3.js"></script>
+    <script src="../js/c3-plot.js"></script>
+    <script src="../js/c3-layers.js"></script>
+
+    <!-- Chart Styles -->
+    <style>
+        body {
+            overflow-y: scroll;
+        }
+
+        .c3.plot {
+            font-family: sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <form>
+        <button id="sync_generate_button" type="button">Generate Random Data</button>
+        <br />
+
+        <label>
+            Limit number of segments
+            <input id="limit_segments" type="checkbox" />
+        </label>
+        <input id="limit_segment_count" type="range" min=1 max=20 disabled />
+    </form>
+    <br />
+
+    <p>
+        This is an example timeline of swimlanes that contain segments over time.
+        Try zooming and panning the charts.
+    </p>
+    <div id="swimlanes_segment_plot"></div>
+
+    <p>
+        Sometimes with large datasets it is more efficient to sample the state for each pixel instead
+        of trying to render individual segments.  Here is a Canvas implementation that is fast, but
+        has fewer styling and interactivity options.  There are also currently IE compatibility issues.
+    </p>
+    <div id="swimlanes_sampled_canvas_plot"></div>
+
+    <p>
+        And here is a hybrid sampling version implemented via SVG.
+        Some more optimizations can be done here if requested.
+    </p>
+    <div id="swimlanes_sampled_svg_plot"></div>
+
+
+    <script src="swimlanes_example.js"></script>
+</body>
+</html>

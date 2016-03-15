@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>C3 Zoomable Plot</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="flamechart_sunburst_example.html">
+                  flamechart_sunburst_example.ts
+                </a>
+              
+                
+                <a class="source" href="legend_example.html">
+                  legend_example.ts
+                </a>
+              
+                
+                <a class="source" href="pie_example.html">
+                  pie_example.ts
+                </a>
+              
+                
+                <a class="source" href="plot_area_example.html">
+                  plot_area_example.ts
+                </a>
+              
+                
+                <a class="source" href="plot_zoom_example.html">
+                  plot_zoom_example.ts
+                </a>
+              
+                
+                <a class="source" href="scatterplot_example.html">
+                  scatterplot_example.ts
+                </a>
+              
+                
+                <a class="source" href="stack_example.html">
+                  stack_example.ts
+                </a>
+              
+                
+                <a class="source" href="swimlanes_example.html">
+                  swimlanes_example.ts
+                </a>
+              
+                
+                <a class="source" href="sync_example.html">
+                  sync_example.ts
+                </a>
+              
+                
+                <a class="source" href="table_selectable_example.html">
+                  table_selectable_example.ts
+                </a>
+              
+                
+                <a class="source" href="table_sortable_example.html">
+                  table_sortable_example.ts
+                </a>
+              
+                
+                <a class="source" href="timeline_example.html">
+                  timeline_example.ts
+                </a>
+              
+                
+                <a class="source" href="worldbank_example.html">
+                  worldbank_example.ts
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <h1 id="c3-zoomable-plot">C3 Zoomable Plot</h1>
+<p><em>A plot that is zoomable and demonstrates some custom styling.</em></p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Data array of numbers from -10 to 10</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> zoom_example_data = []
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> x = <span class="hljs-number">-10</span>; x &lt;= <span class="hljs-number">10</span>; x++) zoom_example_data.push(x);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <h2 id="create-the-c3-chart">Create the C3 chart</h2>
+<p>Create a <code>c3.Plot.horiz_zoom</code> to enable horizontal zooming and attach it to 
+the <code>#zoom_example_plot</code> DOM element.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> zoom_line_layer: c3.Plot.Layer.Line&lt;<span class="hljs-built_in">number</span>&gt;;
+<span class="hljs-keyword">var</span> zoom_example = <span class="hljs-keyword">new</span> c3.Plot.Zoomable&lt;<span class="hljs-built_in">number</span>&gt;({
+    anchor: <span class="hljs-string">'#zoom_example_plot'</span>,
+    width: <span class="hljs-string">"75%"</span>,
+    zoomable: <span class="hljs-string">'h'</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Bind to a <strong>data</strong> array of numbers from -10 to 10.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    data: zoom_example_data,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Setup the user <strong>scales</strong> for the plot.  The scale domains represent user units.  This chart
+will have x values go from -10 to 10 and y values go from -50 to 80.  C3 will take care of the range.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    h: d3.scale.linear().domain([<span class="hljs-number">-10</span>, <span class="hljs-number">10</span>]), <span class="hljs-comment">// horizontal scale</span>
+    v: d3.scale.linear().domain([<span class="hljs-number">-50</span>, <span class="hljs-number">80</span>]), <span class="hljs-comment">// veritcal scale</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>An <strong>accessor function</strong> to get the x value of the data points based on the data element.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    x: (d) =&gt; d,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>The maximum <strong>zoom factor</strong> that the user is allowed to zoom in.  The user cannot zoom out more
+than the original defined domain.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    zoom_extent: <span class="hljs-number">16</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>Define <strong>margins</strong> for the chart to allow extra room for the labels on the edges to fit.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    margins: {
+        top: <span class="hljs-number">10</span>,
+        right: <span class="hljs-number">20</span>,
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Setup <code>c3.Axis</code> objects.  C3 plots may have up to 4 <strong>axes</strong> attached for the top, bottom,
+left, and right of plots.  Axes may also be created independent of plots for layout flexibility
+which is covered in another example.  These axes also enable grid lines in the plot.  They are 
+dotted lines because of styles setup in the <code>examples.less</code> stylesheet.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    axes: [
+        <span class="hljs-keyword">new</span> c3.Axis.X({
+            grid: <span class="hljs-literal">true</span>,
+            tick_size: <span class="hljs-number">10</span>, <span class="hljs-comment">// Make the X Axis tick marks a little bigger</span>
+            path_size: <span class="hljs-number">3</span>, <span class="hljs-comment">// Make the axis domain line a bit thicker</span>
+        }),
+        <span class="hljs-keyword">new</span> c3.Axis.Y({
+            grid: <span class="hljs-literal">true</span>, <span class="hljs-comment">// draw grid lines in addition to the tick marks</span>
+            path_size: <span class="hljs-number">3</span>, <span class="hljs-comment">// Make the axis domain line a bit thicker</span>
+        }),
+    ],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Plots do not render any data by themselves.  Instead, they host a set of <strong>layers</strong> which are
+superimposed on the plot to visualize the same or different data sets.  There are different
+types of layers such as line graphs, scatter plots, swim-lane segments, etc.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    layers: [</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>This first layer is used to draw a horizontal line at y=0.  It does not use the default
+data and instead uses a single value of 0 for the line.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">new</span> c3.Plot.Layer.Line.Horizontal({
+            data: [<span class="hljs-number">0</span>],
+            options: {
+                styles: {
+                    <span class="hljs-string">'stroke'</span>: <span class="hljs-string">'black'</span>,
+                    <span class="hljs-string">'stroke-width'</span>: <span class="hljs-string">'3px'</span>,
+                },
+            },
+        }),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>Draw a vertical line at x=0.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">new</span> c3.Plot.Layer.Line.Vertical({
+            data: [<span class="hljs-number">0</span>],
+            options: {
+                styles: {
+                    <span class="hljs-string">'stroke'</span>: <span class="hljs-string">'black'</span>,
+                    <span class="hljs-string">'stroke-width'</span>: <span class="hljs-string">'3px'</span>,
+                },
+            },
+        }),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>Add another layer for drawing a <strong>line graph</strong>.  This layer defines its own <strong>y</strong> function
+to be a <em>sine wave</em> and to use <code>basis</code> interpolation to form a smooth curve.
+This layer also introduces a new way to style the layer in addition to CSS stylesheets.
+The object passed in to <code>paths.styles</code> has a set of key/value pairs.  The keys represent
+the style names to configure while the values determine how to set those styles.  This
+example just uses a constant value for the color.  In later examples you’ll see how this
+can also be a function to style based on the data.  Assign this layer to a variable 
+<code>zoom_line_layer</code> for later manipulation.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        zoom_line_layer = <span class="hljs-keyword">new</span> c3.Plot.Layer.Line&lt;<span class="hljs-built_in">number</span>&gt;({ <span class="hljs-comment">// Add a line-graph layer to this plot</span>
+            y: (d) =&gt; <span class="hljs-number">40</span> * <span class="hljs-built_in">Math</span>.sin(d),
+            interpolate: <span class="hljs-string">'basis'</span>,
+            options: {
+                styles: {
+                    <span class="hljs-string">'stroke'</span>: <span class="hljs-string">'red'</span>,
+                },
+            },
+        }),
+    ],
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <h2 id="render-the-plot-">Render the plot!</h2>
+<p>Perform the initial rendering of the chart.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>zoom_example.render();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <h2 id="setup-interactive-behaviour">Setup interactive behaviour</h2>
+<p>Use JQuery to assign handlers to buttons in the example html that will modify the chart
+rendering or styles.</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>When the function selection buttons are clicked, change the function used to determine the
+<strong>y value</strong> or line interpolation for the <code>zoom_line_layer</code>.  After the change is made 
+<code>redraw()</code> needs to be called to update the chart based on the new data or accessor function.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>$(<span class="hljs-string">'#zoom_sin_button'</span>).click(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    zoom_line_layer.y = (d) =&gt; <span class="hljs-number">40</span> * <span class="hljs-built_in">Math</span>.sin(d);
+    zoom_line_layer.interpolate = <span class="hljs-string">'basis'</span>;
+    zoom_example.redraw();
+});
+$(<span class="hljs-string">'#zoom_square_button'</span>).click(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    zoom_line_layer.y = (d) =&gt; <span class="hljs-number">40</span> * <span class="hljs-built_in">Math</span>.sin(d);
+    zoom_line_layer.interpolate = <span class="hljs-string">'step-before'</span>;
+    zoom_example.redraw();
+});
+$(<span class="hljs-string">'#zoom_parabolic_button'</span>).click(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    zoom_line_layer.y = (d) =&gt; d * d;
+    zoom_line_layer.interpolate = <span class="hljs-string">'basis'</span>;
+    zoom_example.redraw();
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>When the color selection buttons are clicked change the path style.  The <code>restyle()</code> API 
+should be used here to update the styles used in the chart.  This will avoid the cost of
+updating all of the data and rendering and only update classes and styles.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>$(<span class="hljs-string">'#zoom_red_button'</span>).click(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    zoom_line_layer.options.styles = { stroke: <span class="hljs-string">'red'</span> };
+    zoom_example.restyle();
+});
+$(<span class="hljs-string">'#zoom_green_button'</span>).click(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    zoom_line_layer.options.styles = { stroke: <span class="hljs-string">'green'</span> };
+    zoom_example.restyle();
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>Just for fun, if the <code>#zoom_bell_button</code> is clicked then add a new layer with a bell curve.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> variance = <span class="hljs-number">10</span>;
+$(<span class="hljs-string">'#zoom_bell_button'</span>).click(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    zoom_example.layers.unshift(<span class="hljs-keyword">new</span> c3.Plot.Layer.Area&lt;<span class="hljs-built_in">number</span>&gt;({
+        y: (d) =&gt; <span class="hljs-number">500</span> / (<span class="hljs-built_in">Math</span>.sqrt(variance) * <span class="hljs-built_in">Math</span>.sqrt(<span class="hljs-number">2</span> * <span class="hljs-built_in">Math</span>.PI)) *
+            <span class="hljs-built_in">Math</span>.pow(<span class="hljs-built_in">Math</span>.E, -((d * d) / (<span class="hljs-number">2</span> * variance))),
+        interpolate: <span class="hljs-string">'basis'</span>,
+        baseline: <span class="hljs-number">0</span>,
+        options: {
+            styles: {
+                <span class="hljs-string">'fill'</span>: <span class="hljs-string">'darkslategray'</span>,
+                <span class="hljs-string">'opacity'</span>: <span class="hljs-number">0.5</span>,
+            },
+        },
+    }));
+    zoom_example.render();
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>Allow the user to change the <em>variance</em> used to compute the function.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>$(<span class="hljs-string">'#zoom_bell_variance_select'</span>).on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    variance = $(<span class="hljs-keyword">this</span>).val();
+    zoom_example.redraw();
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>Resize the chart to fit the window</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">window</span>.onresize = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{ zoom_example.resize(); }</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

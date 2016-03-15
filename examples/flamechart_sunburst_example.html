@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Flamechart &amp; Sunburst Examples</title>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Dependencies -->
+    <script src="lib/d3.js"></script>
+    <script src="lib/jquery-2.1.1.js"></script>
+    <script src="lib/crossfilter.js"></script>
+
+    <!-- C3 -->
+    <link rel="stylesheet" href="../css/c3.css" />
+    <script src="../js/c3.js"></script>
+    <script src="../js/c3-plot.js"></script>
+    <script src="../js/c3-layers.js"></script>
+    <script src="../js/c3-polar.js"></script>
+
+    <style>
+        .c3.chart {
+            font-family: sans-serif;
+        }
+        /* Styles to allow Sunburst to fill the remaining part of the window */
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        html {
+            padding: 1em 1em 0 1em;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+        body {
+            display: flex;
+            -ms-flex-direction: column;
+            -webkit-flex-direction: column;
+            flex-direction: column;
+        }
+        #sunburst_example {
+            display: flex;
+            -ms-flex: 1;
+            -webkit-flex: 1;
+            flex: 1;
+            min-height: 16em;
+        }
+        #sunburst_example svg {
+            height: initial;
+            display: flex;
+            -ms-flex: 1;
+            -webkit-flex: 1;
+            flex: 1;
+            /* Allow Sunburst to overflow and cover other items */
+            overflow: visible;
+            z-index: 1;
+        }
+        /* Allow user to click on sunburst elements behind the form */
+        form {
+            position: absolute;
+            pointer-events: none;
+            background: rgba(255,255,255,0.25);
+            border-radius: 1em;
+            text-shadow: 0 0 2px white;
+            z-index: 2;
+        }
+        form input {
+            pointer-events: all;
+        }
+        p {
+            z-index: 2;
+        }
+    </style>
+</head>
+
+<body>
+
+    <p>
+        Example stack Call Trace <b>Flamechart</b>:
+    </p>
+    Pan by dragging.  Zoom with the mouse wheel or touch pinching.
+    <label>
+        Limit number of elements
+        <input id="limit_call_trace_elements" type="range" min=1 max=400 value=400 />
+    </label>
+    <div id="flamechart_example" style="width:90%; margin-left:5%"></div>
+
+    <p>Example stack Call Tree <b>Sunburst</b>:</p>
+    <form>
+        <label>
+            Limit number of elements
+            <input id="limit_call_tree_elements" type="range" min=1 max=350 value=350 />
+        </label><br /><br />
+        <label>
+            Limit angular percentage
+            <input id="limit_call_tree_angle" type="range" min="0.001" max="0.1" value="0.001" step="0.001" />
+        </label><br /><br />
+        Express hierachy via:<br />
+        <label><input type="radio" name="hierarchy" value="parents" checked />Parents</label>
+        <label><input type="radio" name="hierarchy" value="children" />Children</label>
+        <br /><i>(they should appear identical)</i>
+        <p>
+            Click on nodes to navigate.<br />
+            Click in the center to reset.<br />
+            Wheel or pinch to zoom.
+        </p>
+    </form>
+    <div id="sunburst_example"></div>
+
+    <script src="flamechart_sunburst_example.js"></script>
+</body>
+</html>

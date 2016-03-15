@@ -1,0 +1,235 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{68F9083C-D6F9-44F1-BF18-A3267D951250}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>examples</RootNamespace>
+    <AssemblyName>examples</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <TypeScriptToolsVersion>1.7</TypeScriptToolsVersion>
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="changes.txt" />
+    <Content Include="css\c3.css">
+      <DependentUpon>c3.less</DependentUpon>
+    </Content>
+    <Content Include="css\c3.min.css">
+      <DependentUpon>c3.css</DependentUpon>
+    </Content>
+    <Content Include="css\doc.css">
+      <DependentUpon>doc.less</DependentUpon>
+    </Content>
+    <Content Include="css\doc.min.css">
+      <DependentUpon>doc.css</DependentUpon>
+    </Content>
+    <Content Include="examples\scatterplot_example.html" />
+    <Content Include="examples\index.html" />
+    <Content Include="examples\flamechart_sunburst_example.html" />
+    <Content Include="examples\lib\promise.js" />
+    <Content Include="examples\stack_example.html" />
+    <Content Include="examples\legend_example.html" />
+    <Content Include="examples\swimlanes_example.html" />
+    <Content Include="examples\pie_example.html" />
+    <Content Include="examples\timeline_example.html" />
+    <Content Include="examples\plot_zoom_example.html" />
+    <Content Include="examples\sync_example.html" />
+    <Content Include="examples\table_selectable_example.html" />
+    <Content Include="examples\plot_area_example.html" />
+    <Content Include="examples\table_sortable_example.html" />
+    <Content Include="examples\lib\crossfilter.js" />
+    <Content Include="examples\lib\d3.js" />
+    <Content Include="examples\lib\jquery-2.1.1.js" />
+    <Content Include="examples\worldbank_example.html" />
+    <Content Include="api.html" />
+    <Content Include="index.html" />
+    <Content Include="js\c3-layers.js">
+      <DependentUpon>c3-layers.coffee</DependentUpon>
+    </Content>
+    <Content Include="js\c3-layers.min.js">
+      <DependentUpon>c3-layers.js</DependentUpon>
+    </Content>
+    <Content Include="js\c3-legend.js">
+      <DependentUpon>c3-legend.coffee</DependentUpon>
+    </Content>
+    <Content Include="js\c3-legend.min.js">
+      <DependentUpon>c3-legend.js</DependentUpon>
+    </Content>
+    <Content Include="js\c3-plot.js">
+      <DependentUpon>c3-plot.coffee</DependentUpon>
+    </Content>
+    <Content Include="js\c3-plot.min.js">
+      <DependentUpon>c3-plot.js</DependentUpon>
+    </Content>
+    <Content Include="js\c3-polar.js">
+      <DependentUpon>c3-polar.coffee</DependentUpon>
+    </Content>
+    <Content Include="js\c3-polar.min.js">
+      <DependentUpon>c3-polar.js</DependentUpon>
+    </Content>
+    <Content Include="js\c3-table.js">
+      <DependentUpon>c3-table.coffee</DependentUpon>
+    </Content>
+    <Content Include="js\c3-table.min.js">
+      <DependentUpon>c3-table.js</DependentUpon>
+    </Content>
+    <Content Include="js\c3.js">
+      <DependentUpon>c3.coffee</DependentUpon>
+    </Content>
+    <Content Include="js\c3.min.js">
+      <DependentUpon>c3.js</DependentUpon>
+    </Content>
+    <Content Include="sandbox\sandbox.html" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="examples\data\gdp.csv" />
+    <Content Include="examples\data\countries.csv" />
+    <Content Include="examples\data\regions.csv" />
+    <Content Include="js\c3-table.coffee" />
+    <Content Include="js\c3-plot.coffee" />
+    <Content Include="js\c3.coffee" />
+    <Content Include="css\c3.less" />
+    <Content Include="js\c3-legend.coffee" />
+    <Content Include="Cakefile" />
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
+    <Content Include="js\c3-layers.coffee" />
+    <Content Include="js\c3-polar.coffee" />
+    <Content Include="css\doc.less" />
+    <Content Include="examples\data\injury_cause.tsv" />
+    <None Include="Properties\PublishProfiles\demo.pubxml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="c3.d.ts" />
+    <TypeScriptCompile Include="examples\scatterplot_example.ts" />
+    <TypeScriptCompile Include="examples\legend_example.ts" />
+    <TypeScriptCompile Include="examples\flamechart_sunburst_example.ts" />
+    <TypeScriptCompile Include="examples\plot_area_example.ts" />
+    <TypeScriptCompile Include="examples\plot_zoom_example.ts" />
+    <TypeScriptCompile Include="examples\stack_example.ts" />
+    <TypeScriptCompile Include="examples\swimlanes_example.ts" />
+    <TypeScriptCompile Include="examples\pie_example.ts" />
+    <TypeScriptCompile Include="examples\sync_example.ts" />
+    <TypeScriptCompile Include="examples\table_selectable_example.ts" />
+    <TypeScriptCompile Include="examples\table_sortable_example.ts" />
+    <TypeScriptCompile Include="examples\timeline_example.ts" />
+    <TypeScriptCompile Include="examples\typings\crossfilter\crossfilter.d.ts" />
+    <TypeScriptCompile Include="examples\typings\d3\d3.d.ts" />
+    <TypeScriptCompile Include="examples\typings\d3\plugins\d3.superformula.d.ts" />
+    <TypeScriptCompile Include="examples\typings\es6-promise\es6-promise.d.ts" />
+    <TypeScriptCompile Include="examples\typings\jquery\jquery.d.ts" />
+    <TypeScriptCompile Include="examples\worldbank_example.ts" />
+    <TypeScriptCompile Include="sandbox\sandbox.ts" />
+  </ItemGroup>
+  <ItemGroup />
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptModuleKind>None</TypeScriptModuleKind>
+    <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
+    <TypeScriptOutFile />
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptSourceMap>True</TypeScriptSourceMap>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>58688</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:58689/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

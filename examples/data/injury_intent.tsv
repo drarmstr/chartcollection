@@ -1,0 +1,219 @@
+"Notes"	"Five-Year Age Groups"	"Five-Year Age Groups Code"	"Injury Intent"	"Injury Intent Code"	Deaths	Population
+	"< 1 year"	"1"	"Unintentional"	"1"	12766	47830261
+	"< 1 year"	"1"	"Suicide"	"2"	0	47830261
+	"< 1 year"	"1"	"Homicide"	"3"	3943	47830261
+	"< 1 year"	"1"	"Undetermined "	"4"	1080	47830261
+	"< 1 year"	"1"	"Legal Intervention / Operations of War"	"5"	1	47830261
+	"< 1 year"	"1"	"Non-Injury, no intent classified"	"9"	314907	47830261
+"Total"	"< 1 year"	"1"			332697	47830261
+	"1-4 years"	"1-4"	"Unintentional"	"1"	19628	189286073
+	"1-4 years"	"1-4"	"Suicide"	"2"	0	189286073
+	"1-4 years"	"1-4"	"Homicide"	"3"	4644	189286073
+	"1-4 years"	"1-4"	"Undetermined "	"4"	656	189286073
+	"1-4 years"	"1-4"	"Legal Intervention / Operations of War"	"5"	1	189286073
+	"1-4 years"	"1-4"	"Non-Injury, no intent classified"	"9"	32600	189286073
+"Total"	"1-4 years"	"1-4"			57529	189286073
+	"5-9 years"	"5-9"	"Unintentional"	"1"	12978	239385956
+	"5-9 years"	"5-9"	"Suicide"	"2"	57	239385956
+	"5-9 years"	"5-9"	"Homicide"	"3"	1593	239385956
+	"5-9 years"	"5-9"	"Undetermined "	"4"	241	239385956
+	"5-9 years"	"5-9"	"Legal Intervention / Operations of War"	"5"	2	239385956
+	"5-9 years"	"5-9"	"Non-Injury, no intent classified"	"9"	19391	239385956
+"Total"	"5-9 years"	"5-9"			34262	239385956
+	"10-14 years"	"10-14"	"Unintentional"	"1"	15988	250939740
+	"10-14 years"	"10-14"	"Suicide"	"2"	3008	250939740
+	"10-14 years"	"10-14"	"Homicide"	"3"	2508	250939740
+	"10-14 years"	"10-14"	"Undetermined "	"4"	457	250939740
+	"10-14 years"	"10-14"	"Legal Intervention / Operations of War"	"5"	14	250939740
+	"10-14 years"	"10-14"	"Non-Injury, no intent classified"	"9"	22283	250939740
+"Total"	"10-14 years"	"10-14"			44258	250939740
+	"15-19 years"	"15-19"	"Unintentional"	"1"	75459	255076636
+	"15-19 years"	"15-19"	"Suicide"	"2"	19128	255076636
+	"15-19 years"	"15-19"	"Homicide"	"3"	24105	255076636
+	"15-19 years"	"15-19"	"Undetermined "	"4"	1822	255076636
+	"15-19 years"	"15-19"	"Legal Intervention / Operations of War"	"5"	282	255076636
+	"15-19 years"	"15-19"	"Non-Injury, no intent classified"	"9"	36768	255076636
+"Total"	"15-19 years"	"15-19"			157564	255076636
+	"20-24 years"	"20-24"	"Unintentional"	"1"	99621	246218551
+	"20-24 years"	"20-24"	"Suicide"	"2"	30862	246218551
+	"20-24 years"	"20-24"	"Homicide"	"3"	38350	246218551
+	"20-24 years"	"20-24"	"Undetermined "	"4"	4011	246218551
+	"20-24 years"	"20-24"	"Legal Intervention / Operations of War"	"5"	739	246218551
+	"20-24 years"	"20-24"	"Non-Injury, no intent classified"	"9"	58371	246218551
+"Total"	"20-24 years"	"20-24"			231954	246218551
+	"25-29 years"	"25-29"	"Unintentional"	"1"	83394	237615884
+	"25-29 years"	"25-29"	"Suicide"	"2"	30263	237615884
+	"25-29 years"	"25-29"	"Homicide"	"3"	30845	237615884
+	"25-29 years"	"25-29"	"Undetermined "	"4"	4438	237615884
+	"25-29 years"	"25-29"	"Legal Intervention / Operations of War"	"5"	698	237615884
+	"25-29 years"	"25-29"	"Non-Injury, no intent classified"	"9"	81994	237615884
+"Total"	"25-29 years"	"25-29"			231632	237615884
+	"30-34 years"	"30-34"	"Unintentional"	"1"	77397	240147817
+	"30-34 years"	"30-34"	"Suicide"	"2"	31498	240147817
+	"30-34 years"	"30-34"	"Homicide"	"3"	23579	240147817
+	"30-34 years"	"30-34"	"Undetermined "	"4"	5017	240147817
+	"30-34 years"	"30-34"	"Legal Intervention / Operations of War"	"5"	720	240147817
+	"30-34 years"	"30-34"	"Non-Injury, no intent classified"	"9"	131365	240147817
+"Total"	"30-34 years"	"30-34"			269576	240147817
+	"35-39 years"	"35-39"	"Unintentional"	"1"	89030	255923835
+	"35-39 years"	"35-39"	"Suicide"	"2"	36945	255923835
+	"35-39 years"	"35-39"	"Homicide"	"3"	19897	255923835
+	"35-39 years"	"35-39"	"Undetermined "	"4"	6856	255923835
+	"35-39 years"	"35-39"	"Legal Intervention / Operations of War"	"5"	728	255923835
+	"35-39 years"	"35-39"	"Non-Injury, no intent classified"	"9"	238915	255923835
+"Total"	"35-39 years"	"35-39"			392371	255923835
+	"40-44 years"	"40-44"	"Unintentional"	"1"	104849	266244723
+	"40-44 years"	"40-44"	"Suicide"	"2"	42623	266244723
+	"40-44 years"	"40-44"	"Homicide"	"3"	17451	266244723
+	"40-44 years"	"40-44"	"Undetermined "	"4"	8323	266244723
+	"40-44 years"	"40-44"	"Legal Intervention / Operations of War"	"5"	570	266244723
+	"40-44 years"	"40-44"	"Non-Injury, no intent classified"	"9"	439006	266244723
+"Total"	"40-44 years"	"40-44"			612822	266244723
+	"45-49 years"	"45-49"	"Unintentional"	"1"	109979	261809847
+	"45-49 years"	"45-49"	"Suicide"	"2"	44322	261809847
+	"45-49 years"	"45-49"	"Homicide"	"3"	14312	261809847
+	"45-49 years"	"45-49"	"Undetermined "	"4"	8475	261809847
+	"45-49 years"	"45-49"	"Legal Intervention / Operations of War"	"5"	443	261809847
+	"45-49 years"	"45-49"	"Non-Injury, no intent classified"	"9"	731052	261809847
+"Total"	"45-49 years"	"45-49"			908583	261809847
+	"50-54 years"	"50-54"	"Unintentional"	"1"	93060	238330523
+	"50-54 years"	"50-54"	"Suicide"	"2"	39712	238330523
+	"50-54 years"	"50-54"	"Homicide"	"3"	10127	238330523
+	"50-54 years"	"50-54"	"Undetermined "	"4"	6154	238330523
+	"50-54 years"	"50-54"	"Legal Intervention / Operations of War"	"5"	285	238330523
+	"50-54 years"	"50-54"	"Non-Injury, no intent classified"	"9"	1060886	238330523
+"Total"	"50-54 years"	"50-54"			1210224	238330523
+	"55-59 years"	"55-59"	"Unintentional"	"1"	70066	200202661
+	"55-59 years"	"55-59"	"Suicide"	"2"	30914	200202661
+	"55-59 years"	"55-59"	"Homicide"	"3"	6627	200202661
+	"55-59 years"	"55-59"	"Undetermined "	"4"	3547	200202661
+	"55-59 years"	"55-59"	"Legal Intervention / Operations of War"	"5"	177	200202661
+	"55-59 years"	"55-59"	"Non-Injury, no intent classified"	"9"	1371134	200202661
+"Total"	"55-59 years"	"55-59"			1482465	200202661
+	"60-64 years "	"60-64"	"Unintentional"	"1"	53778	158718361
+	"60-64 years "	"60-64"	"Suicide"	"2"	21235	158718361
+	"60-64 years "	"60-64"	"Homicide"	"3"	4274	158718361
+	"60-64 years "	"60-64"	"Undetermined "	"4"	1834	158718361
+	"60-64 years "	"60-64"	"Legal Intervention / Operations of War"	"5"	130	158718361
+	"60-64 years "	"60-64"	"Non-Injury, no intent classified"	"9"	1694909	158718361
+"Total"	"60-64 years "	"60-64"			1776160	158718361
+	"65-69 years"	"65-69"	"Unintentional"	"1"	47678	126104032
+	"65-69 years"	"65-69"	"Suicide"	"2"	15766	126104032
+	"65-69 years"	"65-69"	"Homicide"	"3"	3018	126104032
+	"65-69 years"	"65-69"	"Undetermined "	"4"	1087	126104032
+	"65-69 years"	"65-69"	"Legal Intervention / Operations of War"	"5"	57	126104032
+	"65-69 years"	"65-69"	"Non-Injury, no intent classified"	"9"	2079745	126104032
+"Total"	"65-69 years"	"65-69"			2147351	126104032
+	"70-74 years"	"70-74"	"Unintentional"	"1"	53492	105882683
+	"70-74 years"	"70-74"	"Suicide"	"2"	14365	105882683
+	"70-74 years"	"70-74"	"Homicide"	"3"	2373	105882683
+	"70-74 years"	"70-74"	"Undetermined "	"4"	736	105882683
+	"70-74 years"	"70-74"	"Legal Intervention / Operations of War"	"5"	51	105882683
+	"70-74 years"	"70-74"	"Non-Injury, no intent classified"	"9"	2730002	105882683
+"Total"	"70-74 years"	"70-74"			2801019	105882683
+	"75-79 years"	"75-79"	"Unintentional"	"1"	70733	88913142
+	"75-79 years"	"75-79"	"Suicide"	"2"	14131	88913142
+	"75-79 years"	"75-79"	"Homicide"	"3"	1930	88913142
+	"75-79 years"	"75-79"	"Undetermined "	"4"	673	88913142
+	"75-79 years"	"75-79"	"Legal Intervention / Operations of War"	"5"	49	88913142
+	"75-79 years"	"75-79"	"Non-Injury, no intent classified"	"9"	3618613	88913142
+"Total"	"75-79 years"	"75-79"			3706129	88913142
+	"80-84 years"	"80-84"	"Unintentional"	"1"	87924	65335166
+	"80-84 years"	"80-84"	"Suicide"	"2"	11570	65335166
+	"80-84 years"	"80-84"	"Homicide"	"3"	1462	65335166
+	"80-84 years"	"80-84"	"Undetermined "	"4"	661	65335166
+	"80-84 years"	"80-84"	"Legal Intervention / Operations of War"	"5"	63	65335166
+	"80-84 years"	"80-84"	"Non-Injury, no intent classified"	"9"	4301686	65335166
+"Total"	"80-84 years"	"80-84"			4403366	65335166
+	"85-89 years"	"85-89"	"Unintentional"	"1"	86900	Not Applicable
+	"85-89 years"	"85-89"	"Suicide"	"2"	7098	Not Applicable
+	"85-89 years"	"85-89"	"Homicide"	"3"	846	Not Applicable
+	"85-89 years"	"85-89"	"Undetermined "	"4"	480	Not Applicable
+	"85-89 years"	"85-89"	"Legal Intervention / Operations of War"	"5"	20	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury, no intent classified"	"9"	4125374	Not Applicable
+"Total"	"85-89 years"	"85-89"			4220718	Not Applicable
+	"90-94 years"	"90-94"	"Unintentional"	"1"	57805	Not Applicable
+	"90-94 years"	"90-94"	"Suicide"	"2"	2504	Not Applicable
+	"90-94 years"	"90-94"	"Homicide"	"3"	316	Not Applicable
+	"90-94 years"	"90-94"	"Undetermined "	"4"	271	Not Applicable
+	"90-94 years"	"90-94"	"Legal Intervention / Operations of War"	"5"	9	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury, no intent classified"	"9"	2756021	Not Applicable
+"Total"	"90-94 years"	"90-94"			2816926	Not Applicable
+	"95-99 years"	"95-99"	"Unintentional"	"1"	21762	Not Applicable
+	"95-99 years"	"95-99"	"Suicide"	"2"	447	Not Applicable
+	"95-99 years"	"95-99"	"Homicide"	"3"	85	Not Applicable
+	"95-99 years"	"95-99"	"Undetermined "	"4"	77	Not Applicable
+	"95-99 years"	"95-99"	"Legal Intervention / Operations of War"	"5"	0	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury, no intent classified"	"9"	1079701	Not Applicable
+"Total"	"95-99 years"	"95-99"			1102072	Not Applicable
+	"100+ years"	"100+"	"Unintentional"	"1"	4146	Not Applicable
+	"100+ years"	"100+"	"Suicide"	"2"	32	Not Applicable
+	"100+ years"	"100+"	"Homicide"	"3"	10	Not Applicable
+	"100+ years"	"100+"	"Undetermined "	"4"	10	Not Applicable
+	"100+ years"	"100+"	"Legal Intervention / Operations of War"	"5"	0	Not Applicable
+	"100+ years"	"100+"	"Non-Injury, no intent classified"	"9"	228781	Not Applicable
+"Total"	"100+ years"	"100+"			232979	Not Applicable
+	"Not Stated"	"NS"	"Unintentional"	"1"	791	Not Applicable
+	"Not Stated"	"NS"	"Suicide"	"2"	112	Not Applicable
+	"Not Stated"	"NS"	"Homicide"	"3"	336	Not Applicable
+	"Not Stated"	"NS"	"Undetermined "	"4"	124	Not Applicable
+	"Not Stated"	"NS"	"Legal Intervention / Operations of War"	"5"	0	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury, no intent classified"	"9"	2020	Not Applicable
+"Total"	"Not Stated"	"NS"			3383	Not Applicable
+"Total"					29176040	3530708204
+"---"
+"Dataset: Underlying Cause of Death, 1999-2010"
+"Query Parameters:"
+"Title:"
+"Autopsy: All"
+"Census Regions: All"
+"Five-Year Age Groups: All"
+"Gender: All"
+"Hispanic Origin: All"
+"Injury Intent: All"
+"Injury Mechanism & All Other Leading Causes: All"
+"Place of Death: All"
+"Race: All"
+"Urbanization: All"
+"Weekday: All"
+"Year/Month: All"
+"Group By: Five-Year Age Groups, Injury Intent"
+"Show Totals: True"
+"Show Zero Values: True"
+"Show Suppressed: True"
+"Calculate Rates Per: 100,000"
+"Rate Options: Default intercensal populations for years 2001-2009 (except Infant Age Groups)"
+"---"
+"Help: See http://wonder.cdc.gov/wonder/help/ucd.html for more information."
+"---"
+"Query Date: May 25, 2014 3:46:32 PM"
+"---"
+"Suggested Citation: Centers for Disease Control and Prevention, National Center for Health Statistics. Underlying Cause of Death"
+"1999-2010 on CDC WONDER Online Database, released 2012. Data are from the Multiple Cause of Death Files, 1999-2010, as compiled"
+"from data provided by the 57 vital statistics jurisdictions through the Vital Statistics Cooperative Program. Accessed at"
+"http://wonder.cdc.gov/ucd-icd10.html on May 25, 2014 3:46:32 PM"
+"---"
+Caveats:
+"1. Population and rates are labeled 'Not Applicable' when they include a subset of ages 85-100+ because populations are not"
+"available for those ages. More information: http://wonder.cdc.gov/wonder/help/ucd.html#Ages 85-100."
+"2. Circumstances in Georgia for the year 2008 have resulted in unusually high death counts for the ICD-10 cause of death code"
+"R99, ""Symptoms, signs and abnormal clinical and laboratory findings, not elsewhere classified"". Caution should be used in"
+"interpreting these data. More information: http://wonder.cdc.gov/wonder/help/ucd.html#Georgia-Reporting-Anomalies."
+"3. Circumstances in New Jersey for the year 2009 have resulted in unusually high death counts for the ICD-10 cause of death code"
+"R99, ""Symptoms, signs and abnormal clinical and laboratory findings, not elsewhere classified"" and therefore unusually low"
+"death counts in other ICD-10 codes, most notably R95, ""Sudden Infant Death Syndrome"" and X40-X49, ""Unintentional poisoning."""
+"Caution should be used in interpreting these data. More information:"
+"http://wonder.cdc.gov/wonder/help/ucd.html#New-Jersey-Reporting-Anomalies."
+"4. Death rates are flagged as Unreliable when the rate is calculated with a numerator of 20 or less. More information:"
+"http://wonder.cdc.gov/wonder/help/ucd.html#Unreliable."
+"5. Deaths of persons with Age ""Not Stated"" are included in ""All"" counts and rates, but are not distributed among age groups,"
+"so are not included in age-specific counts, age-specific rates or in any age-adjusted rates. More information:"
+"http://wonder.cdc.gov/wonder/help/ucd.html#Not Stated."
+"6. Population figures for 2010 are April 1 Census counts. The population figures for years 2001 - 2009, other than the infant"
+"age groups, are bridged-race estimates of the July 1 resident population, from the revised intercensal county-level 2000 - 2009"
+"series released by NCHS on October 26, 2012. Population figures for 2000 are April 1 Census counts. Population figures for 1999"
+"are from the 1990-1999 intercensal series of July 1 estimates. <br/><b>Note:</b> Rates and population figures for years 2001 -"
+"2009 differ slightly from previously published reports, due to use of the population estimates which were available at the time"
+"of release."
+"7. The population figures used in the calculation of death rates for the age group 'under 1 year' are the estimates of the"
+"resident population that is under one year of age. More information: http://wonder.cdc.gov/wonder/help/ucd.html#Age Group."

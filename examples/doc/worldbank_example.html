@@ -1,0 +1,2686 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>C3 Crossfilter Dataset</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="flamechart_sunburst_example.html">
+                  flamechart_sunburst_example.ts
+                </a>
+              
+                
+                <a class="source" href="legend_example.html">
+                  legend_example.ts
+                </a>
+              
+                
+                <a class="source" href="pie_example.html">
+                  pie_example.ts
+                </a>
+              
+                
+                <a class="source" href="plot_area_example.html">
+                  plot_area_example.ts
+                </a>
+              
+                
+                <a class="source" href="plot_zoom_example.html">
+                  plot_zoom_example.ts
+                </a>
+              
+                
+                <a class="source" href="scatterplot_example.html">
+                  scatterplot_example.ts
+                </a>
+              
+                
+                <a class="source" href="stack_example.html">
+                  stack_example.ts
+                </a>
+              
+                
+                <a class="source" href="swimlanes_example.html">
+                  swimlanes_example.ts
+                </a>
+              
+                
+                <a class="source" href="sync_example.html">
+                  sync_example.ts
+                </a>
+              
+                
+                <a class="source" href="table_selectable_example.html">
+                  table_selectable_example.ts
+                </a>
+              
+                
+                <a class="source" href="table_sortable_example.html">
+                  table_sortable_example.ts
+                </a>
+              
+                
+                <a class="source" href="timeline_example.html">
+                  timeline_example.ts
+                </a>
+              
+                
+                <a class="source" href="worldbank_example.html">
+                  worldbank_example.ts
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <h1 id="c3-crossfilter-dataset">C3 Crossfilter Dataset</h1>
+<p><em>An example the includes many plots and tables synchronized with a common dataset using <a href="http://square.github.io/crossfilter/" title="Crossfilter Library"><strong>Crossfilter </strong></a>.</em>
+<em>This example also includes more demonstration on how to style and extend custom charts.</em></p>
+<p>Crossfilter is a great library for managing large multivariate datasets and filtering on multiple dimensions.</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>###########################################################################</p>
+<h2 id="load-the-data">Load the Data</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Three data models for this example to visualize.</p>
+<ul>
+<li><strong>gdp_data</strong> - array of objects with <code>country_name</code>, <code>country_code</code>, <code>year</code>,
+and other properties from World Bank indicators based on the <code>indicator_mapping</code>.</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">interface</span> GDPData {
+    country_name: <span class="hljs-built_in">string</span>;
+    country_code: <span class="hljs-built_in">string</span>;
+    year: <span class="hljs-built_in">number</span>;
+    population: <span class="hljs-built_in">number</span>;
+    urban_population: <span class="hljs-built_in">number</span>;
+    gdp: <span class="hljs-built_in">number</span>;
+    gdp_per_capita: <span class="hljs-built_in">number</span>;
+    land_area: <span class="hljs-built_in">number</span>;
+    agriculture: <span class="hljs-built_in">number</span>;
+    manufacturing: <span class="hljs-built_in">number</span>;
+    services: <span class="hljs-built_in">number</span>;
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <ul>
+<li><strong>counties</strong> - map of country codes to objects with <code>name</code>, <code>code</code>, and <code>region_id</code>.</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">interface</span> Country {
+    name: <span class="hljs-built_in">string</span>;
+    code: <span class="hljs-built_in">string</span>;
+    region_id: <span class="hljs-built_in">number</span>;
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <ul>
+<li><strong>regions</strong> - map of region ids to objects with <code>name</code>, <code>id</code>, and <code>parent_id</code>.</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">interface</span> Region {
+    name: <span class="hljs-built_in">string</span>;
+    id: <span class="hljs-built_in">number</span>;
+    parent_id: <span class="hljs-built_in">number</span>;
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>To keep things simple this example doesn’t use
+a proper <em>MVC</em> architecture, so we’ll just use some simple global objects:</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> gdp_data: GDPData[] = [];
+<span class="hljs-keyword">var</span> countries: { [code: <span class="hljs-built_in">string</span>]: Country } = {};
+<span class="hljs-keyword">var</span> regions: { [id: <span class="hljs-built_in">number</span>]: Region } = {};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>The following function will download the sample datasets about countries, GDP metrics, etc from <strong>CSV files</strong>.
+For purposes of understanding the C3 visualization you can skip this section.  Most of it is about
+transforming the data from the format that the <strong>World Bank</strong> provides to a format best suited to 
+working with the <strong>Crossfilter</strong> library.  We could have done this transformation ahead of time and 
+just used that modified CSV, but I wanted to work with the CSV in the original format to be able to
+update the data or get new metrics from the World Bank.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">download_data</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">var</span> indicator_mapping = {
+        <span class="hljs-string">'SP.POP.TOTL'</span>: <span class="hljs-string">'population'</span>,
+        <span class="hljs-string">'EN.URB.MCTY.TL.ZS'</span>: <span class="hljs-string">'urban_population'</span>,
+        <span class="hljs-string">'NY.GDP.MKTP.CD'</span>: <span class="hljs-string">'gdp'</span>,
+        <span class="hljs-string">'NY.GDP.PCAP.CD'</span>: <span class="hljs-string">'gdp_per_capita'</span>,
+        <span class="hljs-string">'AG.LND.TOTL.K2'</span>: <span class="hljs-string">'land_area'</span>,
+        <span class="hljs-string">'NV.AGR.TOTL.CD'</span>: <span class="hljs-string">'agriculture'</span>,
+        <span class="hljs-string">'NV.IND.MANF.CD'</span>: <span class="hljs-string">'manufacturing'</span>,
+        <span class="hljs-string">'NV.SRV.TETC.CD'</span>: <span class="hljs-string">'services'</span>,
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>This function returns a <a href="http://promises-aplus.github.io/promises-spec/"><em>promise</em></a>
+to easily manage multiple CSV dependencies asynchronously.
+The user provides a callback to the promise that will exectute when the promise is <em>resolved</em>.
+<code>Promise.all()</code> will create a promise with multiple dependencies, one for each of the three CSV files to download and process.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">return</span> Promise.all([
+        <span class="hljs-keyword">new</span> Promise((resolve) =&gt; {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <h3 id="load-world-bank-data-csv-">Load World Bank Data <strong>CSV</strong></h3>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Use <em>D3</em> to download the GDP and other metrics from the <strong>World Bank CSV</strong> file.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            d3.csv(<span class="hljs-string">'data/gdp.csv'</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>The <code>row</code> callback is used to structure what the rows look like based on the CSV data.
+Notice that the numerical values use a <code>+</code> to parse the string to a numerical value.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                .row((row) =&gt; ({
+                    country_name: row[<span class="hljs-string">'Country Name'</span>],
+                    country_code: row[<span class="hljs-string">'Country Code'</span>],
+                    indicator: row[<span class="hljs-string">'Indicator Code'</span>],
+                    value: +row[<span class="hljs-string">'Value'</span>],
+                    year: +row[<span class="hljs-string">'Year'</span>],
+                }))</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>The <code>get</code> callback is used to process the data once it is loaded.
+The World Bank provides the data in a format with a single value per row.
+This code translates that to a format with a row for each country and year combination and
+a column for each additional metric provided.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                .get((error, rows) =&gt; {
+                    <span class="hljs-keyword">var</span> tmp_map = {};
+                    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> row of rows) {
+                        <span class="hljs-keyword">if</span> (!row.country_code) <span class="hljs-keyword">continue</span>;
+                        <span class="hljs-keyword">let</span> data_row;
+                        <span class="hljs-keyword">if</span> (!(data_row = tmp_map[row.country_code + row.year]))
+                            data_row = tmp_map[row.country_code + row.year] = {
+                                country_name: row.country_name,
+                                country_code: row.country_code,
+                                year: row.year,
+                            };
+                        data_row[indicator_mapping[row.indicator]] = row.value;
+                    }
+                    gdp_data = [];
+                    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> k <span class="hljs-keyword">in</span> tmp_map) gdp_data.push(tmp_map[k]);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>Convert the GDP metrics to billions of dollars for convenience and ensure
+GDP isn’t 0 if the data is missing to avoid divide by zero problems.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> record of gdp_data) {
+                        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> metric of [<span class="hljs-string">'gdp'</span>, <span class="hljs-string">'agriculture'</span>, <span class="hljs-string">'manufacturing'</span>, <span class="hljs-string">'services'</span>])
+                            record[metric] /= <span class="hljs-number">1000000000</span>;
+                        <span class="hljs-keyword">if</span> (!record.gdp) record.gdp = <span class="hljs-number">1</span>;
+                    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>Resolve this promise to indicate that this dependency has been met.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                    resolve();
+                });
+        }),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <h3 id="load-the-country-data-csv-">Load the country data <strong>CSV</strong></h3>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">new</span> Promise((resolve) =&gt; {
+            d3.csv(<span class="hljs-string">'data/countries.csv'</span>)
+                .row((row) =&gt; ({
+                    name: row[<span class="hljs-string">'name'</span>],
+                    code: row[<span class="hljs-string">'world_bank_code'</span>],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>Countries include a link to their region.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                    region_id: +row[<span class="hljs-string">'region-code'</span>],
+                }))</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>When the raw CSV has been loaded convert it to an associative map based on country ID.
+Normally I found it more efficient to manage this data as an array where the index into the array cooresponds to the ID,
+but just keeping the example simple here.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                .get((error, rows) =&gt; {
+                    rows.filter((row) =&gt; !!row.code).forEach((row) =&gt; {
+                        countries[row.code] = row;
+                    });
+                    resolve();
+                });
+        }),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <h3 id="load-the-region-info-csv-">Load the region info <strong>CSV</strong></h3>
+<p>Convert it to an associative object, and resolve its promise when done.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">new</span> Promise((resolve) =&gt; {
+            d3.csv(<span class="hljs-string">'data/regions.csv'</span>)
+                .row((row) =&gt; ({
+                    name: row[<span class="hljs-string">'name'</span>],
+                    id: +row[<span class="hljs-string">'id'</span>],
+                    parent_id: +row[<span class="hljs-string">'parent_id'</span>],
+                }))
+                .get((error, rows) =&gt; {
+                    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> row of rows)
+                        regions[row.id] = row;
+                    resolve();
+                });
+        }),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>After all the CSV data has been loaded and processed, remove the wait notification and check
+the dataset if any countries referenced by the World Bank data are missing from the countries table.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    ]).then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+        $(<span class="hljs-string">'#waiting'</span>).remove();
+        $(<span class="hljs-string">'main'</span>).css(<span class="hljs-string">'display'</span>, <span class="hljs-string">''</span>);
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> record of gdp_data.filter((record) =&gt; !countries[record.country_code]))
+            <span class="hljs-keyword">throw</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Missing country: "</span> + record.country_code + <span class="hljs-string">" - "</span> + record.country_name);
+    });
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>###########################################################################</p>
+<h2 id="create-and-render-the-charts">Create and Render the Charts</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p>This function will create the various charts and tables for this example.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">render</span>(<span class="hljs-params"></span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <h3 id="prepare-the-data">Prepare the data</h3>
+<p>Output the data set to the console if you want to take a look.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Data:"</span>, gdp_data);
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Regions:"</span>, regions);
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Countries:"</span>, countries);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <p>Setup the core metrics dataset with <a href="http://square.github.io/crossfilter/"><strong>Crossfilter</strong></a></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> xf = crossfilter(gdp_data);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <p><code>groupAll()</code> allows us to get a single value for the entire dataset.
+In this case we do a reduction based on the total population.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> total_population = xf.groupAll&lt;<span class="hljs-built_in">number</span>&gt;().reduceSum((d) =&gt; d.population);
+    <span class="hljs-keyword">var</span> total_gdp = xf.groupAll&lt;<span class="hljs-built_in">number</span>&gt;().reduceSum((d) =&gt; d.gdp);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-25">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-25">&#182;</a>
+              </div>
+              <p>Prepare the Crossfilter <strong>dimensions</strong> we can filter the data on.
+With this we can filter based on country, region, year, urbanization, etc.
+Notice the <em>region</em> dimension is added even though the dataset doesn’t link directly to
+a region.
+The <em>agriculture</em>, <em>services</em>, and <em>manufacturing</em> dimensions are also created based
+on their percentage of GDP instead of an absolute value.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> country_dim = xf.dimension((d) =&gt; d.country_code);
+    <span class="hljs-keyword">var</span> region_dim = xf.dimension((d) =&gt; countries[d.country_code].region_id);
+    <span class="hljs-keyword">var</span> year_dim = xf.dimension((d) =&gt; d.year);
+    <span class="hljs-keyword">var</span> urban_dim = xf.dimension((d) =&gt; d.urban_population);
+    <span class="hljs-keyword">var</span> agriculture_dim = xf.dimension((d) =&gt; <span class="hljs-built_in">Math</span>.min(d.agriculture / d.gdp * <span class="hljs-number">100</span>, <span class="hljs-number">100</span>));
+    <span class="hljs-keyword">var</span> services_dim = xf.dimension((d) =&gt; <span class="hljs-built_in">Math</span>.min(d.services / d.gdp * <span class="hljs-number">100</span>, <span class="hljs-number">100</span>));
+    <span class="hljs-keyword">var</span> manufacturing_dim = xf.dimension((d) =&gt; <span class="hljs-built_in">Math</span>.min(d.manufacturing / d.gdp * <span class="hljs-number">100</span>, <span class="hljs-number">100</span>));</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-26">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-26">&#182;</a>
+              </div>
+              <p>Store an array of all the visualizations in this example.Create <code>redraw()</code> and <code>restyle()</code>
+functions to update all of the charts in this example when the dataset is updated via <em>Crossfilter</em>.
+C3 doesn’t try to automatically update or resize charts because that can be expensive and so it
+lets the user indicate when that needs to be done.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> charts = [];
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">redraw</span>(<span class="hljs-params"></span>) </span>{
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> chart of charts)
+            chart.redraw();
+    }
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">restyle</span>(<span class="hljs-params"></span>) </span>{
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> chart of charts)
+            chart.restyle();
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-27">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-27">&#182;</a>
+              </div>
+              <p>These variables will track the country or region the user’s mouse is currently hovering over.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> hover_country;
+    <span class="hljs-keyword">var</span> hover_region;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-28">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-28">&#182;</a>
+              </div>
+              <p>###########################################################################</p>
+<h3 id="gdp-timeline-chart">GDP Timeline Chart</h3>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-29">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-29">&#182;</a>
+              </div>
+              <p><strong>Crossfiter</strong> dimensions are great for filtering the dataset.  But, we’d also like to visualize
+the data based on those dimensions.  This first chart will be a timeline, so we’ll use the 
+<code>year_dim</code> <strong>dimension</strong>.  The dimension has a function called <code>group()</code> which will generate 
+a <strong>grouping</strong> based on the data. We use <code>reduceSum()</code> to <strong>reduce</strong> each entry in the grouping by
+summing a value specified via a callback.  In this way we can get an arrangement of the data 
+that is grouped by year, but provides values such as GDP, agriculture GDP, etc.
+The <code>all()</code> method returns us an array of this grouping that is easy to use.  Each entry in
+the array contains a <code>key</code> based on the dimension (the year in this case) and a <code>value</code>
+based on the grouping’s reduction.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> gdp_by_year_data = year_dim.group().reduceSum((d) =&gt; d.gdp).all();
+    <span class="hljs-keyword">var</span> agriculture_by_year_data = year_dim.group().reduceSum((d) =&gt; d.agriculture).all();
+    <span class="hljs-keyword">var</span> manufacturing_by_year_data = year_dim.group().reduceSum((d) =&gt; d.manufacturing).all();
+    <span class="hljs-keyword">var</span> services_by_year_data = year_dim.group().reduceSum((d) =&gt; d.services).all();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-30">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-30">&#182;</a>
+              </div>
+              <p>Output the gdp per year data to the console so you can take a look at what it looks like.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"gdp_by_year_data"</span>, gdp_by_year_data);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-31">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-31">&#182;</a>
+              </div>
+              <p>Create a new <code>c3.Plot</code> for the timeline.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> timeline;
+    charts.push(timeline = <span class="hljs-keyword">new</span> c3.Plot.Zoomable&lt;CrossFilter.Grouping&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">number</span>&gt;&gt;({
+        anchor: <span class="hljs-string">'#worldbank_timeline'</span>,
+        height: <span class="hljs-number">300</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-32">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-32">&#182;</a>
+              </div>
+              <p>Setup the <strong>scales</strong>.  Time will go from the year 1970-2012.  The default chart vertical
+scale will go from 0-100 for percentages.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        h: d3.scale.linear().domain([<span class="hljs-number">1970</span>, <span class="hljs-number">2012</span>]),
+        v: d3.scale.linear().domain([<span class="hljs-number">0</span>, <span class="hljs-number">100</span>]),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-33">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-33">&#182;</a>
+              </div>
+              <p>The <strong>x</strong> function uses the key directly, which represents the year from the year dimension.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        x: (d) =&gt; d.key,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-34">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-34">&#182;</a>
+              </div>
+              <p>The default <strong>y</strong> function generates its value as a percentage of the gdp for that year.
+There are better ways to do this, but I wanted to demonstrate the flexibility the callbacks
+provide for visualizing based on the data.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        y: (d) =&gt; d.value &gt; <span class="hljs-number">1</span> ? d.value / gdp_by_year_data[d.key - <span class="hljs-number">1970</span>].value * <span class="hljs-number">100</span> : <span class="hljs-number">0</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-35">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-35">&#182;</a>
+              </div>
+              <p>Set chart as <strong>zoomable</strong> and limit the maximum amount the user is allowed to zoom in.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        zoomable: <span class="hljs-string">'h'</span>,
+        zoom_extent: <span class="hljs-number">16</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-36">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-36">&#182;</a>
+              </div>
+              <p>Set margins on all sides of the chart to allow extra room for labels to fit.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        margins: <span class="hljs-number">8</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-37">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-37">&#182;</a>
+              </div>
+              <p>Create <strong>axes</strong> for this plot.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        axes: [
+            <span class="hljs-keyword">new</span> c3.Axis.X({
+                label: <span class="hljs-string">"Year"</span>,
+                grid: <span class="hljs-literal">true</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-38">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-38">&#182;</a>
+              </div>
+              <p>Use a D3 formatter here to avoid commas showing up in the year</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                tick_label: d3.format(<span class="hljs-string">'f'</span>),
+            }),
+            <span class="hljs-keyword">new</span> c3.Axis.Y({
+                label: <span class="hljs-string">"% of GDP"</span>,
+                grid: <span class="hljs-literal">true</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-39">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-39">&#182;</a>
+              </div>
+              <p>Use our own formatter to add a “%” symbol after the number</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                tick_label: (n) =&gt; n + <span class="hljs-string">"%"</span>,
+            }),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-40">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-40">&#182;</a>
+              </div>
+              <p>Create a third axis for this plot on the right side.This axis will indicate the 
+scale for the GDP layer which is expressed in dollars instead of percentage.
+It also shows that we can use a different scale here to show one way we can represent 
+different units, trillions of dollars instead of billions.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">new</span> c3.Axis.Y({
+                label: <span class="hljs-string">"GDP in USD"</span>,
+                orient: <span class="hljs-string">'right'</span>,
+                scale: d3.scale.linear().domain([<span class="hljs-number">0</span>, d3.max(gdp_by_year_data, (d) =&gt; d.value / <span class="hljs-number">1000</span>)]),
+                tick_label: (n) =&gt; <span class="hljs-string">"$"</span> + n.toLocaleString() + <span class="hljs-string">"t"</span>,
+                axis_size: <span class="hljs-number">75</span>,
+            }),
+        ],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-41">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-41">&#182;</a>
+              </div>
+              <p>Create the <strong>layers</strong> for this timeline.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        layers: [</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-42">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-42">&#182;</a>
+              </div>
+              <p>The first layer is an area graph for the world GDP value.  This doesn’t use the 
+chart’s default vertical scale and instead uses its own scale based on the
+GDP dollars.  The top of the chart is set to the maximum GDP value in our dataset.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">new</span> c3.Plot.Layer.Area&lt;CrossFilter.Grouping&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">number</span>&gt;&gt;({
+                options: {
+                    title: <span class="hljs-string">"GDP"</span>,
+                    <span class="hljs-keyword">class</span>: <span class="hljs-string">'gdp'</span>,
+                },
+                data: gdp_by_year_data,
+                v: d3.scale.linear().domain([<span class="hljs-number">0</span>, d3.max(gdp_by_year_data, (d) =&gt; d.value)]),
+                y: (d) =&gt; d.value,
+                interpolate: <span class="hljs-string">'cardinal'</span>,
+            }),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-43">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-43">&#182;</a>
+              </div>
+              <p>Notice how the <code>class</code> for each layer is set here. This allows the example
+to determine how these individual layers appear with an efficient stylesheet and avoid
+DOM manipulation.  It also allows for dynamically updating the styles, such as when
+hovering over the cooresponding legend item.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">new</span> c3.Plot.Layer.Line&lt;CrossFilter.Grouping&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">number</span>&gt;&gt;({
+                options: {
+                    title: <span class="hljs-string">"% Services"</span>,
+                    <span class="hljs-keyword">class</span>: <span class="hljs-string">'services'</span>,
+                },
+                data: services_by_year_data,
+            }),
+            <span class="hljs-keyword">new</span> c3.Plot.Layer.Line&lt;CrossFilter.Grouping&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">number</span>&gt;&gt;({
+                options: {
+                    title: <span class="hljs-string">"% Manufacturing"</span>,
+                    <span class="hljs-keyword">class</span>: <span class="hljs-string">'manufacturing'</span>,
+                },
+                data: manufacturing_by_year_data,
+            }),
+            <span class="hljs-keyword">new</span> c3.Plot.Layer.Line&lt;CrossFilter.Grouping&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">number</span>&gt;&gt;({
+                options: {
+                    title: <span class="hljs-string">"% Agriculture"</span>,
+                    <span class="hljs-keyword">class</span>: <span class="hljs-string">'agriculture'</span>,
+                },
+                data: agriculture_by_year_data,
+            }),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-44">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-44">&#182;</a>
+              </div>
+              <p>This layer represents a <strong>vertical line</strong> for the <em>currently selected year</em>.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">new</span> c3.Plot.Layer.Line.Vertical&lt;<span class="hljs-built_in">number</span>&gt;({
+                data: [<span class="hljs-number">2000</span>],
+                draggable: <span class="hljs-literal">true</span>,
+
+                options: {
+                    title: <span class="hljs-string">"Selected Year"</span>,
+                    <span class="hljs-keyword">class</span>: <span class="hljs-string">'selected_year'</span>,
+                },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-45">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-45">&#182;</a>
+              </div>
+              <p>Setup an <strong>event handler</strong> when the user drags the line
+to update the filtering to only show data for the selected year.
+Also update the current year and world population at the time and redraw
+all charts to reflect the updated dataset filtering.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                handlers: {
+                    <span class="hljs-string">'drag'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">year</span>) </span>{
+                        <span class="hljs-keyword">this</span>.data = [year];
+                        year = <span class="hljs-built_in">Math</span>.round(year);
+                        year_dim.filter(year);
+                        $(<span class="hljs-string">'#sync_example_year'</span>).text(year);
+                        $(<span class="hljs-string">'#total_population'</span>).text(d3.format(<span class="hljs-string">','</span>)(total_population.value()));
+                        redraw();
+                    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-46">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-46">&#182;</a>
+              </div>
+              <p>Filter the data based on the initial year selection</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                    <span class="hljs-string">'render'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+                        <span class="hljs-keyword">this</span>.handlers[<span class="hljs-string">'drag'</span>](<span class="hljs-keyword">this</span>.data[<span class="hljs-number">0</span>]);
+                    },
+                },
+            }),
+        ],
+    }));</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-47">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-47">&#182;</a>
+              </div>
+              <p>###########################################################################</p>
+<h3 id="timeline-legend">Timeline Legend</h3>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-48">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-48">&#182;</a>
+              </div>
+              <p>Create a C3 legend and link it with the timeline C3 plot we just created.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    charts.push(<span class="hljs-keyword">new</span> c3.Legend.PlotLegend({
+        anchor: <span class="hljs-string">'#worldbank_legend'</span>,
+        plot: timeline,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-49">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-49">&#182;</a>
+              </div>
+              <p>Setup event handlers when hovering over legend items to pulse the opacity 
+across all charts on the page with the same class as this layer.
+This demonstrates a way that classes can be used to synchronize related
+data across the entire page and different visualizations.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        handlers: {
+            <span class="hljs-string">'layer_mouseenter'</span>: (layer) =&gt; {
+                d3.selectAll(<span class="hljs-string">'.'</span> + layer.options.class).classed(<span class="hljs-string">'legend_hover'</span>, <span class="hljs-literal">true</span>);
+            },
+            <span class="hljs-string">'layer_mouseleave'</span>: (layer) =&gt; {
+                d3.selectAll(<span class="hljs-string">'.'</span> + layer.options.class).classed(<span class="hljs-string">'legend_hover'</span>, <span class="hljs-literal">false</span>);
+            },
+        },
+    }));</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-50">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-50">&#182;</a>
+              </div>
+              <p>###########################################################################</p>
+<h3 id="region-table">Region Table</h3>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-51">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-51">&#182;</a>
+              </div>
+              <p>Use Crossfilter to get an array of data just like above.  Only, in this case,
+we are using the <code>region_dim</code> dimension instead of the year dimension.  For each region,
+this grouping will reduce the value based on GDP.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> gdp_by_region_data = region_dim.group().reduceSum((d) =&gt; d.gdp).all();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-52">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-52">&#182;</a>
+              </div>
+              <p>Use this D3 utility function to colorize our regions.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> region_color = d3.scale.category10&lt;<span class="hljs-built_in">number</span>&gt;();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-53">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-53">&#182;</a>
+              </div>
+              <p>Create a <code>c3.Table</code> for the regions table.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> regions_table: c3.Table&lt;CrossFilter.Grouping&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">number</span>&gt;&gt;;
+    <span class="hljs-keyword">var</span> gdp_column: c3.Table.Column&lt;CrossFilter.Grouping&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">number</span>&gt;&gt;;
+    charts.push(regions_table = <span class="hljs-keyword">new</span> c3.Table&lt;CrossFilter.Grouping&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">number</span>&gt;&gt;({
+        anchor: <span class="hljs-string">'#worldbank_region_table'</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-54">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-54">&#182;</a>
+              </div>
+              <p>Bind it to the <strong>data</strong> prepared above.
+The <code>key</code>‘s represent region_id<code>s and the</code>value`’s represent gdp.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        data: gdp_by_region_data,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-55">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-55">&#182;</a>
+              </div>
+              <p>Create two <strong>columns</strong> for this table.  One with the region name and another for the GDP value</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        columns: [
+            {
+                header: { text: <span class="hljs-string">"Region"</span> },
+                cells: { text: (d) =&gt; regions[d.key].name },
+            },
+            gdp_column = {
+                header: { text: <span class="hljs-string">"GDP in $b"</span> },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-56">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-56">&#182;</a>
+              </div>
+              <p>Use a custom <strong>html formatter</strong> for the cell contents</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                cells: { html: (d) =&gt; d3.format(<span class="hljs-string">','</span>)(<span class="hljs-built_in">Math</span>.round(<span class="hljs-built_in">Math</span>.abs(d.value))) },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-57">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-57">&#182;</a>
+              </div>
+              <p>The <strong>value</strong> of this cell used for the bar visualization and for sorting.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                value: (d) =&gt; <span class="hljs-built_in">Math</span>.abs(d.value),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-58">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-58">&#182;</a>
+              </div>
+              <p>In addition to the html content above also use a C3 <code>bar</code> <strong>visualization</strong> of the data
+This will render a bar graph inside the table cell whose width is based on the cell value.
+<code>vis_options.styles</code> is used to set the color for this bar.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                vis: <span class="hljs-string">'bar'</span>,
+                vis_options: {
+                    styles: {
+                        <span class="hljs-string">'background-color'</span>: (d) =&gt; region_color(d.key),
+                    },
+                },
+            },
+        ],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-59">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-59">&#182;</a>
+              </div>
+              <p>The initial <strong>sort</strong>.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        sort_column: gdp_column,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-60">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-60">&#182;</a>
+              </div>
+              <p>Allow the user to <strong>select</strong> multiple items in the table</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        selectable: <span class="hljs-string">'multi'</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-61">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-61">&#182;</a>
+              </div>
+              <p><code>row_options</code> is used to dynamically adjust <strong>rows</strong>.
+<code>row_options.classes</code> will assign CSS <strong>classes</strong> to <strong>rows</strong>.  The class name can be
+anything you like.  In this example we set the rows to have class <code>hover</code> if the row’s
+region is the same as the region the user is hovering over with their mouse or if they
+are hovering over a country in that region.  The stylesheet then causes any table rows with
+the class <code>hover</code> to have a wheat-colored background.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        row_options: {
+            classes: {
+                <span class="hljs-string">'hover'</span>: (d) =&gt; regions[d.key] === hover_region || (hover_country &amp;&amp; d.key === hover_country.region_id),
+            },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-62">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-62">&#182;</a>
+              </div>
+              <p><code>row_options.events</code> will set <strong>event handlers</strong> for <strong>rows</strong> in the table.  Here we set handlers for 
+when the mouse hovers over the row.  When it does, we record the region the user is hovering
+over and call <code>restyle()</code> to restyle the charts.  This way all of the charts in the example
+can highlight or somehow indicate this region of interest.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            events: {
+                mouseenter: (d) =&gt; {
+                    hover_region = regions[d.key];
+                    restyle();
+                },
+                mouseleave: (d) =&gt; {
+                    hover_region = <span class="hljs-literal">null</span>;
+                    restyle();
+                },
+            },
+        },
+    }));</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-63">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-63">&#182;</a>
+              </div>
+              <p>As an alternative to declaratively setting <code>handlers</code> for the chart, you can imperatively call
+<code>.on()</code> to manage event handlers.</p>
+<p>If the user <strong>selects</strong> one or more rows in the table, then we will 
+<strong>filter</strong> the data based on those regions using <em>Crossfilter</em>.
+<code>redraw()</code> is then used to update the charts based on the updated data.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    regions_table.on(<span class="hljs-string">'select'</span>, (selections) =&gt; {
+        <span class="hljs-keyword">if</span> (selections &amp;&amp; selections.length)
+            region_dim.filter((key) =&gt; selections.map((d) =&gt; d.key).indexOf(key) &gt;= <span class="hljs-number">0</span>);
+        <span class="hljs-keyword">else</span>
+            region_dim.filterAll();
+        redraw();
+    });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-64">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-64">&#182;</a>
+              </div>
+              <p>###########################################################################</p>
+<h3 id="country-scatter-plot">Country Scatter Plot</h3>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-65">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-65">&#182;</a>
+              </div>
+              <p>Now we’ll create a fun scatter plot of all of the countries.  For this we want to use the 
+<strong>country dimension</strong>.  But, we want more than one piece of information about each country.
+There are multiple ways to do this, and for larger datasets I would use a different approach.
+However, I wanted to demonstrate here how to use <strong>custom reduction</strong> functions.  Another possible
+use of custom reduction functions might be to compute an average instead of a sum.
+<code>reduce()</code> takes three callbacks.  The third one is used to initially create the “values” for
+this grouping.  The first and second are used to add and remove data from those values based
+on if that data item is filtered in or out.  <em>Crossfilter</em> is surprisingly efficient about this.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">interface</span> CountryData {
+        gdp: <span class="hljs-built_in">number</span>;
+        gdp_per_capita: <span class="hljs-built_in">number</span>;
+        population: <span class="hljs-built_in">number</span>;
+        land_area: <span class="hljs-built_in">number</span>;
+    }
+    <span class="hljs-keyword">var</span> country_data = country_dim.group().reduce&lt;CountryData&gt;(
+        <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">p, v</span>) </span>{
+            p.gdp += v.gdp;
+            p.gdp_per_capita += v.gdp_per_capita;
+            p.population += v.population;
+            p.land_area += v.land_area;
+            <span class="hljs-keyword">return</span> p;
+        },
+        <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">p, v</span>) </span>{
+            p.gdp -= v.gdp;
+            p.gdp_per_capita -= v.gdp_per_capita;
+            p.population -= v.population;
+            p.land_area -= v.land_area;
+            <span class="hljs-keyword">return</span> p;
+        },
+        <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{ <span class="hljs-keyword">return</span> { gdp: <span class="hljs-number">0</span>, gdp_per_capita: <span class="hljs-number">0</span>, population: <span class="hljs-number">0</span>, land_area: <span class="hljs-number">0</span> }; }
+    ).all();
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"country_data"</span>, country_data);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-66">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-66">&#182;</a>
+              </div>
+              <p>I initially sized the country dots with their area proportional to their population.
+However, either the smaller countries were too small to see or the larger countries were
+overwhelming.  So, this is an exponential scale to make it easier to reasonably see all of 
+the countries at once.  It’s a lie, but hey, isn’t that what data visualization is…  ;)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> population_scale = d3.scale.pow()
+        .domain([<span class="hljs-number">1</span>, d3.max(gdp_data, (d) =&gt; d.population)])
+        .range([<span class="hljs-number">3</span>, <span class="hljs-number">3000</span>])
+        .exponent(<span class="hljs-number">0.7</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-67">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-67">&#182;</a>
+              </div>
+              <p>Create a <code>c3.Plot</code> for the <strong>country scatter plot</strong>.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> average_gdp_layer: c3.Plot.Layer.Line.Horizontal&lt;<span class="hljs-built_in">number</span>&gt;;
+    <span class="hljs-keyword">var</span> average_gdp_per_capita_layer: c3.Plot.Layer.Line.Vertical&lt;<span class="hljs-built_in">number</span>&gt;;
+    charts.push(<span class="hljs-keyword">new</span> c3.Plot({
+        anchor: <span class="hljs-string">'#worldbank_country_scatterplot'</span>,
+        height: <span class="hljs-number">330</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-68">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-68">&#182;</a>
+              </div>
+              <p>Setup the <strong>scales</strong> as <strong>logarithmic</strong> for this example.
+Vertical is based on the country’s GDP while horizontal is based on GDP per capita.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        h: d3.scale.log().domain([<span class="hljs-number">1</span>, d3.max(gdp_data, (d) =&gt; d.gdp_per_capita)]),
+        v: d3.scale.log().domain([<span class="hljs-number">1</span>, d3.max(gdp_data, (d) =&gt; d.gdp)]),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-69">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-69">&#182;</a>
+              </div>
+              <p>Setup <strong>margins</strong> and allow the country dots to overflow into the margins.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        margins: {
+            top: <span class="hljs-number">20</span>,
+        },
+        crop_margins: <span class="hljs-literal">false</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-70">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-70">&#182;</a>
+              </div>
+              <p>Add <strong>axes</strong>.  In this case just draw the grid lines and axis label, but disable the 
+tick marks and unit labels.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        axes: [
+            <span class="hljs-keyword">new</span> c3.Axis.X({
+                label: <span class="hljs-string">"GDP per capita"</span>,
+                grid: <span class="hljs-literal">true</span>,
+                tick_label: <span class="hljs-literal">false</span>,
+                tick_size: <span class="hljs-number">0</span>,
+            }),
+            <span class="hljs-keyword">new</span> c3.Axis.Y({
+                label: <span class="hljs-string">"GDP"</span>,
+                grid: <span class="hljs-literal">true</span>,
+                tick_label: <span class="hljs-literal">false</span>,
+                tick_size: <span class="hljs-number">0</span>,
+            }),
+        ],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-71">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-71">&#182;</a>
+              </div>
+              <p>This plot only contains a single <code>scatter</code> layer for the <strong>scatter plot</strong>.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        layers: [
+            <span class="hljs-keyword">new</span> c3.Plot.Layer.Scatter&lt;CrossFilter.Grouping&lt;<span class="hljs-built_in">string</span>, CountryData&gt;&gt;({</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-72">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-72">&#182;</a>
+              </div>
+              <p>Bind the layer <strong>data</strong> to the <code>country_data</code> prepared above and 
+only draw the country if it has data using <strong>filter</strong>.
+The <strong>key</strong> is used to uniquely identify elements which helps optimize
+some operations and provides consistency for animations and decimation.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                data: country_data,
+                key: (d) =&gt; d.key,
+                filter: (d) =&gt; d.value.gdp_per_capita &gt; <span class="hljs-number">1</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-73">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-73">&#182;</a>
+              </div>
+              <p>Set the <strong>x</strong> and <strong>y</strong> values based on GDP and GDP per capita.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                x: (d) =&gt; <span class="hljs-built_in">Math</span>.max(<span class="hljs-number">1</span>, d.value.gdp_per_capita),
+                y: (d) =&gt; <span class="hljs-built_in">Math</span>.max(<span class="hljs-number">1</span>, d.value.gdp),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-74">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-74">&#182;</a>
+              </div>
+              <p>Set the area of the circle based on the country’s population.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                a: (d) =&gt; population_scale(<span class="hljs-built_in">Math</span>.max(<span class="hljs-number">1</span>, d.value.population)),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-75">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-75">&#182;</a>
+              </div>
+              <p><code>circle_options.styles</code> will set CSS <strong>styles</strong> for the <strong>circles</strong>.  Here we set the fill and 
+stroke color based on the country’s region.  We also set the fill as translucent
+unless this country matches the country or region the user is hovering over with their mouse.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                circle_options: {
+                    styles: {
+                        <span class="hljs-string">'fill'</span>: (d) =&gt; region_color(countries[d.key].region_id),
+                        <span class="hljs-string">'stroke'</span>: (d) =&gt; region_color(countries[d.key].region_id),
+                        <span class="hljs-string">'fill-opacity'</span>: (d) =&gt;
+                            hover_country === countries[d.key] || hover_region === regions[countries[d.key].region_id] ? <span class="hljs-number">1</span> : <span class="hljs-number">0.5</span>,
+                    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-76">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-76">&#182;</a>
+              </div>
+              <p><code>circle_options.events</code> establishes <strong>event handlers</strong> for the <strong>circles</strong>.  Here we setup
+handlers when the user hovers over the dot with the mouse.  It sets the <code>hover_country</code>
+and restyles all the charts to reflect this.  It also populates an informational
+div in the right column to display information about this particular country.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                    events: {
+                        mouseenter: (d) =&gt; {
+                            $(this).css('stroke-width', 5);
+                            d3.select('#hover_country_info').html("\
+                                &lt;b&gt;Country:&lt;/b&gt; "+ countries[d.key].name + "&lt;br/&gt;\
+                               &lt;b&gt;Population:&lt;/b&gt; "+ d.value.population + "&lt;br/&gt;\
+                               &lt;b&gt;GDP:&lt;/b&gt; $"+ Math.floor(Math.abs(d.value.gdp)) + " billion&lt;br/&gt;\
+                               &lt;b&gt;GDP per capita:&lt;/b&gt; $"+ Math.floor(Math.abs(d.value.gdp_per_capita)));
+                            hover_country = countries[d.key];
+                            restyle();
+                        },
+                        mouseleave: () =&gt; {
+                            $(this).css('stroke-width', 1);
+                            d3.select('#hover_country_info').html("&lt;i&gt;Hover over dot to view country info.&lt;/i&gt;");
+                            hover_country = null;
+                            restyle();
+                        },
+                    },
+                },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-77">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-77">&#182;</a>
+              </div>
+              <p>Enable <strong>animations</strong> in this plot so the countries will move smoothly as the year 
+filter is updated.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                point_options: {
+                    animate: <span class="hljs-literal">true</span>,
+                    duration: <span class="hljs-number">200</span>,
+                },
+            }),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-78">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-78">&#182;</a>
+              </div>
+              <p>Add a <strong>horizontal line</strong> layer for the average GDP.
+Note how the data is actually set in the <code>redraw_start</code> event below.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            average_gdp_layer = <span class="hljs-keyword">new</span> c3.Plot.Layer.Line.Horizontal&lt;<span class="hljs-built_in">number</span>&gt;({
+                label_options: {
+                    text: (avg) =&gt; <span class="hljs-string">"Avg GDP: $"</span> + d3.format(<span class="hljs-string">','</span>)(<span class="hljs-built_in">Math</span>.floor(avg)) + <span class="hljs-string">"b"</span>,
+                    dx: <span class="hljs-string">'1em'</span>,
+                },
+                vector_options: {
+                    styles: { stroke: <span class="hljs-string">'purple'</span> },
+                    animate: <span class="hljs-literal">true</span>,
+                    duration: <span class="hljs-number">500</span>,
+                },
+            }),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-79">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-79">&#182;</a>
+              </div>
+              <p>Add a <strong>vertical line</strong> layer for the average GDP per capita.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            average_gdp_per_capita_layer = <span class="hljs-keyword">new</span> c3.Plot.Layer.Line.Vertical&lt;<span class="hljs-built_in">number</span>&gt;({
+                vector_options: {
+                    styles: {
+                        stroke: (d, i) =&gt; i ? <span class="hljs-string">'orange'</span> : <span class="hljs-string">'purple'</span>,
+                    },
+                    animate: <span class="hljs-literal">true</span>,
+                    duration: <span class="hljs-number">500</span>,
+                },
+            }),
+        ],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-80">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-80">&#182;</a>
+              </div>
+              <p>Setup an <strong>event handler</strong> on the chart which fires whenever the chart is redrawn to reflect
+new data, but before any built-in behaviour.  This allows us to set the data for the average
+line layers before they are drawn based on the data set due to the current filters.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        handlers: {
+            <span class="hljs-string">'redraw_start'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+                <span class="hljs-keyword">var</span> country_count = country_data.filter((d) =&gt; d.value.gdp_per_capita &gt; <span class="hljs-number">1</span>).length;
+                <span class="hljs-keyword">if</span> (country_count) {
+                    <span class="hljs-keyword">var</span> average_gdp = total_gdp.value() / country_count;
+                    <span class="hljs-keyword">var</span> average_gdp_per_capita_by_country = d3.sum(country_data, (d) =&gt; d.value.gdp_per_capita) / country_count;
+                    <span class="hljs-keyword">var</span> average_gdp_per_capita_by_pop = total_gdp.value() * <span class="hljs-number">1000000000</span> / total_population.value();
+                    average_gdp_layer.data = [average_gdp];
+                    average_gdp_per_capita_layer.data = [average_gdp_per_capita_by_pop, average_gdp_per_capita_by_country];
+                } <span class="hljs-keyword">else</span> {
+                    average_gdp_layer.data = [];
+                    average_gdp_per_capita_layer.data = [];
+                }
+            },
+        },
+    }));</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-81">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-81">&#182;</a>
+              </div>
+              <p>###########################################################################</p>
+<h3 id="urbanization-histogram">Urbanization Histogram</h3>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-82">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-82">&#182;</a>
+              </div>
+              <p>For the urbanization chart we will display the total world GDP but broken down based
+on the percentage of the country that is urbanized (living in a city of 1 million or more).
+We’ll use the <code>urban_dim</code> <em>Crossfilter</em> <strong>dimension</strong> for this.  Notice that in this case
+we provide a callback function to <code>group()</code>.  Previous examples did not do this and just
+grouped the data based on the dimension’s data directly.  Here we are saying that we want
+to actually <strong>group</strong> the data along that dimension.  This callback effectively groups 
+countries into groups of 5% increments based on their urbanization.  So, all data for countries
+with [0-5) percent urbanization are put into one group, countries with [5-10) are put into
+a second group and so on.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> gdp_by_urban_data = urban_dim
+        .group((key) =&gt; <span class="hljs-built_in">Math</span>.floor(key / <span class="hljs-number">5</span>) * <span class="hljs-number">5</span>)
+        .reduceSum((d) =&gt; d.gdp)
+        .all();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-83">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-83">&#182;</a>
+              </div>
+              <p>Create the <code>c3.Plot.Selectable</code> for this histogram.  The <code>selectable: &#39;h&#39;</code> enables the
+user to make horizontal selections in the chart.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    charts.push(<span class="hljs-keyword">new</span> c3.Plot.Selectable&lt;CrossFilter.Grouping&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">number</span>&gt;&gt;({
+        anchor: <span class="hljs-string">'#worldbank_urbanization_histogram'</span>,
+        height: <span class="hljs-number">100</span>,
+        selectable: <span class="hljs-string">'h'</span>,
+
+        data: gdp_by_urban_data,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-84">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-84">&#182;</a>
+              </div>
+              <p>Assign the <strong>class</strong> <code>urban</code> to this chart for styling using a stylesheet.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">class</span>: <span class="hljs-string">'urban'</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-85">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-85">&#182;</a>
+              </div>
+              <p>Setup the <strong>scales</strong> for the chart.  The horizontal scale has a domain from 0-100 to 
+cover the different urbanization percentages.  With our dataset the data points will
+only actually fall at intervals of 5.  Note that the domain isn’t set here for the
+vertical scale.  It needs to be set before the chart is rendered, but we do that below
+in the <code>redraw_start</code> event handler.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        h: d3.scale.linear().domain([<span class="hljs-number">0</span>, <span class="hljs-number">100</span>]),
+        v: d3.scale.linear(),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-86">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-86">&#182;</a>
+              </div>
+              <p><strong>x</strong> and <strong>y</strong> accessors.  With our data <code>key</code> is the urbanization percentage and
+<code>value</code> is the GDP.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        x: (d) =&gt; d.key,
+        y: (d) =&gt; d.value &gt; <span class="hljs-number">1</span> ? d.value : <span class="hljs-number">0</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-87">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-87">&#182;</a>
+              </div>
+              <p>Setup <strong>margins</strong> to allow room for the chart labels</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        margins: {
+            top: <span class="hljs-number">10</span>,
+            right: <span class="hljs-number">20</span>,
+        },
+        crop_margins: <span class="hljs-literal">false</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-88">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-88">&#182;</a>
+              </div>
+              <p>Add <strong>axes</strong> to provide labels and percentage ticks</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        axes: [
+            <span class="hljs-keyword">new</span> c3.Axis.X({
+                label: <span class="hljs-string">"Urbanization %"</span>,
+            }),
+            <span class="hljs-keyword">new</span> c3.Axis.Y({
+                label: <span class="hljs-string">"GDP"</span>,
+                tick_size: <span class="hljs-number">0</span>,
+                tick_label: <span class="hljs-literal">false</span>,
+            }),
+        ],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-89">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-89">&#182;</a>
+              </div>
+              <p>Layers to render.  This example looks silly, but is just to demonstrate that you can
+add multiple layers with the same data that are drawn differently.  Here you can see
+an area layer drawn, a line layer on top of that to accentuate the top of the graph,
+and then a scatter layer on top of that to show a big dot for each datapoint.
+The <code>cardinal</code> interpolation ensures that the curves actually pass through the datapoint,
+which is not the case with <code>basis</code> curve interpolation.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        layers: [
+            <span class="hljs-keyword">new</span> c3.Plot.Layer.Area&lt;CrossFilter.Grouping&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">number</span>&gt;&gt;({
+                interpolate: <span class="hljs-string">'cardinal'</span>,
+            }),
+            <span class="hljs-keyword">new</span> c3.Plot.Layer.Line&lt;CrossFilter.Grouping&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">number</span>&gt;&gt;({
+                interpolate: <span class="hljs-string">'cardinal'</span>,
+                r: <span class="hljs-number">5</span>,
+            }),
+        ],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-90">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-90">&#182;</a>
+              </div>
+              <p>Add chart <strong>event handlers</strong></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        handlers: {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-91">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-91">&#182;</a>
+              </div>
+              <p><code>redraw_start</code> is called before C3 starts to actually draw the chart.  We use it here
+to set the vertical scale each time the chart is drawn so the graph always goes to
+the top of the chart, no matter how the data is filtered.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            redraw_start: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+                <span class="hljs-keyword">this</span>.v.domain([<span class="hljs-number">0</span>, d3.max(gdp_by_urban_data, (d) =&gt; d.value)]);
+            },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-92">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-92">&#182;</a>
+              </div>
+              <p><code>select</code> is triggered whenever the user makes or modifies a selection in the chart.
+We use that here to <strong>filter</strong> out the data based on the urbanization dimension.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            select: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">extent</span>) </span>{
+                <span class="hljs-keyword">if</span> (extent) {
+                    extent[<span class="hljs-number">1</span>]++;
+                    urban_dim.filterRange(extent);
+                } <span class="hljs-keyword">else</span> {
+                    urban_dim.filterAll();
+                }
+                redraw();
+            },
+        },
+    }));</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-93">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-93">&#182;</a>
+              </div>
+              <p>###########################################################################</p>
+<h3 id="histograms">Histograms</h3>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-94">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-94">&#182;</a>
+              </div>
+              <p>Instead of adding the charts to a <em>div</em> node in the DOM, this section will demonstrate
+another way to layout charts in a table on a web page.  You can use whatever HTML layout you prefer.</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-95">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-95">&#182;</a>
+              </div>
+              <p>This is a function that will create a row in the table with a label column and a column
+with the cooresponding C3 histogram based on the dimension and histogram data passed in.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">histogram_plot</span>(<span class="hljs-params">name: <span class="hljs-built_in">string</span>,
+        dimension: CrossFilter.Dimension&lt;GDPData, <span class="hljs-built_in">number</span>&gt;,
+        hist_data: CrossFilter.Grouping&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">number</span>&gt;[]</span>) </span>{
+        <span class="hljs-keyword">var</span> row = d3.selectAll(<span class="hljs-string">'#worldbank_histogram_table'</span>).append(<span class="hljs-string">'tr'</span>)
+            .style(<span class="hljs-string">'border-top'</span>, <span class="hljs-string">'1px solid black'</span>)
+            .style(<span class="hljs-string">'border-bottom'</span>, <span class="hljs-string">'1px solid black'</span>);
+        row.append(<span class="hljs-string">'td'</span>)
+            .style(<span class="hljs-string">'text-align'</span>, <span class="hljs-string">'center'</span>)
+            .style(<span class="hljs-string">'font-weight'</span>, <span class="hljs-string">'bold'</span>)
+            .style(<span class="hljs-string">'background-color'</span>, <span class="hljs-string">'lightgray'</span>)
+            .style(<span class="hljs-string">'width'</span>, <span class="hljs-string">'5em'</span>)
+            .text(name);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-96">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-96">&#182;</a>
+              </div>
+              <p>Create new <strong>histogram</strong> chart returned by this factory function.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> c3.Plot.Selectable&lt;CrossFilter.Grouping&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">number</span>&gt;&gt;({
+            anchor: &lt;HTMLElement&gt;row.append(<span class="hljs-string">'td'</span>).append(<span class="hljs-string">'div'</span>).node(),
+            height: <span class="hljs-number">75</span>,
+            selectable: <span class="hljs-string">'h'</span>,
+
+            data: hist_data,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-97">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-97">&#182;</a>
+              </div>
+              <p><strong>Scales</strong> for the histogram.  The horizontal scale goes from 0-100% for the histogram.
+The vertical scale reflects the count of countries that fall in that percentage, though
+it is set below in the <code>redraw_start</code> handler.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            h: d3.scale.linear().domain([<span class="hljs-number">0</span>, <span class="hljs-number">100</span>]),
+            v: d3.scale.linear(),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-98">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-98">&#182;</a>
+              </div>
+              <p><strong>x</strong> and <strong>y</strong> accessors.  <code>key</code> represents the percentage of GDP based on this
+dimension and <code>value</code> represents the count of countries with that percentage.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            x: (d) =&gt; d.key,
+            y: (d) =&gt; d.value,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-99">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-99">&#182;</a>
+              </div>
+              <p>Notice there are no axes added here, that is covered below.</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-100">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-100">&#182;</a>
+              </div>
+              <p>Add a <strong>layer</strong> to draw an area graph for the histogram.  By assigning it a <strong>class</strong>
+based on the dimension name the stylesheet will specify how it is styled.  It also
+allows these layers to be highlighted when the legend at the top of the example is hovered.
+The <code>cardinal</code> interpolation ensures that the curve actually intersects each datapoint.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            layers: [
+                <span class="hljs-keyword">new</span> c3.Plot.Layer.Area&lt;CrossFilter.Grouping&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">number</span>&gt;&gt;({
+                    <span class="hljs-keyword">class</span>: name,
+                    interpolate: <span class="hljs-string">'cardinal'</span>,
+                }),
+            ],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-101">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-101">&#182;</a>
+              </div>
+              <p>Add chart <strong>event handlers</strong></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            handlers: {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-102">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-102">&#182;</a>
+              </div>
+              <p><code>redraw_start</code> is called before C3 starts to actually draw the chart.  We use it here
+to set the vertical scale each time the chart is drawn so the graph always goes to
+the top of the chart, no matter how the data is filtered.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                redraw_start: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+                    <span class="hljs-keyword">this</span>.v.domain([<span class="hljs-number">0</span>, d3.max(hist_data, (d) =&gt; d.value)]);
+                },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-103">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-103">&#182;</a>
+              </div>
+              <p><code>select</code> is triggered whenever the user makes or modifies a selection in the chart.
+We use that here to <strong>filter</strong> out the data based on this dimension.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                select: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">extent</span>) </span>{
+                    <span class="hljs-keyword">if</span> (extent) {
+                        extent[<span class="hljs-number">1</span>]++;
+                        dimension.filterRange(extent);
+                    } <span class="hljs-keyword">else</span> {
+                        dimension.filterAll();
+                    }
+                    redraw();
+                },
+            },
+        });
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-104">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-104">&#182;</a>
+              </div>
+              <p>For these histograms we will display a histogram of the count of countries based on the
+percentage of their GDP based on services, agriculture, etc.  Notice that these <strong>groupings</strong>
+are missing calls to <code>reduceSum()</code>.  Therefore they use the default reduction which just counts
+the number of data elements in each group.  This effectively gives us a histogram.  The 
+grouping function here will also group countries into groups of 5% just like the urbanization example.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> services_hist = services_dim.group((key) =&gt; <span class="hljs-built_in">Math</span>.floor(key / <span class="hljs-number">5</span>) * <span class="hljs-number">5</span>).all();
+    <span class="hljs-keyword">var</span> agriculture_hist = agriculture_dim.group((key) =&gt; <span class="hljs-built_in">Math</span>.floor(key / <span class="hljs-number">5</span>) * <span class="hljs-number">5</span>).all();
+    <span class="hljs-keyword">var</span> manufacturing_hist = manufacturing_dim.group((key) =&gt; <span class="hljs-built_in">Math</span>.floor(key / <span class="hljs-number">5</span>) * <span class="hljs-number">5</span>).all();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-105">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-105">&#182;</a>
+              </div>
+              <p>Create three rows in the table with histogram charts for each of these dimensions.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    charts.push(histogram_plot(<span class="hljs-string">'services'</span>, services_dim, services_hist));
+    charts.push(histogram_plot(<span class="hljs-string">'manufacturing'</span>, manufacturing_dim, manufacturing_hist));
+    charts.push(histogram_plot(<span class="hljs-string">'agriculture'</span>, agriculture_dim, agriculture_hist));</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-106">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-106">&#182;</a>
+              </div>
+              <p>Previous examples usually attached axes directly to their associated plot.  This example
+demonstrates a different way of laying out the charts.  To provide flexibility, axes can be
+created independently of plots.  This example creates a single X-Axis that is added to the
+table and thus shared by all three histograms.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> axis_row = d3.selectAll(<span class="hljs-string">'#worldbank_histogram_table'</span>).append(<span class="hljs-string">'tr'</span>);
+    axis_row.append(<span class="hljs-string">'td'</span>);
+    charts.push(<span class="hljs-keyword">new</span> c3.Axis.X({
+        anchor: &lt;HTMLElement&gt;axis_row.append(<span class="hljs-string">'td'</span>).append(<span class="hljs-string">'div'</span>).node(),
+        height: <span class="hljs-number">30</span>,
+        scale: d3.scale.linear().domain([<span class="hljs-number">0</span>, <span class="hljs-number">100</span>]),
+    }));</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-107">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-107">&#182;</a>
+              </div>
+              <p>#########################################################################################</p>
+<h2 id="country-table">Country Table</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-108">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-108">&#182;</a>
+              </div>
+              <p>Create a second dimension to filter on so the scatter plot will reflect this filter.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> country_dim2 = xf.dimension((d) =&gt; d.country_code);
+    <span class="hljs-keyword">var</span> country_data2 = country_dim2.group().reduce&lt;CountryData&gt;(
+        <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">p, v</span>) </span>{
+            p.gdp += v.gdp;
+            p.gdp_per_capita += v.gdp_per_capita;
+            p.population += v.population;
+            p.land_area += v.land_area;
+            <span class="hljs-keyword">return</span> p;
+        },
+        <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">p, v</span>) </span>{
+            p.gdp -= v.gdp;
+            p.gdp_per_capita -= v.gdp_per_capita;
+            p.population -= v.population;
+            p.land_area -= v.land_area;
+            <span class="hljs-keyword">return</span> p;
+        },
+        <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{ <span class="hljs-keyword">return</span> { gdp: <span class="hljs-number">0</span>, gdp_per_capita: <span class="hljs-number">0</span>, population: <span class="hljs-number">0</span>, land_area: <span class="hljs-number">0</span> }; }
+    ).all();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-109">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-109">&#182;</a>
+              </div>
+              <p>Create a <code>c3.Table</code> to show the top countries</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> country_gdp_column: c3.Table.Column&lt;CrossFilter.Grouping&lt;<span class="hljs-built_in">string</span>, CountryData&gt;&gt;;
+    charts.push(<span class="hljs-keyword">new</span> c3.Table&lt;CrossFilter.Grouping&lt;<span class="hljs-built_in">string</span>, CountryData&gt;&gt;({
+        anchor: <span class="hljs-string">'#worldbank_country_table'</span>,
+        width: <span class="hljs-string">'100%'</span>,
+        data: country_data2,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-110">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-110">&#182;</a>
+              </div>
+              <p>Enable users to <strong>select</strong> and <strong>sort</strong> countries in this table.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        selectable: <span class="hljs-literal">true</span>,
+        sortable: <span class="hljs-literal">true</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-111">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-111">&#182;</a>
+              </div>
+              <p><strong>Limit</strong> this table to only show the top 10 countries and not to display any countries
+that have a 0 value.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        limit_rows: <span class="hljs-number">10</span>,
+        filter: (d) =&gt; d.value.gdp &gt; <span class="hljs-number">0.000000001</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-112">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-112">&#182;</a>
+              </div>
+              <p>Setup <strong>columns</strong> for this table</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        columns: [
+            {
+                header: { text: <span class="hljs-string">"Country"</span> },
+                cells: { html: (d) =&gt; <span class="hljs-string">'&lt;b&gt;'</span> + countries[d.key].name + <span class="hljs-string">'&lt;/b&gt;'</span> },
+            }, {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-113">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-113">&#182;</a>
+              </div>
+              <p>The “Region” column is styled to have a background that matches the color for the
+region this country is in.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                header: { text: <span class="hljs-string">"Region"</span> },
+                cells: {
+                    text: (d) =&gt; regions[countries[d.key].region_id].name,
+                    styles: {
+                        <span class="hljs-string">'background-color'</span>: (d) =&gt; region_color(countries[d.key].region_id),
+                    },
+                },
+            }, {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-114">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-114">&#182;</a>
+              </div>
+              <p>These columns use custom formatters to set the html content of the cell 
+adding commas, units, rounding, etc.  You can add raw HTML if you like.
+These column also use the <code>vis</code> visualization support to render a bar
+graph based on the cell value.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                header: { text: <span class="hljs-string">"Population"</span> },
+                cells: { html: (d) =&gt; d3.format(<span class="hljs-string">','</span>)(d.value.population) },
+                sort: (d) =&gt; d.value.population,
+                vis: <span class="hljs-string">'bar'</span>,
+            }, {
+                header: { text: <span class="hljs-string">"Land Area"</span> },
+                cells: { html: (d) =&gt; (d3.format(<span class="hljs-string">','</span>)(<span class="hljs-built_in">Math</span>.round(d.value.land_area))) + <span class="hljs-string">"km&lt;sup&gt;2&lt;/sup&gt;"</span> },
+                sort: (d) =&gt; <span class="hljs-built_in">Math</span>.round(d.value.land_area),
+                vis: <span class="hljs-string">'bar'</span>,
+            },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-115">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-115">&#182;</a>
+              </div>
+              <p>Assign this column to a variable <code>gdp_column</code> so we can refer to it below for setting the default sort.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            country_gdp_column = {
+                header: { text: <span class="hljs-string">"GDP"</span> },
+                cells: { html: (d) =&gt; <span class="hljs-string">"$"</span> + (d3.format(<span class="hljs-string">','</span>)(<span class="hljs-built_in">Math</span>.round(d.value.gdp))) + <span class="hljs-string">"b"</span> },
+                sort: (d) =&gt; <span class="hljs-built_in">Math</span>.round(d.value.gdp),
+                vis: <span class="hljs-string">'bar'</span>,
+            }, {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-116">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-116">&#182;</a>
+              </div>
+              <p>By default, the <code>bar</code> visualization will base the bar width as a percentage of the
+total value of all cells.  This isn’t always appropriate, though, such as in the case
+of GDP per capita.  So, here we manually set the <code>total_value</code> to be the maximum
+per capita value.  Look out for Monaco!</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                header: { text: <span class="hljs-string">"GDP per capita"</span> },
+                cells: { html: (d) =&gt; <span class="hljs-string">"$"</span> + (d3.format(<span class="hljs-string">','</span>)(<span class="hljs-built_in">Math</span>.round(d.value.gdp_per_capita))) },
+                sort: (d) =&gt; <span class="hljs-built_in">Math</span>.round(d.value.gdp_per_capita),
+                vis: <span class="hljs-string">'bar'</span>,
+                total_value: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{ <span class="hljs-keyword">return</span> d3.max(country_data2, (d) =&gt; d.value.gdp_per_capita); },
+            },
+        ],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-117">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-117">&#182;</a>
+              </div>
+              <p>Initial column to <strong>sort</strong> on.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        sort_column: country_gdp_column,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-118">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-118">&#182;</a>
+              </div>
+              <p>Add some padding to each cell using <code>cell_options.styles</code> to assign <strong>styles</strong> to <strong>cells</strong></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        cell_options: {
+            styles: {
+                padding: <span class="hljs-string">"0 0.25em"</span>,
+            },
+        },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-119">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-119">&#182;</a>
+              </div>
+              <p>Use <code>row_options.classes</code> to enable <strong>CSS classes</strong> on table <strong>rows</strong>.  The classes can be
+whatever class you want for your styling.  Here we turn on the <code>hover</code> class if this
+country matches the country the user is hovering over or is in the region the use is 
+hovering over with their mouse.  The stylesheet will then dictate how these rows appear;
+in this case giving them a wheat-colored background.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        row_options: {
+            classes: {
+                hover: (d) =&gt; hover_country === countries[d.key] || hover_region === regions[countries[d.key].region_id],
+            },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-120">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-120">&#182;</a>
+              </div>
+              <p><code>row_options.events</code> adds <strong>event handlers</strong> to table <strong>rows</strong>.  These handlers set the global
+hover country when the user hovers the mouse over a row.  <code>restyle()</code> is then called
+for all charts to update based on this new focus country.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            events: {
+                mouseenter: (d) =&gt; {
+                    hover_country = countries[d.key];
+                    restyle();
+                },
+                mouseleave: (d) =&gt; {
+                    hover_country = <span class="hljs-literal">null</span>;
+                    restyle();
+                },
+            },
+        },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-121">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-121">&#182;</a>
+              </div>
+              <p><code>handlers</code> adds <strong>event handlers</strong> to the chart object itself.  Here we tie into the
+<code>select</code> event when the user selects one or more row to <strong>filter</strong> the data on only that country.
+<em>Note</em>: While all the other charts will filter to only display the filtered country the
+country scatter plot will still display all countries.  This is because when you filter
+on a particular dimension it affects all <em>other</em> dimensinos, but <em>not</em> the one used to filter.
+This is actually a very good thing, otherwise when you filtered on a chart or table all
+of the data outside of that selection would then disappear which would be awkward and hard
+to change the selection.  If we wanted the country scatter plot to only show the filtered
+country, the solution would be easy: just make another dimension and use different ones for
+the scatter plot and this table.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        handlers: {
+            <span class="hljs-string">'select'</span>: (selections) =&gt; {
+                <span class="hljs-keyword">if</span> (selections.length)
+                    country_dim2.filter((key) =&gt; selections.map((d) =&gt; d.key).indexOf(key) &gt;= <span class="hljs-number">0</span>);
+                <span class="hljs-keyword">else</span>
+                    country_dim2.filterAll();
+                redraw();
+            },
+        },
+    }));</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-122">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-122">&#182;</a>
+              </div>
+              <p>#########################################################################################</p>
+<h3 id="initial-rendering">Initial Rendering</h3>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-123">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-123">&#182;</a>
+              </div>
+              <p>Perform the initial <code>render()</code></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> chart of charts)
+        chart.render();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-124">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-124">&#182;</a>
+              </div>
+              <p><strong>Resize</strong> charts if the window is resized.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">window</span>.onresize = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> chart of charts)
+            chart.resize();
+    }
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-125">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-125">&#182;</a>
+              </div>
+              <p>#########################################################################################</p>
+<h1 id="start-here">Start Here</h1>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-126">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-126">&#182;</a>
+              </div>
+              <p>The loading and rendering are initiated here..  It calls the <code>download_data()</code> function to 
+download the data which returns a Promise.  We setup a <em>then</em> callback function to be 
+called when all of the data is loaded and promised.  This callback function calls which ends up 
+calling the <code>render()</code> function.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>download_data().then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{ setTimeout(render, <span class="hljs-number">0</span>); });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-127">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-127">&#182;</a>
+              </div>
+              <p>The reason to have setTimeout call the render function instead of calling it directly is
+just a trick to help with debugging in the browser when using promises.  The callback function
+for a promise is called, which catches all exceptions to be used to call an error callback.
+This is great except unhandled errors are then reported to the debugger later after we are already
+out of the context of the error.  So, you can’t navigate the stack, view the contents of variables, 
+etc.  By using setTimeout it will cause the callback to return immediatly and then the browser
+will call render itself.  Since this is done outside of the promise’s scope, exceptions are not caught and
+passed to the promise error handler and instead can be caught and handeled as normal in a 
+debugger.  In production code you could use this instead:</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-128">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-128">&#182;</a>
+              </div>
+              <pre><code>download_data().then(render)
+</code></pre>
+            </div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

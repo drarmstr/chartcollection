@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Plot Area Chart Example</title>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Dependencies -->
+    <script src="lib/d3.js"></script>
+    <script src="lib/jquery-2.1.1.js"></script>
+    <script src="lib/crossfilter.js"></script>
+
+    <!-- C3 -->
+    <link rel="stylesheet" href="../css/c3.css" />
+    <script src="../js/c3.js"></script>
+    <script src="../js/c3-plot.js"></script>
+    <script src="../js/c3-layers.js"></script>
+
+    <!-- Chart Styles -->
+    <style>
+        .c3.plot {
+            font-family: sans-serif;
+        }
+
+        .c3.plot .layer.area path {
+            fill-opacity: 0.75;
+        }
+
+        .c3.axis .tick line{
+            stroke: darkgray;
+        }
+        .c3.axis line.grid {
+            stroke-dasharray: 2,2;
+        }
+    </style>
+</head>
+
+<body>
+    This chart demonstrates a simple area plot of <i>y = x<sup>3</sup></i>.
+    <br/><br/>
+    <div id="area_example_plot" style="height:300px"></div>
+
+    <script src="plot_area_example.js"></script>
+</body>
+</html>

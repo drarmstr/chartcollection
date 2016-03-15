@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>C3 Pie Charts</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="flamechart_sunburst_example.html">
+                  flamechart_sunburst_example.ts
+                </a>
+              
+                
+                <a class="source" href="legend_example.html">
+                  legend_example.ts
+                </a>
+              
+                
+                <a class="source" href="pie_example.html">
+                  pie_example.ts
+                </a>
+              
+                
+                <a class="source" href="plot_area_example.html">
+                  plot_area_example.ts
+                </a>
+              
+                
+                <a class="source" href="plot_zoom_example.html">
+                  plot_zoom_example.ts
+                </a>
+              
+                
+                <a class="source" href="scatterplot_example.html">
+                  scatterplot_example.ts
+                </a>
+              
+                
+                <a class="source" href="stack_example.html">
+                  stack_example.ts
+                </a>
+              
+                
+                <a class="source" href="swimlanes_example.html">
+                  swimlanes_example.ts
+                </a>
+              
+                
+                <a class="source" href="sync_example.html">
+                  sync_example.ts
+                </a>
+              
+                
+                <a class="source" href="table_selectable_example.html">
+                  table_selectable_example.ts
+                </a>
+              
+                
+                <a class="source" href="table_sortable_example.html">
+                  table_sortable_example.ts
+                </a>
+              
+                
+                <a class="source" href="timeline_example.html">
+                  timeline_example.ts
+                </a>
+              
+                
+                <a class="source" href="worldbank_example.html">
+                  worldbank_example.ts
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <h1 id="c3-pie-charts">C3 Pie Charts</h1>
+<p><em>Demonstrate Pie charts.</em></p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <h2 id="prepare-the-data">Prepare the Data</h2>
+<p>A function to generate random data.  Construct an array which contains objects that have 
+<code>x</code> and <code>y</code> members.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">type</span> PolarPlotDatum = { id: <span class="hljs-built_in">number</span>, value: <span class="hljs-built_in">number</span>, radius: <span class="hljs-built_in">number</span>, height: <span class="hljs-built_in">number</span>, color:<span class="hljs-built_in">string</span> }
+<span class="hljs-keyword">var</span> random_polar_data: PolarPlotDatum[] = [];
+<span class="hljs-keyword">var</span> radial_line_values = [<span class="hljs-number">0.25</span>, <span class="hljs-number">0.666</span>];
+
+<span class="hljs-keyword">var</span> polar_data_color = d3.scale.category10();
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">generate_polar_data</span>(<span class="hljs-params"></span>) </span>{
+    random_polar_data.length = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++) {
+        random_polar_data.push({
+            id: i,
+            value: <span class="hljs-number">10</span> * <span class="hljs-built_in">Math</span>.random(),
+            radius: <span class="hljs-number">7</span> * <span class="hljs-built_in">Math</span>.random(),
+            height: <span class="hljs-number">3</span> * <span class="hljs-built_in">Math</span>.random(),
+            color: polar_data_color(i.toString()).toString(),
+        });
+    }
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Generate initial dataset.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>generate_polar_data();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <h2 id="create-a-pie-chart-">Create a <strong>Pie Chart</strong></h2>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> pie_chart_layer: c3.Polar.Layer.Pie&lt;PolarPlotDatum&gt;;
+<span class="hljs-keyword">var</span> pie_chart = <span class="hljs-keyword">new</span> c3.Polar&lt;PolarPlotDatum&gt;({
+    anchor: <span class="hljs-string">'#pie_example_chart'</span>,
+    width: <span class="hljs-number">300</span>,
+    height: <span class="hljs-number">300</span>,
+
+    data: random_polar_data,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Create a single <strong>pie chart</strong> layer</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    layers: [
+        pie_chart_layer = <span class="hljs-keyword">new</span> c3.Polar.Layer.Pie&lt;PolarPlotDatum&gt;({</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>A key is necessary for pie charts</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            key: (d) =&gt; d.id,
+            value: (d) =&gt; d.value,
+            sort: <span class="hljs-literal">false</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Set an <code>inner_radius</code> to create a “donut chart”
+These could also be callbacks</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            inner_radius: <span class="hljs-number">0.2</span>,
+            outer_radius: <span class="hljs-number">0.8</span>,
+            pad: <span class="hljs-number">0.01</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>Style the pie chart arc segments</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            arc_options: {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Tooltip with just the value, and color based on the data</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                title: (d) =&gt; d.value,
+                styles: {
+                    <span class="hljs-string">'fill'</span>: (d) =&gt; d.color,
+                },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Enable the segments to <strong>animate</strong> when data is changed with a redraw</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                animate: <span class="hljs-literal">true</span>,
+                duration: <span class="hljs-number">4000</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>Have the segments slide out slightly when hovering over them</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                events: {
+                    <span class="hljs-string">'mouseenter'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+                        d3.select(<span class="hljs-keyword">this</span>).transition(<span class="hljs-string">'grow'</span>).attr(<span class="hljs-string">'transform'</span>, <span class="hljs-string">'scale(1.2)'</span>);
+                    },
+                    <span class="hljs-string">'mouseleave'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+                        d3.select(<span class="hljs-keyword">this</span>).transition(<span class="hljs-string">'grow'</span>).attr(<span class="hljs-string">'transform'</span>, <span class="hljs-string">'scale(1)'</span>);
+                    },
+                },
+            },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>If the data is sorted <em>and</em> the elements are limited, then this creates
+an arc segment for the range of the <em>other</em> values of the ellided data.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            other_options: {
+                title: (d) =&gt; <span class="hljs-string">"Other"</span>,
+                styles: {
+                    <span class="hljs-string">'fill'</span>: <span class="hljs-string">'black'</span>,
+                    <span class="hljs-string">'opacity'</span>: <span class="hljs-number">0.5</span>,
+                    <span class="hljs-string">'stroke'</span>: <span class="hljs-string">'black'</span>,
+                    <span class="hljs-string">'stroke-width'</span>: <span class="hljs-number">2</span>,
+                    <span class="hljs-string">'stroke-dasharray'</span>: <span class="hljs-string">'5,5'</span>,
+                },
+                animate: <span class="hljs-literal">true</span>,
+            },
+        }),
+    ],
+}).render();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <h2 id="create-a-polar-segment-chart">Create a Polar Segment Chart</h2>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> polar_segment_chart = <span class="hljs-keyword">new</span> c3.Polar&lt;PolarPlotDatum&gt;({
+    anchor: <span class="hljs-string">'#polar_segment_example_chart'</span>,
+    width: <span class="hljs-number">300</span>,
+    height: <span class="hljs-number">300</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>Use the same data array for this layer</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    data: random_polar_data,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>Setup angular and radial scales to go from 0-10</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    t: d3.scale.linear().domain([<span class="hljs-number">0</span>, <span class="hljs-number">10</span>]),
+    r: d3.scale.linear().domain([<span class="hljs-number">0</span>, <span class="hljs-number">10</span>]),
+    zoomable: <span class="hljs-literal">true</span>,
+
+    layers: [</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>Create a single <strong>Arc</strong> segment layer</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">new</span> c3.Polar.Layer.Arc&lt;PolarPlotDatum&gt;({
+            key: (d) =&gt; d.id,
+            value: (d) =&gt; d.value,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>Arc segments layers can define the radius and angle extents of the segment region.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            inner_radius: (d) =&gt; d.radius,
+            outer_radius: (d) =&gt; d.radius + d.height,
+            start_angle: (d) =&gt; d.id,
+            end_angle: (d) =&gt; d.id + (d.value / <span class="hljs-number">5</span>),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>Style and animate the arc segments</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            arc_options: {
+                title: (d) =&gt; d.value,
+                styles: {
+                    <span class="hljs-string">'fill'</span>: (d) =&gt; d.color,
+                },
+                animate: <span class="hljs-literal">true</span>,
+                duration: <span class="hljs-number">4000</span>,
+            },
+        }),
+    ],
+}).render();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <h2 id="create-a-half-moon-pie-chart">Create a Half-moon Pie Chart</h2>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> half_moon_chart = <span class="hljs-keyword">new</span> c3.Polar&lt;PolarPlotDatum&gt;({
+    anchor: <span class="hljs-string">'#half_moon_example_chart'</span>,
+    width: <span class="hljs-number">600</span>,
+    height: <span class="hljs-number">600</span>,
+
+    data: random_polar_data,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>Setup the angular range from -π/2 to π/2 to create a “half moon” effect.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    angular_range: [-<span class="hljs-built_in">Math</span>.PI/<span class="hljs-number">2</span>, <span class="hljs-built_in">Math</span>.PI/<span class="hljs-number">2</span>],
+    zoomable: <span class="hljs-literal">true</span>,
+
+    layers: [
+        <span class="hljs-keyword">new</span> c3.Polar.Layer.Pie&lt;PolarPlotDatum&gt;({
+            key: (d) =&gt; d.id,
+            value: (d) =&gt; d.value,
+            sort: <span class="hljs-literal">false</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p>Create a half-ring with these radius</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            inner_radius: <span class="hljs-number">0.6</span>,
+            outer_radius: <span class="hljs-number">0.9</span>,
+            pad: <span class="hljs-number">0.015</span>,
+
+            arc_options: {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>Style the arc segments</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                title: (d) =&gt; d.value,
+                styles: {
+                    <span class="hljs-string">'fill'</span>: (d) =&gt; d.color,
+                },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <p>Animate arc segments when they move due to <code>redraw()</code></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                animate: <span class="hljs-literal">true</span>,
+                duration: <span class="hljs-number">4000</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <p>Animate arc segments sliding out when hovering just for fun.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                events: {
+                    <span class="hljs-string">'mouseenter'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+                        d3.select(<span class="hljs-keyword">this</span>).transition().attr(<span class="hljs-string">'transform'</span>, <span class="hljs-string">'scale(1.1)'</span>);
+                    },
+                    <span class="hljs-string">'mouseleave'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+                        d3.select(<span class="hljs-keyword">this</span>).transition().attr(<span class="hljs-string">'transform'</span>, <span class="hljs-string">'scale(1)'</span>);
+                    },
+                },
+            },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-25">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-25">&#182;</a>
+              </div>
+              <p>Create an arch segment for “other” data that was decimated due to sorting and limiting the 
+segment count with <code>limit_elements</code> and <code>sort</code>.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            other_options: {
+                title: (d) =&gt; <span class="hljs-string">"Other"</span>,
+                styles: {
+                    <span class="hljs-string">'fill'</span>: <span class="hljs-string">'black'</span>,
+                    <span class="hljs-string">'opacity'</span>: <span class="hljs-number">0.5</span>,
+                    <span class="hljs-string">'stroke'</span>: <span class="hljs-string">'black'</span>,
+                    <span class="hljs-string">'stroke-width'</span>: <span class="hljs-number">2</span>,
+                    <span class="hljs-string">'stroke-dasharray'</span>: <span class="hljs-string">'5,5'</span>,
+                },
+                animate: <span class="hljs-literal">true</span>,
+            },
+        }),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-26">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-26">&#182;</a>
+              </div>
+              <p>Create a second layer to demonstrate composability.
+This layer is just a thin band of three segments</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">new</span> c3.Polar.Layer.Pie&lt;<span class="hljs-built_in">number</span>&gt;({
+            key: (d) =&gt; d,
+            value: (d) =&gt; d,
+            inner_radius: <span class="hljs-number">0.55</span>,
+            outer_radius: <span class="hljs-number">0.5</span>,
+            pad: <span class="hljs-number">0.015</span>,
+
+            data: [<span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-27">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-27">&#182;</a>
+              </div>
+              <p>Style the segments to be red, green, and blue respectively.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            arc_options: {
+                title: <span class="hljs-string">"Example extra data layer"</span>,
+                styles: {
+                    <span class="hljs-string">'fill'</span>: (d,i) =&gt; [<span class="hljs-string">'red'</span>,<span class="hljs-string">'green'</span>,<span class="hljs-string">'blue'</span>][i],
+                },
+            },
+        }),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-28">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-28">&#182;</a>
+              </div>
+              <p>Create a third layer of <strong>radial</strong> line vectors.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">new</span> c3.Polar.Layer.Radial&lt;<span class="hljs-built_in">number</span>&gt;({
+            value: (d) =&gt; d,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-29">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-29">&#182;</a>
+              </div>
+              <p>Use a global array for the data so it can be shared with the legend</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            data: radial_line_values,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-30">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-30">&#182;</a>
+              </div>
+              <p>Allow the lines to be <strong>draggable</strong></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            draggable: <span class="hljs-literal">true</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-31">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-31">&#182;</a>
+              </div>
+              <p>Draw one vector with an infinite length and the other with the full radius of 1</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            outer_radius: (d,i) =&gt; i ? <span class="hljs-number">1</span> : <span class="hljs-literal">Infinity</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-32">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-32">&#182;</a>
+              </div>
+              <p>Style one line in red and the other in green.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            line_options: {
+                styles: {
+                    <span class="hljs-string">'stroke'</span>: (d, i) =&gt; [<span class="hljs-string">'red'</span>,<span class="hljs-string">'green'</span>][i],
+                    <span class="hljs-string">'stroke-dasharray'</span>: <span class="hljs-string">'10,5'</span>,
+                    <span class="hljs-string">'stroke-width'</span>: <span class="hljs-number">3</span>,
+                },
+            },
+
+            handlers: {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-33">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-33">&#182;</a>
+              </div>
+              <p>When the lines are dragged, update the original data array and sync with the
+legend by redrawing it.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                drag: (value, d, i) =&gt; {
+                    radial_line_values[i] = value;
+                    radial_line_values_legend.redraw();
+                },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-34">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-34">&#182;</a>
+              </div>
+              <p>Redraw layer so it binds the updated values.
+This wouldn’t be necessary if we were just modifying an Object in-place in the data array.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                dragend: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">value, d, i</span>) </span>{ <span class="hljs-keyword">this</span>.redraw(); },
+            },
+        }),
+    ],
+}).render();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-35">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-35">&#182;</a>
+              </div>
+              <h2 id="legend-for-radial-vectors">Legend for radial vectors</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-36">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-36">&#182;</a>
+              </div>
+              <p>Create a <strong>legend</strong> for the current values of the radial lines</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> radial_line_values_legend = <span class="hljs-keyword">new</span> c3.Legend&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">void</span>&gt;({
+    anchor: <span class="hljs-string">'#line_values_legend'</span>,
+
+    data: radial_line_values,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-37">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-37">&#182;</a>
+              </div>
+              <p>Display the value as a truncated integer percentage </p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    item_options: {
+        text: (d) =&gt; ((d*<span class="hljs-number">100</span>)|<span class="hljs-number">0</span>)+<span class="hljs-string">'%'</span>,
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-38">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-38">&#182;</a>
+              </div>
+              <p>Use a matching colored swatch for the legend bullets</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    bullet_options: {
+        html: <span class="hljs-string">''</span>,
+        styles: {
+            <span class="hljs-string">'background'</span>: (d, i) =&gt; [<span class="hljs-string">'red'</span>, <span class="hljs-string">'green'</span>][i],
+            <span class="hljs-string">'height'</span>: <span class="hljs-string">'1em'</span>,
+            <span class="hljs-string">'width'</span>: <span class="hljs-string">'1em'</span>,
+            <span class="hljs-string">'border-radius'</span>: <span class="hljs-string">'0.25em'</span>,
+        },
+    },
+}).render();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-39">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-39">&#182;</a>
+              </div>
+              <h2 id="forms-to-modify-chart-options">Forms to modify chart options</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-40">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-40">&#182;</a>
+              </div>
+              <p>Allow the user generate new data by clicking on a button.  We need to <code>redraw()</code> the charts
+to reflect the updated data.  <em>Note</em>: if we had cleared random_data via: <code>random_data = []</code>
+in the <code>generate_data()</code> function, then this wouldn’t work.  It would just have updated the
+variable and not the array that the charts are working with.  That’s why <code>random_data.length=0</code> is used.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>$(<span class="hljs-string">'#sync_generate_button'</span>).on(<span class="hljs-string">'click'</span>, () =&gt; {
+    generate_polar_data();
+    pie_chart.redraw();
+    half_moon_chart.redraw();
+    polar_segment_chart.redraw();
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-41">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-41">&#182;</a>
+              </div>
+              <p>Enable animations when transitioning datasets</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>$(<span class="hljs-string">'#enable_animations'</span>).on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    (&lt;c3.Polar.Layer.Pie&lt;<span class="hljs-built_in">any</span>&gt;&gt;pie_chart.layers[<span class="hljs-number">0</span>]).arc_options.animate = <span class="hljs-keyword">this</span>.checked;
+    (&lt;c3.Polar.Layer.Pie&lt;<span class="hljs-built_in">any</span>&gt;&gt;half_moon_chart.layers[<span class="hljs-number">0</span>]).arc_options.animate = <span class="hljs-keyword">this</span>.checked;
+    (&lt;c3.Polar.Layer.Pie&lt;<span class="hljs-built_in">any</span>&gt;&gt;polar_segment_chart.layers[<span class="hljs-number">0</span>]).arc_options.animate = <span class="hljs-keyword">this</span>.checked;
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-42">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-42">&#182;</a>
+              </div>
+              <p>Enable sorting pie wedges</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>$(<span class="hljs-string">'#enable_sorting'</span>).on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    (&lt;c3.Polar.Layer.Pie&lt;<span class="hljs-built_in">any</span>&gt;&gt;pie_chart.layers[<span class="hljs-number">0</span>]).sort = <span class="hljs-keyword">this</span>.checked;
+    pie_chart.redraw();
+    (&lt;c3.Polar.Layer.Pie&lt;<span class="hljs-built_in">any</span>&gt;&gt;half_moon_chart.layers[<span class="hljs-number">0</span>]).sort = <span class="hljs-keyword">this</span>.checked;
+    half_moon_chart.redraw();
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-43">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-43">&#182;</a>
+              </div>
+              <p>Limit the number of elements that will be drawn.
+If there are too many elements, then the ones with the smallest value won’t be drawn.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>$(<span class="hljs-string">'#limit_segment_count'</span>).on(<span class="hljs-string">'input'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    (&lt;c3.Polar.Layer.Pie&lt;<span class="hljs-built_in">any</span>&gt;&gt;pie_chart.layers[<span class="hljs-number">0</span>]).limit_elements = +$(<span class="hljs-keyword">this</span>).val();
+    pie_chart.redraw();
+    (&lt;c3.Polar.Layer.Pie&lt;<span class="hljs-built_in">any</span>&gt;&gt;half_moon_chart.layers[<span class="hljs-number">0</span>]).limit_elements = +$(<span class="hljs-keyword">this</span>).val();
+    half_moon_chart.redraw();
+    (&lt;c3.Polar.Layer.Arc&lt;<span class="hljs-built_in">any</span>&gt;&gt;polar_segment_chart.layers[<span class="hljs-number">0</span>]).limit_elements = +$(<span class="hljs-keyword">this</span>).val();
+    polar_segment_chart.redraw();
+});</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

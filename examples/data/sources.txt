@@ -1,0 +1,10 @@
+countries.csv: https://github.com/lukes/ISO-3166-Countries-with-Regional-Codes/blob/master/all/all.csv
+regions.csv: http://unstats.un.org/unsd/methods/m49/m49regin.htm
+gdp.csv: http://databank.worldbank.org/data/views/variableselection/selectvariables.aspx?source=world-development-indicators#s_p
+intent_of_death.csv: http://wonder.cdc.gov/ 
+	Dataset: Mortality > Underlying Cause of Death > Detailed Mortality
+	(Group by Age Group and Injury Intent)
+injury_cause.csv: http://wonder.cdc.gov/ 
+	Dataset: Mortality > Underlying Cause of Death > Detailed Mortality
+	(Group by Age Group and Injury Mechanism, set to 5-year age groups, enable output for 0 and surpressed values)
+	

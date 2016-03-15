@@ -1,0 +1,345 @@
+﻿svg.c3 {
+    //    shape-rendering: optimizeSpeed;
+    //    shape-rendering: crispEdges;
+}
+
+svg.c3.global {
+    position: fixed; // Workaround for IE11: It does not use height:0 properly and scrollbars can appear
+    height: 0;
+    width: 0;
+}
+
+.no-highlight {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: -moz-none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.clearfix {
+    &:after {
+        content: " ";
+        display: table;
+        clear: both;
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+// Chart
+///////////////////////////////////////////////////////////////////////////////////////////////
+.c3.chart {
+    .no-highlight;
+    overflow: hidden;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+// Axis
+///////////////////////////////////////////////////////////////////////////////////////////////
+.c3 g.axis {
+    shape-rendering: crispEdges;
+
+    text.label {
+        text-anchor: middle;
+        font-weight: bold;
+    }
+
+    line {
+        stroke: black;
+    }
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+// Plot
+///////////////////////////////////////////////////////////////////////////////////////////////
+.c3.plot {
+    cursor: default;
+
+    .background {
+        -ms-touch-action: none;
+        touch-action: none; // Prevent default browser page zooming over chart
+        pointer-events: all; // Force background to be target of 'pointer' events
+    }
+
+    &.zoomable {
+        g.content {
+            cursor: ew-resize;
+            cursor: -webkit-grab;
+            cursor: -moz-grab;
+            cursor: grab;
+            &:active {
+                cursor: -webkit-grabbing;
+                cursor: -moz-grabbing;
+                cursor: grabbing;
+            }
+        }
+
+        g.layer {
+            &.sampled {
+                shape-rendering: crispEdges;
+            }
+        }
+
+        .scaled {
+            vector-effect: non-scaling-stroke;
+
+            rect, line {
+                shape-rendering: crispEdges;
+            }
+        }
+
+        line.select_value {
+            vector-effect: non-scaling-stroke;
+            shape-rendering: crispEdges;
+            pointer-events: none;
+        }
+    }
+
+    &.selectable {
+        .brush {
+            fill: none;
+        }
+    }
+
+    .layer {
+        &.path {
+            text {
+                text-anchor: middle;
+                alignment-baseline: middle;
+                pointer-events: none;
+            }
+        }
+
+        &.line {
+            path {
+                fill: none;
+            }
+        }
+
+        &.straight {
+            shape-rendering: crispEdges;
+
+            text {
+                pointer-events: none;
+            }
+
+            &.draggable {
+                &.horizontal {
+                    cursor: row-resize;
+                }
+                &.vertical {
+                    cursor: col-resize;
+                }
+                line.grab {
+                    visibility: hidden;
+                    stroke-width: 9px;
+                    stroke-dasharray: none;
+                    pointer-events: all;
+                }
+            }
+        }
+
+        &.scatter {
+            text {
+                text-anchor: middle;
+                alignment-baseline: middle;
+                pointer-events: none;
+            }
+        }
+
+        &.bar {
+            shape-rendering: crispEdges;
+        }
+
+        &.segment {
+            rect {
+                vector-effect: non-scaling-stroke;
+            }
+
+            text {
+                alignment-baseline: middle;
+                pointer-events: none;
+                text-anchor: middle;
+            }
+        }
+    }
+}
+
+.c3.hover {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        margin-top: 0.5em;
+        margin-left: -0.75em; // padding + border-width
+        min-width: 3em;
+        padding: 0.25em;
+        border-radius: 0.25em;
+        pointer-events: none;
+        color: black;
+        background-color: wheat;
+        box-shadow: 3px 3px 6px black;
+    &:before {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 0;
+        top: -1em; // border-width * 2
+        border: 0.5em solid transparent;
+        border-bottom-color: wheat;
+    }
+}
+
+html.grabbing, html.grabbing * {
+    cursor: ew-resize !important;
+    cursor: -webkit-grabbing !important;
+    cursor: -moz-grabbing !important;
+    cursor: grabbing !important;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+// Polar
+///////////////////////////////////////////////////////////////////////////////////////////////
+.c3.polar {
+    .content > .background {
+        visibility: hidden;
+        pointer-events: all; // Let entire chart grab pointer events, such as zooming
+    }
+
+    svg.layers {
+        overflow: visible;
+    }
+
+    .layer {
+        &.radial {
+            &.draggable {
+                cursor: move;
+                line.grab {
+                    visibility: hidden;
+                    stroke-width: 9px;
+                    stroke-dasharray: none;
+                    pointer-events: all;
+                }
+            }
+        }
+
+        &.sunburst {
+            path {
+                cursor: pointer;
+            }
+            circle.bullseye {
+                cursor: pointer;
+            }
+            circle.center {
+                pointer-events: none;
+                fill: none;
+                stroke: black;
+                stroke-width: 3;
+                stroke-opacity: 0.5;
+                stroke-dasharray: 5,2;
+            }
+        }
+    }
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+// Butterfly Flow
+///////////////////////////////////////////////////////////////////////////////////////////////
+.c3.butterfly {
+    g.nodes {
+        rect {
+            shape-rendering: crispEdges;
+            cursor: pointer;
+        }
+
+        text {
+            cursor: pointer;
+        }
+    }
+
+    path {
+        fill: none;
+    }
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+// Table
+///////////////////////////////////////////////////////////////////////////////////////////////
+table.c3.table {
+    border-collapse: collapse;
+
+    th {
+        .no-highlight;
+        cursor: default;
+
+        &.sortable {
+            cursor: pointer;
+
+            .ui-icon {
+                margin-left: 0.25em;
+            }
+        }
+    }
+
+    td {
+        div.bar {
+            margin: 1px 0;
+            background-color: lightgray;
+            border-radius: 0.4em;
+        }
+    }
+
+    &.selectable {
+        .no-highlight;
+        tr {
+            cursor: pointer;
+        }
+    }
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+// Legend
+///////////////////////////////////////////////////////////////////////////////////////////////
+ul.c3.legend {
+    display: inline-block;
+    padding: 0.5em;
+    margin: 0.5em;
+    border-radius: 0.5em;
+    cursor: default;
+    .no-highlight;
+    list-style-type: none;
+    color: white;
+    background: #404040;
+    font-family: sans-serif;
+
+    ul { // Nested Lists
+        padding-left: 0.25em;
+        list-style-type: inherit;
+    }
+
+    li { // List Items
+        //        white-space: nowrap;
+        line-height: 95%;
+        padding: 0.25em 0.5em 0.25em 0.5em;
+        overflow: hidden;
+
+        > .bullet {
+            display: inline-block;
+            margin-right: 0.5em;
+
+            > svg {
+                shape-rendering: crispEdges;
+            }
+        }
+    }
+
+    &.hoverable li:hover {
+        background: rgba(255,255,255,0.2);
+        border-radius: 0.25em;
+    }
+}

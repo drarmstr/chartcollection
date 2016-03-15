@@ -1,0 +1,690 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>C3 API</title>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+    <link rel="stylesheet" href="css/doc.css" />
+</head>
+
+<body>
+    <header>
+        <h1><a href="."><img src="img/c3.jpg" height=32 width=32 /></a> API <small>Overview</small></h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#dom">DOM</a></li>
+            <li><a href="#methods">Methods</a></li>
+            <li><a href="#datasets">Datasets</a></li>
+            <li><a href="#scales">Scales</a></li>
+            <li><a href="#layers">Layers</a></li>
+            <li><a href="#selection_options">Selection Options</a></li>
+            <li><a href="#styling">Styling</a></li>
+            <li><a href="#events">Events</a></li>
+            <li><a href="#extensibility">Extensibility</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="introduction">
+            <p>
+                The C3 API focuses on a declaritve style API where most options and functionality callbacks
+                are specified in an options object.  A visualization is created by instantiating one of the
+                visualization types from the C3 collection.  When constructing with <code>new</code>, pass in
+                a single argument that is the options object.  The specific options supported vary based on
+                the type of visualization and are documented in the <a href="doc/">API Reference</a>.
+                During creation, options in this options object become properties of your instantiated
+                visulization object for future reference or modification.  Once you have created your object,
+                then just call <code>render()</code> on it to actually render the chart.
+                That's all you need to do!
+                There are a few other standard methods available to update the chart if you want to make it
+                more dynamic such as resizing, updating the dataset, restyling it, etc.
+            </p>
+            <p>
+                For example:<blockquote><pre>
+var my_chart = <b>new c3.Plot</b>({
+    <b>anchor</b>: '#scatter_plot_example',
+    <b>height</b>: 300,
+    <b>width</b>: '50%',
+    <b>data</b>: student_data,
+    ...  // Options to specify what the new chart should be
+});
+my_chart.<b>render()</b>;  // Render your new chart!
+
+window.onresize = function() {
+    my_chart.<b>resize()</b>;  // Resize your chart when the window resizes
+}
+</pre>
+                </blockquote>
+            </p>
+        </section>
+
+
+        <section id="dom">
+            <h1>Attaching to the DOM</h1>
+            <p>
+                A visualization object needs to be attached to the DOM to actually be visible in your document.
+                There are a few of ways of doing this.  The <code>anchor</code> option can specify
+                an HTML DOM element which the visualization will attach to as a child when rendering.
+                Alternatively the <code>anchor</code> option could specify a string which represents a CSS
+                selector that specifies the DOM node that should be attached to when rendering.
+            </p>
+            <p>Example <code>anchor</code> option values:</p>
+            <code>
+                <ul>
+                    <li>'#my_node'</li>
+                    <li>document.querySelector('#my_node')</li>
+                    <li>$('my_node')[0]</li>
+                    <li>$('&lt;div id="my_node"&gt;&lt;/div&gt;').appendTo('#your_node')[0]</li>
+                    <li>d3.select('#my_node').node()</li>
+                    <li>d3.select('#your_node').append('div').attr('id','my_node').node()</li>
+                </ul>
+            </code>
+            <p>
+                If no <code>anchor</code> option is specified, then C3 will create a new <code>&lt;div&gt;</code>
+                element to contain the visualiztion.  This element will not be attached to the DOM, but
+                will be accessible as the <code>anchor</code> property of the visualization object for you
+                to attach to the DOM when and where you wish.
+            </p>
+            <p>
+                The visualization will be sized based on the size you specify via the <code>height</code>
+                and <code>width</code> options.  If you do not specify a size then it will use the size
+                of anchor element.  If the anchor element is not attached to the DOM it may not have a size,
+                in this case you may need to resize the chart after attaching to the DOM.
+            </p>
+        </section>
+
+
+        <section id="methods">
+            <h1>Methods</h1>
+            <p>
+                The standard visualization API contains the following methods:
+            </p>
+            <dl>
+                <dt><code>render([options])</code></dt>
+                <dd>
+                    The primary method used to actually render the visualization.
+                    <p>
+                        This should generally only be called once to initialize the visualization object.
+                        However, some visualizations with multiple layers may need to have <code>render()</code>
+                        called again if the set of layers changes.
+                    </p>
+                    <p>
+                        The <code>render</code> call optionally takes an additional options object that
+                        will be merged for additional options or potentially override options used when
+                        the object was created.
+                    </p>
+                </dd>
+                <dt><code>resize([width, height])</code></dt>
+                <dd>
+                    Resize the visualization.
+                    <p>
+                        The visualization will be resized to match the current size of the anchor element.
+                        Optionally, a <code>width</code> and <code>height</code> can be specified to
+                        explicitly set a new size for the anchor element.
+                    </p>
+                    <p>
+                        For performance reasons, a <code>resize</code> operation will attempt to perform
+                        minimal work resizing and repositioning elements.  Therefore, it may not reflect
+                        changes in the data set or other changed options.  Use the other methods below
+                        for those types of changes.
+                    </p>
+                </dd>
+                <dt><code>redraw([origin])</code></dt>
+                <dd>
+                    A method to redraw the visualization to reflect a modified dataset or added/removed
+                    dataset elements.  It should also be used after modifying the some of the visualization object's
+                    options after initial rendering, such as modified scales, modified accessors, etc.
+                    <p>
+                        Some visualizations support animations for modified/added/removed data.
+                        These animations generally need to be explicitly enabled in the
+                        <a href="#selection_options">C3 selection options</a>.
+                    </p>
+                    <p>
+                        An optional <code>origin</code> string may be used by some visualizations
+                        for optimizations.
+                        For performance reasons, <code>redraw()</code> may not update the styles of
+                        existing elements.  Use <code>restyle()</code> for this.
+                    </p>
+                </dd>
+                <dt><code>restyle()</code></dt>
+                <dd>
+                    Update the CSS styles and classes of all data elements to reflect what is specified in the
+                    <a href="#selection_options">C3 selection options</a>.
+                </dd>
+            </dl>
+            <p>
+                Some visualizations may offer aditional methods.
+                For example, a selectable data table may offer a <code>select()</code> method or
+                a zoomable chart may offer a <code>zoom()</code> method.
+                These will be documented in the <a href="doc/">API Reference</a>.
+            </p>
+        </section>
+
+
+        <section id="datasets">
+            <h1>Data Sets</h1>
+            <p>
+                The data for a visualization is generally provided via a <code>data</code> option.
+                It usually refers to an array of objects, but there isn't a restriction on the type
+                of objects.  They could be simple numbers or complex nested structures.
+                Each visualization will have some set of appropriate options that allow you to specify
+                the <i>shape</i> of the data, or how to access that concept from the dataset.
+            </p>
+            <p>
+                For example, a scatter plot might have <code>x</code> and <code>y</code> options to
+                get the x and y positions of each data point and an <code>r</code> option to get the radius
+                of the circle for each datapoint.  These types of options can usually take constants as
+                values, such as saying all data point circles have a radius of 10.  Or they can take
+                a callback function.  The function you specify will be called for eash element in your
+                <code>data</code> array and passed the data element as the first argument.  Your callback
+                function should return the desired value for that data element.
+            </p>
+            <p>
+                Some visualization options also support calling the callback functions with additional
+                parameters.  Often the second argument will be the index of the element in the
+                <code>data</code> array.  Though, some visualisations or combination of options do not
+                support this, such as enabling a <code>filter</code> option.
+            </p>
+            <p>
+                So, a simple example scatter plot layer options might look like:<blockquote><pre>
+...
+<b>data</b>: [
+    { name: "Joe", gender: "male", age: 16, grade: 3.2 },
+    { name: "Lisa", gender: "female", age: 18, grade: 2.3 },
+    { name: "Patrick", gender: "male", age: 28, grade: 1.2 },
+    { name: "Mandy", gender: "female", age: 32, grade: 3.8 },
+    { name: "Tommy", gender: "male", age: 9, grade: 1.7 },
+],
+<b>x</b>: function(d) { return d.age; },
+<b>y</b>: function(d) { return d.grade; },
+<b>r</b>: 10,
+<b>filter</b>: function(d) { return d.age >= 16; },
+...
+</pre>
+                </blockquote>
+                Because each visualization type may need slightly different configuration options,
+                please refer to the <a href="doc/">API Reference</a> documentation for details.
+            </p>
+        </section>
+
+
+        <section id="scales">
+            <h1>Scales</h1>
+            <p>
+                Most visualizations contain a set of options for <i>scales</i>.  XY plots have <code>h</code>
+                and <code>v</code> for the <i>horizontal</i> and <i>vertical</i> scales.  Polar charts have
+                <code>r</code> and <code>t</code> for the <i>radial</i> and <i>angular</i> scales.
+            </p>
+            <p>
+                C3 uses <a href="https://github.com/mbostock/d3/wiki/Scales">D3 scales</a> for its scales.
+                A scale simply takes an input <i>domain</i>
+                value and provides an output <i>range</i> value.  The extents of the <i>domain</i> and
+                <i>range</i> values are used to perform the conversion.  So, if the x values of a scatter
+                plot might vary between 0 and 10 the <i>domain</i> of the horizontal scale may be
+                <code>[0,10]</code>, this represents the x-axis.  The <i>range</i> of the horizontal
+                dimension would be based on the current pixel width of the chart.  C3 takes care of
+                properly setting the ranges of the scales, so you only have to worry about setting the domain.
+                The domains default to <code>[0,1]</code>.
+            </p>
+            <p>
+                The most common scale type is <a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales#linear"><code>linear</code></a>.
+                A <i>linear</i> scale performs a simple extrapolation from the input domain to the output range.
+                If the horizontal domain is <code>[0,10]</code> and the chart width is 100 pixels,
+                then an x value of 2 will translate to 20 pixels, and so on.
+                But, D3 also provides other scale types such as
+                <a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales#log"><code>log</code></a>,
+                <a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales#pow"><code>pow</code></a>,
+                and even <a href="https://github.com/mbostock/d3/wiki/Ordinal-Scales"><code>ordinal</code></a>.
+            </p>
+            <p>
+                An example scatter plot may have the following scale options:<blockquote>
+                    <pre>
+...
+<b>h</b>: d3.scale.linear().domain([0,50]),
+<b>v</b>: d3.scale.linear().domain([0,4]),
+...
+</pre>
+                </blockquote>
+            </p>
+        </section>
+
+
+        <section id="layers">
+            <h1>Layers</h1>
+            <p>
+                XY <i>Plots</i> and <i>Polar</i> charts support composition of multiple <i>layers</i>.
+                A <i>plot</i> might contain an <i>area graph</i> layer with a <i>bar chart</i> layer on top
+                with a <i>line</i> layer on top of that.
+            </p>
+            <p>
+                Layers are specified as an array of layer objects.  The order of the layers in the array
+                represents the <i>z ordering</i> of the layers.
+                Layers objects are created much like visualization objects.  The desired layer type should
+                be instantiated with <code>new</code> and the constructor should be passed an options object.
+                Layers can inherit some options from their parent chart such as the scales and some
+                dataset accessor options; or, they can override them.
+            </p>
+            <p>
+                Our scatter plot example might have two layers:<blockquote><pre>
+...
+<b>layers</b>: [
+    new <b>c3.Plot.Layer.Scatter</b>({
+        ...
+    }),
+    new <b>c3.Plot.Layer.Line.Horizontal</b>({
+        <b>data</b>: [2.67],
+        <b>value</b>: function(d) { return d; },
+    }),
+],
+...
+</pre></blockquote>
+            </p>
+            <p>
+                Similar to layers, <i>plots</i> also support configuring <i>axes</i> via the <code>axes</code>
+                option which should be an array of <code>c3.Axis</code> objects.
+            </p>
+        </section>
+
+
+        <section id="selection_options">
+            <h1>Selection Options</h1>
+            <p>
+                C3 creates and configures visual elements using <a href="doc/class/c3/Selection.html">C3 Selections</a>,
+                which are an abstraction of <a href="https://github.com/mbostock/d3/wiki/Selections">D3 Selections</a>.
+                The C3 Selections are user configurable using <a href="doc/class/c3/Selection.Options.html">C3 Selection Options</a>.
+            </p>
+            <p>
+                Visualization will expose options for the various visual elements that are part of that particular
+                visualization.  For example, a table has options for <code>table_options</code> for the
+                overall <code>&lt;table&gt;</code> element, <code>header_options</code> for the header
+                <code>&lt;th&gt;</code> elements, <code>row_options</code> for the <code>&lt;tr&gt;</code> elements,
+                <code>cell_options</code> for <code>&lt;td&gt;</code>, and so forth.
+                A plot chart has an <code>options</code> option for the overall chart <code>&lt;svg&gt;</code> element,
+                <code>layer_options</code> for the SVG <code>&lt;g&gt;</code> element for each layer, and so on.
+                A scatter plot layer also has an overall <code>options</code> option as well as
+                <code>point_options</code> for the SVG <code>&lt;g&gt;</code> element for each data point,
+                <code>circle_options</code> for the SVG <code>&lt;circle&gt;</code> element in each data point,
+                <code>label_options</code> for the SVG <code>&lt;text&gt;</code> element in each data point,
+                and so on and so forth.  Each different visualization may use a different set of visual elements
+                so please refer to the <a href="doc/">API Reference</a> for details on a particular visualization.
+            </p>
+            <p>
+                The <a href="doc/class/c3/Selection.Options.html">C3 Selection Options</a> is an object that
+                contains can contain a set of optional properties for you to configure.
+                Like the data set options, the selection options can generally be provided either as a
+                constant value or a callback function.  The callback functions will be called for each
+                element in the selection.  The first parameter it is called with is the data
+                assocated with that item in the selection.  This varies based on the selection.
+                The <code>layer_options</code> callbacks would call with the layer object, the
+                scatter plot <code>circle_options</code> would call with the data element from the user
+                data set bound to that data point, while it isn't applicable to the overall <code>options</code>.
+                Depending on the visualization, additional parameters might also be provided such as the
+                index of the data element into the dataset array, the associated column number for a
+                cell in the table, etc.
+                Some example selection options properties include:
+            </p>
+            <dl>
+                <dt><code>text</code></dt>
+                <dd>
+                    The <code>innerText</code> content of the element.  Useful for selections for SVG text
+                    labels, table cells, etc.
+                </dd>
+                <dt><code>html</code></dt>
+                <dd>
+                    Similar to the <code>text</code> option except that it specifies the raw <code>innerHTML</code>
+                    instead of just text.  You can use this to create nested elements, such as styling
+                    with <code>&lt;b&gt;</code> tags.  Please be careful with this option as you may need
+                    to escape characters to properly render in HTML as appropriate and may need to guard
+                    against untrusted string sources which could expose you to creating <code>&lt;script&gt;</code>
+                    tags and executing untrusted code.
+                </dd>
+                <dt><code>title</code></dt>
+                <dd>
+                    Specify content for <i>tooltips</i>.
+                </dd>
+                <dt><code>animate</code></dt>
+                <dd>
+                    A <i>boolean</i> value to
+                    enable any animations for these visual elements that may be supported by the visualization.
+                    For example, new datapoints could fade into existence or smoothly change locations if
+                    their values change during a <code>redraw()</code>.
+                </dd>
+                <dt><code>duration</code></dt>
+                <dd>
+                    A <i>numeric</i> value for the duration in milliseconds that any enabled animations should take.
+                </dd>
+                <dt><code>class, classes, styles, events</code></dt>
+                <dd>
+                    Additional selection option properties are available and discussed in later sections.
+                </dd>
+            </dl>
+            <p>
+                A scatter plot layer might include the following options:<blockquote>
+    <pre>
+...
+<b>point_options</b>: {
+    <b>animate</b>: true,
+    <b>duration</b>: 1000,
+},
+<b>label_options </b>: {
+    <b>text</b>: function(d) { return d.grade; },
+},
+...
+</pre>
+</blockquote>
+            </p>
+        </section>
+
+
+        <section id="styling">
+            <h1>Styling</h1>
+            <p>
+                C3 offers a variety of mechanisms to style your visualizations.
+                The end result is to style the visual elements from each C3 Selection with CSS styles
+                as desired.  Because everything is done directly with CSS styles, C3 automatically supports
+                whatever CSS functionality the browser it is executing within supports.
+                Different approaches have different performance and flexibility tradeoffs.
+            </p>
+            <ul>
+                <li>
+                    By including <code>c3.css</code>, various important default styles are set.
+                    Most of these are used for functional purposes.  It is the intention of C3
+                    to not impose opinionated styles.  So, the default styles will be very minimal or nonexistant.
+                </li>
+                <li>
+                    You may include your own style sheets, <code>&lt;style&gt;</code> tags, or <code>style</code>
+                    attributes to specify CSS styles.
+                    C3 visualizations have the <code>c3</code> class as well as a set of classes based
+                    on the visualization type hierarchy to help constrain your CSS selector rules.
+                    For example, to style the fill color for all area graphs you could use the CSS rule:
+                    <blockquote><code>.c3.plot .layer.area path { fill: red; }</code></blockquote>
+                </li>
+                <li>
+                    If you want to style some charts or layers in different ways, then you can setup
+                    CSS rules for individual charts and layers.  To aid this, charts and layers have a
+                    <code>class</code> option and C3 Selection Options include a
+                    <a href="doc/class/c3/Selection.Options.html#class-variable"><code>class</code></a>
+                    property to set a CSS class for those elements.  Selection Options also offer a
+                    <a href="doc/class/c3/Selection.Options.html#classes-variable"><code>classes</code></a>
+                    property for more sophisticated classing.  This option should actually itself be a
+                    JavaScript object.  The keys of the object represent possible CSS class names while
+                    the values are a boolean or a callback function returning a boolean that determines
+                    if the element has that class assigned to it.
+                    <blockquote>
+                        <pre>
+...
+<b>class</b>: 'average-grade',
+<b>circle_options</b>: {
+    <b>classes</b>: {
+        'passing': function(d) { return d.grade >= 2; },
+        'failing': function(d) { return d.grade < 2; }
+    }
+},
+...
+                        </pre>
+                    </blockquote>
+                </li>
+                <li>
+                    To individually set styles for each element based on the data, Selection Options offer
+                    a <a href="doc/class/c3/Selection.Options.html#styles-variable"><code>styles</code></a>
+                    property.  This property should be assigned a JavaScript object.  The keys represent
+                    the CSS styles that you would like to set for each element.  The values can be constants
+                    or callback functions.  As before, the first parameter of the callback function is the
+                    data bound to that element and additional paremeters may be also used for the index
+                    into the data set array, table column, etc.
+                    <blockquote>
+                        <pre>
+...
+<b>circle_options</b>: {
+    <b>styles</b>: {
+        'opacity': 1,
+        'fill': function(d) { return d.gender==="male" ? 'blue' : 'pink'; }
+    }
+},
+...
+</pre>
+                    </blockquote>
+                </li>
+                <li>
+                    Styles can also be adjusted manually using D3, JQuery, JavaScript DOM API, or your
+                    favorite DOM and CSS manipulation using the <a href="#extensibility">extensibility</a>
+                    features desribed below.
+                </li>
+            </ul>
+        </section>
+
+
+        <section id="events">
+            <h1>Events</h1>
+            <p>
+                You can create customized interactive behavior by attaching event handlers to the visual
+                elements using the <a href="doc/class/c3/Selection.Options.html#events-variable"><code>events</code></a>
+                property of the Selection Options.
+                Like CSS styles, C3 follows the D3 philosophy of exposing native
+                <a href="https://www.w3.org/TR/uievents/">DOM events</a>.
+                So, C3 automatically supports whatever DOM events that your browser supports.
+            </p>
+            <p>
+                Set <i>events</i> for the <code>options</code> or <code>content_options</code> to attach
+                events to respond to the entire visualization or layer.  Or, you can set <i>events</i>
+                for a more specific Selection Options to set behavior for those element types in the visualization.
+            </p>
+            <p>
+                The <code>events</code> option should be set fo a JavaScript object.  The keys in the object
+                represent the event name.  Values should be the event handler callback function to attach
+                to the DOM element that will be called when the event is triggered.  For the callback, the
+                <code>this</code> context will be set to the DOM element.  The first parameter will be
+                the data element bound to the DOM element.  Additional parameters may also be provided
+                such as the index into the data array, etc.
+            </p>
+            <p>
+                Some examples:<blockquote>
+    <pre>
+...
+<b>options</b>: {
+    <b>events</b>: {
+        'mousemove': function() { ... }
+    },
+},
+<b>circle_options</b>: {
+    <b>events</b>: {
+        'mouseenter': function() { d3.select(this).transition().duration(500).attr('r', 20); },
+        'mouseleave': function() { d3.select(this).transition().duration(500).attr('r', 10); },
+        'click': function(d) { alert("You clicked on " + d.name); }
+    },
+},
+...
+</pre>
+</blockquote>
+            </p>
+        </section>
+
+
+        <section id="other">
+            <h1>Other Options</h1>
+            <p>
+                Different visualization types may have other options for enabling additional functionality,
+                data decimation, performnace optimizations, etc.
+                Please refer to the <a href="doc/">API Reference</a> for each visualization type.
+            </p>
+            <p>
+                For example, straight line layers support enabling draggability:
+                <blockquote>
+                    <pre>
+...
+<b>draggable</b>: true,
+<b>handlers</b>: {
+    <b>drag</b>: function(d) { ... }
+},
+...
+</pre>
+                </blockquote>
+            </p>
+        </section>
+
+
+        <section id="extensibility">
+            <h1>Extensibility</h1>
+            <p>
+                If the built-in functionality is not sufficient C3 provides a mechanism for extending
+                custom behavior.
+                C3 <i>visualizations</i> and <i>layers</i> will fire events for which you can register
+                callback handlers.
+                With these callbacks you can manipulate the visualization's Selections using D3, JQuery,
+                the raw JavaScript DOM API, or your other favorite DOM and CSS manipulation technique.
+            </p>
+            <p>
+                The handlers can be set declaratively by setting the
+                <a href="doc/class/c3/Base.html#handlers-variable"><code>handlers</code></a> option for the
+                <i>visualization</i> or <i>layer</i>.  Or, alternatively, you can set them imperatively by
+                calling <a href="doc/class/c3/Base.html#on-dynamic"><code>on()</code></a> with your
+                instantiated visualization or layer.  The visualization or layer object will also be the
+                <code>this</code> context for the callback function.
+            </p>
+            <p>
+                Registering an event handler again with the same name will replace the original handler.
+                However, like D3, you can provide a <i>namespace</i> to the event name to allow multiple
+                handlers to trigger for the same event.  For example, you can register both
+                <code>redraw.foo</code> and <code>redraw.bar</code>.  You can remove an event handler by
+                using a value of <code>null</code> in place of the callback function.
+            </p>
+            <p>
+                The following are the built-in base extension events:
+            </p>
+            <dl>
+                <dt><code>render_start</code></dt>
+                <dd>Called for one-time intialization.  This event fires before any built-in actions are taken.</dd>
+                <dt><code>render</code></dt>
+                <dd>
+                    Called for one-time intialization.  This event fires after built-in initialization,
+                    but before the initial sizing and placement of the data elements.
+                </dd>
+                <dt><code>rendered</code></dt>
+                <dd>
+                    Called for one-time initialization.  This event fires after the visualization is
+                    completely rendered.
+                </dd>
+                <dt><code>resize_start</code></dt>
+                <dd>
+                    This event fires when the visualization is resized, but before any built-in actions are taken.
+                </dd>
+                <dt><code>resize</code></dt>
+                <dd>This event fires after the visualization resizes.</dd>
+                <dt><code>redraw_start</code></dt>
+                <dd>
+                    This event fires before the data elements are placed into the visualization.
+                    This can be caused by rendering, resizing, redrawing, or other actions such as
+                    zooming, rebasing, etc.
+                </dd>
+                <dt><code>redraw</code></dt>
+                <dd>
+                    This event fires after data elements are placed into the visualization.
+                    This can be caused by rendering, resizing, redrawing, or other actions such as
+                    zooming, rebasing, etc.
+                </dd>
+                <dt><code>restyle_start</code></dt>
+                <dd>This event fires before data elements are styled.</dd>
+                <dt><code>restyle</code></dt>
+                <dd>This event fires after data elements are styled.</dd>
+            </dl>
+            <p>
+                Some visualization may expose additional functionality that offers additional events.
+                For example a <i>zoomable</i> chart may offer <code>zoomstart</code>, <code>zoom</code>,
+                and <code>zoomend</code> events while a <code>draggable</code> layer may offer
+                <code>dragstart</code>, <code>drag</code>, and <code>dragend</code> events.
+                Please refer to the various visualizations in the <a href="doc/">API Reference</a> for more details.
+            </p>
+        </section>
+
+
+        <section id="example">
+            <h1>Example</h1>
+            <p>
+                Pulling together all of the concepts discussed above, the following is a
+                <a href="examples/#scatterplot">scatter plot example</a> (view
+                <a href="examples/doc/scatterplot_example.html">annotated source</a>
+                with axes, guidelines, and click events added):<blockquote><pre>
+var student_data = [
+    { name: "Joe", gender: "male", age: 16, grade: 3.2 },
+    { name: "Lisa", gender: "female", age: 18, grade: 2.3 },
+    { name: "Patrick", gender: "male", age: 28, grade: 1.2 },
+    { name: "Mandy", gender: "female", age: 32, grade: 3.8 },
+    { name: "Tommy", gender: "male", age: 9, grade: 1.7 },
+];
+
+var my_chart = <b>new c3.Plot</b>({
+    <b>anchor</b>: '#scatter_plot_example',
+    <b>height</b>: 300,
+    <b>width</b>: '50%',
+
+    <b>h</b>: d3.scale.linear().domain([0,50]),
+    <b>v</b>: d3.scale.linear().domain([0,4]),
+
+    <b>layers</b>: [
+        new <b>c3.Plot.Layer.Scatter</b>({
+            <b>data</b>: student_data,
+            <b>x</b>: function(d) { return d.age; },
+            <b>y</b>: function(d) { return d.grade; },
+            <b>r</b>: 10,
+            <b>filter</b>: function(d) { return d.age >= 16; },
+
+            <b>point_options</b>: {
+                <b>animate</b>: true,
+                <b>duration</b>: 1000,
+            },
+            <b>label_options </b>: {
+                <b>text</b>: function(d) { return d.grade; },
+            },
+            <b>circle_options</b>: {
+                <b>classes</b>: {
+                    'passing': function(d) { return d.grade >= 2; },
+                    'failing': function(d) { return d.grade < 2; },
+                }
+                <b>styles</b>: {
+                    'fill': function(d) { return d.gender==="male" ? 'blue' : 'pink'; }
+                },
+                <b>events</b>: {
+                    'mouseenter': function() { d3.select(this).transition().duration(500).attr('r', 20); },
+                    'mouseleave': function() { d3.select(this).transition().duration(500).attr('r', 10); },
+                    'click': function(d) { alert("You clicked on " + d.name); }
+                },
+            },
+        }),
+
+        new <b>c3.Plot.Layer.Line.Horizontal</b>({
+            <b>data</b>: [2.67],
+            <b>value</b>: function(d) { return d; },
+            <b>class</b>: 'average-grade',
+            <b>handlers</b>: {
+                <b>redraw_start</b>: function () {
+                    var students = student_data.filter((student) => student.age >= 16);
+                    var average_grade = d3.sum(students, (student) => student.grade) / students.length;
+                    this.data = isNaN(average_grade) ? [] : [average_grade];
+                },
+            },
+        }),
+
+    ],
+});
+
+// Render your new chart!
+my_chart.<b>render()</b>;
+
+// Resize your chart when the window resizes
+window.onresize = function() {
+    my_chart.<b>resize()</b>;
+}
+
+// Add a new student and redraw
+my_data.push({ name: "Bella", gender: "female", age: 27, grade: 3.4 });
+my_chart.<b>redraw()</b>;
+</pre></blockquote>
+            </p>
+            <p>View other <a href="examples/">C3 Examples</a>.</p>
+        </section>
+    </main>
+</body>
+</html>

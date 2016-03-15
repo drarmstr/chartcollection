@@ -1,0 +1,38 @@
+﻿[
+  {
+    "outputFile": "js/c3.js",
+    "inputFile": "js/c3.coffee"
+  },
+  {
+    "outputFile": "js/c3-plot.js",
+    "inputFile": "js/c3-plot.coffee"
+  },
+  {
+    "outputFile": "css/c3.css",
+    "inputFile": "css/c3.less"
+  },
+  {
+    "outputFile": "js/c3-layers.js",
+    "inputFile": "js/c3-layers.coffee"
+  },
+  {
+    "outputFile": "examples/css/examples.css",
+    "inputFile": "examples/css/examples.less"
+  },
+  {
+    "outputFile": "js/c3-table.js",
+    "inputFile": "js/c3-table.coffee"
+  },
+  {
+    "outputFile": "js/c3-legend.js",
+    "inputFile": "js/c3-legend.coffee"
+  },
+  {
+    "outputFile": "js/c3-polar.js",
+    "inputFile": "js/c3-polar.coffee"
+  },
+  {
+    "outputFile": "css/doc.css",
+    "inputFile": "css/doc.less"
+  }
+]

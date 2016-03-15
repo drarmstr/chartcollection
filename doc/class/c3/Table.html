@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset='UTF-8'>
+  <title>C3 Documentation</title>
+  <script src='../../javascript/application.js'></script>
+  <script src='../../javascript/search.js'></script>
+  <link rel='stylesheet' href='../../stylesheets/application.css' type='text/css'>
+</head>
+  <body>
+    <div id='base' data-path='../../'></div>
+<div id='header'>
+  <div id='menu'>
+    <a href='../../alphabetical_index.html' title='Index'>
+      Index
+    </a>
+    &raquo;
+    <span class='title'>c3</span>
+    &raquo;
+    <span class='title'>Table</span>
+  </div>
+</div>
+    <div id='content'>
+      <h1>
+        Class:
+        c3.Table
+      </h1>
+      <table class='box'>
+        <tr>
+          <td>Defined in:</td>
+          <td>js\c3-table.coffee</td>
+        </tr>
+        <tr>
+          <td>Inherits:</td>
+          <td>
+            <a href='../../class/c3/Base.html'>c3.Base</a>
+          </td>
+        </tr>
+      </table>
+      <h2>Overview</h2>
+      <div class='docstring'>
+  <p>A visualization of data using HTML tables.</p><p>Like other c3 visualizations, call <code>redraw()</code> to update the table when the <code>data</code>
+array is changed and call <code>restyle()</code> to update the table when styles or classes
+in the various <a href='../../class/c3/Selection.Options.html'>options</a> are changed.  If the set of <code>columns</code>
+is changed, then please call <code>render()</code> to update the table; this flow has not been
+tested yet, but I can fix any issues that come up if this is needed.</p><h2 id="events">Events</h2>
+<ul>
+<li><strong>select</strong> - Triggered when a row is selected/unselected.  The event is called with an argument: <em>single</em> select tables are passed with their selection while <em>multi</em> select tables are passed with an array of the selections. Selections are references to items in the data array.</li>
+</ul>
+<h2 id="extensibility">Extensibility</h2><p>The following members are created which represent <a href='../../class/c3/Selection.html'>c3.Selection</a>&#39;s:</p><ul>
+<li><strong>table</strong> - The HTML <code>table</code></li>
+<li><strong>header</strong> - The HTML table <code>thead</code> header</li>
+<li><strong>headers</strong> - The individual <code>th</code> headers in the header row</li>
+<li><strong>body</strong> - The HTML table <code>tbody</code> body</li>
+<li><strong>rows</strong> - The HTML table <code>tr</code> rows</li>
+<li><strong>cells</strong> - The HTML table <code>td</code> cells</li>
+</ul><p>The following additional members are also created:</p><ul>
+<li><strong>selections</strong> - [Array] The current table selections.  Items point to entries in the table&#39;s <code>data</code> array.</li>
+</ul>
+
+</div>
+<div class='tags'>
+  <h3>Author:</h3>
+  <ul class='author'>
+    <li>
+      Douglas Armstrong 
+    </li>
+  </ul>
+</div>
+      <h2>Variables Summary</h2>
+      <dl class='constants'>
+  <dt id='version-variable'>
+    version
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>0.1</code></pre>
+    
+  </dd>
+  <dt id='type-variable'>
+    type
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>&#39;table&#39;</code></pre>
+    
+  </dd>
+  <dt id='data-variable'>
+    data
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>[]</code></pre>
+    <div class='docstring'>
+  <p>[Array] Array of data for the table to visualize. Each element that is defined would be a seperate row in the table.</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='key-variable'>
+    key
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>undefined</code></pre>
+    <div class='docstring'>
+  <p>[Function] An optional callback to describe a unique key for each data element. These may be used to affect performance when updating the dataset and for animations.</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='filter-variable'>
+    filter
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>undefined</code></pre>
+    <div class='docstring'>
+  <p>[Function] A callback to define if data elements should be included in the table or not.  For example, this could be set to a function that returns true for data elements with some non-zero value to cause elements with a zero value to not be included in the table.</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='columns-variable'>
+    columns
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>[]</code></pre>
+    <div class='docstring'>
+  <p>[Array<c3.Table.Column>] An array of column objects which describe how to construct the table.
+Column objects can contain the following members:</p><ul>
+<li><strong>header</strong> [<a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a>] Options to describe the header contents, styles, events, etc. Use <code>text</code> or <code>html</code> to define the content for the header.</li>
+<li><strong>cells</strong> [<a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a>] Options to describe the cell contents, styles, events, etc. Use <code>text</code> or <code>html</code> to define the cell contents.</li>
+<li><strong>sortable</strong> [Boolean] - Boolean to define if the counter should be user-sortable by clicking on the header.</li>
+<li><strong>value</strong> [Function] - A callback to get the <em>value</em> of the cell for sorting or visualization.</li>
+<li><strong>sort</strong> [Function] - A callback to get the value for sorting, if different then <code>value</code>; also sets <code>sortable</code> to true.</li>
+<li><strong>sort_ascending</strong> [Boolean] - Sort the rows based on ascending value instead of descending.</li>
+<li><strong>vis</strong> [String] Optional type of visualization for the <em>value</em> of the cells in this column.  Options include:<ul>
+<li><em>bar</em> - The value is represented as a horizontal bar across the cell underlying the content html.
+The bars may be styled using _vis<em>options.styles</em>.</li>
+</ul>
+</li>
+<li><strong>total_value</strong> [Number, Function] - Some visualizations, such as <em>bar</em>, show their values relative to some total value.  This number or callback provides for that value. If not set, the default is to use the sum of values for all the cells in the column.</li>
+<li><strong>vis_options</strong> [<a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a>] Options that may be used by value visualizations. Using the Table-level vis_options should perform better than column-specific options.</li>
+</ul>
+
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='selectable-variable'>
+    selectable
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>false</code></pre>
+    <div class='docstring'>
+  <p>[Boolean] Are the table rows selectable</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='sortable-variable'>
+    sortable
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>false</code></pre>
+    <div class='docstring'>
+  <p>[Boolean, String] True for the table rows to be selectable or a string with possible values:</p><ul>
+<li><strong>single</strong> - A single row can be selected</li>
+<li><strong>multi</strong> - Multiple rows can be selected</li>
+</ul>
+
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='sort_column-variable'>
+    sort_column
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>undefined</code></pre>
+    <div class='docstring'>
+  <p>[{c3.Table.Column}] The column currently used for sorting</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='limit_rows-variable'>
+    limit_rows
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>undefined</code></pre>
+    <div class='docstring'>
+  <p>[Number] Limit the number of table rows to the top N</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='table_options-variable'>
+    table_options
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>undefined</code></pre>
+    <div class='docstring'>
+  <p>[<a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a>] Options for the <code>table</code> node.</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='table_header_options-variable'>
+    table_header_options
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>undefined</code></pre>
+    <div class='docstring'>
+  <p>[<a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a>] Options for the table <code>thead</code> header.</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='header_options-variable'>
+    header_options
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>undefined</code></pre>
+    <div class='docstring'>
+  <p>[<a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a>] Options for the table <code>th</code> headers.  Callbacks are called with two arguments:
+The first is the column object and the second is the column index.</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='table_body_options-variable'>
+    table_body_options
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>undefined</code></pre>
+    <div class='docstring'>
+  <p>[<a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a>] Options for the table <code>tbody</code>.</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='row_options-variable'>
+    row_options
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>undefined</code></pre>
+    <div class='docstring'>
+  <p>[<a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a>] Options for the table <code>tr</code> rows.  Callbacks are called with two arguments.
+The first is the data element, the second is the row index.</p><p>A <code>column_options</code> options could be created using <code>col</code> to specify options for each column instead
+of manually specifying in each column object in <code>columns</code>.
+If this is needed, just let me know.</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='cell_options-variable'>
+    cell_options
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>undefined</code></pre>
+    <div class='docstring'>
+  <p>[<a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a>] Options for the table <code>td</code> cells.  Callbacks are called with three arguments.
+The first is the data element, the second is the column index, and the third is the row index.</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='vis_options-variable'>
+    vis_options
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>undefined</code></pre>
+    <div class='docstring'>
+  <p>[<a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a>] Options for any <code>vis</code> visualizations, such as inline bar charts.
+Callbacks are called with the first argument as the data element, the second as
+the column index, and the third as the row index.</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+</dl>
+      <h3 class='inherited'>
+        Variable inherited from
+        <a href='../../class/c3/Base.html'>c3.Base</a>
+      </h3>
+      <p class='inherited'>
+        <a href='../../class/c3/Base.html#anchor-variable'>anchor</a>
+        <a href='../../class/c3/Base.html#height-variable'>height</a>
+        <a href='../../class/c3/Base.html#width-variable'>width</a>
+        <a href='../../class/c3/Base.html#anchor_styles-variable'>anchor_styles</a>
+        <a href='../../class/c3/Base.html#handlers-variable'>handlers</a>
+      </p>
+      <h2>Class Method Summary</h2>
+      <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#set_select-static'>
+        .
+(Array)
+<b>set_select</b><span>(set, item, multi_select)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Helper logic for selecting an item in a multiple-select list with a click or ctrl-click 
+    </span>
+  </li>
+</ul>
+      <h2>Instance Method Summary</h2>
+      <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#_init-dynamic'>
+        #
+(void)
+<b>_init</b><span>()</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#_update_headers-dynamic'>
+        #
+(void)
+<b>_update_headers</b><span>()</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#_update-dynamic'>
+        #
+(void)
+<b>_update</b><span>(origin)</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#_style-dynamic'>
+        #
+(void)
+<b>_style</b><span>(style_new)</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#sort-dynamic'>
+        #
+(void)
+<b>sort</b><span>(column, ascending)</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      Sort the table 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#highlight-dynamic'>
+        #
+(void)
+<b>highlight</b><span>(selections = @selections)</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      Update the visual selection in the table without triggering selection event 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#select-dynamic'>
+        #
+(void)
+<b>select</b><span>(selections = @selections)</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      Select items in the table and trigger the selection event 
+    </span>
+  </li>
+</ul>
+      <h2>
+        <small>Inherited Method Summary</small>
+        <h3 class='inherited'>
+          Methods inherited from
+          <a href='../../class/c3/Base.html'>c3.Base</a>
+        </h3>
+        <p class='inherited'>
+          <a href='../../class/c3/Base.html#render-dynamic'>#render</a>
+          <a href='../../class/c3/Base.html#resize-dynamic'>#resize</a>
+          <a href='../../class/c3/Base.html#redraw-dynamic'>#redraw</a>
+          <a href='../../class/c3/Base.html#restyle-dynamic'>#restyle</a>
+          <a href='../../class/c3/Base.html#init-dynamic'>#init</a>
+          <a href='../../class/c3/Base.html#_prep-dynamic'>#_prep</a>
+          <a href='../../class/c3/Base.html#_init-dynamic'>#_init</a>
+          <a href='../../class/c3/Base.html#size-dynamic'>#size</a>
+          <a href='../../class/c3/Base.html#_size-dynamic'>#_size</a>
+          <a href='../../class/c3/Base.html#update-dynamic'>#update</a>
+          <a href='../../class/c3/Base.html#_update-dynamic'>#_update</a>
+          <a href='../../class/c3/Base.html#draw-dynamic'>#draw</a>
+          <a href='../../class/c3/Base.html#_draw-dynamic'>#_draw</a>
+          <a href='../../class/c3/Base.html#style-dynamic'>#style</a>
+          <a href='../../class/c3/Base.html#_style-dynamic'>#_style</a>
+          <a href='../../class/c3/Base.html#on-dynamic'>#on</a>
+        </p>
+      </h2>
+      <h2>Class Method Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='set_select-static'>
+      .
+(Array)
+<b>set_select</b><span>(set, item, multi_select)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Helper logic for selecting an item in a multiple-select list with a click or ctrl-click</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>set</span>
+      <span class='type'>
+        (
+          <tt>Array</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>An array of items that represents the current selection </span>
+    </li>
+    <li>
+      <span class='name'>item</span>
+      <span class='type'>
+        (
+          <tt>Object</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>A new item to add or remove from the current selection </span>
+    </li>
+    <li>
+      <span class='name'>multi_select</span>
+      <span class='type'>
+        (
+          <tt>Boolean</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>Indicate if multiple selections are allowed </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt>Array</tt>
+      )
+      &mdash;
+      <span class='desc'>This returns the new set, but also modifys the set passed in, so old references are still valid </span>
+    </li>
+  </ul>
+</div>
+  </div>
+</div>
+      <h2>Constructor Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='constructor-dynamic'>
+      #
+(void)
+<b>constructor</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+</div>
+      <h2>Instance Method Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='_init-dynamic'>
+      #
+(void)
+<b>_init</b><span>()</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='_update_headers-dynamic'>
+      #
+(void)
+<b>_update_headers</b><span>()</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='_update-dynamic'>
+      #
+(void)
+<b>_update</b><span>(origin)</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='_style-dynamic'>
+      #
+(void)
+<b>_style</b><span>(style_new)</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='sort-dynamic'>
+      #
+(void)
+<b>sort</b><span>(column, ascending)</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Sort the table</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>column</span>
+      <span class='type'>
+        (
+          <tt>column</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>A reference to the column object to sort on </span>
+    </li>
+    <li>
+      <span class='name'>ascending</span>
+      <span class='type'>
+        (
+          <tt>Boolean</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>True to sort top to bottom based on ascending values, otherwise alternate on subsequent calls to sorting on the same column. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='highlight-dynamic'>
+      #
+(void)
+<b>highlight</b><span>(selections = @selections)</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Update the visual selection in the table without triggering selection event</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>selections</span>
+      <span class='type'>
+        (
+          <tt>Array</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>An array of items to select referencing items in the data array </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='select-dynamic'>
+      #
+(void)
+<b>select</b><span>(selections = @selections)</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Select items in the table and trigger the selection event</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>selections</span>
+      <span class='type'>
+        (
+          <tt>Array</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>An array of items to select referencing items in the data array </span>
+    </li>
+  </ul>
+</div>
+  </div>
+</div>
+    </div>
+    <div id='footer'>
+  March 01, 16 10:15:34 by
+  <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
+    Codo
+  </a>
+  2.0.11
+  &#10034;
+  Press H to see the keyboard shortcuts
+  &#10034;
+  <a href='http://twitter.com/netzpirat' target='_parent'>@netzpirat</a>
+  &#10034;
+  <a href='http://twitter.com/_inossidabile' target='_parent'>@_inossidabile</a>
+</div>
+<iframe id='search_frame'></iframe>
+<div id='fuzzySearch'>
+  <input type='text'>
+  <ol></ol>
+</div>
+<div id='help'>
+  <p>
+    Quickly fuzzy find classes, mixins, methods, file:
+  </p>
+  <ul>
+    <li>
+      <span>T</span>
+      Open fuzzy finder dialog
+    </li>
+  </ul>
+  <p>
+    Control the navigation frame:
+  </p>
+  <ul>
+    <li>
+      <span>L</span>
+      Toggle list view
+    </li>
+    <li>
+      <span>C</span>
+      Show class list
+    </li>
+    <li>
+      <span>I</span>
+      Show mixin list
+    </li>
+    <li>
+      <span>F</span>
+      Show file list
+    </li>
+    <li>
+      <span>M</span>
+      Show method list
+    </li>
+    <li>
+      <span>E</span>
+      Show extras list
+    </li>
+  </ul>
+  <p>
+    You can focus and blur the search input:
+  </p>
+  <ul>
+    <li>
+      <span>S</span>
+      Focus search input
+    </li>
+    <li>
+      <span>Esc</span>
+      Blur search input
+    </li>
+  </ul>
+</div>
+  </body>
+</html>

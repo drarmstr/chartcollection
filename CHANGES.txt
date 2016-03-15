@@ -1,0 +1,55 @@
+0.1
+Initial Release
+
+################################################################################
+# Historic C4
+################################################################################
+
+0.4.2
+* Disable page zooming over plots and capture 'pointer' events.
+* Stackable layers tolerate empty data arrays for both layer and stacks.
+* Fortify and update TypeScript typings
+* Fix legend redraw() with nested bullets
+* Fix plot_legend regression for animating stacked layers while zoomed
+
+0.4.1
+* Zoom plots center zoom action when axes are present.
+* Bar graph automatic bar width based on neighbor proximity instead of linear distribution
+
+0.4
+* Add ability for path layers to render circles at data points along path
+* Add safety check for duplicate stack keys to stackable layer `safe` mode
+* Improve c4.selection options() interface
+* Add .parent class to legend items with children
+
+0.3.2
+* Document the background svg:rect in plots for styling and event capture
+* Fix plot_legend when layer has no data
+
+0.3.1
+* Fixes to TypeScript typing definition
+* Fix class names applied when minified
+* Fix to preserve the i,j parameter semantics for `title` in c4.selection.options when dealing with stacked data.
+
+0.3
+* crop_margins now supports 'x' and 'y' values.
+* Add `safe` mode to c4.layer.scatter to tolerate positional accessors returning undefined
+
+0.2.2
+* Arrange source files to live in same directory as output files.
+
+0.2.1
+* Fix bar charts with a single bar and a bar_width specified as a percentage
+
+0.2
+* Add `safe` mode to c4.layer.stackable which will tolerate:
+** Data not sorted along X axis
+** Removing elements where X or Y are not defined
+** Pad missing data for stacks
+* Plot Legends do not render layer bullet glyphs for layers that are stacked.
+
+0.1.1
+* Make stacking of stackable layers tolerant of undefined y values.
+
+0.1
+Initial Release

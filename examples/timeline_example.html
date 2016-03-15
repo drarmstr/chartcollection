@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Zoomable Plot Chart Example with Table Layout</title>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Dependencies -->
+    <script src="lib/d3.js"></script>
+    <script src="lib/jquery-2.1.1.js"></script>
+    <script src="lib/crossfilter.js"></script>
+
+    <!-- C3 -->
+    <link rel="stylesheet" href="../css/c3.css" />
+    <script src="../js/c3.js"></script>
+    <script src="../js/c3-plot.js"></script>
+    <script src="../js/c3-layers.js"></script>
+
+    <!-- Chart Styles -->
+    <style>
+        body {
+            overflow-y: scroll;
+        }
+
+        .c3.plot, table {
+            font-family: sans-serif;
+        }
+
+        .c3.plot .layer.line path {
+            stroke-width: 2px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table tr {
+            border-top: 2px solid black;
+        }
+
+        .c3.axis path.domain {
+            display: none;
+        }
+
+        .c3.axis .tick line {
+            stroke: darkgray;
+        }
+
+        .c3.axis line.grid {
+            stroke-dasharray: 2,2;
+        }
+    </style>
+</head>
+
+<body>
+    Timeline example to demonstrate layout of synced plots using a table.
+
+    <table id="timeline_example_table"></table>
+
+    <script src="timeline_example.js"></script>
+</body>
+</html>

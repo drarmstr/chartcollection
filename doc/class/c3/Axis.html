@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset='UTF-8'>
+  <title>C3 Documentation</title>
+  <script src='../../javascript/application.js'></script>
+  <script src='../../javascript/search.js'></script>
+  <link rel='stylesheet' href='../../stylesheets/application.css' type='text/css'>
+</head>
+  <body>
+    <div id='base' data-path='../../'></div>
+<div id='header'>
+  <div id='menu'>
+    <a href='../../alphabetical_index.html' title='Index'>
+      Index
+    </a>
+    &raquo;
+    <span class='title'>c3</span>
+    &raquo;
+    <span class='title'>Axis</span>
+  </div>
+</div>
+    <div id='content'>
+      <h1>
+        Class:
+        c3.Axis
+        <span class='note title'>Abstract</span>
+      </h1>
+      <table class='box'>
+        <tr>
+          <td>Defined in:</td>
+          <td>js\c3-plot.coffee</td>
+        </tr>
+        <tr>
+          <td>Inherits:</td>
+          <td>
+            <a href='../../class/c3/Chart.html'>c3.Chart</a>
+          </td>
+        </tr>
+      </table>
+      <h2>Overview</h2>
+      <div class='docstring'>
+  <div class='abstract note'>
+    <strong>
+      This
+      class
+      is abstract.
+    </strong>
+    
+  </div>
+  <div class='note todo'>
+    <strong>TODO:</strong>
+    Normalize the zoom/pan implementation from <a href='../../class/c3/Plot.Zoomable.html'>c3.Plot.Zoomable</a> 
+  </div>
+  <div class='note todo'>
+    <strong>TODO:</strong>
+    Ability to specify tick counts for ordinal scales? 
+  </div>
+  <div class='note todo'>
+    <strong>TODO:</strong>
+    Remove dependency on d3.axis for more flexibility, cleaner implementation, and performance? 
+  </div>
+  <p>An Axis visualizes a set of tick marks and units based on the supplied <strong>D3 scale</strong>.
+This is an <strong>abstract</strong> class, please create a {c3.Axis.x} or {c3.Axis.y}.</p><p>Axes may be attached to <a href='../../class/c3/Plot.html'>XY Plots</a> or managed as a 
+seperate DOM element for layout flexibility.</p>
+</div>
+<div class='tags'>
+  <h3>Author:</h3>
+  <ul class='author'>
+    <li>
+      Douglas Armstrong 
+    </li>
+  </ul>
+</div>
+      <h2>Direct Known Subclasses</h2>
+      <p class='children'>
+        <a href='../../class/c3/Axis.X.html'>c3.Axis.X</a>
+        <a href='../../class/c3/Axis.Y.html'>c3.Axis.Y</a>
+      </p>
+      <h2>Variables Summary</h2>
+      <dl class='constants'>
+  <dt id='version-variable'>
+    version
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>0.1</code></pre>
+    
+  </dd>
+  <dt id='type-variable'>
+    type
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>&#39;axis&#39;</code></pre>
+    
+  </dd>
+  <dt id='_next_uid-variable'>
+    _next_uid
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>0</code></pre>
+    
+  </dd>
+  <dt id='scale-variable'>
+    scale
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>undefined</code></pre>
+    <div class='docstring'>
+  <p>[<a href='https://github.com/mbostock/d3/wiki/Scales'>d3.scale</a>, Boolean] Scale where the <em>domain()</em> specifies the units to display in the axis.
+<em>c3 will automatically set the range()</em>.
+<em>If this axis is part of a <a href='../../class/c3/Plot.html'>plot</a>, then the scale will default to the plot&#39;s horizontal or veritcal scale</em>.
+Set to false to disable the scale from being drawn.</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='orient-variable'>
+    orient
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>undefined</code></pre>
+    <div class='docstring'>
+  <p>[String] Axis orientation.  Use <em>bottom</em> or <em>top</em> for an X axis and <em>left</em> or <em>right</em> for a Y axis.</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='grid-variable'>
+    grid
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>false</code></pre>
+    <div class='docstring'>
+  <p>[Boolean] Set to true to draw grid lines as well as the axis</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='label-variable'>
+    label
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>undefined</code></pre>
+    <div class='docstring'>
+  <p>[String] Text label for this axis</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='ticks-variable'>
+    ticks
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>true</code></pre>
+    <div class='docstring'>
+  <p>[Boolean] Enable tick marks and labels</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='tick_label-variable'>
+    tick_label
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>true</code></pre>
+    <div class='docstring'>
+  <p>[Boolean, Function] Formater function for the tick label.  <em>Set to <code>true</code> for displaying the default tick values.</em>
+_See <a href='https://github.com/mbostock/d3/wiki/Formatting#d3_format'>d3.format</a>_.</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='tick_values-variable'>
+    tick_values
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>undefined</code></pre>
+    <div class='docstring'>
+  <p>[Array] An array of manually set tick values to use instead of the scale&#39;s automatic tick generation.</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='tick_count-variable'>
+    tick_count
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>undefined</code></pre>
+    <div class='docstring'>
+  <p>[Number] Specify number of ticks to generate</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='tick_size-variable'>
+    tick_size
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>6</code></pre>
+    <div class='docstring'>
+  <p>[Number] Size of the tick marks in pixels</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='path_size-variable'>
+    path_size
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>2</code></pre>
+    <div class='docstring'>
+  <p>[Number] Width of the path that forms a line along the length of the axis</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='axis_size-variable'>
+    axis_size
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>undefined</code></pre>
+    <div class='docstring'>
+  <p>[Number] The overall width of a horizontal axis or height of a vertical axis</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+</dl>
+      <h3 class='inherited'>
+        Variable inherited from
+        <a href='../../class/c3/Chart.html'>c3.Chart</a>
+      </h3>
+      <p class='inherited'>
+        <a href='../../class/c3/Chart.html#type-variable'>type</a>
+        <a href='../../class/c3/Chart.html#class-variable'>class</a>
+        <a href='../../class/c3/Chart.html#options-variable'>options</a>
+        <a href='../../class/c3/Chart.html#content_options-variable'>content_options</a>
+        <a href='../../class/c3/Base.html#anchor-variable'>anchor</a>
+        <a href='../../class/c3/Base.html#height-variable'>height</a>
+        <a href='../../class/c3/Base.html#width-variable'>width</a>
+        <a href='../../class/c3/Base.html#anchor_styles-variable'>anchor_styles</a>
+        <a href='../../class/c3/Base.html#handlers-variable'>handlers</a>
+      </p>
+      <h2>Instance Method Summary</h2>
+      <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#_init-dynamic'>
+        #
+(void)
+<b>_init</b><span>()</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#_draw-dynamic'>
+        #
+(void)
+<b>_draw</b><span>()</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+    </span>
+  </li>
+</ul>
+      <h2>
+        <small>Inherited Method Summary</small>
+        <h3 class='inherited'>
+          Methods inherited from
+          <a href='../../class/c3/Chart.html'>c3.Chart</a>
+        </h3>
+        <p class='inherited'>
+          <a href='../../class/c3/Chart.html#init-dynamic'>#init</a>
+          <a href='../../class/c3/Chart.html#style-dynamic'>#style</a>
+          <a href='../../class/c3/Base.html#render-dynamic'>#render</a>
+          <a href='../../class/c3/Base.html#resize-dynamic'>#resize</a>
+          <a href='../../class/c3/Base.html#redraw-dynamic'>#redraw</a>
+          <a href='../../class/c3/Base.html#restyle-dynamic'>#restyle</a>
+          <a href='../../class/c3/Base.html#_prep-dynamic'>#_prep</a>
+          <a href='../../class/c3/Base.html#_init-dynamic'>#_init</a>
+          <a href='../../class/c3/Base.html#size-dynamic'>#size</a>
+          <a href='../../class/c3/Base.html#_size-dynamic'>#_size</a>
+          <a href='../../class/c3/Base.html#update-dynamic'>#update</a>
+          <a href='../../class/c3/Base.html#_update-dynamic'>#_update</a>
+          <a href='../../class/c3/Base.html#draw-dynamic'>#draw</a>
+          <a href='../../class/c3/Base.html#_draw-dynamic'>#_draw</a>
+          <a href='../../class/c3/Base.html#_style-dynamic'>#_style</a>
+          <a href='../../class/c3/Base.html#on-dynamic'>#on</a>
+        </p>
+      </h2>
+      <h2>Constructor Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='constructor-dynamic'>
+      #
+(void)
+<b>constructor</b><span>(opt)</span>
+      <br>
+    </p>
+    
+  </div>
+</div>
+      <h2>Instance Method Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='_init-dynamic'>
+      #
+(void)
+<b>_init</b><span>()</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='_draw-dynamic'>
+      #
+(void)
+<b>_draw</b><span>()</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    
+  </div>
+</div>
+    </div>
+    <div id='footer'>
+  March 01, 16 10:15:34 by
+  <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
+    Codo
+  </a>
+  2.0.11
+  &#10034;
+  Press H to see the keyboard shortcuts
+  &#10034;
+  <a href='http://twitter.com/netzpirat' target='_parent'>@netzpirat</a>
+  &#10034;
+  <a href='http://twitter.com/_inossidabile' target='_parent'>@_inossidabile</a>
+</div>
+<iframe id='search_frame'></iframe>
+<div id='fuzzySearch'>
+  <input type='text'>
+  <ol></ol>
+</div>
+<div id='help'>
+  <p>
+    Quickly fuzzy find classes, mixins, methods, file:
+  </p>
+  <ul>
+    <li>
+      <span>T</span>
+      Open fuzzy finder dialog
+    </li>
+  </ul>
+  <p>
+    Control the navigation frame:
+  </p>
+  <ul>
+    <li>
+      <span>L</span>
+      Toggle list view
+    </li>
+    <li>
+      <span>C</span>
+      Show class list
+    </li>
+    <li>
+      <span>I</span>
+      Show mixin list
+    </li>
+    <li>
+      <span>F</span>
+      Show file list
+    </li>
+    <li>
+      <span>M</span>
+      Show method list
+    </li>
+    <li>
+      <span>E</span>
+      Show extras list
+    </li>
+  </ul>
+  <p>
+    You can focus and blur the search input:
+  </p>
+  <ul>
+    <li>
+      <span>S</span>
+      Focus search input
+    </li>
+    <li>
+      <span>Esc</span>
+      Blur search input
+    </li>
+  </ul>
+</div>
+  </body>
+</html>

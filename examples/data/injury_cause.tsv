@@ -1,0 +1,1690 @@
+"Notes"	"Five-Year Age Groups"	"Five-Year Age Groups Code"	"Injury Mechanism & All Other Leading Causes"	"Injury Mechanism & All Other Leading Causes Code"	Deaths	Population	Crude Rate
+	"< 1 year"	"1"	"Cut/Pierce"	"GRINJ-001"	42	47830261	0.1
+	"< 1 year"	"1"	"Drowning"	"GRINJ-002"	900	47830261	1.9
+	"< 1 year"	"1"	"Fall"	"GRINJ-003"	237	47830261	0.5
+	"< 1 year"	"1"	"Fire/Flame"	"GRINJ-004"	443	47830261	0.9
+	"< 1 year"	"1"	"Hot object/Substance"	"GRINJ-005"	30	47830261	0.1
+	"< 1 year"	"1"	"Firearm"	"GRINJ-006"	120	47830261	0.3
+	"< 1 year"	"1"	"Machinery"	"GRINJ-007"	2	47830261	Unreliable
+	"< 1 year"	"1"	"Motor Vehicle Traffic"	"GRINJ-008"	1549	47830261	3.2
+	"< 1 year"	"1"	"Other Pedal cyclist"	"GRINJ-009"	1	47830261	Unreliable
+	"< 1 year"	"1"	"Other Pedestrian"	"GRINJ-010"	40	47830261	0.1
+	"< 1 year"	"1"	"Other land transport"	"GRINJ-011"	30	47830261	0.1
+	"< 1 year"	"1"	"Other transport"	"GRINJ-012"	18	47830261	Unreliable
+	"< 1 year"	"1"	"Natural/Environmental"	"GRINJ-013"	216	47830261	0.5
+	"< 1 year"	"1"	"Overexertion"	"GRINJ-014"	0	47830261	Unreliable
+	"< 1 year"	"1"	"Poisoning"	"GRINJ-015"	408	47830261	0.9
+	"< 1 year"	"1"	"Struck by or against"	"GRINJ-016"	133	47830261	0.3
+	"< 1 year"	"1"	"Suffocation"	"GRINJ-017"	9913	47830261	20.7
+	"< 1 year"	"1"	"Other specified, classifiable Injury"	"GRINJ-018"	1317	47830261	2.8
+	"< 1 year"	"1"	"Other specified, not elsewhere classified Injury"	"GRINJ-019"	240	47830261	0.5
+	"< 1 year"	"1"	"Unspecified Injury"	"GRINJ-020"	2151	47830261	4.5
+	"< 1 year"	"1"	"Non-Injury: Intestinal infections"	"GR113 001-003"	803	47830261	1.7
+	"< 1 year"	"1"	"Non-Injury: Tuberculosis"	"GR113 005-006"	12	47830261	Unreliable
+	"< 1 year"	"1"	"Non-Injury: Whooping cough"	"GR113-007"	180	47830261	0.4
+	"< 1 year"	"1"	"Non-Injury: Scarlet fever and erysipelas"	"GR113-008"	0	47830261	Unreliable
+	"< 1 year"	"1"	"Non-Injury: Meningococcal infection"	"GR113-009"	177	47830261	0.4
+	"< 1 year"	"1"	"Non-Injury: Septicemia"	"GR113-010"	3293	47830261	6.9
+	"< 1 year"	"1"	"Non-Injury: Syphilis"	"GR113-011"	12	47830261	Unreliable
+	"< 1 year"	"1"	"Non-Injury: Acute poliomyelitis"	"GR113-012"	0	47830261	Unreliable
+	"< 1 year"	"1"	"Non-Injury: Arthropod-borne viral encephalitis"	"GR113-013"	2	47830261	Unreliable
+	"< 1 year"	"1"	"Non-Injury: Measles"	"GR113-014"	2	47830261	Unreliable
+	"< 1 year"	"1"	"Non-Injury: Viral hepatitis"	"GR113-015"	18	47830261	Unreliable
+	"< 1 year"	"1"	"Non-Injury: Human immunodeficiency virus (HIV) disease"	"GR113-016"	64	47830261	0.1
+	"< 1 year"	"1"	"Non-Injury: Malaria"	"GR113-017"	2	47830261	Unreliable
+	"< 1 year"	"1"	"Non-Injury: Other and unspecified infectious and parasitic diseases and their sequelae"	"GR113-018"	2021	47830261	4.2
+	"< 1 year"	"1"	"Non-Injury: Malignant neoplasms (Cancers)"	"GR113 020-043"	878	47830261	1.8
+	"< 1 year"	"1"	"Non-Injury: In situ neoplasms, benign neoplasms and neoplasms of uncertain or unknown behavior"	"GR113-044"	725	47830261	1.5
+	"< 1 year"	"1"	"Non-Injury: Anemias"	"GR113-045"	183	47830261	0.4
+	"< 1 year"	"1"	"Non-Injury: Diabetes mellitus"	"GR113-046"	36	47830261	0.1
+	"< 1 year"	"1"	"Non-Injury: Nutritional Deficiencies"	"GR113 048-049"	85	47830261	0.2
+	"< 1 year"	"1"	"Non-Injury: Meningitis"	"GR113-050"	890	47830261	1.9
+	"< 1 year"	"1"	"Non-Injury: Parkinsons disease"	"GR113-051"	4	47830261	Unreliable
+	"< 1 year"	"1"	"Non-Injury: Alzheimers disease"	"GR113-052"	0	47830261	Unreliable
+	"< 1 year"	"1"	"Non-Injury: Diseases of Heart"	"GR113 055-068"	5095	47830261	10.7
+	"< 1 year"	"1"	"Non-Injury: Essential (primary) hypertension and hypertensive renal disease"	"GR113-069"	26	47830261	0.1
+	"< 1 year"	"1"	"Non-Injury: Cerebrovascular diseases, including stroke"	"GR113-070"	1498	47830261	3.1
+	"< 1 year"	"1"	"Non-Injury: Atherosclerosis"	"GR113-071"	26	47830261	0.1
+	"< 1 year"	"1"	"Non-Injury: Other diseases of the circulatory system"	"GR113 073-074"	168	47830261	0.4
+	"< 1 year"	"1"	"Non-Injury: Other disorders of circulatory system"	"GR113-075"	368	47830261	0.8
+	"< 1 year"	"1"	"Non-Injury: Influenza & Pneumonia"	"GR113 077-078"	3188	47830261	6.7
+	"< 1 year"	"1"	"Non-Injury: Other acute lower respiratory infections"	"GR113 079"	589	47830261	1.2
+	"< 1 year"	"1"	"Non-Injury: Chronic lower respiratory diseases"	"GR113 082"	420	47830261	0.9
+	"< 1 year"	"1"	"Non-Injury: Pneumoconioses and chemical effects"	"GR113-087"	4	47830261	Unreliable
+	"< 1 year"	"1"	"Non-Injury: Pneumonitis due to solids and liquids"	"GR113-088"	139	47830261	0.3
+	"< 1 year"	"1"	"Non-Injury: Other diseases of respiratory system"	"GR113-089"	3423	47830261	7.2
+	"< 1 year"	"1"	"Non-Injury: Peptic ulcer"	"GR113-090"	16	47830261	Unreliable
+	"< 1 year"	"1"	"Non-Injury: Diseases of appendix"	"GR113-091"	32	47830261	0.1
+	"< 1 year"	"1"	"Non-Injury: Hernia"	"GR113-092"	413	47830261	0.9
+	"< 1 year"	"1"	"Non-Injury: Chronic liver disease and cirrhosis"	"GR113 093"	63	47830261	0.1
+	"< 1 year"	"1"	"Non-Injury: Cholelithiasis and other disorders of gallbladder"	"GR113-096"	4	47830261	Unreliable
+	"< 1 year"	"1"	"Non-Injury: Nephritis, nephrotic syndrome and nephrosis"	"GR113 097"	1813	47830261	3.8
+	"< 1 year"	"1"	"Non-Injury: Infections of kidney"	"GR113-102"	49	47830261	0.1
+	"< 1 year"	"1"	"Non-Injury: Hyperplasia of prostate"	"GR113-103"	1	47830261	Unreliable
+	"< 1 year"	"1"	"Non-Injury: Inflammatory diseases of female pelvic organs"	"GR113-104"	14	47830261	Unreliable
+	"< 1 year"	"1"	"Non-Injury: Pregnancy with abortive outcome"	"GR113-106"	0	47830261	Unreliable
+	"< 1 year"	"1"	"Non-Injury: Other complications of pregnancy, childbirth and the puerperium"	"GR113-107"	0	47830261	Unreliable
+	"< 1 year"	"1"	"Non-Injury: Certain conditions originating in the perinatal period"	"GR113-108"	166192	47830261	347.5
+	"< 1 year"	"1"	"Non-Injury: Congenital malformations, deformations and chromosomal abnormalities"	"GR113-109"	66815	47830261	139.7
+	"< 1 year"	"1"	"Non-Injury: Symptoms, signs and abnormal clinical and laboratory findings, not elsewhere classified"	"GR113-110"	41489	47830261	86.7
+	"< 1 year"	"1"	"Non-Injury: All other diseases (Residual)"	"GR113-111"	13403	47830261	28.0
+	"< 1 year"	"1"	"Non-Injury: Complications of medical and surgical care"	"GR113-135"	272	47830261	0.6
+"Total"	"< 1 year"	"1"			332697	47830261	695.6
+	"1-4 years"	"1-4"	"Cut/Pierce"	"GRINJ-001"	164	189286073	0.1
+	"1-4 years"	"1-4"	"Drowning"	"GRINJ-002"	5766	189286073	3.0
+	"1-4 years"	"1-4"	"Fall"	"GRINJ-003"	507	189286073	0.3
+	"1-4 years"	"1-4"	"Fire/Flame"	"GRINJ-004"	2819	189286073	1.5
+	"1-4 years"	"1-4"	"Hot object/Substance"	"GRINJ-005"	81	189286073	0.0
+	"1-4 years"	"1-4"	"Firearm"	"GRINJ-006"	751	189286073	0.4
+	"1-4 years"	"1-4"	"Machinery"	"GRINJ-007"	100	189286073	0.1
+	"1-4 years"	"1-4"	"Motor Vehicle Traffic"	"GRINJ-008"	5679	189286073	3.0
+	"1-4 years"	"1-4"	"Other Pedal cyclist"	"GRINJ-009"	27	189286073	0.0
+	"1-4 years"	"1-4"	"Other Pedestrian"	"GRINJ-010"	1282	189286073	0.7
+	"1-4 years"	"1-4"	"Other land transport"	"GRINJ-011"	254	189286073	0.1
+	"1-4 years"	"1-4"	"Other transport"	"GRINJ-012"	97	189286073	0.1
+	"1-4 years"	"1-4"	"Natural/Environmental"	"GRINJ-013"	450	189286073	0.2
+	"1-4 years"	"1-4"	"Overexertion"	"GRINJ-014"	0	189286073	Unreliable
+	"1-4 years"	"1-4"	"Poisoning"	"GRINJ-015"	640	189286073	0.3
+	"1-4 years"	"1-4"	"Struck by or against"	"GRINJ-016"	470	189286073	0.2
+	"1-4 years"	"1-4"	"Suffocation"	"GRINJ-017"	2024	189286073	1.1
+	"1-4 years"	"1-4"	"Other specified, classifiable Injury"	"GRINJ-018"	1071	189286073	0.6
+	"1-4 years"	"1-4"	"Other specified, not elsewhere classified Injury"	"GRINJ-019"	510	189286073	0.3
+	"1-4 years"	"1-4"	"Unspecified Injury"	"GRINJ-020"	2237	189286073	1.2
+	"1-4 years"	"1-4"	"Non-Injury: Intestinal infections"	"GR113 001-003"	157	189286073	0.1
+	"1-4 years"	"1-4"	"Non-Injury: Tuberculosis"	"GR113 005-006"	21	189286073	0.0
+	"1-4 years"	"1-4"	"Non-Injury: Whooping cough"	"GR113-007"	2	189286073	Unreliable
+	"1-4 years"	"1-4"	"Non-Injury: Scarlet fever and erysipelas"	"GR113-008"	1	189286073	Unreliable
+	"1-4 years"	"1-4"	"Non-Injury: Meningococcal infection"	"GR113-009"	177	189286073	0.1
+	"1-4 years"	"1-4"	"Non-Injury: Septicemia"	"GR113-010"	1019	189286073	0.5
+	"1-4 years"	"1-4"	"Non-Injury: Syphilis"	"GR113-011"	2	189286073	Unreliable
+	"1-4 years"	"1-4"	"Non-Injury: Acute poliomyelitis"	"GR113-012"	0	189286073	Unreliable
+	"1-4 years"	"1-4"	"Non-Injury: Arthropod-borne viral encephalitis"	"GR113-013"	3	189286073	Unreliable
+	"1-4 years"	"1-4"	"Non-Injury: Measles"	"GR113-014"	2	189286073	Unreliable
+	"1-4 years"	"1-4"	"Non-Injury: Viral hepatitis"	"GR113-015"	9	189286073	Unreliable
+	"1-4 years"	"1-4"	"Non-Injury: Human immunodeficiency virus (HIV) disease"	"GR113-016"	73	189286073	0.0
+	"1-4 years"	"1-4"	"Non-Injury: Malaria"	"GR113-017"	1	189286073	Unreliable
+	"1-4 years"	"1-4"	"Non-Injury: Other and unspecified infectious and parasitic diseases and their sequelae"	"GR113-018"	819	189286073	0.4
+	"1-4 years"	"1-4"	"Non-Injury: Malignant neoplasms (Cancers)"	"GR113 020-043"	4659	189286073	2.5
+	"1-4 years"	"1-4"	"Non-Injury: In situ neoplasms, benign neoplasms and neoplasms of uncertain or unknown behavior"	"GR113-044"	667	189286073	0.4
+	"1-4 years"	"1-4"	"Non-Injury: Anemias"	"GR113-045"	314	189286073	0.2
+	"1-4 years"	"1-4"	"Non-Injury: Diabetes mellitus"	"GR113-046"	63	189286073	0.0
+	"1-4 years"	"1-4"	"Non-Injury: Nutritional Deficiencies"	"GR113 048-049"	37	189286073	0.0
+	"1-4 years"	"1-4"	"Non-Injury: Meningitis"	"GR113-050"	294	189286073	0.2
+	"1-4 years"	"1-4"	"Non-Injury: Parkinsons disease"	"GR113-051"	3	189286073	Unreliable
+	"1-4 years"	"1-4"	"Non-Injury: Alzheimers disease"	"GR113-052"	0	189286073	Unreliable
+	"1-4 years"	"1-4"	"Non-Injury: Diseases of Heart"	"GR113 055-068"	2111	189286073	1.1
+	"1-4 years"	"1-4"	"Non-Injury: Essential (primary) hypertension and hypertensive renal disease"	"GR113-069"	16	189286073	Unreliable
+	"1-4 years"	"1-4"	"Non-Injury: Cerebrovascular diseases, including stroke"	"GR113-070"	615	189286073	0.3
+	"1-4 years"	"1-4"	"Non-Injury: Atherosclerosis"	"GR113-071"	4	189286073	Unreliable
+	"1-4 years"	"1-4"	"Non-Injury: Other diseases of the circulatory system"	"GR113 073-074"	39	189286073	0.0
+	"1-4 years"	"1-4"	"Non-Injury: Other disorders of circulatory system"	"GR113-075"	40	189286073	0.0
+	"1-4 years"	"1-4"	"Non-Injury: Influenza & Pneumonia"	"GR113 077-078"	1460	189286073	0.8
+	"1-4 years"	"1-4"	"Non-Injury: Other acute lower respiratory infections"	"GR113 079"	223	189286073	0.1
+	"1-4 years"	"1-4"	"Non-Injury: Chronic lower respiratory diseases"	"GR113 082"	643	189286073	0.3
+	"1-4 years"	"1-4"	"Non-Injury: Pneumoconioses and chemical effects"	"GR113-087"	7	189286073	Unreliable
+	"1-4 years"	"1-4"	"Non-Injury: Pneumonitis due to solids and liquids"	"GR113-088"	120	189286073	0.1
+	"1-4 years"	"1-4"	"Non-Injury: Other diseases of respiratory system"	"GR113-089"	1147	189286073	0.6
+	"1-4 years"	"1-4"	"Non-Injury: Peptic ulcer"	"GR113-090"	13	189286073	Unreliable
+	"1-4 years"	"1-4"	"Non-Injury: Diseases of appendix"	"GR113-091"	40	189286073	0.0
+	"1-4 years"	"1-4"	"Non-Injury: Hernia"	"GR113-092"	44	189286073	0.0
+	"1-4 years"	"1-4"	"Non-Injury: Chronic liver disease and cirrhosis"	"GR113 093"	21	189286073	0.0
+	"1-4 years"	"1-4"	"Non-Injury: Cholelithiasis and other disorders of gallbladder"	"GR113-096"	2	189286073	Unreliable
+	"1-4 years"	"1-4"	"Non-Injury: Nephritis, nephrotic syndrome and nephrosis"	"GR113 097"	178	189286073	0.1
+	"1-4 years"	"1-4"	"Non-Injury: Infections of kidney"	"GR113-102"	24	189286073	0.0
+	"1-4 years"	"1-4"	"Non-Injury: Hyperplasia of prostate"	"GR113-103"	0	189286073	Unreliable
+	"1-4 years"	"1-4"	"Non-Injury: Inflammatory diseases of female pelvic organs"	"GR113-104"	2	189286073	Unreliable
+	"1-4 years"	"1-4"	"Non-Injury: Pregnancy with abortive outcome"	"GR113-106"	0	189286073	Unreliable
+	"1-4 years"	"1-4"	"Non-Injury: Other complications of pregnancy, childbirth and the puerperium"	"GR113-107"	0	189286073	Unreliable
+	"1-4 years"	"1-4"	"Non-Injury: Certain conditions originating in the perinatal period"	"GR113-108"	802	189286073	0.4
+	"1-4 years"	"1-4"	"Non-Injury: Congenital malformations, deformations and chromosomal abnormalities"	"GR113-109"	6316	189286073	3.3
+	"1-4 years"	"1-4"	"Non-Injury: Symptoms, signs and abnormal clinical and laboratory findings, not elsewhere classified"	"GR113-110"	2956	189286073	1.6
+	"1-4 years"	"1-4"	"Non-Injury: All other diseases (Residual)"	"GR113-111"	7200	189286073	3.8
+	"1-4 years"	"1-4"	"Non-Injury: Complications of medical and surgical care"	"GR113-135"	254	189286073	0.1
+"Total"	"1-4 years"	"1-4"			57529	189286073	30.4
+	"5-9 years"	"5-9"	"Cut/Pierce"	"GRINJ-001"	157	239385956	0.1
+	"5-9 years"	"5-9"	"Drowning"	"GRINJ-002"	1833	239385956	0.8
+	"5-9 years"	"5-9"	"Fall"	"GRINJ-003"	211	239385956	0.1
+	"5-9 years"	"5-9"	"Fire/Flame"	"GRINJ-004"	1806	239385956	0.8
+	"5-9 years"	"5-9"	"Hot object/Substance"	"GRINJ-005"	8	239385956	Unreliable
+	"5-9 years"	"5-9"	"Firearm"	"GRINJ-006"	834	239385956	0.3
+	"5-9 years"	"5-9"	"Machinery"	"GRINJ-007"	77	239385956	0.0
+	"5-9 years"	"5-9"	"Motor Vehicle Traffic"	"GRINJ-008"	6592	239385956	2.8
+	"5-9 years"	"5-9"	"Other Pedal cyclist"	"GRINJ-009"	81	239385956	0.0
+	"5-9 years"	"5-9"	"Other Pedestrian"	"GRINJ-010"	331	239385956	0.1
+	"5-9 years"	"5-9"	"Other land transport"	"GRINJ-011"	500	239385956	0.2
+	"5-9 years"	"5-9"	"Other transport"	"GRINJ-012"	190	239385956	0.1
+	"5-9 years"	"5-9"	"Natural/Environmental"	"GRINJ-013"	154	239385956	0.1
+	"5-9 years"	"5-9"	"Overexertion"	"GRINJ-014"	0	239385956	Unreliable
+	"5-9 years"	"5-9"	"Poisoning"	"GRINJ-015"	277	239385956	0.1
+	"5-9 years"	"5-9"	"Struck by or against"	"GRINJ-016"	230	239385956	0.1
+	"5-9 years"	"5-9"	"Suffocation"	"GRINJ-017"	756	239385956	0.3
+	"5-9 years"	"5-9"	"Other specified, classifiable Injury"	"GRINJ-018"	268	239385956	0.1
+	"5-9 years"	"5-9"	"Other specified, not elsewhere classified Injury"	"GRINJ-019"	207	239385956	0.1
+	"5-9 years"	"5-9"	"Unspecified Injury"	"GRINJ-020"	359	239385956	0.1
+	"5-9 years"	"5-9"	"Non-Injury: Intestinal infections"	"GR113 001-003"	38	239385956	0.0
+	"5-9 years"	"5-9"	"Non-Injury: Tuberculosis"	"GR113 005-006"	6	239385956	Unreliable
+	"5-9 years"	"5-9"	"Non-Injury: Whooping cough"	"GR113-007"	0	239385956	Unreliable
+	"5-9 years"	"5-9"	"Non-Injury: Scarlet fever and erysipelas"	"GR113-008"	3	239385956	Unreliable
+	"5-9 years"	"5-9"	"Non-Injury: Meningococcal infection"	"GR113-009"	75	239385956	0.0
+	"5-9 years"	"5-9"	"Non-Injury: Septicemia"	"GR113-010"	435	239385956	0.2
+	"5-9 years"	"5-9"	"Non-Injury: Syphilis"	"GR113-011"	0	239385956	Unreliable
+	"5-9 years"	"5-9"	"Non-Injury: Acute poliomyelitis"	"GR113-012"	0	239385956	Unreliable
+	"5-9 years"	"5-9"	"Non-Injury: Arthropod-borne viral encephalitis"	"GR113-013"	3	239385956	Unreliable
+	"5-9 years"	"5-9"	"Non-Injury: Measles"	"GR113-014"	0	239385956	Unreliable
+	"5-9 years"	"5-9"	"Non-Injury: Viral hepatitis"	"GR113-015"	8	239385956	Unreliable
+	"5-9 years"	"5-9"	"Non-Injury: Human immunodeficiency virus (HIV) disease"	"GR113-016"	107	239385956	0.0
+	"5-9 years"	"5-9"	"Non-Injury: Malaria"	"GR113-017"	0	239385956	Unreliable
+	"5-9 years"	"5-9"	"Non-Injury: Other and unspecified infectious and parasitic diseases and their sequelae"	"GR113-018"	366	239385956	0.2
+	"5-9 years"	"5-9"	"Non-Injury: Malignant neoplasms (Cancers)"	"GR113 020-043"	5867	239385956	2.5
+	"5-9 years"	"5-9"	"Non-Injury: In situ neoplasms, benign neoplasms and neoplasms of uncertain or unknown behavior"	"GR113-044"	556	239385956	0.2
+	"5-9 years"	"5-9"	"Non-Injury: Anemias"	"GR113-045"	227	239385956	0.1
+	"5-9 years"	"5-9"	"Non-Injury: Diabetes mellitus"	"GR113-046"	89	239385956	0.0
+	"5-9 years"	"5-9"	"Non-Injury: Nutritional Deficiencies"	"GR113 048-049"	14	239385956	Unreliable
+	"5-9 years"	"5-9"	"Non-Injury: Meningitis"	"GR113-050"	124	239385956	0.1
+	"5-9 years"	"5-9"	"Non-Injury: Parkinsons disease"	"GR113-051"	1	239385956	Unreliable
+	"5-9 years"	"5-9"	"Non-Injury: Alzheimers disease"	"GR113-052"	0	239385956	Unreliable
+	"5-9 years"	"5-9"	"Non-Injury: Diseases of Heart"	"GR113 055-068"	1167	239385956	0.5
+	"5-9 years"	"5-9"	"Non-Injury: Essential (primary) hypertension and hypertensive renal disease"	"GR113-069"	10	239385956	Unreliable
+	"5-9 years"	"5-9"	"Non-Injury: Cerebrovascular diseases, including stroke"	"GR113-070"	440	239385956	0.2
+	"5-9 years"	"5-9"	"Non-Injury: Atherosclerosis"	"GR113-071"	1	239385956	Unreliable
+	"5-9 years"	"5-9"	"Non-Injury: Other diseases of the circulatory system"	"GR113 073-074"	31	239385956	0.0
+	"5-9 years"	"5-9"	"Non-Injury: Other disorders of circulatory system"	"GR113-075"	23	239385956	0.0
+	"5-9 years"	"5-9"	"Non-Injury: Influenza & Pneumonia"	"GR113 077-078"	607	239385956	0.3
+	"5-9 years"	"5-9"	"Non-Injury: Other acute lower respiratory infections"	"GR113 079"	33	239385956	0.0
+	"5-9 years"	"5-9"	"Non-Injury: Chronic lower respiratory diseases"	"GR113 082"	597	239385956	0.2
+	"5-9 years"	"5-9"	"Non-Injury: Pneumoconioses and chemical effects"	"GR113-087"	1	239385956	Unreliable
+	"5-9 years"	"5-9"	"Non-Injury: Pneumonitis due to solids and liquids"	"GR113-088"	61	239385956	0.0
+	"5-9 years"	"5-9"	"Non-Injury: Other diseases of respiratory system"	"GR113-089"	410	239385956	0.2
+	"5-9 years"	"5-9"	"Non-Injury: Peptic ulcer"	"GR113-090"	8	239385956	Unreliable
+	"5-9 years"	"5-9"	"Non-Injury: Diseases of appendix"	"GR113-091"	64	239385956	0.0
+	"5-9 years"	"5-9"	"Non-Injury: Hernia"	"GR113-092"	22	239385956	0.0
+	"5-9 years"	"5-9"	"Non-Injury: Chronic liver disease and cirrhosis"	"GR113 093"	5	239385956	Unreliable
+	"5-9 years"	"5-9"	"Non-Injury: Cholelithiasis and other disorders of gallbladder"	"GR113-096"	5	239385956	Unreliable
+	"5-9 years"	"5-9"	"Non-Injury: Nephritis, nephrotic syndrome and nephrosis"	"GR113 097"	113	239385956	0.0
+	"5-9 years"	"5-9"	"Non-Injury: Infections of kidney"	"GR113-102"	5	239385956	Unreliable
+	"5-9 years"	"5-9"	"Non-Injury: Hyperplasia of prostate"	"GR113-103"	0	239385956	Unreliable
+	"5-9 years"	"5-9"	"Non-Injury: Inflammatory diseases of female pelvic organs"	"GR113-104"	0	239385956	Unreliable
+	"5-9 years"	"5-9"	"Non-Injury: Pregnancy with abortive outcome"	"GR113-106"	0	239385956	Unreliable
+	"5-9 years"	"5-9"	"Non-Injury: Other complications of pregnancy, childbirth and the puerperium"	"GR113-107"	0	239385956	Unreliable
+	"5-9 years"	"5-9"	"Non-Injury: Certain conditions originating in the perinatal period"	"GR113-108"	210	239385956	0.1
+	"5-9 years"	"5-9"	"Non-Injury: Congenital malformations, deformations and chromosomal abnormalities"	"GR113-109"	2273	239385956	0.9
+	"5-9 years"	"5-9"	"Non-Injury: Symptoms, signs and abnormal clinical and laboratory findings, not elsewhere classified"	"GR113-110"	745	239385956	0.3
+	"5-9 years"	"5-9"	"Non-Injury: All other diseases (Residual)"	"GR113-111"	4525	239385956	1.9
+	"5-9 years"	"5-9"	"Non-Injury: Complications of medical and surgical care"	"GR113-135"	116	239385956	0.0
+"Total"	"5-9 years"	"5-9"			34262	239385956	14.3
+	"10-14 years"	"10-14"	"Cut/Pierce"	"GRINJ-001"	235	250939740	0.1
+	"10-14 years"	"10-14"	"Drowning"	"GRINJ-002"	1678	250939740	0.7
+	"10-14 years"	"10-14"	"Fall"	"GRINJ-003"	304	250939740	0.1
+	"10-14 years"	"10-14"	"Fire/Flame"	"GRINJ-004"	1027	250939740	0.4
+	"10-14 years"	"10-14"	"Hot object/Substance"	"GRINJ-005"	3	250939740	Unreliable
+	"10-14 years"	"10-14"	"Firearm"	"GRINJ-006"	3113	250939740	1.2
+	"10-14 years"	"10-14"	"Machinery"	"GRINJ-007"	89	250939740	0.0
+	"10-14 years"	"10-14"	"Motor Vehicle Traffic"	"GRINJ-008"	9048	250939740	3.6
+	"10-14 years"	"10-14"	"Other Pedal cyclist"	"GRINJ-009"	156	250939740	0.1
+	"10-14 years"	"10-14"	"Other Pedestrian"	"GRINJ-010"	304	250939740	0.1
+	"10-14 years"	"10-14"	"Other land transport"	"GRINJ-011"	876	250939740	0.3
+	"10-14 years"	"10-14"	"Other transport"	"GRINJ-012"	314	250939740	0.1
+	"10-14 years"	"10-14"	"Natural/Environmental"	"GRINJ-013"	168	250939740	0.1
+	"10-14 years"	"10-14"	"Overexertion"	"GRINJ-014"	0	250939740	Unreliable
+	"10-14 years"	"10-14"	"Poisoning"	"GRINJ-015"	707	250939740	0.3
+	"10-14 years"	"10-14"	"Struck by or against"	"GRINJ-016"	195	250939740	0.1
+	"10-14 years"	"10-14"	"Suffocation"	"GRINJ-017"	2947	250939740	1.2
+	"10-14 years"	"10-14"	"Other specified, classifiable Injury"	"GRINJ-018"	248	250939740	0.1
+	"10-14 years"	"10-14"	"Other specified, not elsewhere classified Injury"	"GRINJ-019"	235	250939740	0.1
+	"10-14 years"	"10-14"	"Unspecified Injury"	"GRINJ-020"	328	250939740	0.1
+	"10-14 years"	"10-14"	"Non-Injury: Intestinal infections"	"GR113 001-003"	29	250939740	0.0
+	"10-14 years"	"10-14"	"Non-Injury: Tuberculosis"	"GR113 005-006"	11	250939740	Unreliable
+	"10-14 years"	"10-14"	"Non-Injury: Whooping cough"	"GR113-007"	2	250939740	Unreliable
+	"10-14 years"	"10-14"	"Non-Injury: Scarlet fever and erysipelas"	"GR113-008"	0	250939740	Unreliable
+	"10-14 years"	"10-14"	"Non-Injury: Meningococcal infection"	"GR113-009"	82	250939740	0.0
+	"10-14 years"	"10-14"	"Non-Injury: Septicemia"	"GR113-010"	449	250939740	0.2
+	"10-14 years"	"10-14"	"Non-Injury: Syphilis"	"GR113-011"	2	250939740	Unreliable
+	"10-14 years"	"10-14"	"Non-Injury: Acute poliomyelitis"	"GR113-012"	0	250939740	Unreliable
+	"10-14 years"	"10-14"	"Non-Injury: Arthropod-borne viral encephalitis"	"GR113-013"	2	250939740	Unreliable
+	"10-14 years"	"10-14"	"Non-Injury: Measles"	"GR113-014"	0	250939740	Unreliable
+	"10-14 years"	"10-14"	"Non-Injury: Viral hepatitis"	"GR113-015"	9	250939740	Unreliable
+	"10-14 years"	"10-14"	"Non-Injury: Human immunodeficiency virus (HIV) disease"	"GR113-016"	175	250939740	0.1
+	"10-14 years"	"10-14"	"Non-Injury: Malaria"	"GR113-017"	1	250939740	Unreliable
+	"10-14 years"	"10-14"	"Non-Injury: Other and unspecified infectious and parasitic diseases and their sequelae"	"GR113-018"	351	250939740	0.1
+	"10-14 years"	"10-14"	"Non-Injury: Malignant neoplasms (Cancers)"	"GR113 020-043"	5902	250939740	2.4
+	"10-14 years"	"10-14"	"Non-Injury: In situ neoplasms, benign neoplasms and neoplasms of uncertain or unknown behavior"	"GR113-044"	492	250939740	0.2
+	"10-14 years"	"10-14"	"Non-Injury: Anemias"	"GR113-045"	270	250939740	0.1
+	"10-14 years"	"10-14"	"Non-Injury: Diabetes mellitus"	"GR113-046"	288	250939740	0.1
+	"10-14 years"	"10-14"	"Non-Injury: Nutritional Deficiencies"	"GR113 048-049"	16	250939740	Unreliable
+	"10-14 years"	"10-14"	"Non-Injury: Meningitis"	"GR113-050"	145	250939740	0.1
+	"10-14 years"	"10-14"	"Non-Injury: Parkinsons disease"	"GR113-051"	0	250939740	Unreliable
+	"10-14 years"	"10-14"	"Non-Injury: Alzheimers disease"	"GR113-052"	1	250939740	Unreliable
+	"10-14 years"	"10-14"	"Non-Injury: Diseases of Heart"	"GR113 055-068"	1794	250939740	0.7
+	"10-14 years"	"10-14"	"Non-Injury: Essential (primary) hypertension and hypertensive renal disease"	"GR113-069"	10	250939740	Unreliable
+	"10-14 years"	"10-14"	"Non-Injury: Cerebrovascular diseases, including stroke"	"GR113-070"	552	250939740	0.2
+	"10-14 years"	"10-14"	"Non-Injury: Atherosclerosis"	"GR113-071"	1	250939740	Unreliable
+	"10-14 years"	"10-14"	"Non-Injury: Other diseases of the circulatory system"	"GR113 073-074"	109	250939740	0.0
+	"10-14 years"	"10-14"	"Non-Injury: Other disorders of circulatory system"	"GR113-075"	26	250939740	0.0
+	"10-14 years"	"10-14"	"Non-Injury: Influenza & Pneumonia"	"GR113 077-078"	650	250939740	0.3
+	"10-14 years"	"10-14"	"Non-Injury: Other acute lower respiratory infections"	"GR113 079"	18	250939740	Unreliable
+	"10-14 years"	"10-14"	"Non-Injury: Chronic lower respiratory diseases"	"GR113 082"	871	250939740	0.3
+	"10-14 years"	"10-14"	"Non-Injury: Pneumoconioses and chemical effects"	"GR113-087"	0	250939740	Unreliable
+	"10-14 years"	"10-14"	"Non-Injury: Pneumonitis due to solids and liquids"	"GR113-088"	92	250939740	0.0
+	"10-14 years"	"10-14"	"Non-Injury: Other diseases of respiratory system"	"GR113-089"	427	250939740	0.2
+	"10-14 years"	"10-14"	"Non-Injury: Peptic ulcer"	"GR113-090"	11	250939740	Unreliable
+	"10-14 years"	"10-14"	"Non-Injury: Diseases of appendix"	"GR113-091"	78	250939740	0.0
+	"10-14 years"	"10-14"	"Non-Injury: Hernia"	"GR113-092"	19	250939740	Unreliable
+	"10-14 years"	"10-14"	"Non-Injury: Chronic liver disease and cirrhosis"	"GR113 093"	16	250939740	Unreliable
+	"10-14 years"	"10-14"	"Non-Injury: Cholelithiasis and other disorders of gallbladder"	"GR113-096"	8	250939740	Unreliable
+	"10-14 years"	"10-14"	"Non-Injury: Nephritis, nephrotic syndrome and nephrosis"	"GR113 097"	148	250939740	0.1
+	"10-14 years"	"10-14"	"Non-Injury: Infections of kidney"	"GR113-102"	12	250939740	Unreliable
+	"10-14 years"	"10-14"	"Non-Injury: Hyperplasia of prostate"	"GR113-103"	0	250939740	Unreliable
+	"10-14 years"	"10-14"	"Non-Injury: Inflammatory diseases of female pelvic organs"	"GR113-104"	2	250939740	Unreliable
+	"10-14 years"	"10-14"	"Non-Injury: Pregnancy with abortive outcome"	"GR113-106"	3	250939740	Unreliable
+	"10-14 years"	"10-14"	"Non-Injury: Other complications of pregnancy, childbirth and the puerperium"	"GR113-107"	11	250939740	Unreliable
+	"10-14 years"	"10-14"	"Non-Injury: Certain conditions originating in the perinatal period"	"GR113-108"	152	250939740	0.1
+	"10-14 years"	"10-14"	"Non-Injury: Congenital malformations, deformations and chromosomal abnormalities"	"GR113-109"	2229	250939740	0.9
+	"10-14 years"	"10-14"	"Non-Injury: Symptoms, signs and abnormal clinical and laboratory findings, not elsewhere classified"	"GR113-110"	962	250939740	0.4
+	"10-14 years"	"10-14"	"Non-Injury: All other diseases (Residual)"	"GR113-111"	5729	250939740	2.3
+	"10-14 years"	"10-14"	"Non-Injury: Complications of medical and surgical care"	"GR113-135"	126	250939740	0.1
+"Total"	"10-14 years"	"10-14"			44258	250939740	17.6
+	"15-19 years"	"15-19"	"Cut/Pierce"	"GRINJ-001"	2122	255076636	0.8
+	"15-19 years"	"15-19"	"Drowning"	"GRINJ-002"	4000	255076636	1.6
+	"15-19 years"	"15-19"	"Fall"	"GRINJ-003"	1468	255076636	0.6
+	"15-19 years"	"15-19"	"Fire/Flame"	"GRINJ-004"	1044	255076636	0.4
+	"15-19 years"	"15-19"	"Hot object/Substance"	"GRINJ-005"	5	255076636	Unreliable
+	"15-19 years"	"15-19"	"Firearm"	"GRINJ-006"	30940	255076636	12.1
+	"15-19 years"	"15-19"	"Machinery"	"GRINJ-007"	182	255076636	0.1
+	"15-19 years"	"15-19"	"Motor Vehicle Traffic"	"GRINJ-008"	55197	255076636	21.6
+	"15-19 years"	"15-19"	"Other Pedal cyclist"	"GRINJ-009"	142	255076636	0.1
+	"15-19 years"	"15-19"	"Other Pedestrian"	"GRINJ-010"	784	255076636	0.3
+	"15-19 years"	"15-19"	"Other land transport"	"GRINJ-011"	1910	255076636	0.7
+	"15-19 years"	"15-19"	"Other transport"	"GRINJ-012"	659	255076636	0.3
+	"15-19 years"	"15-19"	"Natural/Environmental"	"GRINJ-013"	346	255076636	0.1
+	"15-19 years"	"15-19"	"Overexertion"	"GRINJ-014"	2	255076636	Unreliable
+	"15-19 years"	"15-19"	"Poisoning"	"GRINJ-015"	9502	255076636	3.7
+	"15-19 years"	"15-19"	"Struck by or against"	"GRINJ-016"	461	255076636	0.2
+	"15-19 years"	"15-19"	"Suffocation"	"GRINJ-017"	8724	255076636	3.4
+	"15-19 years"	"15-19"	"Other specified, classifiable Injury"	"GRINJ-018"	905	255076636	0.4
+	"15-19 years"	"15-19"	"Other specified, not elsewhere classified Injury"	"GRINJ-019"	679	255076636	0.3
+	"15-19 years"	"15-19"	"Unspecified Injury"	"GRINJ-020"	1724	255076636	0.7
+	"15-19 years"	"15-19"	"Non-Injury: Intestinal infections"	"GR113 001-003"	28	255076636	0.0
+	"15-19 years"	"15-19"	"Non-Injury: Tuberculosis"	"GR113 005-006"	28	255076636	0.0
+	"15-19 years"	"15-19"	"Non-Injury: Whooping cough"	"GR113-007"	0	255076636	Unreliable
+	"15-19 years"	"15-19"	"Non-Injury: Scarlet fever and erysipelas"	"GR113-008"	0	255076636	Unreliable
+	"15-19 years"	"15-19"	"Non-Injury: Meningococcal infection"	"GR113-009"	215	255076636	0.1
+	"15-19 years"	"15-19"	"Non-Injury: Septicemia"	"GR113-010"	608	255076636	0.2
+	"15-19 years"	"15-19"	"Non-Injury: Syphilis"	"GR113-011"	2	255076636	Unreliable
+	"15-19 years"	"15-19"	"Non-Injury: Acute poliomyelitis"	"GR113-012"	0	255076636	Unreliable
+	"15-19 years"	"15-19"	"Non-Injury: Arthropod-borne viral encephalitis"	"GR113-013"	1	255076636	Unreliable
+	"15-19 years"	"15-19"	"Non-Injury: Measles"	"GR113-014"	0	255076636	Unreliable
+	"15-19 years"	"15-19"	"Non-Injury: Viral hepatitis"	"GR113-015"	47	255076636	0.0
+	"15-19 years"	"15-19"	"Non-Injury: Human immunodeficiency virus (HIV) disease"	"GR113-016"	382	255076636	0.1
+	"15-19 years"	"15-19"	"Non-Injury: Malaria"	"GR113-017"	1	255076636	Unreliable
+	"15-19 years"	"15-19"	"Non-Injury: Other and unspecified infectious and parasitic diseases and their sequelae"	"GR113-018"	509	255076636	0.2
+	"15-19 years"	"15-19"	"Non-Injury: Malignant neoplasms (Cancers)"	"GR113 020-043"	8375	255076636	3.3
+	"15-19 years"	"15-19"	"Non-Injury: In situ neoplasms, benign neoplasms and neoplasms of uncertain or unknown behavior"	"GR113-044"	542	255076636	0.2
+	"15-19 years"	"15-19"	"Non-Injury: Anemias"	"GR113-045"	475	255076636	0.2
+	"15-19 years"	"15-19"	"Non-Injury: Diabetes mellitus"	"GR113-046"	602	255076636	0.2
+	"15-19 years"	"15-19"	"Non-Injury: Nutritional Deficiencies"	"GR113 048-049"	31	255076636	0.0
+	"15-19 years"	"15-19"	"Non-Injury: Meningitis"	"GR113-050"	148	255076636	0.1
+	"15-19 years"	"15-19"	"Non-Injury: Parkinsons disease"	"GR113-051"	7	255076636	Unreliable
+	"15-19 years"	"15-19"	"Non-Injury: Alzheimers disease"	"GR113-052"	0	255076636	Unreliable
+	"15-19 years"	"15-19"	"Non-Injury: Diseases of Heart"	"GR113 055-068"	4512	255076636	1.8
+	"15-19 years"	"15-19"	"Non-Injury: Essential (primary) hypertension and hypertensive renal disease"	"GR113-069"	69	255076636	0.0
+	"15-19 years"	"15-19"	"Non-Injury: Cerebrovascular diseases, including stroke"	"GR113-070"	850	255076636	0.3
+	"15-19 years"	"15-19"	"Non-Injury: Atherosclerosis"	"GR113-071"	6	255076636	Unreliable
+	"15-19 years"	"15-19"	"Non-Injury: Other diseases of the circulatory system"	"GR113 073-074"	243	255076636	0.1
+	"15-19 years"	"15-19"	"Non-Injury: Other disorders of circulatory system"	"GR113-075"	158	255076636	0.1
+	"15-19 years"	"15-19"	"Non-Injury: Influenza & Pneumonia"	"GR113 077-078"	894	255076636	0.4
+	"15-19 years"	"15-19"	"Non-Injury: Other acute lower respiratory infections"	"GR113 079"	19	255076636	Unreliable
+	"15-19 years"	"15-19"	"Non-Injury: Chronic lower respiratory diseases"	"GR113 082"	938	255076636	0.4
+	"15-19 years"	"15-19"	"Non-Injury: Pneumoconioses and chemical effects"	"GR113-087"	3	255076636	Unreliable
+	"15-19 years"	"15-19"	"Non-Injury: Pneumonitis due to solids and liquids"	"GR113-088"	165	255076636	0.1
+	"15-19 years"	"15-19"	"Non-Injury: Other diseases of respiratory system"	"GR113-089"	647	255076636	0.3
+	"15-19 years"	"15-19"	"Non-Injury: Peptic ulcer"	"GR113-090"	23	255076636	0.0
+	"15-19 years"	"15-19"	"Non-Injury: Diseases of appendix"	"GR113-091"	63	255076636	0.0
+	"15-19 years"	"15-19"	"Non-Injury: Hernia"	"GR113-092"	24	255076636	0.0
+	"15-19 years"	"15-19"	"Non-Injury: Chronic liver disease and cirrhosis"	"GR113 093"	48	255076636	0.0
+	"15-19 years"	"15-19"	"Non-Injury: Cholelithiasis and other disorders of gallbladder"	"GR113-096"	21	255076636	0.0
+	"15-19 years"	"15-19"	"Non-Injury: Nephritis, nephrotic syndrome and nephrosis"	"GR113 097"	292	255076636	0.1
+	"15-19 years"	"15-19"	"Non-Injury: Infections of kidney"	"GR113-102"	16	255076636	Unreliable
+	"15-19 years"	"15-19"	"Non-Injury: Hyperplasia of prostate"	"GR113-103"	0	255076636	Unreliable
+	"15-19 years"	"15-19"	"Non-Injury: Inflammatory diseases of female pelvic organs"	"GR113-104"	6	255076636	Unreliable
+	"15-19 years"	"15-19"	"Non-Injury: Pregnancy with abortive outcome"	"GR113-106"	31	255076636	0.0
+	"15-19 years"	"15-19"	"Non-Injury: Other complications of pregnancy, childbirth and the puerperium"	"GR113-107"	409	255076636	0.2
+	"15-19 years"	"15-19"	"Non-Injury: Certain conditions originating in the perinatal period"	"GR113-108"	120	255076636	0.0
+	"15-19 years"	"15-19"	"Non-Injury: Congenital malformations, deformations and chromosomal abnormalities"	"GR113-109"	2764	255076636	1.1
+	"15-19 years"	"15-19"	"Non-Injury: Symptoms, signs and abnormal clinical and laboratory findings, not elsewhere classified"	"GR113-110"	2980	255076636	1.2
+	"15-19 years"	"15-19"	"Non-Injury: All other diseases (Residual)"	"GR113-111"	9271	255076636	3.6
+	"15-19 years"	"15-19"	"Non-Injury: Complications of medical and surgical care"	"GR113-135"	195	255076636	0.1
+"Total"	"15-19 years"	"15-19"			157564	255076636	61.8
+	"20-24 years"	"20-24"	"Cut/Pierce"	"GRINJ-001"	3804	246218551	1.5
+	"20-24 years"	"20-24"	"Drowning"	"GRINJ-002"	4152	246218551	1.7
+	"20-24 years"	"20-24"	"Fall"	"GRINJ-003"	2766	246218551	1.1
+	"20-24 years"	"20-24"	"Fire/Flame"	"GRINJ-004"	1567	246218551	0.6
+	"20-24 years"	"20-24"	"Hot object/Substance"	"GRINJ-005"	21	246218551	0.0
+	"20-24 years"	"20-24"	"Firearm"	"GRINJ-006"	49343	246218551	20.0
+	"20-24 years"	"20-24"	"Machinery"	"GRINJ-007"	428	246218551	0.2
+	"20-24 years"	"20-24"	"Motor Vehicle Traffic"	"GRINJ-008"	63049	246218551	25.6
+	"20-24 years"	"20-24"	"Other Pedal cyclist"	"GRINJ-009"	124	246218551	0.1
+	"20-24 years"	"20-24"	"Other Pedestrian"	"GRINJ-010"	916	246218551	0.4
+	"20-24 years"	"20-24"	"Other land transport"	"GRINJ-011"	2013	246218551	0.8
+	"20-24 years"	"20-24"	"Other transport"	"GRINJ-012"	1147	246218551	0.5
+	"20-24 years"	"20-24"	"Natural/Environmental"	"GRINJ-013"	493	246218551	0.2
+	"20-24 years"	"20-24"	"Overexertion"	"GRINJ-014"	8	246218551	Unreliable
+	"20-24 years"	"20-24"	"Poisoning"	"GRINJ-015"	25714	246218551	10.4
+	"20-24 years"	"20-24"	"Struck by or against"	"GRINJ-016"	779	246218551	0.3
+	"20-24 years"	"20-24"	"Suffocation"	"GRINJ-017"	11681	246218551	4.7
+	"20-24 years"	"20-24"	"Other specified, classifiable Injury"	"GRINJ-018"	1731	246218551	0.7
+	"20-24 years"	"20-24"	"Other specified, not elsewhere classified Injury"	"GRINJ-019"	1177	246218551	0.5
+	"20-24 years"	"20-24"	"Unspecified Injury"	"GRINJ-020"	2670	246218551	1.1
+	"20-24 years"	"20-24"	"Non-Injury: Intestinal infections"	"GR113 001-003"	51	246218551	0.0
+	"20-24 years"	"20-24"	"Non-Injury: Tuberculosis"	"GR113 005-006"	78	246218551	0.0
+	"20-24 years"	"20-24"	"Non-Injury: Whooping cough"	"GR113-007"	0	246218551	Unreliable
+	"20-24 years"	"20-24"	"Non-Injury: Scarlet fever and erysipelas"	"GR113-008"	1	246218551	Unreliable
+	"20-24 years"	"20-24"	"Non-Injury: Meningococcal infection"	"GR113-009"	159	246218551	0.1
+	"20-24 years"	"20-24"	"Non-Injury: Septicemia"	"GR113-010"	1024	246218551	0.4
+	"20-24 years"	"20-24"	"Non-Injury: Syphilis"	"GR113-011"	0	246218551	Unreliable
+	"20-24 years"	"20-24"	"Non-Injury: Acute poliomyelitis"	"GR113-012"	0	246218551	Unreliable
+	"20-24 years"	"20-24"	"Non-Injury: Arthropod-borne viral encephalitis"	"GR113-013"	2	246218551	Unreliable
+	"20-24 years"	"20-24"	"Non-Injury: Measles"	"GR113-014"	0	246218551	Unreliable
+	"20-24 years"	"20-24"	"Non-Injury: Viral hepatitis"	"GR113-015"	114	246218551	0.0
+	"20-24 years"	"20-24"	"Non-Injury: Human immunodeficiency virus (HIV) disease"	"GR113-016"	1756	246218551	0.7
+	"20-24 years"	"20-24"	"Non-Injury: Malaria"	"GR113-017"	4	246218551	Unreliable
+	"20-24 years"	"20-24"	"Non-Injury: Other and unspecified infectious and parasitic diseases and their sequelae"	"GR113-018"	553	246218551	0.2
+	"20-24 years"	"20-24"	"Non-Injury: Malignant neoplasms (Cancers)"	"GR113 020-043"	11773	246218551	4.8
+	"20-24 years"	"20-24"	"Non-Injury: In situ neoplasms, benign neoplasms and neoplasms of uncertain or unknown behavior"	"GR113-044"	580	246218551	0.2
+	"20-24 years"	"20-24"	"Non-Injury: Anemias"	"GR113-045"	774	246218551	0.3
+	"20-24 years"	"20-24"	"Non-Injury: Diabetes mellitus"	"GR113-046"	1429	246218551	0.6
+	"20-24 years"	"20-24"	"Non-Injury: Nutritional Deficiencies"	"GR113 048-049"	50	246218551	0.0
+	"20-24 years"	"20-24"	"Non-Injury: Meningitis"	"GR113-050"	196	246218551	0.1
+	"20-24 years"	"20-24"	"Non-Injury: Parkinsons disease"	"GR113-051"	11	246218551	Unreliable
+	"20-24 years"	"20-24"	"Non-Injury: Alzheimers disease"	"GR113-052"	2	246218551	Unreliable
+	"20-24 years"	"20-24"	"Non-Injury: Diseases of Heart"	"GR113 055-068"	8187	246218551	3.3
+	"20-24 years"	"20-24"	"Non-Injury: Essential (primary) hypertension and hypertensive renal disease"	"GR113-069"	180	246218551	0.1
+	"20-24 years"	"20-24"	"Non-Injury: Cerebrovascular diseases, including stroke"	"GR113-070"	1503	246218551	0.6
+	"20-24 years"	"20-24"	"Non-Injury: Atherosclerosis"	"GR113-071"	18	246218551	Unreliable
+	"20-24 years"	"20-24"	"Non-Injury: Other diseases of the circulatory system"	"GR113 073-074"	454	246218551	0.2
+	"20-24 years"	"20-24"	"Non-Injury: Other disorders of circulatory system"	"GR113-075"	339	246218551	0.1
+	"20-24 years"	"20-24"	"Non-Injury: Influenza & Pneumonia"	"GR113 077-078"	1555	246218551	0.6
+	"20-24 years"	"20-24"	"Non-Injury: Other acute lower respiratory infections"	"GR113 079"	26	246218551	0.0
+	"20-24 years"	"20-24"	"Non-Injury: Chronic lower respiratory diseases"	"GR113 082"	1141	246218551	0.5
+	"20-24 years"	"20-24"	"Non-Injury: Pneumoconioses and chemical effects"	"GR113-087"	1	246218551	Unreliable
+	"20-24 years"	"20-24"	"Non-Injury: Pneumonitis due to solids and liquids"	"GR113-088"	320	246218551	0.1
+	"20-24 years"	"20-24"	"Non-Injury: Other diseases of respiratory system"	"GR113-089"	913	246218551	0.4
+	"20-24 years"	"20-24"	"Non-Injury: Peptic ulcer"	"GR113-090"	51	246218551	0.0
+	"20-24 years"	"20-24"	"Non-Injury: Diseases of appendix"	"GR113-091"	64	246218551	0.0
+	"20-24 years"	"20-24"	"Non-Injury: Hernia"	"GR113-092"	29	246218551	0.0
+	"20-24 years"	"20-24"	"Non-Injury: Chronic liver disease and cirrhosis"	"GR113 093"	266	246218551	0.1
+	"20-24 years"	"20-24"	"Non-Injury: Cholelithiasis and other disorders of gallbladder"	"GR113-096"	71	246218551	0.0
+	"20-24 years"	"20-24"	"Non-Injury: Nephritis, nephrotic syndrome and nephrosis"	"GR113 097"	736	246218551	0.3
+	"20-24 years"	"20-24"	"Non-Injury: Infections of kidney"	"GR113-102"	52	246218551	0.0
+	"20-24 years"	"20-24"	"Non-Injury: Hyperplasia of prostate"	"GR113-103"	0	246218551	Unreliable
+	"20-24 years"	"20-24"	"Non-Injury: Inflammatory diseases of female pelvic organs"	"GR113-104"	25	246218551	0.0
+	"20-24 years"	"20-24"	"Non-Injury: Pregnancy with abortive outcome"	"GR113-106"	77	246218551	0.0
+	"20-24 years"	"20-24"	"Non-Injury: Other complications of pregnancy, childbirth and the puerperium"	"GR113-107"	1239	246218551	0.5
+	"20-24 years"	"20-24"	"Non-Injury: Certain conditions originating in the perinatal period"	"GR113-108"	76	246218551	0.0
+	"20-24 years"	"20-24"	"Non-Injury: Congenital malformations, deformations and chromosomal abnormalities"	"GR113-109"	2744	246218551	1.1
+	"20-24 years"	"20-24"	"Non-Injury: Symptoms, signs and abnormal clinical and laboratory findings, not elsewhere classified"	"GR113-110"	5625	246218551	2.3
+	"20-24 years"	"20-24"	"Non-Injury: All other diseases (Residual)"	"GR113-111"	13864	246218551	5.6
+	"20-24 years"	"20-24"	"Non-Injury: Complications of medical and surgical care"	"GR113-135"	258	246218551	0.1
+"Total"	"20-24 years"	"20-24"			231954	246218551	94.2
+	"25-29 years"	"25-29"	"Cut/Pierce"	"GRINJ-001"	3410	237615884	1.4
+	"25-29 years"	"25-29"	"Drowning"	"GRINJ-002"	3275	237615884	1.4
+	"25-29 years"	"25-29"	"Fall"	"GRINJ-003"	2638	237615884	1.1
+	"25-29 years"	"25-29"	"Fire/Flame"	"GRINJ-004"	1660	237615884	0.7
+	"25-29 years"	"25-29"	"Hot object/Substance"	"GRINJ-005"	19	237615884	Unreliable
+	"25-29 years"	"25-29"	"Firearm"	"GRINJ-006"	40465	237615884	17.0
+	"25-29 years"	"25-29"	"Machinery"	"GRINJ-007"	460	237615884	0.2
+	"25-29 years"	"25-29"	"Motor Vehicle Traffic"	"GRINJ-008"	43570	237615884	18.3
+	"25-29 years"	"25-29"	"Other Pedal cyclist"	"GRINJ-009"	102	237615884	0.0
+	"25-29 years"	"25-29"	"Other Pedestrian"	"GRINJ-010"	856	237615884	0.4
+	"25-29 years"	"25-29"	"Other land transport"	"GRINJ-011"	1517	237615884	0.6
+	"25-29 years"	"25-29"	"Other transport"	"GRINJ-012"	1385	237615884	0.6
+	"25-29 years"	"25-29"	"Natural/Environmental"	"GRINJ-013"	562	237615884	0.2
+	"25-29 years"	"25-29"	"Overexertion"	"GRINJ-014"	8	237615884	Unreliable
+	"25-29 years"	"25-29"	"Poisoning"	"GRINJ-015"	32136	237615884	13.5
+	"25-29 years"	"25-29"	"Struck by or against"	"GRINJ-016"	797	237615884	0.3
+	"25-29 years"	"25-29"	"Suffocation"	"GRINJ-017"	11312	237615884	4.8
+	"25-29 years"	"25-29"	"Other specified, classifiable Injury"	"GRINJ-018"	1736	237615884	0.7
+	"25-29 years"	"25-29"	"Other specified, not elsewhere classified Injury"	"GRINJ-019"	1221	237615884	0.5
+	"25-29 years"	"25-29"	"Unspecified Injury"	"GRINJ-020"	2509	237615884	1.1
+	"25-29 years"	"25-29"	"Non-Injury: Intestinal infections"	"GR113 001-003"	59	237615884	0.0
+	"25-29 years"	"25-29"	"Non-Injury: Tuberculosis"	"GR113 005-006"	89	237615884	0.0
+	"25-29 years"	"25-29"	"Non-Injury: Whooping cough"	"GR113-007"	0	237615884	Unreliable
+	"25-29 years"	"25-29"	"Non-Injury: Scarlet fever and erysipelas"	"GR113-008"	0	237615884	Unreliable
+	"25-29 years"	"25-29"	"Non-Injury: Meningococcal infection"	"GR113-009"	86	237615884	0.0
+	"25-29 years"	"25-29"	"Non-Injury: Septicemia"	"GR113-010"	1522	237615884	0.6
+	"25-29 years"	"25-29"	"Non-Injury: Syphilis"	"GR113-011"	1	237615884	Unreliable
+	"25-29 years"	"25-29"	"Non-Injury: Acute poliomyelitis"	"GR113-012"	0	237615884	Unreliable
+	"25-29 years"	"25-29"	"Non-Injury: Arthropod-borne viral encephalitis"	"GR113-013"	1	237615884	Unreliable
+	"25-29 years"	"25-29"	"Non-Injury: Measles"	"GR113-014"	1	237615884	Unreliable
+	"25-29 years"	"25-29"	"Non-Injury: Viral hepatitis"	"GR113-015"	263	237615884	0.1
+	"25-29 years"	"25-29"	"Non-Injury: Human immunodeficiency virus (HIV) disease"	"GR113-016"	5563	237615884	2.3
+	"25-29 years"	"25-29"	"Non-Injury: Malaria"	"GR113-017"	3	237615884	Unreliable
+	"25-29 years"	"25-29"	"Non-Injury: Other and unspecified infectious and parasitic diseases and their sequelae"	"GR113-018"	707	237615884	0.3
+	"25-29 years"	"25-29"	"Non-Injury: Malignant neoplasms (Cancers)"	"GR113 020-043"	16329	237615884	6.9
+	"25-29 years"	"25-29"	"Non-Injury: In situ neoplasms, benign neoplasms and neoplasms of uncertain or unknown behavior"	"GR113-044"	800	237615884	0.3
+	"25-29 years"	"25-29"	"Non-Injury: Anemias"	"GR113-045"	872	237615884	0.4
+	"25-29 years"	"25-29"	"Non-Injury: Diabetes mellitus"	"GR113-046"	2608	237615884	1.1
+	"25-29 years"	"25-29"	"Non-Injury: Nutritional Deficiencies"	"GR113 048-049"	81	237615884	0.0
+	"25-29 years"	"25-29"	"Non-Injury: Meningitis"	"GR113-050"	205	237615884	0.1
+	"25-29 years"	"25-29"	"Non-Injury: Parkinsons disease"	"GR113-051"	17	237615884	Unreliable
+	"25-29 years"	"25-29"	"Non-Injury: Alzheimers disease"	"GR113-052"	3	237615884	Unreliable
+	"25-29 years"	"25-29"	"Non-Injury: Diseases of Heart"	"GR113 055-068"	13569	237615884	5.7
+	"25-29 years"	"25-29"	"Non-Injury: Essential (primary) hypertension and hypertensive renal disease"	"GR113-069"	374	237615884	0.2
+	"25-29 years"	"25-29"	"Non-Injury: Cerebrovascular diseases, including stroke"	"GR113-070"	2313	237615884	1.0
+	"25-29 years"	"25-29"	"Non-Injury: Atherosclerosis"	"GR113-071"	21	237615884	0.0
+	"25-29 years"	"25-29"	"Non-Injury: Other diseases of the circulatory system"	"GR113 073-074"	677	237615884	0.3
+	"25-29 years"	"25-29"	"Non-Injury: Other disorders of circulatory system"	"GR113-075"	556	237615884	0.2
+	"25-29 years"	"25-29"	"Non-Injury: Influenza & Pneumonia"	"GR113 077-078"	1985	237615884	0.8
+	"25-29 years"	"25-29"	"Non-Injury: Other acute lower respiratory infections"	"GR113 079"	23	237615884	0.0
+	"25-29 years"	"25-29"	"Non-Injury: Chronic lower respiratory diseases"	"GR113 082"	1415	237615884	0.6
+	"25-29 years"	"25-29"	"Non-Injury: Pneumoconioses and chemical effects"	"GR113-087"	5	237615884	Unreliable
+	"25-29 years"	"25-29"	"Non-Injury: Pneumonitis due to solids and liquids"	"GR113-088"	374	237615884	0.2
+	"25-29 years"	"25-29"	"Non-Injury: Other diseases of respiratory system"	"GR113-089"	1080	237615884	0.5
+	"25-29 years"	"25-29"	"Non-Injury: Peptic ulcer"	"GR113-090"	101	237615884	0.0
+	"25-29 years"	"25-29"	"Non-Injury: Diseases of appendix"	"GR113-091"	52	237615884	0.0
+	"25-29 years"	"25-29"	"Non-Injury: Hernia"	"GR113-092"	44	237615884	0.0
+	"25-29 years"	"25-29"	"Non-Injury: Chronic liver disease and cirrhosis"	"GR113 093"	1066	237615884	0.4
+	"25-29 years"	"25-29"	"Non-Injury: Cholelithiasis and other disorders of gallbladder"	"GR113-096"	99	237615884	0.0
+	"25-29 years"	"25-29"	"Non-Injury: Nephritis, nephrotic syndrome and nephrosis"	"GR113 097"	1166	237615884	0.5
+	"25-29 years"	"25-29"	"Non-Injury: Infections of kidney"	"GR113-102"	63	237615884	0.0
+	"25-29 years"	"25-29"	"Non-Injury: Hyperplasia of prostate"	"GR113-103"	0	237615884	Unreliable
+	"25-29 years"	"25-29"	"Non-Injury: Inflammatory diseases of female pelvic organs"	"GR113-104"	20	237615884	0.0
+	"25-29 years"	"25-29"	"Non-Injury: Pregnancy with abortive outcome"	"GR113-106"	91	237615884	0.0
+	"25-29 years"	"25-29"	"Non-Injury: Other complications of pregnancy, childbirth and the puerperium"	"GR113-107"	1567	237615884	0.7
+	"25-29 years"	"25-29"	"Non-Injury: Certain conditions originating in the perinatal period"	"GR113-108"	49	237615884	0.0
+	"25-29 years"	"25-29"	"Non-Injury: Congenital malformations, deformations and chromosomal abnormalities"	"GR113-109"	2588	237615884	1.1
+	"25-29 years"	"25-29"	"Non-Injury: Symptoms, signs and abnormal clinical and laboratory findings, not elsewhere classified"	"GR113-110"	6555	237615884	2.8
+	"25-29 years"	"25-29"	"Non-Injury: All other diseases (Residual)"	"GR113-111"	16580	237615884	7.0
+	"25-29 years"	"25-29"	"Non-Injury: Complications of medical and surgical care"	"GR113-135"	351	237615884	0.1
+"Total"	"25-29 years"	"25-29"			231632	237615884	97.5
+	"30-34 years"	"30-34"	"Cut/Pierce"	"GRINJ-001"	3132	240147817	1.3
+	"30-34 years"	"30-34"	"Drowning"	"GRINJ-002"	2798	240147817	1.2
+	"30-34 years"	"30-34"	"Fall"	"GRINJ-003"	2803	240147817	1.2
+	"30-34 years"	"30-34"	"Fire/Flame"	"GRINJ-004"	1661	240147817	0.7
+	"30-34 years"	"30-34"	"Hot object/Substance"	"GRINJ-005"	19	240147817	Unreliable
+	"30-34 years"	"30-34"	"Firearm"	"GRINJ-006"	32869	240147817	13.7
+	"30-34 years"	"30-34"	"Machinery"	"GRINJ-007"	461	240147817	0.2
+	"30-34 years"	"30-34"	"Motor Vehicle Traffic"	"GRINJ-008"	35567	240147817	14.8
+	"30-34 years"	"30-34"	"Other Pedal cyclist"	"GRINJ-009"	127	240147817	0.1
+	"30-34 years"	"30-34"	"Other Pedestrian"	"GRINJ-010"	844	240147817	0.4
+	"30-34 years"	"30-34"	"Other land transport"	"GRINJ-011"	1356	240147817	0.6
+	"30-34 years"	"30-34"	"Other transport"	"GRINJ-012"	1620	240147817	0.7
+	"30-34 years"	"30-34"	"Natural/Environmental"	"GRINJ-013"	622	240147817	0.3
+	"30-34 years"	"30-34"	"Overexertion"	"GRINJ-014"	6	240147817	Unreliable
+	"30-34 years"	"30-34"	"Poisoning"	"GRINJ-015"	36128	240147817	15.0
+	"30-34 years"	"30-34"	"Struck by or against"	"GRINJ-016"	870	240147817	0.4
+	"30-34 years"	"30-34"	"Suffocation"	"GRINJ-017"	11316	240147817	4.7
+	"30-34 years"	"30-34"	"Other specified, classifiable Injury"	"GRINJ-018"	1919	240147817	0.8
+	"30-34 years"	"30-34"	"Other specified, not elsewhere classified Injury"	"GRINJ-019"	1432	240147817	0.6
+	"30-34 years"	"30-34"	"Unspecified Injury"	"GRINJ-020"	2661	240147817	1.1
+	"30-34 years"	"30-34"	"Non-Injury: Intestinal infections"	"GR113 001-003"	94	240147817	0.0
+	"30-34 years"	"30-34"	"Non-Injury: Tuberculosis"	"GR113 005-006"	125	240147817	0.1
+	"30-34 years"	"30-34"	"Non-Injury: Whooping cough"	"GR113-007"	0	240147817	Unreliable
+	"30-34 years"	"30-34"	"Non-Injury: Scarlet fever and erysipelas"	"GR113-008"	2	240147817	Unreliable
+	"30-34 years"	"30-34"	"Non-Injury: Meningococcal infection"	"GR113-009"	61	240147817	0.0
+	"30-34 years"	"30-34"	"Non-Injury: Septicemia"	"GR113-010"	2218	240147817	0.9
+	"30-34 years"	"30-34"	"Non-Injury: Syphilis"	"GR113-011"	9	240147817	Unreliable
+	"30-34 years"	"30-34"	"Non-Injury: Acute poliomyelitis"	"GR113-012"	0	240147817	Unreliable
+	"30-34 years"	"30-34"	"Non-Injury: Arthropod-borne viral encephalitis"	"GR113-013"	1	240147817	Unreliable
+	"30-34 years"	"30-34"	"Non-Injury: Measles"	"GR113-014"	0	240147817	Unreliable
+	"30-34 years"	"30-34"	"Non-Injury: Viral hepatitis"	"GR113-015"	539	240147817	0.2
+	"30-34 years"	"30-34"	"Non-Injury: Human immunodeficiency virus (HIV) disease"	"GR113-016"	12787	240147817	5.3
+	"30-34 years"	"30-34"	"Non-Injury: Malaria"	"GR113-017"	6	240147817	Unreliable
+	"30-34 years"	"30-34"	"Non-Injury: Other and unspecified infectious and parasitic diseases and their sequelae"	"GR113-018"	1007	240147817	0.4
+	"30-34 years"	"30-34"	"Non-Injury: Malignant neoplasms (Cancers)"	"GR113 020-043"	28351	240147817	11.8
+	"30-34 years"	"30-34"	"Non-Injury: In situ neoplasms, benign neoplasms and neoplasms of uncertain or unknown behavior"	"GR113-044"	1107	240147817	0.5
+	"30-34 years"	"30-34"	"Non-Injury: Anemias"	"GR113-045"	981	240147817	0.4
+	"30-34 years"	"30-34"	"Non-Injury: Diabetes mellitus"	"GR113-046"	4774	240147817	2.0
+	"30-34 years"	"30-34"	"Non-Injury: Nutritional Deficiencies"	"GR113 048-049"	103	240147817	0.0
+	"30-34 years"	"30-34"	"Non-Injury: Meningitis"	"GR113-050"	259	240147817	0.1
+	"30-34 years"	"30-34"	"Non-Injury: Parkinsons disease"	"GR113-051"	19	240147817	Unreliable
+	"30-34 years"	"30-34"	"Non-Injury: Alzheimers disease"	"GR113-052"	10	240147817	Unreliable
+	"30-34 years"	"30-34"	"Non-Injury: Diseases of Heart"	"GR113 055-068"	24622	240147817	10.3
+	"30-34 years"	"30-34"	"Non-Injury: Essential (primary) hypertension and hypertensive renal disease"	"GR113-069"	798	240147817	0.3
+	"30-34 years"	"30-34"	"Non-Injury: Cerebrovascular diseases, including stroke"	"GR113-070"	4358	240147817	1.8
+	"30-34 years"	"30-34"	"Non-Injury: Atherosclerosis"	"GR113-071"	54	240147817	0.0
+	"30-34 years"	"30-34"	"Non-Injury: Other diseases of the circulatory system"	"GR113 073-074"	1136	240147817	0.5
+	"30-34 years"	"30-34"	"Non-Injury: Other disorders of circulatory system"	"GR113-075"	969	240147817	0.4
+	"30-34 years"	"30-34"	"Non-Injury: Influenza & Pneumonia"	"GR113 077-078"	2661	240147817	1.1
+	"30-34 years"	"30-34"	"Non-Injury: Other acute lower respiratory infections"	"GR113 079"	30	240147817	0.0
+	"30-34 years"	"30-34"	"Non-Injury: Chronic lower respiratory diseases"	"GR113 082"	1922	240147817	0.8
+	"30-34 years"	"30-34"	"Non-Injury: Pneumoconioses and chemical effects"	"GR113-087"	9	240147817	Unreliable
+	"30-34 years"	"30-34"	"Non-Injury: Pneumonitis due to solids and liquids"	"GR113-088"	514	240147817	0.2
+	"30-34 years"	"30-34"	"Non-Injury: Other diseases of respiratory system"	"GR113-089"	1514	240147817	0.6
+	"30-34 years"	"30-34"	"Non-Injury: Peptic ulcer"	"GR113-090"	152	240147817	0.1
+	"30-34 years"	"30-34"	"Non-Injury: Diseases of appendix"	"GR113-091"	74	240147817	0.0
+	"30-34 years"	"30-34"	"Non-Injury: Hernia"	"GR113-092"	65	240147817	0.0
+	"30-34 years"	"30-34"	"Non-Injury: Chronic liver disease and cirrhosis"	"GR113 093"	3564	240147817	1.5
+	"30-34 years"	"30-34"	"Non-Injury: Cholelithiasis and other disorders of gallbladder"	"GR113-096"	147	240147817	0.1
+	"30-34 years"	"30-34"	"Non-Injury: Nephritis, nephrotic syndrome and nephrosis"	"GR113 097"	1942	240147817	0.8
+	"30-34 years"	"30-34"	"Non-Injury: Infections of kidney"	"GR113-102"	70	240147817	0.0
+	"30-34 years"	"30-34"	"Non-Injury: Hyperplasia of prostate"	"GR113-103"	0	240147817	Unreliable
+	"30-34 years"	"30-34"	"Non-Injury: Inflammatory diseases of female pelvic organs"	"GR113-104"	31	240147817	0.0
+	"30-34 years"	"30-34"	"Non-Injury: Pregnancy with abortive outcome"	"GR113-106"	81	240147817	0.0
+	"30-34 years"	"30-34"	"Non-Injury: Other complications of pregnancy, childbirth and the puerperium"	"GR113-107"	1589	240147817	0.7
+	"30-34 years"	"30-34"	"Non-Injury: Certain conditions originating in the perinatal period"	"GR113-108"	31	240147817	0.0
+	"30-34 years"	"30-34"	"Non-Injury: Congenital malformations, deformations and chromosomal abnormalities"	"GR113-109"	2608	240147817	1.1
+	"30-34 years"	"30-34"	"Non-Injury: Symptoms, signs and abnormal clinical and laboratory findings, not elsewhere classified"	"GR113-110"	7736	240147817	3.2
+	"30-34 years"	"30-34"	"Non-Injury: All other diseases (Residual)"	"GR113-111"	21726	240147817	9.0
+	"30-34 years"	"30-34"	"Non-Injury: Complications of medical and surgical care"	"GR113-135"	509	240147817	0.2
+"Total"	"30-34 years"	"30-34"			269576	240147817	112.3
+	"35-39 years"	"35-39"	"Cut/Pierce"	"GRINJ-001"	3333	255923835	1.3
+	"35-39 years"	"35-39"	"Drowning"	"GRINJ-002"	3309	255923835	1.3
+	"35-39 years"	"35-39"	"Fall"	"GRINJ-003"	3783	255923835	1.5
+	"35-39 years"	"35-39"	"Fire/Flame"	"GRINJ-004"	2154	255923835	0.8
+	"35-39 years"	"35-39"	"Hot object/Substance"	"GRINJ-005"	34	255923835	0.0
+	"35-39 years"	"35-39"	"Firearm"	"GRINJ-006"	30730	255923835	12.0
+	"35-39 years"	"35-39"	"Machinery"	"GRINJ-007"	588	255923835	0.2
+	"35-39 years"	"35-39"	"Motor Vehicle Traffic"	"GRINJ-008"	36293	255923835	14.2
+	"35-39 years"	"35-39"	"Other Pedal cyclist"	"GRINJ-009"	148	255923835	0.1
+	"35-39 years"	"35-39"	"Other Pedestrian"	"GRINJ-010"	1057	255923835	0.4
+	"35-39 years"	"35-39"	"Other land transport"	"GRINJ-011"	1522	255923835	0.6
+	"35-39 years"	"35-39"	"Other transport"	"GRINJ-012"	1821	255923835	0.7
+	"35-39 years"	"35-39"	"Natural/Environmental"	"GRINJ-013"	902	255923835	0.4
+	"35-39 years"	"35-39"	"Overexertion"	"GRINJ-014"	6	255923835	Unreliable
+	"35-39 years"	"35-39"	"Poisoning"	"GRINJ-015"	47172	255923835	18.4
+	"35-39 years"	"35-39"	"Struck by or against"	"GRINJ-016"	1034	255923835	0.4
+	"35-39 years"	"35-39"	"Suffocation"	"GRINJ-017"	12278	255923835	4.8
+	"35-39 years"	"35-39"	"Other specified, classifiable Injury"	"GRINJ-018"	2246	255923835	0.9
+	"35-39 years"	"35-39"	"Other specified, not elsewhere classified Injury"	"GRINJ-019"	1657	255923835	0.6
+	"35-39 years"	"35-39"	"Unspecified Injury"	"GRINJ-020"	3389	255923835	1.3
+	"35-39 years"	"35-39"	"Non-Injury: Intestinal infections"	"GR113 001-003"	128	255923835	0.1
+	"35-39 years"	"35-39"	"Non-Injury: Tuberculosis"	"GR113 005-006"	182	255923835	0.1
+	"35-39 years"	"35-39"	"Non-Injury: Whooping cough"	"GR113-007"	0	255923835	Unreliable
+	"35-39 years"	"35-39"	"Non-Injury: Scarlet fever and erysipelas"	"GR113-008"	0	255923835	Unreliable
+	"35-39 years"	"35-39"	"Non-Injury: Meningococcal infection"	"GR113-009"	71	255923835	0.0
+	"35-39 years"	"35-39"	"Non-Injury: Septicemia"	"GR113-010"	3790	255923835	1.5
+	"35-39 years"	"35-39"	"Non-Injury: Syphilis"	"GR113-011"	15	255923835	Unreliable
+	"35-39 years"	"35-39"	"Non-Injury: Acute poliomyelitis"	"GR113-012"	0	255923835	Unreliable
+	"35-39 years"	"35-39"	"Non-Injury: Arthropod-borne viral encephalitis"	"GR113-013"	1	255923835	Unreliable
+	"35-39 years"	"35-39"	"Non-Injury: Measles"	"GR113-014"	1	255923835	Unreliable
+	"35-39 years"	"35-39"	"Non-Injury: Viral hepatitis"	"GR113-015"	1778	255923835	0.7
+	"35-39 years"	"35-39"	"Non-Injury: Human immunodeficiency virus (HIV) disease"	"GR113-016"	23054	255923835	9.0
+	"35-39 years"	"35-39"	"Non-Injury: Malaria"	"GR113-017"	4	255923835	Unreliable
+	"35-39 years"	"35-39"	"Non-Injury: Other and unspecified infectious and parasitic diseases and their sequelae"	"GR113-018"	1651	255923835	0.6
+	"35-39 years"	"35-39"	"Non-Injury: Malignant neoplasms (Cancers)"	"GR113 020-043"	56799	255923835	22.2
+	"35-39 years"	"35-39"	"Non-Injury: In situ neoplasms, benign neoplasms and neoplasms of uncertain or unknown behavior"	"GR113-044"	1627	255923835	0.6
+	"35-39 years"	"35-39"	"Non-Injury: Anemias"	"GR113-045"	1038	255923835	0.4
+	"35-39 years"	"35-39"	"Non-Injury: Diabetes mellitus"	"GR113-046"	8505	255923835	3.3
+	"35-39 years"	"35-39"	"Non-Injury: Nutritional Deficiencies"	"GR113 048-049"	211	255923835	0.1
+	"35-39 years"	"35-39"	"Non-Injury: Meningitis"	"GR113-050"	345	255923835	0.1
+	"35-39 years"	"35-39"	"Non-Injury: Parkinsons disease"	"GR113-051"	41	255923835	0.0
+	"35-39 years"	"35-39"	"Non-Injury: Alzheimers disease"	"GR113-052"	20	255923835	0.0
+	"35-39 years"	"35-39"	"Non-Injury: Diseases of Heart"	"GR113 055-068"	49390	255923835	19.3
+	"35-39 years"	"35-39"	"Non-Injury: Essential (primary) hypertension and hypertensive renal disease"	"GR113-069"	1463	255923835	0.6
+	"35-39 years"	"35-39"	"Non-Injury: Cerebrovascular diseases, including stroke"	"GR113-070"	9023	255923835	3.5
+	"35-39 years"	"35-39"	"Non-Injury: Atherosclerosis"	"GR113-071"	125	255923835	0.0
+	"35-39 years"	"35-39"	"Non-Injury: Other diseases of the circulatory system"	"GR113 073-074"	2015	255923835	0.8
+	"35-39 years"	"35-39"	"Non-Injury: Other disorders of circulatory system"	"GR113-075"	1467	255923835	0.6
+	"35-39 years"	"35-39"	"Non-Injury: Influenza & Pneumonia"	"GR113 077-078"	4331	255923835	1.7
+	"35-39 years"	"35-39"	"Non-Injury: Other acute lower respiratory infections"	"GR113 079"	47	255923835	0.0
+	"35-39 years"	"35-39"	"Non-Injury: Chronic lower respiratory diseases"	"GR113 082"	3345	255923835	1.3
+	"35-39 years"	"35-39"	"Non-Injury: Pneumoconioses and chemical effects"	"GR113-087"	18	255923835	Unreliable
+	"35-39 years"	"35-39"	"Non-Injury: Pneumonitis due to solids and liquids"	"GR113-088"	726	255923835	0.3
+	"35-39 years"	"35-39"	"Non-Injury: Other diseases of respiratory system"	"GR113-089"	2345	255923835	0.9
+	"35-39 years"	"35-39"	"Non-Injury: Peptic ulcer"	"GR113-090"	382	255923835	0.1
+	"35-39 years"	"35-39"	"Non-Injury: Diseases of appendix"	"GR113-091"	114	255923835	0.0
+	"35-39 years"	"35-39"	"Non-Injury: Hernia"	"GR113-092"	151	255923835	0.1
+	"35-39 years"	"35-39"	"Non-Injury: Chronic liver disease and cirrhosis"	"GR113 093"	10311	255923835	4.0
+	"35-39 years"	"35-39"	"Non-Injury: Cholelithiasis and other disorders of gallbladder"	"GR113-096"	236	255923835	0.1
+	"35-39 years"	"35-39"	"Non-Injury: Nephritis, nephrotic syndrome and nephrosis"	"GR113 097"	3370	255923835	1.3
+	"35-39 years"	"35-39"	"Non-Injury: Infections of kidney"	"GR113-102"	129	255923835	0.1
+	"35-39 years"	"35-39"	"Non-Injury: Hyperplasia of prostate"	"GR113-103"	2	255923835	Unreliable
+	"35-39 years"	"35-39"	"Non-Injury: Inflammatory diseases of female pelvic organs"	"GR113-104"	57	255923835	0.0
+	"35-39 years"	"35-39"	"Non-Injury: Pregnancy with abortive outcome"	"GR113-106"	79	255923835	0.0
+	"35-39 years"	"35-39"	"Non-Injury: Other complications of pregnancy, childbirth and the puerperium"	"GR113-107"	1307	255923835	0.5
+	"35-39 years"	"35-39"	"Non-Injury: Certain conditions originating in the perinatal period"	"GR113-108"	31	255923835	0.0
+	"35-39 years"	"35-39"	"Non-Injury: Congenital malformations, deformations and chromosomal abnormalities"	"GR113-109"	2875	255923835	1.1
+	"35-39 years"	"35-39"	"Non-Injury: Symptoms, signs and abnormal clinical and laboratory findings, not elsewhere classified"	"GR113-110"	10664	255923835	4.2
+	"35-39 years"	"35-39"	"Non-Injury: All other diseases (Residual)"	"GR113-111"	34946	255923835	13.7
+	"35-39 years"	"35-39"	"Non-Injury: Complications of medical and surgical care"	"GR113-135"	705	255923835	0.3
+"Total"	"35-39 years"	"35-39"			392371	255923835	153.3
+	"40-44 years"	"40-44"	"Cut/Pierce"	"GRINJ-001"	3472	266244723	1.3
+	"40-44 years"	"40-44"	"Drowning"	"GRINJ-002"	3685	266244723	1.4
+	"40-44 years"	"40-44"	"Fall"	"GRINJ-003"	5439	266244723	2.0
+	"40-44 years"	"40-44"	"Fire/Flame"	"GRINJ-004"	2746	266244723	1.0
+	"40-44 years"	"40-44"	"Hot object/Substance"	"GRINJ-005"	54	266244723	0.0
+	"40-44 years"	"40-44"	"Firearm"	"GRINJ-006"	30603	266244723	11.5
+	"40-44 years"	"40-44"	"Machinery"	"GRINJ-007"	726	266244723	0.3
+	"40-44 years"	"40-44"	"Motor Vehicle Traffic"	"GRINJ-008"	37952	266244723	14.3
+	"40-44 years"	"40-44"	"Other Pedal cyclist"	"GRINJ-009"	236	266244723	0.1
+	"40-44 years"	"40-44"	"Other Pedestrian"	"GRINJ-010"	1207	266244723	0.5
+	"40-44 years"	"40-44"	"Other land transport"	"GRINJ-011"	1608	266244723	0.6
+	"40-44 years"	"40-44"	"Other transport"	"GRINJ-012"	1891	266244723	0.7
+	"40-44 years"	"40-44"	"Natural/Environmental"	"GRINJ-013"	1306	266244723	0.5
+	"40-44 years"	"40-44"	"Overexertion"	"GRINJ-014"	6	266244723	Unreliable
+	"40-44 years"	"40-44"	"Poisoning"	"GRINJ-015"	59867	266244723	22.5
+	"40-44 years"	"40-44"	"Struck by or against"	"GRINJ-016"	1299	266244723	0.5
+	"40-44 years"	"40-44"	"Suffocation"	"GRINJ-017"	12935	266244723	4.9
+	"40-44 years"	"40-44"	"Other specified, classifiable Injury"	"GRINJ-018"	2500	266244723	0.9
+	"40-44 years"	"40-44"	"Other specified, not elsewhere classified Injury"	"GRINJ-019"	2096	266244723	0.8
+	"40-44 years"	"40-44"	"Unspecified Injury"	"GRINJ-020"	4188	266244723	1.6
+	"40-44 years"	"40-44"	"Non-Injury: Intestinal infections"	"GR113 001-003"	256	266244723	0.1
+	"40-44 years"	"40-44"	"Non-Injury: Tuberculosis"	"GR113 005-006"	270	266244723	0.1
+	"40-44 years"	"40-44"	"Non-Injury: Whooping cough"	"GR113-007"	1	266244723	Unreliable
+	"40-44 years"	"40-44"	"Non-Injury: Scarlet fever and erysipelas"	"GR113-008"	0	266244723	Unreliable
+	"40-44 years"	"40-44"	"Non-Injury: Meningococcal infection"	"GR113-009"	70	266244723	0.0
+	"40-44 years"	"40-44"	"Non-Injury: Septicemia"	"GR113-010"	6544	266244723	2.5
+	"40-44 years"	"40-44"	"Non-Injury: Syphilis"	"GR113-011"	17	266244723	Unreliable
+	"40-44 years"	"40-44"	"Non-Injury: Acute poliomyelitis"	"GR113-012"	0	266244723	Unreliable
+	"40-44 years"	"40-44"	"Non-Injury: Arthropod-borne viral encephalitis"	"GR113-013"	1	266244723	Unreliable
+	"40-44 years"	"40-44"	"Non-Injury: Measles"	"GR113-014"	0	266244723	Unreliable
+	"40-44 years"	"40-44"	"Non-Injury: Viral hepatitis"	"GR113-015"	5234	266244723	2.0
+	"40-44 years"	"40-44"	"Non-Injury: Human immunodeficiency virus (HIV) disease"	"GR113-016"	29943	266244723	11.2
+	"40-44 years"	"40-44"	"Non-Injury: Malaria"	"GR113-017"	9	266244723	Unreliable
+	"40-44 years"	"40-44"	"Non-Injury: Other and unspecified infectious and parasitic diseases and their sequelae"	"GR113-018"	2507	266244723	0.9
+	"40-44 years"	"40-44"	"Non-Injury: Malignant neoplasms (Cancers)"	"GR113 020-043"	118137	266244723	44.4
+	"40-44 years"	"40-44"	"Non-Injury: In situ neoplasms, benign neoplasms and neoplasms of uncertain or unknown behavior"	"GR113-044"	2374	266244723	0.9
+	"40-44 years"	"40-44"	"Non-Injury: Anemias"	"GR113-045"	1281	266244723	0.5
+	"40-44 years"	"40-44"	"Non-Injury: Diabetes mellitus"	"GR113-046"	15198	266244723	5.7
+	"40-44 years"	"40-44"	"Non-Injury: Nutritional Deficiencies"	"GR113 048-049"	333	266244723	0.1
+	"40-44 years"	"40-44"	"Non-Injury: Meningitis"	"GR113-050"	453	266244723	0.2
+	"40-44 years"	"40-44"	"Non-Injury: Parkinsons disease"	"GR113-051"	73	266244723	0.0
+	"40-44 years"	"40-44"	"Non-Injury: Alzheimers disease"	"GR113-052"	79	266244723	0.0
+	"40-44 years"	"40-44"	"Non-Injury: Diseases of Heart"	"GR113 055-068"	100807	266244723	37.9
+	"40-44 years"	"40-44"	"Non-Injury: Essential (primary) hypertension and hypertensive renal disease"	"GR113-069"	3045	266244723	1.1
+	"40-44 years"	"40-44"	"Non-Injury: Cerebrovascular diseases, including stroke"	"GR113-070"	18356	266244723	6.9
+	"40-44 years"	"40-44"	"Non-Injury: Atherosclerosis"	"GR113-071"	302	266244723	0.1
+	"40-44 years"	"40-44"	"Non-Injury: Other diseases of the circulatory system"	"GR113 073-074"	3342	266244723	1.3
+	"40-44 years"	"40-44"	"Non-Injury: Other disorders of circulatory system"	"GR113-075"	2301	266244723	0.9
+	"40-44 years"	"40-44"	"Non-Injury: Influenza & Pneumonia"	"GR113 077-078"	7163	266244723	2.7
+	"40-44 years"	"40-44"	"Non-Injury: Other acute lower respiratory infections"	"GR113 079"	71	266244723	0.0
+	"40-44 years"	"40-44"	"Non-Injury: Chronic lower respiratory diseases"	"GR113 082"	7080	266244723	2.7
+	"40-44 years"	"40-44"	"Non-Injury: Pneumoconioses and chemical effects"	"GR113-087"	32	266244723	0.0
+	"40-44 years"	"40-44"	"Non-Injury: Pneumonitis due to solids and liquids"	"GR113-088"	1261	266244723	0.5
+	"40-44 years"	"40-44"	"Non-Injury: Other diseases of respiratory system"	"GR113-089"	3979	266244723	1.5
+	"40-44 years"	"40-44"	"Non-Injury: Peptic ulcer"	"GR113-090"	737	266244723	0.3
+	"40-44 years"	"40-44"	"Non-Injury: Diseases of appendix"	"GR113-091"	151	266244723	0.1
+	"40-44 years"	"40-44"	"Non-Injury: Hernia"	"GR113-092"	269	266244723	0.1
+	"40-44 years"	"40-44"	"Non-Injury: Chronic liver disease and cirrhosis"	"GR113 093"	23946	266244723	9.0
+	"40-44 years"	"40-44"	"Non-Injury: Cholelithiasis and other disorders of gallbladder"	"GR113-096"	367	266244723	0.1
+	"40-44 years"	"40-44"	"Non-Injury: Nephritis, nephrotic syndrome and nephrosis"	"GR113 097"	5807	266244723	2.2
+	"40-44 years"	"40-44"	"Non-Injury: Infections of kidney"	"GR113-102"	214	266244723	0.1
+	"40-44 years"	"40-44"	"Non-Injury: Hyperplasia of prostate"	"GR113-103"	2	266244723	Unreliable
+	"40-44 years"	"40-44"	"Non-Injury: Inflammatory diseases of female pelvic organs"	"GR113-104"	62	266244723	0.0
+	"40-44 years"	"40-44"	"Non-Injury: Pregnancy with abortive outcome"	"GR113-106"	21	266244723	0.0
+	"40-44 years"	"40-44"	"Non-Injury: Other complications of pregnancy, childbirth and the puerperium"	"GR113-107"	641	266244723	0.2
+	"40-44 years"	"40-44"	"Non-Injury: Certain conditions originating in the perinatal period"	"GR113-108"	35	266244723	0.0
+	"40-44 years"	"40-44"	"Non-Injury: Congenital malformations, deformations and chromosomal abnormalities"	"GR113-109"	3320	266244723	1.2
+	"40-44 years"	"40-44"	"Non-Injury: Symptoms, signs and abnormal clinical and laboratory findings, not elsewhere classified"	"GR113-110"	14190	266244723	5.3
+	"40-44 years"	"40-44"	"Non-Injury: All other diseases (Residual)"	"GR113-111"	57684	266244723	21.7
+	"40-44 years"	"40-44"	"Non-Injury: Complications of medical and surgical care"	"GR113-135"	1041	266244723	0.4
+"Total"	"40-44 years"	"40-44"			612822	266244723	230.2
+	"45-49 years"	"45-49"	"Cut/Pierce"	"GRINJ-001"	3327	261809847	1.3
+	"45-49 years"	"45-49"	"Drowning"	"GRINJ-002"	3738	261809847	1.4
+	"45-49 years"	"45-49"	"Fall"	"GRINJ-003"	7277	261809847	2.8
+	"45-49 years"	"45-49"	"Fire/Flame"	"GRINJ-004"	3287	261809847	1.3
+	"45-49 years"	"45-49"	"Hot object/Substance"	"GRINJ-005"	59	261809847	0.0
+	"45-49 years"	"45-49"	"Firearm"	"GRINJ-006"	29491	261809847	11.3
+	"45-49 years"	"45-49"	"Machinery"	"GRINJ-007"	768	261809847	0.3
+	"45-49 years"	"45-49"	"Motor Vehicle Traffic"	"GRINJ-008"	36748	261809847	14.0
+	"45-49 years"	"45-49"	"Other Pedal cyclist"	"GRINJ-009"	295	261809847	0.1
+	"45-49 years"	"45-49"	"Other Pedestrian"	"GRINJ-010"	1229	261809847	0.5
+	"45-49 years"	"45-49"	"Other land transport"	"GRINJ-011"	1535	261809847	0.6
+	"45-49 years"	"45-49"	"Other transport"	"GRINJ-012"	1866	261809847	0.7
+	"45-49 years"	"45-49"	"Natural/Environmental"	"GRINJ-013"	1551	261809847	0.6
+	"45-49 years"	"45-49"	"Overexertion"	"GRINJ-014"	16	261809847	Unreliable
+	"45-49 years"	"45-49"	"Poisoning"	"GRINJ-015"	63033	261809847	24.1
+	"45-49 years"	"45-49"	"Struck by or against"	"GRINJ-016"	1403	261809847	0.5
+	"45-49 years"	"45-49"	"Suffocation"	"GRINJ-017"	12229	261809847	4.7
+	"45-49 years"	"45-49"	"Other specified, classifiable Injury"	"GRINJ-018"	2684	261809847	1.0
+	"45-49 years"	"45-49"	"Other specified, not elsewhere classified Injury"	"GRINJ-019"	2351	261809847	0.9
+	"45-49 years"	"45-49"	"Unspecified Injury"	"GRINJ-020"	4644	261809847	1.8
+	"45-49 years"	"45-49"	"Non-Injury: Intestinal infections"	"GR113 001-003"	475	261809847	0.2
+	"45-49 years"	"45-49"	"Non-Injury: Tuberculosis"	"GR113 005-006"	448	261809847	0.2
+	"45-49 years"	"45-49"	"Non-Injury: Whooping cough"	"GR113-007"	1	261809847	Unreliable
+	"45-49 years"	"45-49"	"Non-Injury: Scarlet fever and erysipelas"	"GR113-008"	2	261809847	Unreliable
+	"45-49 years"	"45-49"	"Non-Injury: Meningococcal infection"	"GR113-009"	86	261809847	0.0
+	"45-49 years"	"45-49"	"Non-Injury: Septicemia"	"GR113-010"	10644	261809847	4.1
+	"45-49 years"	"45-49"	"Non-Injury: Syphilis"	"GR113-011"	20	261809847	0.0
+	"45-49 years"	"45-49"	"Non-Injury: Acute poliomyelitis"	"GR113-012"	0	261809847	Unreliable
+	"45-49 years"	"45-49"	"Non-Injury: Arthropod-borne viral encephalitis"	"GR113-013"	1	261809847	Unreliable
+	"45-49 years"	"45-49"	"Non-Injury: Measles"	"GR113-014"	2	261809847	Unreliable
+	"45-49 years"	"45-49"	"Non-Injury: Viral hepatitis"	"GR113-015"	11895	261809847	4.5
+	"45-49 years"	"45-49"	"Non-Injury: Human immunodeficiency virus (HIV) disease"	"GR113-016"	28091	261809847	10.7
+	"45-49 years"	"45-49"	"Non-Injury: Malaria"	"GR113-017"	8	261809847	Unreliable
+	"45-49 years"	"45-49"	"Non-Injury: Other and unspecified infectious and parasitic diseases and their sequelae"	"GR113-018"	4008	261809847	1.5
+	"45-49 years"	"45-49"	"Non-Injury: Malignant neoplasms (Cancers)"	"GR113 020-043"	226217	261809847	86.4
+	"45-49 years"	"45-49"	"Non-Injury: In situ neoplasms, benign neoplasms and neoplasms of uncertain or unknown behavior"	"GR113-044"	3622	261809847	1.4
+	"45-49 years"	"45-49"	"Non-Injury: Anemias"	"GR113-045"	1484	261809847	0.6
+	"45-49 years"	"45-49"	"Non-Injury: Diabetes mellitus"	"GR113-046"	25617	261809847	9.8
+	"45-49 years"	"45-49"	"Non-Injury: Nutritional Deficiencies"	"GR113 048-049"	511	261809847	0.2
+	"45-49 years"	"45-49"	"Non-Injury: Meningitis"	"GR113-050"	654	261809847	0.2
+	"45-49 years"	"45-49"	"Non-Injury: Parkinsons disease"	"GR113-051"	201	261809847	0.1
+	"45-49 years"	"45-49"	"Non-Injury: Alzheimers disease"	"GR113-052"	301	261809847	0.1
+	"45-49 years"	"45-49"	"Non-Injury: Diseases of Heart"	"GR113 055-068"	177494	261809847	67.8
+	"45-49 years"	"45-49"	"Non-Injury: Essential (primary) hypertension and hypertensive renal disease"	"GR113-069"	5325	261809847	2.0
+	"45-49 years"	"45-49"	"Non-Injury: Cerebrovascular diseases, including stroke"	"GR113-070"	30485	261809847	11.6
+	"45-49 years"	"45-49"	"Non-Injury: Atherosclerosis"	"GR113-071"	674	261809847	0.3
+	"45-49 years"	"45-49"	"Non-Injury: Other diseases of the circulatory system"	"GR113 073-074"	5378	261809847	2.1
+	"45-49 years"	"45-49"	"Non-Injury: Other disorders of circulatory system"	"GR113-075"	3151	261809847	1.2
+	"45-49 years"	"45-49"	"Non-Injury: Influenza & Pneumonia"	"GR113 077-078"	10486	261809847	4.0
+	"45-49 years"	"45-49"	"Non-Injury: Other acute lower respiratory infections"	"GR113 079"	89	261809847	0.0
+	"45-49 years"	"45-49"	"Non-Injury: Chronic lower respiratory diseases"	"GR113 082"	15534	261809847	5.9
+	"45-49 years"	"45-49"	"Non-Injury: Pneumoconioses and chemical effects"	"GR113-087"	63	261809847	0.0
+	"45-49 years"	"45-49"	"Non-Injury: Pneumonitis due to solids and liquids"	"GR113-088"	2019	261809847	0.8
+	"45-49 years"	"45-49"	"Non-Injury: Other diseases of respiratory system"	"GR113-089"	6614	261809847	2.5
+	"45-49 years"	"45-49"	"Non-Injury: Peptic ulcer"	"GR113-090"	1397	261809847	0.5
+	"45-49 years"	"45-49"	"Non-Injury: Diseases of appendix"	"GR113-091"	217	261809847	0.1
+	"45-49 years"	"45-49"	"Non-Injury: Hernia"	"GR113-092"	415	261809847	0.2
+	"45-49 years"	"45-49"	"Non-Injury: Chronic liver disease and cirrhosis"	"GR113 093"	41188	261809847	15.7
+	"45-49 years"	"45-49"	"Non-Injury: Cholelithiasis and other disorders of gallbladder"	"GR113-096"	594	261809847	0.2
+	"45-49 years"	"45-49"	"Non-Injury: Nephritis, nephrotic syndrome and nephrosis"	"GR113 097"	9655	261809847	3.7
+	"45-49 years"	"45-49"	"Non-Injury: Infections of kidney"	"GR113-102"	287	261809847	0.1
+	"45-49 years"	"45-49"	"Non-Injury: Hyperplasia of prostate"	"GR113-103"	5	261809847	Unreliable
+	"45-49 years"	"45-49"	"Non-Injury: Inflammatory diseases of female pelvic organs"	"GR113-104"	75	261809847	0.0
+	"45-49 years"	"45-49"	"Non-Injury: Pregnancy with abortive outcome"	"GR113-106"	8	261809847	Unreliable
+	"45-49 years"	"45-49"	"Non-Injury: Other complications of pregnancy, childbirth and the puerperium"	"GR113-107"	296	261809847	0.1
+	"45-49 years"	"45-49"	"Non-Injury: Certain conditions originating in the perinatal period"	"GR113-108"	25	261809847	0.0
+	"45-49 years"	"45-49"	"Non-Injury: Congenital malformations, deformations and chromosomal abnormalities"	"GR113-109"	3883	261809847	1.5
+	"45-49 years"	"45-49"	"Non-Injury: Symptoms, signs and abnormal clinical and laboratory findings, not elsewhere classified"	"GR113-110"	16503	261809847	6.3
+	"45-49 years"	"45-49"	"Non-Injury: All other diseases (Residual)"	"GR113-111"	83491	261809847	31.9
+	"45-49 years"	"45-49"	"Non-Injury: Complications of medical and surgical care"	"GR113-135"	1413	261809847	0.5
+"Total"	"45-49 years"	"45-49"			908583	261809847	347.0
+	"50-54 years"	"50-54"	"Cut/Pierce"	"GRINJ-001"	2584	238330523	1.1
+	"50-54 years"	"50-54"	"Drowning"	"GRINJ-002"	3190	238330523	1.3
+	"50-54 years"	"50-54"	"Fall"	"GRINJ-003"	8243	238330523	3.5
+	"50-54 years"	"50-54"	"Fire/Flame"	"GRINJ-004"	3204	238330523	1.3
+	"50-54 years"	"50-54"	"Hot object/Substance"	"GRINJ-005"	67	238330523	0.0
+	"50-54 years"	"50-54"	"Firearm"	"GRINJ-006"	25990	238330523	10.9
+	"50-54 years"	"50-54"	"Machinery"	"GRINJ-007"	738	238330523	0.3
+	"50-54 years"	"50-54"	"Motor Vehicle Traffic"	"GRINJ-008"	31719	238330523	13.3
+	"50-54 years"	"50-54"	"Other Pedal cyclist"	"GRINJ-009"	292	238330523	0.1
+	"50-54 years"	"50-54"	"Other Pedestrian"	"GRINJ-010"	1003	238330523	0.4
+	"50-54 years"	"50-54"	"Other land transport"	"GRINJ-011"	1357	238330523	0.6
+	"50-54 years"	"50-54"	"Other transport"	"GRINJ-012"	1768	238330523	0.7
+	"50-54 years"	"50-54"	"Natural/Environmental"	"GRINJ-013"	1765	238330523	0.7
+	"50-54 years"	"50-54"	"Overexertion"	"GRINJ-014"	9	238330523	Unreliable
+	"50-54 years"	"50-54"	"Poisoning"	"GRINJ-015"	47452	238330523	19.9
+	"50-54 years"	"50-54"	"Struck by or against"	"GRINJ-016"	1268	238330523	0.5
+	"50-54 years"	"50-54"	"Suffocation"	"GRINJ-017"	10098	238330523	4.2
+	"50-54 years"	"50-54"	"Other specified, classifiable Injury"	"GRINJ-018"	2122	238330523	0.9
+	"50-54 years"	"50-54"	"Other specified, not elsewhere classified Injury"	"GRINJ-019"	2043	238330523	0.9
+	"50-54 years"	"50-54"	"Unspecified Injury"	"GRINJ-020"	4426	238330523	1.9
+	"50-54 years"	"50-54"	"Non-Injury: Intestinal infections"	"GR113 001-003"	862	238330523	0.4
+	"50-54 years"	"50-54"	"Non-Injury: Tuberculosis"	"GR113 005-006"	557	238330523	0.2
+	"50-54 years"	"50-54"	"Non-Injury: Whooping cough"	"GR113-007"	0	238330523	Unreliable
+	"50-54 years"	"50-54"	"Non-Injury: Scarlet fever and erysipelas"	"GR113-008"	0	238330523	Unreliable
+	"50-54 years"	"50-54"	"Non-Injury: Meningococcal infection"	"GR113-009"	90	238330523	0.0
+	"50-54 years"	"50-54"	"Non-Injury: Septicemia"	"GR113-010"	15527	238330523	6.5
+	"50-54 years"	"50-54"	"Non-Injury: Syphilis"	"GR113-011"	28	238330523	0.0
+	"50-54 years"	"50-54"	"Non-Injury: Acute poliomyelitis"	"GR113-012"	0	238330523	Unreliable
+	"50-54 years"	"50-54"	"Non-Injury: Arthropod-borne viral encephalitis"	"GR113-013"	8	238330523	Unreliable
+	"50-54 years"	"50-54"	"Non-Injury: Measles"	"GR113-014"	0	238330523	Unreliable
+	"50-54 years"	"50-54"	"Non-Injury: Viral hepatitis"	"GR113-015"	16131	238330523	6.8
+	"50-54 years"	"50-54"	"Non-Injury: Human immunodeficiency virus (HIV) disease"	"GR113-016"	20706	238330523	8.7
+	"50-54 years"	"50-54"	"Non-Injury: Malaria"	"GR113-017"	7	238330523	Unreliable
+	"50-54 years"	"50-54"	"Non-Injury: Other and unspecified infectious and parasitic diseases and their sequelae"	"GR113-018"	5344	238330523	2.2
+	"50-54 years"	"50-54"	"Non-Injury: Malignant neoplasms (Cancers)"	"GR113 020-043"	369196	238330523	154.9
+	"50-54 years"	"50-54"	"Non-Injury: In situ neoplasms, benign neoplasms and neoplasms of uncertain or unknown behavior"	"GR113-044"	4977	238330523	2.1
+	"50-54 years"	"50-54"	"Non-Injury: Anemias"	"GR113-045"	1445	238330523	0.6
+	"50-54 years"	"50-54"	"Non-Injury: Diabetes mellitus"	"GR113-046"	40229	238330523	16.9
+	"50-54 years"	"50-54"	"Non-Injury: Nutritional Deficiencies"	"GR113 048-049"	776	238330523	0.3
+	"50-54 years"	"50-54"	"Non-Injury: Meningitis"	"GR113-050"	664	238330523	0.3
+	"50-54 years"	"50-54"	"Non-Injury: Parkinsons disease"	"GR113-051"	530	238330523	0.2
+	"50-54 years"	"50-54"	"Non-Injury: Alzheimers disease"	"GR113-052"	746	238330523	0.3
+	"50-54 years"	"50-54"	"Non-Injury: Diseases of Heart"	"GR113 055-068"	267417	238330523	112.2
+	"50-54 years"	"50-54"	"Non-Injury: Essential (primary) hypertension and hypertensive renal disease"	"GR113-069"	8171	238330523	3.4
+	"50-54 years"	"50-54"	"Non-Injury: Cerebrovascular diseases, including stroke"	"GR113-070"	42654	238330523	17.9
+	"50-54 years"	"50-54"	"Non-Injury: Atherosclerosis"	"GR113-071"	1273	238330523	0.5
+	"50-54 years"	"50-54"	"Non-Injury: Other diseases of the circulatory system"	"GR113 073-074"	7423	238330523	3.1
+	"50-54 years"	"50-54"	"Non-Injury: Other disorders of circulatory system"	"GR113-075"	3336	238330523	1.4
+	"50-54 years"	"50-54"	"Non-Injury: Influenza & Pneumonia"	"GR113 077-078"	13937	238330523	5.8
+	"50-54 years"	"50-54"	"Non-Injury: Other acute lower respiratory infections"	"GR113 079"	105	238330523	0.0
+	"50-54 years"	"50-54"	"Non-Injury: Chronic lower respiratory diseases"	"GR113 082"	30236	238330523	12.7
+	"50-54 years"	"50-54"	"Non-Injury: Pneumoconioses and chemical effects"	"GR113-087"	138	238330523	0.1
+	"50-54 years"	"50-54"	"Non-Injury: Pneumonitis due to solids and liquids"	"GR113-088"	2949	238330523	1.2
+	"50-54 years"	"50-54"	"Non-Injury: Other diseases of respiratory system"	"GR113-089"	9865	238330523	4.1
+	"50-54 years"	"50-54"	"Non-Injury: Peptic ulcer"	"GR113-090"	1879	238330523	0.8
+	"50-54 years"	"50-54"	"Non-Injury: Diseases of appendix"	"GR113-091"	271	238330523	0.1
+	"50-54 years"	"50-54"	"Non-Injury: Hernia"	"GR113-092"	657	238330523	0.3
+	"50-54 years"	"50-54"	"Non-Injury: Chronic liver disease and cirrhosis"	"GR113 093"	49960	238330523	21.0
+	"50-54 years"	"50-54"	"Non-Injury: Cholelithiasis and other disorders of gallbladder"	"GR113-096"	915	238330523	0.4
+	"50-54 years"	"50-54"	"Non-Injury: Nephritis, nephrotic syndrome and nephrosis"	"GR113 097"	14559	238330523	6.1
+	"50-54 years"	"50-54"	"Non-Injury: Infections of kidney"	"GR113-102"	335	238330523	0.1
+	"50-54 years"	"50-54"	"Non-Injury: Hyperplasia of prostate"	"GR113-103"	10	238330523	Unreliable
+	"50-54 years"	"50-54"	"Non-Injury: Inflammatory diseases of female pelvic organs"	"GR113-104"	56	238330523	0.0
+	"50-54 years"	"50-54"	"Non-Injury: Pregnancy with abortive outcome"	"GR113-106"	4	238330523	Unreliable
+	"50-54 years"	"50-54"	"Non-Injury: Other complications of pregnancy, childbirth and the puerperium"	"GR113-107"	226	238330523	0.1
+	"50-54 years"	"50-54"	"Non-Injury: Certain conditions originating in the perinatal period"	"GR113-108"	17	238330523	Unreliable
+	"50-54 years"	"50-54"	"Non-Injury: Congenital malformations, deformations and chromosomal abnormalities"	"GR113-109"	4203	238330523	1.8
+	"50-54 years"	"50-54"	"Non-Injury: Symptoms, signs and abnormal clinical and laboratory findings, not elsewhere classified"	"GR113-110"	15828	238330523	6.6
+	"50-54 years"	"50-54"	"Non-Injury: All other diseases (Residual)"	"GR113-111"	104881	238330523	44.0
+	"50-54 years"	"50-54"	"Non-Injury: Complications of medical and surgical care"	"GR113-135"	1758	238330523	0.7
+"Total"	"50-54 years"	"50-54"			1210224	238330523	507.8
+	"55-59 years"	"55-59"	"Cut/Pierce"	"GRINJ-001"	1821	200202661	0.9
+	"55-59 years"	"55-59"	"Drowning"	"GRINJ-002"	2502	200202661	1.2
+	"55-59 years"	"55-59"	"Fall"	"GRINJ-003"	8700	200202661	4.3
+	"55-59 years"	"55-59"	"Fire/Flame"	"GRINJ-004"	2878	200202661	1.4
+	"55-59 years"	"55-59"	"Hot object/Substance"	"GRINJ-005"	72	200202661	0.0
+	"55-59 years"	"55-59"	"Firearm"	"GRINJ-006"	20864	200202661	10.4
+	"55-59 years"	"55-59"	"Machinery"	"GRINJ-007"	664	200202661	0.3
+	"55-59 years"	"55-59"	"Motor Vehicle Traffic"	"GRINJ-008"	25856	200202661	12.9
+	"55-59 years"	"55-59"	"Other Pedal cyclist"	"GRINJ-009"	236	200202661	0.1
+	"55-59 years"	"55-59"	"Other Pedestrian"	"GRINJ-010"	799	200202661	0.4
+	"55-59 years"	"55-59"	"Other land transport"	"GRINJ-011"	1077	200202661	0.5
+	"55-59 years"	"55-59"	"Other transport"	"GRINJ-012"	1452	200202661	0.7
+	"55-59 years"	"55-59"	"Natural/Environmental"	"GRINJ-013"	1419	200202661	0.7
+	"55-59 years"	"55-59"	"Overexertion"	"GRINJ-014"	13	200202661	Unreliable
+	"55-59 years"	"55-59"	"Poisoning"	"GRINJ-015"	27197	200202661	13.6
+	"55-59 years"	"55-59"	"Struck by or against"	"GRINJ-016"	979	200202661	0.5
+	"55-59 years"	"55-59"	"Suffocation"	"GRINJ-017"	7699	200202661	3.8
+	"55-59 years"	"55-59"	"Other specified, classifiable Injury"	"GRINJ-018"	1640	200202661	0.8
+	"55-59 years"	"55-59"	"Other specified, not elsewhere classified Injury"	"GRINJ-019"	1684	200202661	0.8
+	"55-59 years"	"55-59"	"Unspecified Injury"	"GRINJ-020"	3779	200202661	1.9
+	"55-59 years"	"55-59"	"Non-Injury: Intestinal infections"	"GR113 001-003"	1381	200202661	0.7
+	"55-59 years"	"55-59"	"Non-Injury: Tuberculosis"	"GR113 005-006"	563	200202661	0.3
+	"55-59 years"	"55-59"	"Non-Injury: Whooping cough"	"GR113-007"	1	200202661	Unreliable
+	"55-59 years"	"55-59"	"Non-Injury: Scarlet fever and erysipelas"	"GR113-008"	1	200202661	Unreliable
+	"55-59 years"	"55-59"	"Non-Injury: Meningococcal infection"	"GR113-009"	71	200202661	0.0
+	"55-59 years"	"55-59"	"Non-Injury: Septicemia"	"GR113-010"	20402	200202661	10.2
+	"55-59 years"	"55-59"	"Non-Injury: Syphilis"	"GR113-011"	28	200202661	0.0
+	"55-59 years"	"55-59"	"Non-Injury: Acute poliomyelitis"	"GR113-012"	0	200202661	Unreliable
+	"55-59 years"	"55-59"	"Non-Injury: Arthropod-borne viral encephalitis"	"GR113-013"	2	200202661	Unreliable
+	"55-59 years"	"55-59"	"Non-Injury: Measles"	"GR113-014"	1	200202661	Unreliable
+	"55-59 years"	"55-59"	"Non-Injury: Viral hepatitis"	"GR113-015"	13506	200202661	6.7
+	"55-59 years"	"55-59"	"Non-Injury: Human immunodeficiency virus (HIV) disease"	"GR113-016"	12293	200202661	6.1
+	"55-59 years"	"55-59"	"Non-Injury: Malaria"	"GR113-017"	8	200202661	Unreliable
+	"55-59 years"	"55-59"	"Non-Injury: Other and unspecified infectious and parasitic diseases and their sequelae"	"GR113-018"	5590	200202661	2.8
+	"55-59 years"	"55-59"	"Non-Injury: Malignant neoplasms (Cancers)"	"GR113 020-043"	518658	200202661	259.1
+	"55-59 years"	"55-59"	"Non-Injury: In situ neoplasms, benign neoplasms and neoplasms of uncertain or unknown behavior"	"GR113-044"	6770	200202661	3.4
+	"55-59 years"	"55-59"	"Non-Injury: Anemias"	"GR113-045"	1673	200202661	0.8
+	"55-59 years"	"55-59"	"Non-Injury: Diabetes mellitus"	"GR113-046"	56690	200202661	28.3
+	"55-59 years"	"55-59"	"Non-Injury: Nutritional Deficiencies"	"GR113 048-049"	991	200202661	0.5
+	"55-59 years"	"55-59"	"Non-Injury: Meningitis"	"GR113-050"	633	200202661	0.3
+	"55-59 years"	"55-59"	"Non-Injury: Parkinsons disease"	"GR113-051"	1289	200202661	0.6
+	"55-59 years"	"55-59"	"Non-Injury: Alzheimers disease"	"GR113-052"	2158	200202661	1.1
+	"55-59 years"	"55-59"	"Non-Injury: Diseases of Heart"	"GR113 055-068"	349513	200202661	174.6
+	"55-59 years"	"55-59"	"Non-Injury: Essential (primary) hypertension and hypertensive renal disease"	"GR113-069"	10236	200202661	5.1
+	"55-59 years"	"55-59"	"Non-Injury: Cerebrovascular diseases, including stroke"	"GR113-070"	53401	200202661	26.7
+	"55-59 years"	"55-59"	"Non-Injury: Atherosclerosis"	"GR113-071"	2028	200202661	1.0
+	"55-59 years"	"55-59"	"Non-Injury: Other diseases of the circulatory system"	"GR113 073-074"	10586	200202661	5.3
+	"55-59 years"	"55-59"	"Non-Injury: Other disorders of circulatory system"	"GR113-075"	3463	200202661	1.7
+	"55-59 years"	"55-59"	"Non-Injury: Influenza & Pneumonia"	"GR113 077-078"	16817	200202661	8.4
+	"55-59 years"	"55-59"	"Non-Injury: Other acute lower respiratory infections"	"GR113 079"	95	200202661	0.0
+	"55-59 years"	"55-59"	"Non-Injury: Chronic lower respiratory diseases"	"GR113 082"	54707	200202661	27.3
+	"55-59 years"	"55-59"	"Non-Injury: Pneumoconioses and chemical effects"	"GR113-087"	287	200202661	0.1
+	"55-59 years"	"55-59"	"Non-Injury: Pneumonitis due to solids and liquids"	"GR113-088"	3984	200202661	2.0
+	"55-59 years"	"55-59"	"Non-Injury: Other diseases of respiratory system"	"GR113-089"	13869	200202661	6.9
+	"55-59 years"	"55-59"	"Non-Injury: Peptic ulcer"	"GR113-090"	2261	200202661	1.1
+	"55-59 years"	"55-59"	"Non-Injury: Diseases of appendix"	"GR113-091"	306	200202661	0.2
+	"55-59 years"	"55-59"	"Non-Injury: Hernia"	"GR113-092"	786	200202661	0.4
+	"55-59 years"	"55-59"	"Non-Injury: Chronic liver disease and cirrhosis"	"GR113 093"	46795	200202661	23.4
+	"55-59 years"	"55-59"	"Non-Injury: Cholelithiasis and other disorders of gallbladder"	"GR113-096"	1228	200202661	0.6
+	"55-59 years"	"55-59"	"Non-Injury: Nephritis, nephrotic syndrome and nephrosis"	"GR113 097"	20718	200202661	10.3
+	"55-59 years"	"55-59"	"Non-Injury: Infections of kidney"	"GR113-102"	355	200202661	0.2
+	"55-59 years"	"55-59"	"Non-Injury: Hyperplasia of prostate"	"GR113-103"	42	200202661	0.0
+	"55-59 years"	"55-59"	"Non-Injury: Inflammatory diseases of female pelvic organs"	"GR113-104"	67	200202661	0.0
+	"55-59 years"	"55-59"	"Non-Injury: Pregnancy with abortive outcome"	"GR113-106"	0	200202661	Unreliable
+	"55-59 years"	"55-59"	"Non-Injury: Other complications of pregnancy, childbirth and the puerperium"	"GR113-107"	21	200202661	0.0
+	"55-59 years"	"55-59"	"Non-Injury: Certain conditions originating in the perinatal period"	"GR113-108"	14	200202661	Unreliable
+	"55-59 years"	"55-59"	"Non-Injury: Congenital malformations, deformations and chromosomal abnormalities"	"GR113-109"	4381	200202661	2.2
+	"55-59 years"	"55-59"	"Non-Injury: Symptoms, signs and abnormal clinical and laboratory findings, not elsewhere classified"	"GR113-110"	14122	200202661	7.1
+	"55-59 years"	"55-59"	"Non-Injury: All other diseases (Residual)"	"GR113-111"	116209	200202661	58.0
+	"55-59 years"	"55-59"	"Non-Injury: Complications of medical and surgical care"	"GR113-135"	2134	200202661	1.1
+"Total"	"55-59 years"	"55-59"			1482465	200202661	740.5
+	"60-64 years "	"60-64"	"Cut/Pierce"	"GRINJ-001"	1173	158718361	0.7
+	"60-64 years "	"60-64"	"Drowning"	"GRINJ-002"	1939	158718361	1.2
+	"60-64 years "	"60-64"	"Fall"	"GRINJ-003"	9375	158718361	5.9
+	"60-64 years "	"60-64"	"Fire/Flame"	"GRINJ-004"	2625	158718361	1.7
+	"60-64 years "	"60-64"	"Hot object/Substance"	"GRINJ-005"	69	158718361	0.0
+	"60-64 years "	"60-64"	"Firearm"	"GRINJ-006"	15627	158718361	9.8
+	"60-64 years "	"60-64"	"Machinery"	"GRINJ-007"	686	158718361	0.4
+	"60-64 years "	"60-64"	"Motor Vehicle Traffic"	"GRINJ-008"	20437	158718361	12.9
+	"60-64 years "	"60-64"	"Other Pedal cyclist"	"GRINJ-009"	203	158718361	0.1
+	"60-64 years "	"60-64"	"Other Pedestrian"	"GRINJ-010"	594	158718361	0.4
+	"60-64 years "	"60-64"	"Other land transport"	"GRINJ-011"	949	158718361	0.6
+	"60-64 years "	"60-64"	"Other transport"	"GRINJ-012"	1152	158718361	0.7
+	"60-64 years "	"60-64"	"Natural/Environmental"	"GRINJ-013"	1223	158718361	0.8
+	"60-64 years "	"60-64"	"Overexertion"	"GRINJ-014"	9	158718361	Unreliable
+	"60-64 years "	"60-64"	"Poisoning"	"GRINJ-015"	12560	158718361	7.9
+	"60-64 years "	"60-64"	"Struck by or against"	"GRINJ-016"	857	158718361	0.5
+	"60-64 years "	"60-64"	"Suffocation"	"GRINJ-017"	5797	158718361	3.7
+	"60-64 years "	"60-64"	"Other specified, classifiable Injury"	"GRINJ-018"	1197	158718361	0.8
+	"60-64 years "	"60-64"	"Other specified, not elsewhere classified Injury"	"GRINJ-019"	1360	158718361	0.9
+	"60-64 years "	"60-64"	"Unspecified Injury"	"GRINJ-020"	3419	158718361	2.2
+	"60-64 years "	"60-64"	"Non-Injury: Intestinal infections"	"GR113 001-003"	2084	158718361	1.3
+	"60-64 years "	"60-64"	"Non-Injury: Tuberculosis"	"GR113 005-006"	613	158718361	0.4
+	"60-64 years "	"60-64"	"Non-Injury: Whooping cough"	"GR113-007"	0	158718361	Unreliable
+	"60-64 years "	"60-64"	"Non-Injury: Scarlet fever and erysipelas"	"GR113-008"	1	158718361	Unreliable
+	"60-64 years "	"60-64"	"Non-Injury: Meningococcal infection"	"GR113-009"	39	158718361	0.0
+	"60-64 years "	"60-64"	"Non-Injury: Septicemia"	"GR113-010"	25037	158718361	15.8
+	"60-64 years "	"60-64"	"Non-Injury: Syphilis"	"GR113-011"	30	158718361	0.0
+	"60-64 years "	"60-64"	"Non-Injury: Acute poliomyelitis"	"GR113-012"	0	158718361	Unreliable
+	"60-64 years "	"60-64"	"Non-Injury: Arthropod-borne viral encephalitis"	"GR113-013"	6	158718361	Unreliable
+	"60-64 years "	"60-64"	"Non-Injury: Measles"	"GR113-014"	0	158718361	Unreliable
+	"60-64 years "	"60-64"	"Non-Injury: Viral hepatitis"	"GR113-015"	7548	158718361	4.8
+	"60-64 years "	"60-64"	"Non-Injury: Human immunodeficiency virus (HIV) disease"	"GR113-016"	6477	158718361	4.1
+	"60-64 years "	"60-64"	"Non-Injury: Malaria"	"GR113-017"	9	158718361	Unreliable
+	"60-64 years "	"60-64"	"Non-Injury: Other and unspecified infectious and parasitic diseases and their sequelae"	"GR113-018"	5878	158718361	3.7
+	"60-64 years "	"60-64"	"Non-Injury: Malignant neoplasms (Cancers)"	"GR113 020-043"	659962	158718361	415.8
+	"60-64 years "	"60-64"	"Non-Injury: In situ neoplasms, benign neoplasms and neoplasms of uncertain or unknown behavior"	"GR113-044"	8923	158718361	5.6
+	"60-64 years "	"60-64"	"Non-Injury: Anemias"	"GR113-045"	1952	158718361	1.2
+	"60-64 years "	"60-64"	"Non-Injury: Diabetes mellitus"	"GR113-046"	71141	158718361	44.8
+	"60-64 years "	"60-64"	"Non-Injury: Nutritional Deficiencies"	"GR113 048-049"	1234	158718361	0.8
+	"60-64 years "	"60-64"	"Non-Injury: Meningitis"	"GR113-050"	558	158718361	0.4
+	"60-64 years "	"60-64"	"Non-Injury: Parkinsons disease"	"GR113-051"	3112	158718361	2.0
+	"60-64 years "	"60-64"	"Non-Injury: Alzheimers disease"	"GR113-052"	5156	158718361	3.2
+	"60-64 years "	"60-64"	"Non-Injury: Diseases of Heart"	"GR113 055-068"	431707	158718361	272.0
+	"60-64 years "	"60-64"	"Non-Injury: Essential (primary) hypertension and hypertensive renal disease"	"GR113-069"	12999	158718361	8.2
+	"60-64 years "	"60-64"	"Non-Injury: Cerebrovascular diseases, including stroke"	"GR113-070"	68345	158718361	43.1
+	"60-64 years "	"60-64"	"Non-Injury: Atherosclerosis"	"GR113-071"	3107	158718361	2.0
+	"60-64 years "	"60-64"	"Non-Injury: Other diseases of the circulatory system"	"GR113 073-074"	15490	158718361	9.8
+	"60-64 years "	"60-64"	"Non-Injury: Other disorders of circulatory system"	"GR113-075"	3501	158718361	2.2
+	"60-64 years "	"60-64"	"Non-Injury: Influenza & Pneumonia"	"GR113 077-078"	21890	158718361	13.8
+	"60-64 years "	"60-64"	"Non-Injury: Other acute lower respiratory infections"	"GR113 079"	106	158718361	0.1
+	"60-64 years "	"60-64"	"Non-Injury: Chronic lower respiratory diseases"	"GR113 082"	93949	158718361	59.2
+	"60-64 years "	"60-64"	"Non-Injury: Pneumoconioses and chemical effects"	"GR113-087"	453	158718361	0.3
+	"60-64 years "	"60-64"	"Non-Injury: Pneumonitis due to solids and liquids"	"GR113-088"	5522	158718361	3.5
+	"60-64 years "	"60-64"	"Non-Injury: Other diseases of respiratory system"	"GR113-089"	19179	158718361	12.1
+	"60-64 years "	"60-64"	"Non-Injury: Peptic ulcer"	"GR113-090"	2587	158718361	1.6
+	"60-64 years "	"60-64"	"Non-Injury: Diseases of appendix"	"GR113-091"	347	158718361	0.2
+	"60-64 years "	"60-64"	"Non-Injury: Hernia"	"GR113-092"	1064	158718361	0.7
+	"60-64 years "	"60-64"	"Non-Injury: Chronic liver disease and cirrhosis"	"GR113 093"	39251	158718361	24.7
+	"60-64 years "	"60-64"	"Non-Injury: Cholelithiasis and other disorders of gallbladder"	"GR113-096"	1607	158718361	1.0
+	"60-64 years "	"60-64"	"Non-Injury: Nephritis, nephrotic syndrome and nephrosis"	"GR113 097"	27380	158718361	17.3
+	"60-64 years "	"60-64"	"Non-Injury: Infections of kidney"	"GR113-102"	378	158718361	0.2
+	"60-64 years "	"60-64"	"Non-Injury: Hyperplasia of prostate"	"GR113-103"	94	158718361	0.1
+	"60-64 years "	"60-64"	"Non-Injury: Inflammatory diseases of female pelvic organs"	"GR113-104"	87	158718361	0.1
+	"60-64 years "	"60-64"	"Non-Injury: Pregnancy with abortive outcome"	"GR113-106"	0	158718361	Unreliable
+	"60-64 years "	"60-64"	"Non-Injury: Other complications of pregnancy, childbirth and the puerperium"	"GR113-107"	2	158718361	Unreliable
+	"60-64 years "	"60-64"	"Non-Injury: Certain conditions originating in the perinatal period"	"GR113-108"	12	158718361	Unreliable
+	"60-64 years "	"60-64"	"Non-Injury: Congenital malformations, deformations and chromosomal abnormalities"	"GR113-109"	3651	158718361	2.3
+	"60-64 years "	"60-64"	"Non-Injury: Symptoms, signs and abnormal clinical and laboratory findings, not elsewhere classified"	"GR113-110"	13355	158718361	8.4
+	"60-64 years "	"60-64"	"Non-Injury: All other diseases (Residual)"	"GR113-111"	126641	158718361	79.8
+	"60-64 years "	"60-64"	"Non-Injury: Complications of medical and surgical care"	"GR113-135"	2445	158718361	1.5
+"Total"	"60-64 years "	"60-64"			1776160	158718361	1119.1
+	"65-69 years"	"65-69"	"Cut/Pierce"	"GRINJ-001"	858	126104032	0.7
+	"65-69 years"	"65-69"	"Drowning"	"GRINJ-002"	1529	126104032	1.2
+	"65-69 years"	"65-69"	"Fall"	"GRINJ-003"	11160	126104032	8.8
+	"65-69 years"	"65-69"	"Fire/Flame"	"GRINJ-004"	2528	126104032	2.0
+	"65-69 years"	"65-69"	"Hot object/Substance"	"GRINJ-005"	73	126104032	0.1
+	"65-69 years"	"65-69"	"Firearm"	"GRINJ-006"	12545	126104032	9.9
+	"65-69 years"	"65-69"	"Machinery"	"GRINJ-007"	546	126104032	0.4
+	"65-69 years"	"65-69"	"Motor Vehicle Traffic"	"GRINJ-008"	17066	126104032	13.5
+	"65-69 years"	"65-69"	"Other Pedal cyclist"	"GRINJ-009"	166	126104032	0.1
+	"65-69 years"	"65-69"	"Other Pedestrian"	"GRINJ-010"	526	126104032	0.4
+	"65-69 years"	"65-69"	"Other land transport"	"GRINJ-011"	811	126104032	0.6
+	"65-69 years"	"65-69"	"Other transport"	"GRINJ-012"	783	126104032	0.6
+	"65-69 years"	"65-69"	"Natural/Environmental"	"GRINJ-013"	1145	126104032	0.9
+	"65-69 years"	"65-69"	"Overexertion"	"GRINJ-014"	10	126104032	Unreliable
+	"65-69 years"	"65-69"	"Poisoning"	"GRINJ-015"	6186	126104032	4.9
+	"65-69 years"	"65-69"	"Struck by or against"	"GRINJ-016"	645	126104032	0.5
+	"65-69 years"	"65-69"	"Suffocation"	"GRINJ-017"	5254	126104032	4.2
+	"65-69 years"	"65-69"	"Other specified, classifiable Injury"	"GRINJ-018"	802	126104032	0.6
+	"65-69 years"	"65-69"	"Other specified, not elsewhere classified Injury"	"GRINJ-019"	1155	126104032	0.9
+	"65-69 years"	"65-69"	"Unspecified Injury"	"GRINJ-020"	3818	126104032	3.0
+	"65-69 years"	"65-69"	"Non-Injury: Intestinal infections"	"GR113 001-003"	3238	126104032	2.6
+	"65-69 years"	"65-69"	"Non-Injury: Tuberculosis"	"GR113 005-006"	701	126104032	0.6
+	"65-69 years"	"65-69"	"Non-Injury: Whooping cough"	"GR113-007"	0	126104032	Unreliable
+	"65-69 years"	"65-69"	"Non-Injury: Scarlet fever and erysipelas"	"GR113-008"	5	126104032	Unreliable
+	"65-69 years"	"65-69"	"Non-Injury: Meningococcal infection"	"GR113-009"	41	126104032	0.0
+	"65-69 years"	"65-69"	"Non-Injury: Septicemia"	"GR113-010"	31728	126104032	25.2
+	"65-69 years"	"65-69"	"Non-Injury: Syphilis"	"GR113-011"	31	126104032	0.0
+	"65-69 years"	"65-69"	"Non-Injury: Acute poliomyelitis"	"GR113-012"	0	126104032	Unreliable
+	"65-69 years"	"65-69"	"Non-Injury: Arthropod-borne viral encephalitis"	"GR113-013"	4	126104032	Unreliable
+	"65-69 years"	"65-69"	"Non-Injury: Measles"	"GR113-014"	0	126104032	Unreliable
+	"65-69 years"	"65-69"	"Non-Injury: Viral hepatitis"	"GR113-015"	5016	126104032	4.0
+	"65-69 years"	"65-69"	"Non-Injury: Human immunodeficiency virus (HIV) disease"	"GR113-016"	3558	126104032	2.8
+	"65-69 years"	"65-69"	"Non-Injury: Malaria"	"GR113-017"	6	126104032	Unreliable
+	"65-69 years"	"65-69"	"Non-Injury: Other and unspecified infectious and parasitic diseases and their sequelae"	"GR113-018"	6594	126104032	5.2
+	"65-69 years"	"65-69"	"Non-Injury: Malignant neoplasms (Cancers)"	"GR113 020-043"	786816	126104032	623.9
+	"65-69 years"	"65-69"	"Non-Injury: In situ neoplasms, benign neoplasms and neoplasms of uncertain or unknown behavior"	"GR113-044"	11929	126104032	9.5
+	"65-69 years"	"65-69"	"Non-Injury: Anemias"	"GR113-045"	2351	126104032	1.9
+	"65-69 years"	"65-69"	"Non-Injury: Diabetes mellitus"	"GR113-046"	85523	126104032	67.8
+	"65-69 years"	"65-69"	"Non-Injury: Nutritional Deficiencies"	"GR113 048-049"	1698	126104032	1.3
+	"65-69 years"	"65-69"	"Non-Injury: Meningitis"	"GR113-050"	518	126104032	0.4
+	"65-69 years"	"65-69"	"Non-Injury: Parkinsons disease"	"GR113-051"	7821	126104032	6.2
+	"65-69 years"	"65-69"	"Non-Injury: Alzheimers disease"	"GR113-052"	12069	126104032	9.6
+	"65-69 years"	"65-69"	"Non-Injury: Diseases of Heart"	"GR113 055-068"	525273	126104032	416.5
+	"65-69 years"	"65-69"	"Non-Injury: Essential (primary) hypertension and hypertensive renal disease"	"GR113-069"	15969	126104032	12.7
+	"65-69 years"	"65-69"	"Non-Injury: Cerebrovascular diseases, including stroke"	"GR113-070"	93793	126104032	74.4
+	"65-69 years"	"65-69"	"Non-Injury: Atherosclerosis"	"GR113-071"	4719	126104032	3.7
+	"65-69 years"	"65-69"	"Non-Injury: Other diseases of the circulatory system"	"GR113 073-074"	22723	126104032	18.0
+	"65-69 years"	"65-69"	"Non-Injury: Other disorders of circulatory system"	"GR113-075"	3664	126104032	2.9
+	"65-69 years"	"65-69"	"Non-Injury: Influenza & Pneumonia"	"GR113 077-078"	29504	126104032	23.4
+	"65-69 years"	"65-69"	"Non-Injury: Other acute lower respiratory infections"	"GR113 079"	127	126104032	0.1
+	"65-69 years"	"65-69"	"Non-Injury: Chronic lower respiratory diseases"	"GR113 082"	146997	126104032	116.6
+	"65-69 years"	"65-69"	"Non-Injury: Pneumoconioses and chemical effects"	"GR113-087"	875	126104032	0.7
+	"65-69 years"	"65-69"	"Non-Injury: Pneumonitis due to solids and liquids"	"GR113-088"	7606	126104032	6.0
+	"65-69 years"	"65-69"	"Non-Injury: Other diseases of respiratory system"	"GR113-089"	27224	126104032	21.6
+	"65-69 years"	"65-69"	"Non-Injury: Peptic ulcer"	"GR113-090"	2974	126104032	2.4
+	"65-69 years"	"65-69"	"Non-Injury: Diseases of appendix"	"GR113-091"	378	126104032	0.3
+	"65-69 years"	"65-69"	"Non-Injury: Hernia"	"GR113-092"	1183	126104032	0.9
+	"65-69 years"	"65-69"	"Non-Injury: Chronic liver disease and cirrhosis"	"GR113 093"	33377	126104032	26.5
+	"65-69 years"	"65-69"	"Non-Injury: Cholelithiasis and other disorders of gallbladder"	"GR113-096"	2340	126104032	1.9
+	"65-69 years"	"65-69"	"Non-Injury: Nephritis, nephrotic syndrome and nephrosis"	"GR113 097"	37404	126104032	29.7
+	"65-69 years"	"65-69"	"Non-Injury: Infections of kidney"	"GR113-102"	492	126104032	0.4
+	"65-69 years"	"65-69"	"Non-Injury: Hyperplasia of prostate"	"GR113-103"	185	126104032	0.1
+	"65-69 years"	"65-69"	"Non-Injury: Inflammatory diseases of female pelvic organs"	"GR113-104"	99	126104032	0.1
+	"65-69 years"	"65-69"	"Non-Injury: Pregnancy with abortive outcome"	"GR113-106"	0	126104032	Unreliable
+	"65-69 years"	"65-69"	"Non-Injury: Other complications of pregnancy, childbirth and the puerperium"	"GR113-107"	6	126104032	Unreliable
+	"65-69 years"	"65-69"	"Non-Injury: Certain conditions originating in the perinatal period"	"GR113-108"	8	126104032	Unreliable
+	"65-69 years"	"65-69"	"Non-Injury: Congenital malformations, deformations and chromosomal abnormalities"	"GR113-109"	2621	126104032	2.1
+	"65-69 years"	"65-69"	"Non-Injury: Symptoms, signs and abnormal clinical and laboratory findings, not elsewhere classified"	"GR113-110"	13923	126104032	11.0
+	"65-69 years"	"65-69"	"Non-Injury: All other diseases (Residual)"	"GR113-111"	143752	126104032	114.0
+	"65-69 years"	"65-69"	"Non-Injury: Complications of medical and surgical care"	"GR113-135"	2882	126104032	2.3
+"Total"	"65-69 years"	"65-69"			2147351	126104032	1702.8
+	"70-74 years"	"70-74"	"Cut/Pierce"	"GRINJ-001"	680	105882683	0.6
+	"70-74 years"	"70-74"	"Drowning"	"GRINJ-002"	1461	105882683	1.4
+	"70-74 years"	"70-74"	"Fall"	"GRINJ-003"	16709	105882683	15.8
+	"70-74 years"	"70-74"	"Fire/Flame"	"GRINJ-004"	2577	105882683	2.4
+	"70-74 years"	"70-74"	"Hot object/Substance"	"GRINJ-005"	81	105882683	0.1
+	"70-74 years"	"70-74"	"Firearm"	"GRINJ-006"	11804	105882683	11.1
+	"70-74 years"	"70-74"	"Machinery"	"GRINJ-007"	524	105882683	0.5
+	"70-74 years"	"70-74"	"Motor Vehicle Traffic"	"GRINJ-008"	16850	105882683	15.9
+	"70-74 years"	"70-74"	"Other Pedal cyclist"	"GRINJ-009"	131	105882683	0.1
+	"70-74 years"	"70-74"	"Other Pedestrian"	"GRINJ-010"	510	105882683	0.5
+	"70-74 years"	"70-74"	"Other land transport"	"GRINJ-011"	706	105882683	0.7
+	"70-74 years"	"70-74"	"Other transport"	"GRINJ-012"	564	105882683	0.5
+	"70-74 years"	"70-74"	"Natural/Environmental"	"GRINJ-013"	1158	105882683	1.1
+	"70-74 years"	"70-74"	"Overexertion"	"GRINJ-014"	9	105882683	Unreliable
+	"70-74 years"	"70-74"	"Poisoning"	"GRINJ-015"	4114	105882683	3.9
+	"70-74 years"	"70-74"	"Struck by or against"	"GRINJ-016"	562	105882683	0.5
+	"70-74 years"	"70-74"	"Suffocation"	"GRINJ-017"	5788	105882683	5.5
+	"70-74 years"	"70-74"	"Other specified, classifiable Injury"	"GRINJ-018"	671	105882683	0.6
+	"70-74 years"	"70-74"	"Other specified, not elsewhere classified Injury"	"GRINJ-019"	1183	105882683	1.1
+	"70-74 years"	"70-74"	"Unspecified Injury"	"GRINJ-020"	4935	105882683	4.7
+	"70-74 years"	"70-74"	"Non-Injury: Intestinal infections"	"GR113 001-003"	5267	105882683	5.0
+	"70-74 years"	"70-74"	"Non-Injury: Tuberculosis"	"GR113 005-006"	836	105882683	0.8
+	"70-74 years"	"70-74"	"Non-Injury: Whooping cough"	"GR113-007"	1	105882683	Unreliable
+	"70-74 years"	"70-74"	"Non-Injury: Scarlet fever and erysipelas"	"GR113-008"	1	105882683	Unreliable
+	"70-74 years"	"70-74"	"Non-Injury: Meningococcal infection"	"GR113-009"	44	105882683	0.0
+	"70-74 years"	"70-74"	"Non-Injury: Septicemia"	"GR113-010"	42150	105882683	39.8
+	"70-74 years"	"70-74"	"Non-Injury: Syphilis"	"GR113-011"	36	105882683	0.0
+	"70-74 years"	"70-74"	"Non-Injury: Acute poliomyelitis"	"GR113-012"	0	105882683	Unreliable
+	"70-74 years"	"70-74"	"Non-Injury: Arthropod-borne viral encephalitis"	"GR113-013"	14	105882683	Unreliable
+	"70-74 years"	"70-74"	"Non-Injury: Measles"	"GR113-014"	0	105882683	Unreliable
+	"70-74 years"	"70-74"	"Non-Injury: Viral hepatitis"	"GR113-015"	4628	105882683	4.4
+	"70-74 years"	"70-74"	"Non-Injury: Human immunodeficiency virus (HIV) disease"	"GR113-016"	1815	105882683	1.7
+	"70-74 years"	"70-74"	"Non-Injury: Malaria"	"GR113-017"	5	105882683	Unreliable
+	"70-74 years"	"70-74"	"Non-Injury: Other and unspecified infectious and parasitic diseases and their sequelae"	"GR113-018"	7903	105882683	7.5
+	"70-74 years"	"70-74"	"Non-Injury: Malignant neoplasms (Cancers)"	"GR113 020-043"	930224	105882683	878.5
+	"70-74 years"	"70-74"	"Non-Injury: In situ neoplasms, benign neoplasms and neoplasms of uncertain or unknown behavior"	"GR113-044"	17590	105882683	16.6
+	"70-74 years"	"70-74"	"Non-Injury: Anemias"	"GR113-045"	3677	105882683	3.5
+	"70-74 years"	"70-74"	"Non-Injury: Diabetes mellitus"	"GR113-046"	105813	105882683	99.9
+	"70-74 years"	"70-74"	"Non-Injury: Nutritional Deficiencies"	"GR113 048-049"	2625	105882683	2.5
+	"70-74 years"	"70-74"	"Non-Injury: Meningitis"	"GR113-050"	535	105882683	0.5
+	"70-74 years"	"70-74"	"Non-Injury: Parkinsons disease"	"GR113-051"	19717	105882683	18.6
+	"70-74 years"	"70-74"	"Non-Injury: Alzheimers disease"	"GR113-052"	33402	105882683	31.5
+	"70-74 years"	"70-74"	"Non-Injury: Diseases of Heart"	"GR113 055-068"	710699	105882683	671.2
+	"70-74 years"	"70-74"	"Non-Injury: Essential (primary) hypertension and hypertensive renal disease"	"GR113-069"	21715	105882683	20.5
+	"70-74 years"	"70-74"	"Non-Injury: Cerebrovascular diseases, including stroke"	"GR113-070"	147427	105882683	139.2
+	"70-74 years"	"70-74"	"Non-Injury: Atherosclerosis"	"GR113-071"	8060	105882683	7.6
+	"70-74 years"	"70-74"	"Non-Injury: Other diseases of the circulatory system"	"GR113 073-074"	32737	105882683	30.9
+	"70-74 years"	"70-74"	"Non-Injury: Other disorders of circulatory system"	"GR113-075"	4355	105882683	4.1
+	"70-74 years"	"70-74"	"Non-Injury: Influenza & Pneumonia"	"GR113 077-078"	48064	105882683	45.4
+	"70-74 years"	"70-74"	"Non-Injury: Other acute lower respiratory infections"	"GR113 079"	192	105882683	0.2
+	"70-74 years"	"70-74"	"Non-Injury: Chronic lower respiratory diseases"	"GR113 082"	217528	105882683	205.4
+	"70-74 years"	"70-74"	"Non-Injury: Pneumoconioses and chemical effects"	"GR113-087"	1654	105882683	1.6
+	"70-74 years"	"70-74"	"Non-Injury: Pneumonitis due to solids and liquids"	"GR113-088"	13584	105882683	12.8
+	"70-74 years"	"70-74"	"Non-Injury: Other diseases of respiratory system"	"GR113-089"	39287	105882683	37.1
+	"70-74 years"	"70-74"	"Non-Injury: Peptic ulcer"	"GR113-090"	4122	105882683	3.9
+	"70-74 years"	"70-74"	"Non-Injury: Diseases of appendix"	"GR113-091"	530	105882683	0.5
+	"70-74 years"	"70-74"	"Non-Injury: Hernia"	"GR113-092"	1615	105882683	1.5
+	"70-74 years"	"70-74"	"Non-Injury: Chronic liver disease and cirrhosis"	"GR113 093"	30787	105882683	29.1
+	"70-74 years"	"70-74"	"Non-Injury: Cholelithiasis and other disorders of gallbladder"	"GR113-096"	3455	105882683	3.3
+	"70-74 years"	"70-74"	"Non-Injury: Nephritis, nephrotic syndrome and nephrosis"	"GR113 097"	52882	105882683	49.9
+	"70-74 years"	"70-74"	"Non-Injury: Infections of kidney"	"GR113-102"	698	105882683	0.7
+	"70-74 years"	"70-74"	"Non-Injury: Hyperplasia of prostate"	"GR113-103"	361	105882683	0.3
+	"70-74 years"	"70-74"	"Non-Injury: Inflammatory diseases of female pelvic organs"	"GR113-104"	112	105882683	0.1
+	"70-74 years"	"70-74"	"Non-Injury: Pregnancy with abortive outcome"	"GR113-106"	0	105882683	Unreliable
+	"70-74 years"	"70-74"	"Non-Injury: Other complications of pregnancy, childbirth and the puerperium"	"GR113-107"	1	105882683	Unreliable
+	"70-74 years"	"70-74"	"Non-Injury: Certain conditions originating in the perinatal period"	"GR113-108"	12	105882683	Unreliable
+	"70-74 years"	"70-74"	"Non-Injury: Congenital malformations, deformations and chromosomal abnormalities"	"GR113-109"	2250	105882683	2.1
+	"70-74 years"	"70-74"	"Non-Injury: Symptoms, signs and abnormal clinical and laboratory findings, not elsewhere classified"	"GR113-110"	18113	105882683	17.1
+	"70-74 years"	"70-74"	"Non-Injury: All other diseases (Residual)"	"GR113-111"	189909	105882683	179.4
+	"70-74 years"	"70-74"	"Non-Injury: Complications of medical and surgical care"	"GR113-135"	3570	105882683	3.4
+"Total"	"70-74 years"	"70-74"			2801019	105882683	2645.4
+	"75-79 years"	"75-79"	"Cut/Pierce"	"GRINJ-001"	639	88913142	0.7
+	"75-79 years"	"75-79"	"Drowning"	"GRINJ-002"	1370	88913142	1.5
+	"75-79 years"	"75-79"	"Fall"	"GRINJ-003"	27459	88913142	30.9
+	"75-79 years"	"75-79"	"Fire/Flame"	"GRINJ-004"	2770	88913142	3.1
+	"75-79 years"	"75-79"	"Hot object/Substance"	"GRINJ-005"	100	88913142	0.1
+	"75-79 years"	"75-79"	"Firearm"	"GRINJ-006"	11625	88913142	13.1
+	"75-79 years"	"75-79"	"Machinery"	"GRINJ-007"	463	88913142	0.5
+	"75-79 years"	"75-79"	"Motor Vehicle Traffic"	"GRINJ-008"	17987	88913142	20.2
+	"75-79 years"	"75-79"	"Other Pedal cyclist"	"GRINJ-009"	98	88913142	0.1
+	"75-79 years"	"75-79"	"Other Pedestrian"	"GRINJ-010"	596	88913142	0.7
+	"75-79 years"	"75-79"	"Other land transport"	"GRINJ-011"	707	88913142	0.8
+	"75-79 years"	"75-79"	"Other transport"	"GRINJ-012"	343	88913142	0.4
+	"75-79 years"	"75-79"	"Natural/Environmental"	"GRINJ-013"	1433	88913142	1.6
+	"75-79 years"	"75-79"	"Overexertion"	"GRINJ-014"	9	88913142	Unreliable
+	"75-79 years"	"75-79"	"Poisoning"	"GRINJ-015"	3586	88913142	4.0
+	"75-79 years"	"75-79"	"Struck by or against"	"GRINJ-016"	456	88913142	0.5
+	"75-79 years"	"75-79"	"Suffocation"	"GRINJ-017"	7792	88913142	8.8
+	"75-79 years"	"75-79"	"Other specified, classifiable Injury"	"GRINJ-018"	566	88913142	0.6
+	"75-79 years"	"75-79"	"Other specified, not elsewhere classified Injury"	"GRINJ-019"	1454	88913142	1.6
+	"75-79 years"	"75-79"	"Unspecified Injury"	"GRINJ-020"	8063	88913142	9.1
+	"75-79 years"	"75-79"	"Non-Injury: Intestinal infections"	"GR113 001-003"	8860	88913142	10.0
+	"75-79 years"	"75-79"	"Non-Injury: Tuberculosis"	"GR113 005-006"	1093	88913142	1.2
+	"75-79 years"	"75-79"	"Non-Injury: Whooping cough"	"GR113-007"	0	88913142	Unreliable
+	"75-79 years"	"75-79"	"Non-Injury: Scarlet fever and erysipelas"	"GR113-008"	2	88913142	Unreliable
+	"75-79 years"	"75-79"	"Non-Injury: Meningococcal infection"	"GR113-009"	44	88913142	0.0
+	"75-79 years"	"75-79"	"Non-Injury: Septicemia"	"GR113-010"	57590	88913142	64.8
+	"75-79 years"	"75-79"	"Non-Injury: Syphilis"	"GR113-011"	61	88913142	0.1
+	"75-79 years"	"75-79"	"Non-Injury: Acute poliomyelitis"	"GR113-012"	0	88913142	Unreliable
+	"75-79 years"	"75-79"	"Non-Injury: Arthropod-borne viral encephalitis"	"GR113-013"	8	88913142	Unreliable
+	"75-79 years"	"75-79"	"Non-Injury: Measles"	"GR113-014"	1	88913142	Unreliable
+	"75-79 years"	"75-79"	"Non-Injury: Viral hepatitis"	"GR113-015"	4018	88913142	4.5
+	"75-79 years"	"75-79"	"Non-Injury: Human immunodeficiency virus (HIV) disease"	"GR113-016"	879	88913142	1.0
+	"75-79 years"	"75-79"	"Non-Injury: Malaria"	"GR113-017"	4	88913142	Unreliable
+	"75-79 years"	"75-79"	"Non-Injury: Other and unspecified infectious and parasitic diseases and their sequelae"	"GR113-018"	9389	88913142	10.6
+	"75-79 years"	"75-79"	"Non-Injury: Malignant neoplasms (Cancers)"	"GR113 020-043"	1027700	88913142	1155.8
+	"75-79 years"	"75-79"	"Non-Injury: In situ neoplasms, benign neoplasms and neoplasms of uncertain or unknown behavior"	"GR113-044"	25024	88913142	28.1
+	"75-79 years"	"75-79"	"Non-Injury: Anemias"	"GR113-045"	5537	88913142	6.2
+	"75-79 years"	"75-79"	"Non-Injury: Diabetes mellitus"	"GR113-046"	127788	88913142	143.7
+	"75-79 years"	"75-79"	"Non-Injury: Nutritional Deficiencies"	"GR113 048-049"	4531	88913142	5.1
+	"75-79 years"	"75-79"	"Non-Injury: Meningitis"	"GR113-050"	587	88913142	0.7
+	"75-79 years"	"75-79"	"Non-Injury: Parkinsons disease"	"GR113-051"	42632	88913142	47.9
+	"75-79 years"	"75-79"	"Non-Injury: Alzheimers disease"	"GR113-052"	86761	88913142	97.6
+	"75-79 years"	"75-79"	"Non-Injury: Diseases of Heart"	"GR113 055-068"	1001026	88913142	1125.8
+	"75-79 years"	"75-79"	"Non-Injury: Essential (primary) hypertension and hypertensive renal disease"	"GR113-069"	32182	88913142	36.2
+	"75-79 years"	"75-79"	"Non-Injury: Cerebrovascular diseases, including stroke"	"GR113-070"	239288	88913142	269.1
+	"75-79 years"	"75-79"	"Non-Injury: Atherosclerosis"	"GR113-071"	14642	88913142	16.5
+	"75-79 years"	"75-79"	"Non-Injury: Other diseases of the circulatory system"	"GR113 073-074"	44724	88913142	50.3
+	"75-79 years"	"75-79"	"Non-Injury: Other disorders of circulatory system"	"GR113-075"	5708	88913142	6.4
+	"75-79 years"	"75-79"	"Non-Injury: Influenza & Pneumonia"	"GR113 077-078"	81754	88913142	91.9
+	"75-79 years"	"75-79"	"Non-Injury: Other acute lower respiratory infections"	"GR113 079"	292	88913142	0.3
+	"75-79 years"	"75-79"	"Non-Injury: Chronic lower respiratory diseases"	"GR113 082"	285790	88913142	321.4
+	"75-79 years"	"75-79"	"Non-Injury: Pneumoconioses and chemical effects"	"GR113-087"	2396	88913142	2.7
+	"75-79 years"	"75-79"	"Non-Injury: Pneumonitis due to solids and liquids"	"GR113-088"	24627	88913142	27.7
+	"75-79 years"	"75-79"	"Non-Injury: Other diseases of respiratory system"	"GR113-089"	53219	88913142	59.9
+	"75-79 years"	"75-79"	"Non-Injury: Peptic ulcer"	"GR113-090"	5802	88913142	6.5
+	"75-79 years"	"75-79"	"Non-Injury: Diseases of appendix"	"GR113-091"	601	88913142	0.7
+	"75-79 years"	"75-79"	"Non-Injury: Hernia"	"GR113-092"	2408	88913142	2.7
+	"75-79 years"	"75-79"	"Non-Injury: Chronic liver disease and cirrhosis"	"GR113 093"	26737	88913142	30.1
+	"75-79 years"	"75-79"	"Non-Injury: Cholelithiasis and other disorders of gallbladder"	"GR113-096"	5102	88913142	5.7
+	"75-79 years"	"75-79"	"Non-Injury: Nephritis, nephrotic syndrome and nephrosis"	"GR113 097"	75017	88913142	84.4
+	"75-79 years"	"75-79"	"Non-Injury: Infections of kidney"	"GR113-102"	1089	88913142	1.2
+	"75-79 years"	"75-79"	"Non-Injury: Hyperplasia of prostate"	"GR113-103"	654	88913142	0.7
+	"75-79 years"	"75-79"	"Non-Injury: Inflammatory diseases of female pelvic organs"	"GR113-104"	181	88913142	0.2
+	"75-79 years"	"75-79"	"Non-Injury: Pregnancy with abortive outcome"	"GR113-106"	0	88913142	Unreliable
+	"75-79 years"	"75-79"	"Non-Injury: Other complications of pregnancy, childbirth and the puerperium"	"GR113-107"	3	88913142	Unreliable
+	"75-79 years"	"75-79"	"Non-Injury: Certain conditions originating in the perinatal period"	"GR113-108"	6	88913142	Unreliable
+	"75-79 years"	"75-79"	"Non-Injury: Congenital malformations, deformations and chromosomal abnormalities"	"GR113-109"	2487	88913142	2.8
+	"75-79 years"	"75-79"	"Non-Injury: Symptoms, signs and abnormal clinical and laboratory findings, not elsewhere classified"	"GR113-110"	26588	88913142	29.9
+	"75-79 years"	"75-79"	"Non-Injury: All other diseases (Residual)"	"GR113-111"	279340	88913142	314.2
+	"75-79 years"	"75-79"	"Non-Injury: Complications of medical and surgical care"	"GR113-135"	4441	88913142	5.0
+"Total"	"75-79 years"	"75-79"			3706129	88913142	4168.3
+	"80-84 years"	"80-84"	"Cut/Pierce"	"GRINJ-001"	500	65335166	0.8
+	"80-84 years"	"80-84"	"Drowning"	"GRINJ-002"	1171	65335166	1.8
+	"80-84 years"	"80-84"	"Fall"	"GRINJ-003"	40954	65335166	62.7
+	"80-84 years"	"80-84"	"Fire/Flame"	"GRINJ-004"	2712	65335166	4.2
+	"80-84 years"	"80-84"	"Hot object/Substance"	"GRINJ-005"	145	65335166	0.2
+	"80-84 years"	"80-84"	"Firearm"	"GRINJ-006"	9239	65335166	14.1
+	"80-84 years"	"80-84"	"Machinery"	"GRINJ-007"	334	65335166	0.5
+	"80-84 years"	"80-84"	"Motor Vehicle Traffic"	"GRINJ-008"	15996	65335166	24.5
+	"80-84 years"	"80-84"	"Other Pedal cyclist"	"GRINJ-009"	68	65335166	0.1
+	"80-84 years"	"80-84"	"Other Pedestrian"	"GRINJ-010"	535	65335166	0.8
+	"80-84 years"	"80-84"	"Other land transport"	"GRINJ-011"	559	65335166	0.9
+	"80-84 years"	"80-84"	"Other transport"	"GRINJ-012"	175	65335166	0.3
+	"80-84 years"	"80-84"	"Natural/Environmental"	"GRINJ-013"	1559	65335166	2.4
+	"80-84 years"	"80-84"	"Overexertion"	"GRINJ-014"	9	65335166	Unreliable
+	"80-84 years"	"80-84"	"Poisoning"	"GRINJ-015"	3052	65335166	4.7
+	"80-84 years"	"80-84"	"Struck by or against"	"GRINJ-016"	351	65335166	0.5
+	"80-84 years"	"80-84"	"Suffocation"	"GRINJ-017"	9546	65335166	14.6
+	"80-84 years"	"80-84"	"Other specified, classifiable Injury"	"GRINJ-018"	486	65335166	0.7
+	"80-84 years"	"80-84"	"Other specified, not elsewhere classified Injury"	"GRINJ-019"	1659	65335166	2.5
+	"80-84 years"	"80-84"	"Unspecified Injury"	"GRINJ-020"	12630	65335166	19.3
+	"80-84 years"	"80-84"	"Non-Injury: Intestinal infections"	"GR113 001-003"	12852	65335166	19.7
+	"80-84 years"	"80-84"	"Non-Injury: Tuberculosis"	"GR113 005-006"	1148	65335166	1.8
+	"80-84 years"	"80-84"	"Non-Injury: Whooping cough"	"GR113-007"	2	65335166	Unreliable
+	"80-84 years"	"80-84"	"Non-Injury: Scarlet fever and erysipelas"	"GR113-008"	1	65335166	Unreliable
+	"80-84 years"	"80-84"	"Non-Injury: Meningococcal infection"	"GR113-009"	42	65335166	0.1
+	"80-84 years"	"80-84"	"Non-Injury: Septicemia"	"GR113-010"	67672	65335166	103.6
+	"80-84 years"	"80-84"	"Non-Injury: Syphilis"	"GR113-011"	61	65335166	0.1
+	"80-84 years"	"80-84"	"Non-Injury: Acute poliomyelitis"	"GR113-012"	0	65335166	Unreliable
+	"80-84 years"	"80-84"	"Non-Injury: Arthropod-borne viral encephalitis"	"GR113-013"	4	65335166	Unreliable
+	"80-84 years"	"80-84"	"Non-Injury: Measles"	"GR113-014"	0	65335166	Unreliable
+	"80-84 years"	"80-84"	"Non-Injury: Viral hepatitis"	"GR113-015"	2833	65335166	4.3
+	"80-84 years"	"80-84"	"Non-Injury: Human immunodeficiency virus (HIV) disease"	"GR113-016"	343	65335166	0.5
+	"80-84 years"	"80-84"	"Non-Injury: Malaria"	"GR113-017"	2	65335166	Unreliable
+	"80-84 years"	"80-84"	"Non-Injury: Other and unspecified infectious and parasitic diseases and their sequelae"	"GR113-018"	9244	65335166	14.1
+	"80-84 years"	"80-84"	"Non-Injury: Malignant neoplasms (Cancers)"	"GR113 020-043"	937241	65335166	1434.5
+	"80-84 years"	"80-84"	"Non-Injury: In situ neoplasms, benign neoplasms and neoplasms of uncertain or unknown behavior"	"GR113-044"	30733	65335166	47.0
+	"80-84 years"	"80-84"	"Non-Injury: Anemias"	"GR113-045"	8268	65335166	12.7
+	"80-84 years"	"80-84"	"Non-Injury: Diabetes mellitus"	"GR113-046"	132422	65335166	202.7
+	"80-84 years"	"80-84"	"Non-Injury: Nutritional Deficiencies"	"GR113 048-049"	6959	65335166	10.7
+	"80-84 years"	"80-84"	"Non-Injury: Meningitis"	"GR113-050"	503	65335166	0.8
+	"80-84 years"	"80-84"	"Non-Injury: Parkinsons disease"	"GR113-051"	61919	65335166	94.8
+	"80-84 years"	"80-84"	"Non-Injury: Alzheimers disease"	"GR113-052"	169702	65335166	259.7
+	"80-84 years"	"80-84"	"Non-Injury: Diseases of Heart"	"GR113 055-068"	1297922	65335166	1986.6
+	"80-84 years"	"80-84"	"Non-Injury: Essential (primary) hypertension and hypertensive renal disease"	"GR113-069"	44903	65335166	68.7
+	"80-84 years"	"80-84"	"Non-Injury: Cerebrovascular diseases, including stroke"	"GR113-070"	338395	65335166	517.9
+	"80-84 years"	"80-84"	"Non-Injury: Atherosclerosis"	"GR113-071"	23462	65335166	35.9
+	"80-84 years"	"80-84"	"Non-Injury: Other diseases of the circulatory system"	"GR113 073-074"	49579	65335166	75.9
+	"80-84 years"	"80-84"	"Non-Injury: Other disorders of circulatory system"	"GR113-075"	6772	65335166	10.4
+	"80-84 years"	"80-84"	"Non-Injury: Influenza & Pneumonia"	"GR113 077-078"	126328	65335166	193.4
+	"80-84 years"	"80-84"	"Non-Injury: Other acute lower respiratory infections"	"GR113 079"	436	65335166	0.7
+	"80-84 years"	"80-84"	"Non-Injury: Chronic lower respiratory diseases"	"GR113 082"	299234	65335166	458.0
+	"80-84 years"	"80-84"	"Non-Injury: Pneumoconioses and chemical effects"	"GR113-087"	2803	65335166	4.3
+	"80-84 years"	"80-84"	"Non-Injury: Pneumonitis due to solids and liquids"	"GR113-088"	39621	65335166	60.6
+	"80-84 years"	"80-84"	"Non-Injury: Other diseases of respiratory system"	"GR113-089"	59117	65335166	90.5
+	"80-84 years"	"80-84"	"Non-Injury: Peptic ulcer"	"GR113-090"	7542	65335166	11.5
+	"80-84 years"	"80-84"	"Non-Injury: Diseases of appendix"	"GR113-091"	719	65335166	1.1
+	"80-84 years"	"80-84"	"Non-Injury: Hernia"	"GR113-092"	3303	65335166	5.1
+	"80-84 years"	"80-84"	"Non-Injury: Chronic liver disease and cirrhosis"	"GR113 093"	18460	65335166	28.3
+	"80-84 years"	"80-84"	"Non-Injury: Cholelithiasis and other disorders of gallbladder"	"GR113-096"	6821	65335166	10.4
+	"80-84 years"	"80-84"	"Non-Injury: Nephritis, nephrotic syndrome and nephrosis"	"GR113 097"	93092	65335166	142.5
+	"80-84 years"	"80-84"	"Non-Injury: Infections of kidney"	"GR113-102"	1422	65335166	2.2
+	"80-84 years"	"80-84"	"Non-Injury: Hyperplasia of prostate"	"GR113-103"	1238	65335166	1.9
+	"80-84 years"	"80-84"	"Non-Injury: Inflammatory diseases of female pelvic organs"	"GR113-104"	200	65335166	0.3
+	"80-84 years"	"80-84"	"Non-Injury: Pregnancy with abortive outcome"	"GR113-106"	0	65335166	Unreliable
+	"80-84 years"	"80-84"	"Non-Injury: Other complications of pregnancy, childbirth and the puerperium"	"GR113-107"	0	65335166	Unreliable
+	"80-84 years"	"80-84"	"Non-Injury: Certain conditions originating in the perinatal period"	"GR113-108"	7	65335166	Unreliable
+	"80-84 years"	"80-84"	"Non-Injury: Congenital malformations, deformations and chromosomal abnormalities"	"GR113-109"	2598	65335166	4.0
+	"80-84 years"	"80-84"	"Non-Injury: Symptoms, signs and abnormal clinical and laboratory findings, not elsewhere classified"	"GR113-110"	39407	65335166	60.3
+	"80-84 years"	"80-84"	"Non-Injury: All other diseases (Residual)"	"GR113-111"	391824	65335166	599.7
+	"80-84 years"	"80-84"	"Non-Injury: Complications of medical and surgical care"	"GR113-135"	4530	65335166	6.9
+"Total"	"80-84 years"	"80-84"			4403366	65335166	6739.7
+	"85-89 years"	"85-89"	"Cut/Pierce"	"GRINJ-001"	297	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Drowning"	"GRINJ-002"	781	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Fall"	"GRINJ-003"	45258	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Fire/Flame"	"GRINJ-004"	1886	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Hot object/Substance"	"GRINJ-005"	131	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Firearm"	"GRINJ-006"	5302	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Machinery"	"GRINJ-007"	169	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Motor Vehicle Traffic"	"GRINJ-008"	10176	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Other Pedal cyclist"	"GRINJ-009"	40	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Other Pedestrian"	"GRINJ-010"	341	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Other land transport"	"GRINJ-011"	363	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Other transport"	"GRINJ-012"	59	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Natural/Environmental"	"GRINJ-013"	1373	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Overexertion"	"GRINJ-014"	12	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Poisoning"	"GRINJ-015"	2216	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Struck by or against"	"GRINJ-016"	216	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Suffocation"	"GRINJ-017"	9404	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Other specified, classifiable Injury"	"GRINJ-018"	335	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Other specified, not elsewhere classified Injury"	"GRINJ-019"	1523	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Unspecified Injury"	"GRINJ-020"	15462	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Intestinal infections"	"GR113 001-003"	13561	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Tuberculosis"	"GR113 005-006"	881	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Whooping cough"	"GR113-007"	0	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Scarlet fever and erysipelas"	"GR113-008"	3	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Meningococcal infection"	"GR113-009"	29	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Septicemia"	"GR113-010"	61772	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Syphilis"	"GR113-011"	56	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Acute poliomyelitis"	"GR113-012"	0	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Arthropod-borne viral encephalitis"	"GR113-013"	4	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Measles"	"GR113-014"	0	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Viral hepatitis"	"GR113-015"	1396	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Human immunodeficiency virus (HIV) disease"	"GR113-016"	124	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Malaria"	"GR113-017"	1	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Other and unspecified infectious and parasitic diseases and their sequelae"	"GR113-018"	7193	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Malignant neoplasms (Cancers)"	"GR113 020-043"	636780	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: In situ neoplasms, benign neoplasms and neoplasms of uncertain or unknown behavior"	"GR113-044"	27312	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Anemias"	"GR113-045"	9584	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Diabetes mellitus"	"GR113-046"	104959	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Nutritional Deficiencies"	"GR113 048-049"	8580	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Meningitis"	"GR113-050"	377	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Parkinsons disease"	"GR113-051"	53646	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Alzheimers disease"	"GR113-052"	224142	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Diseases of Heart"	"GR113 055-068"	1376803	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Essential (primary) hypertension and hypertensive renal disease"	"GR113-069"	50414	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Cerebrovascular diseases, including stroke"	"GR113-070"	362818	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Atherosclerosis"	"GR113-071"	30005	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Other diseases of the circulatory system"	"GR113 073-074"	43495	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Other disorders of circulatory system"	"GR113-075"	6373	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Influenza & Pneumonia"	"GR113 077-078"	148789	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Other acute lower respiratory infections"	"GR113 079"	601	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Chronic lower respiratory diseases"	"GR113 082"	229873	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Pneumoconioses and chemical effects"	"GR113-087"	2220	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Pneumonitis due to solids and liquids"	"GR113-088"	46683	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Other diseases of respiratory system"	"GR113-089"	48776	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Peptic ulcer"	"GR113-090"	7466	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Diseases of appendix"	"GR113-091"	601	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Hernia"	"GR113-092"	3622	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Chronic liver disease and cirrhosis"	"GR113 093"	9215	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Cholelithiasis and other disorders of gallbladder"	"GR113-096"	7020	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Nephritis, nephrotic syndrome and nephrosis"	"GR113 097"	91385	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Infections of kidney"	"GR113-102"	1467	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Hyperplasia of prostate"	"GR113-103"	1451	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Inflammatory diseases of female pelvic organs"	"GR113-104"	198	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Pregnancy with abortive outcome"	"GR113-106"	0	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Other complications of pregnancy, childbirth and the puerperium"	"GR113-107"	0	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Certain conditions originating in the perinatal period"	"GR113-108"	3	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Congenital malformations, deformations and chromosomal abnormalities"	"GR113-109"	2094	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Symptoms, signs and abnormal clinical and laboratory findings, not elsewhere classified"	"GR113-110"	50991	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: All other diseases (Residual)"	"GR113-111"	449148	Not Applicable	Not Applicable
+	"85-89 years"	"85-89"	"Non-Injury: Complications of medical and surgical care"	"GR113-135"	3463	Not Applicable	Not Applicable
+"Total"	"85-89 years"	"85-89"			4220718	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Cut/Pierce"	"GRINJ-001"	124	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Drowning"	"GRINJ-002"	329	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Fall"	"GRINJ-003"	31633	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Fire/Flame"	"GRINJ-004"	870	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Hot object/Substance"	"GRINJ-005"	93	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Firearm"	"GRINJ-006"	1755	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Machinery"	"GRINJ-007"	60	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Motor Vehicle Traffic"	"GRINJ-008"	3573	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Other Pedal cyclist"	"GRINJ-009"	11	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Other Pedestrian"	"GRINJ-010"	137	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Other land transport"	"GRINJ-011"	144	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Other transport"	"GRINJ-012"	13	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Natural/Environmental"	"GRINJ-013"	844	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Overexertion"	"GRINJ-014"	6	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Poisoning"	"GRINJ-015"	962	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Struck by or against"	"GRINJ-016"	114	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Suffocation"	"GRINJ-017"	6196	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Other specified, classifiable Injury"	"GRINJ-018"	105	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Other specified, not elsewhere classified Injury"	"GRINJ-019"	935	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Unspecified Injury"	"GRINJ-020"	13001	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Intestinal infections"	"GR113 001-003"	8251	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Tuberculosis"	"GR113 005-006"	383	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Whooping cough"	"GR113-007"	1	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Scarlet fever and erysipelas"	"GR113-008"	7	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Meningococcal infection"	"GR113-009"	21	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Septicemia"	"GR113-010"	36510	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Syphilis"	"GR113-011"	25	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Acute poliomyelitis"	"GR113-012"	0	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Arthropod-borne viral encephalitis"	"GR113-013"	0	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Measles"	"GR113-014"	0	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Viral hepatitis"	"GR113-015"	410	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Human immunodeficiency virus (HIV) disease"	"GR113-016"	47	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Malaria"	"GR113-017"	0	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Other and unspecified infectious and parasitic diseases and their sequelae"	"GR113-018"	3875	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Malignant neoplasms (Cancers)"	"GR113 020-043"	281849	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: In situ neoplasms, benign neoplasms and neoplasms of uncertain or unknown behavior"	"GR113-044"	15346	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Anemias"	"GR113-045"	8204	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Diabetes mellitus"	"GR113-046"	54227	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Nutritional Deficiencies"	"GR113 048-049"	6831	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Meningitis"	"GR113-050"	163	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Parkinsons disease"	"GR113-051"	24797	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Alzheimers disease"	"GR113-052"	177878	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Diseases of Heart"	"GR113 055-068"	1015351	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Essential (primary) hypertension and hypertensive renal disease"	"GR113-069"	39710	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Cerebrovascular diseases, including stroke"	"GR113-070"	250882	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Atherosclerosis"	"GR113-071"	26897	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Other diseases of the circulatory system"	"GR113 073-074"	25876	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Other disorders of circulatory system"	"GR113-075"	4210	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Influenza & Pneumonia"	"GR113 077-078"	121604	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Other acute lower respiratory infections"	"GR113 079"	601	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Chronic lower respiratory diseases"	"GR113 082"	112271	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Pneumoconioses and chemical effects"	"GR113-087"	945	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Pneumonitis due to solids and liquids"	"GR113-088"	34583	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Other diseases of respiratory system"	"GR113-089"	26068	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Peptic ulcer"	"GR113-090"	4668	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Diseases of appendix"	"GR113-091"	346	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Hernia"	"GR113-092"	2529	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Chronic liver disease and cirrhosis"	"GR113 093"	2719	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Cholelithiasis and other disorders of gallbladder"	"GR113-096"	4914	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Nephritis, nephrotic syndrome and nephrosis"	"GR113 097"	58608	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Infections of kidney"	"GR113-102"	1055	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Hyperplasia of prostate"	"GR113-103"	1133	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Inflammatory diseases of female pelvic organs"	"GR113-104"	120	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Pregnancy with abortive outcome"	"GR113-106"	0	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Other complications of pregnancy, childbirth and the puerperium"	"GR113-107"	2	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Certain conditions originating in the perinatal period"	"GR113-108"	1	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Congenital malformations, deformations and chromosomal abnormalities"	"GR113-109"	1109	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Symptoms, signs and abnormal clinical and laboratory findings, not elsewhere classified"	"GR113-110"	51154	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: All other diseases (Residual)"	"GR113-111"	348019	Not Applicable	Not Applicable
+	"90-94 years"	"90-94"	"Non-Injury: Complications of medical and surgical care"	"GR113-135"	1821	Not Applicable	Not Applicable
+"Total"	"90-94 years"	"90-94"			2816926	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Cut/Pierce"	"GRINJ-001"	29	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Drowning"	"GRINJ-002"	85	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Fall"	"GRINJ-003"	12063	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Fire/Flame"	"GRINJ-004"	258	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Hot object/Substance"	"GRINJ-005"	27	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Firearm"	"GRINJ-006"	287	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Machinery"	"GRINJ-007"	12	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Motor Vehicle Traffic"	"GRINJ-008"	596	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Other Pedal cyclist"	"GRINJ-009"	1	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Other Pedestrian"	"GRINJ-010"	26	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Other land transport"	"GRINJ-011"	20	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Other transport"	"GRINJ-012"	2	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Natural/Environmental"	"GRINJ-013"	257	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Overexertion"	"GRINJ-014"	0	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Poisoning"	"GRINJ-015"	218	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Struck by or against"	"GRINJ-016"	35	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Suffocation"	"GRINJ-017"	2439	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Other specified, classifiable Injury"	"GRINJ-018"	35	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Other specified, not elsewhere classified Injury"	"GRINJ-019"	374	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Unspecified Injury"	"GRINJ-020"	5607	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Intestinal infections"	"GR113 001-003"	2932	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Tuberculosis"	"GR113 005-006"	103	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Whooping cough"	"GR113-007"	0	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Scarlet fever and erysipelas"	"GR113-008"	3	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Meningococcal infection"	"GR113-009"	11	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Septicemia"	"GR113-010"	12835	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Syphilis"	"GR113-011"	14	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Acute poliomyelitis"	"GR113-012"	0	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Arthropod-borne viral encephalitis"	"GR113-013"	0	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Measles"	"GR113-014"	0	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Viral hepatitis"	"GR113-015"	63	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Human immunodeficiency virus (HIV) disease"	"GR113-016"	20	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Malaria"	"GR113-017"	0	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Other and unspecified infectious and parasitic diseases and their sequelae"	"GR113-018"	1435	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Malignant neoplasms (Cancers)"	"GR113 020-043"	73270	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: In situ neoplasms, benign neoplasms and neoplasms of uncertain or unknown behavior"	"GR113-044"	4600	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Anemias"	"GR113-045"	3869	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Diabetes mellitus"	"GR113-046"	16383	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Nutritional Deficiencies"	"GR113 048-049"	3189	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Meningitis"	"GR113-050"	29	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Parkinsons disease"	"GR113-051"	5635	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Alzheimers disease"	"GR113-052"	73953	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Diseases of Heart"	"GR113 055-068"	424145	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Essential (primary) hypertension and hypertensive renal disease"	"GR113-069"	18180	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Cerebrovascular diseases, including stroke"	"GR113-070"	93816	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Atherosclerosis"	"GR113-071"	13897	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Other diseases of the circulatory system"	"GR113 073-074"	9040	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Other disorders of circulatory system"	"GR113-075"	1622	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Influenza & Pneumonia"	"GR113 077-078"	55466	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Other acute lower respiratory infections"	"GR113 079"	307	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Chronic lower respiratory diseases"	"GR113 082"	32980	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Pneumoconioses and chemical effects"	"GR113-087"	179	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Pneumonitis due to solids and liquids"	"GR113-088"	13841	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Other diseases of respiratory system"	"GR113-089"	8692	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Peptic ulcer"	"GR113-090"	1672	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Diseases of appendix"	"GR113-091"	104	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Hernia"	"GR113-092"	918	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Chronic liver disease and cirrhosis"	"GR113 093"	433	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Cholelithiasis and other disorders of gallbladder"	"GR113-096"	1784	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Nephritis, nephrotic syndrome and nephrosis"	"GR113 097"	21202	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Infections of kidney"	"GR113-102"	397	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Hyperplasia of prostate"	"GR113-103"	430	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Inflammatory diseases of female pelvic organs"	"GR113-104"	41	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Pregnancy with abortive outcome"	"GR113-106"	0	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Other complications of pregnancy, childbirth and the puerperium"	"GR113-107"	1	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Certain conditions originating in the perinatal period"	"GR113-108"	1	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Congenital malformations, deformations and chromosomal abnormalities"	"GR113-109"	385	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Symptoms, signs and abnormal clinical and laboratory findings, not elsewhere classified"	"GR113-110"	29731	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: All other diseases (Residual)"	"GR113-111"	151529	Not Applicable	Not Applicable
+	"95-99 years"	"95-99"	"Non-Injury: Complications of medical and surgical care"	"GR113-135"	564	Not Applicable	Not Applicable
+"Total"	"95-99 years"	"95-99"			1102072	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Cut/Pierce"	"GRINJ-001"	1	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Drowning"	"GRINJ-002"	8	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Fall"	"GRINJ-003"	2155	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Fire/Flame"	"GRINJ-004"	40	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Hot object/Substance"	"GRINJ-005"	5	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Firearm"	"GRINJ-006"	20	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Machinery"	"GRINJ-007"	0	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Motor Vehicle Traffic"	"GRINJ-008"	48	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Other Pedal cyclist"	"GRINJ-009"	0	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Other Pedestrian"	"GRINJ-010"	4	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Other land transport"	"GRINJ-011"	2	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Other transport"	"GRINJ-012"	0	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Natural/Environmental"	"GRINJ-013"	44	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Overexertion"	"GRINJ-014"	0	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Poisoning"	"GRINJ-015"	28	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Struck by or against"	"GRINJ-016"	3	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Suffocation"	"GRINJ-017"	523	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Other specified, classifiable Injury"	"GRINJ-018"	7	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Other specified, not elsewhere classified Injury"	"GRINJ-019"	68	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Unspecified Injury"	"GRINJ-020"	1242	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Intestinal infections"	"GR113 001-003"	418	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Tuberculosis"	"GR113 005-006"	7	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Whooping cough"	"GR113-007"	0	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Scarlet fever and erysipelas"	"GR113-008"	2	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Meningococcal infection"	"GR113-009"	1	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Septicemia"	"GR113-010"	2239	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Syphilis"	"GR113-011"	1	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Acute poliomyelitis"	"GR113-012"	0	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Arthropod-borne viral encephalitis"	"GR113-013"	0	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Measles"	"GR113-014"	0	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Viral hepatitis"	"GR113-015"	9	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Human immunodeficiency virus (HIV) disease"	"GR113-016"	4	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Malaria"	"GR113-017"	0	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Other and unspecified infectious and parasitic diseases and their sequelae"	"GR113-018"	272	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Malignant neoplasms (Cancers)"	"GR113 020-043"	9582	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: In situ neoplasms, benign neoplasms and neoplasms of uncertain or unknown behavior"	"GR113-044"	620	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Anemias"	"GR113-045"	951	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Diabetes mellitus"	"GR113-046"	2558	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Nutritional Deficiencies"	"GR113 048-049"	849	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Meningitis"	"GR113-050"	4	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Parkinsons disease"	"GR113-051"	534	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Alzheimers disease"	"GR113-052"	13439	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Diseases of Heart"	"GR113 055-068"	95257	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Essential (primary) hypertension and hypertensive renal disease"	"GR113-069"	4600	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Cerebrovascular diseases, including stroke"	"GR113-070"	17264	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Atherosclerosis"	"GR113-071"	4035	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Other diseases of the circulatory system"	"GR113 073-074"	1596	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Other disorders of circulatory system"	"GR113-075"	317	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Influenza & Pneumonia"	"GR113 077-078"	14541	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Other acute lower respiratory infections"	"GR113 079"	133	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Chronic lower respiratory diseases"	"GR113 082"	4842	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Pneumoconioses and chemical effects"	"GR113-087"	17	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Pneumonitis due to solids and liquids"	"GR113-088"	2842	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Other diseases of respiratory system"	"GR113-089"	1657	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Peptic ulcer"	"GR113-090"	311	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Diseases of appendix"	"GR113-091"	20	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Hernia"	"GR113-092"	126	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Chronic liver disease and cirrhosis"	"GR113 093"	31	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Cholelithiasis and other disorders of gallbladder"	"GR113-096"	349	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Nephritis, nephrotic syndrome and nephrosis"	"GR113 097"	4026	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Infections of kidney"	"GR113-102"	80	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Hyperplasia of prostate"	"GR113-103"	80	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Inflammatory diseases of female pelvic organs"	"GR113-104"	6	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Pregnancy with abortive outcome"	"GR113-106"	0	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Other complications of pregnancy, childbirth and the puerperium"	"GR113-107"	0	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Certain conditions originating in the perinatal period"	"GR113-108"	0	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Congenital malformations, deformations and chromosomal abnormalities"	"GR113-109"	76	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Symptoms, signs and abnormal clinical and laboratory findings, not elsewhere classified"	"GR113-110"	11752	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: All other diseases (Residual)"	"GR113-111"	33233	Not Applicable	Not Applicable
+	"100+ years"	"100+"	"Non-Injury: Complications of medical and surgical care"	"GR113-135"	100	Not Applicable	Not Applicable
+"Total"	"100+ years"	"100+"			232979	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Cut/Pierce"	"GRINJ-001"	42	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Drowning"	"GRINJ-002"	263	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Fall"	"GRINJ-003"	36	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Fire/Flame"	"GRINJ-004"	59	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Hot object/Substance"	"GRINJ-005"	0	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Firearm"	"GRINJ-006"	166	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Machinery"	"GRINJ-007"	1	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Motor Vehicle Traffic"	"GRINJ-008"	210	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Other Pedal cyclist"	"GRINJ-009"	4	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Other Pedestrian"	"GRINJ-010"	38	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Other land transport"	"GRINJ-011"	5	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Other transport"	"GRINJ-012"	3	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Natural/Environmental"	"GRINJ-013"	147	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Overexertion"	"GRINJ-014"	0	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Poisoning"	"GRINJ-015"	126	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Struck by or against"	"GRINJ-016"	7	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Suffocation"	"GRINJ-017"	65	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Other specified, classifiable Injury"	"GRINJ-018"	23	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Other specified, not elsewhere classified Injury"	"GRINJ-019"	25	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Unspecified Injury"	"GRINJ-020"	143	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Intestinal infections"	"GR113 001-003"	1	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Tuberculosis"	"GR113 005-006"	4	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Whooping cough"	"GR113-007"	0	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Scarlet fever and erysipelas"	"GR113-008"	0	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Meningococcal infection"	"GR113-009"	0	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Septicemia"	"GR113-010"	17	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Syphilis"	"GR113-011"	0	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Acute poliomyelitis"	"GR113-012"	0	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Arthropod-borne viral encephalitis"	"GR113-013"	0	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Measles"	"GR113-014"	0	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Viral hepatitis"	"GR113-015"	2	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Human immunodeficiency virus (HIV) disease"	"GR113-016"	21	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Malaria"	"GR113-017"	0	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Other and unspecified infectious and parasitic diseases and their sequelae"	"GR113-018"	1	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Malignant neoplasms (Cancers)"	"GR113 020-043"	108	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: In situ neoplasms, benign neoplasms and neoplasms of uncertain or unknown behavior"	"GR113-044"	3	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Anemias"	"GR113-045"	2	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Diabetes mellitus"	"GR113-046"	15	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Nutritional Deficiencies"	"GR113 048-049"	1	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Meningitis"	"GR113-050"	3	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Parkinsons disease"	"GR113-051"	3	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Alzheimers disease"	"GR113-052"	7	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Diseases of Heart"	"GR113 055-068"	479	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Essential (primary) hypertension and hypertensive renal disease"	"GR113-069"	5	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Cerebrovascular diseases, including stroke"	"GR113-070"	40	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Atherosclerosis"	"GR113-071"	4	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Other diseases of the circulatory system"	"GR113 073-074"	6	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Other disorders of circulatory system"	"GR113-075"	5	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Influenza & Pneumonia"	"GR113 077-078"	28	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Other acute lower respiratory infections"	"GR113 079"	0	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Chronic lower respiratory diseases"	"GR113 082"	38	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Pneumoconioses and chemical effects"	"GR113-087"	1	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Pneumonitis due to solids and liquids"	"GR113-088"	1	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Other diseases of respiratory system"	"GR113-089"	11	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Peptic ulcer"	"GR113-090"	4	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Diseases of appendix"	"GR113-091"	0	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Hernia"	"GR113-092"	0	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Chronic liver disease and cirrhosis"	"GR113 093"	34	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Cholelithiasis and other disorders of gallbladder"	"GR113-096"	1	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Nephritis, nephrotic syndrome and nephrosis"	"GR113 097"	11	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Infections of kidney"	"GR113-102"	0	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Hyperplasia of prostate"	"GR113-103"	2	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Inflammatory diseases of female pelvic organs"	"GR113-104"	0	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Pregnancy with abortive outcome"	"GR113-106"	0	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Other complications of pregnancy, childbirth and the puerperium"	"GR113-107"	0	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Certain conditions originating in the perinatal period"	"GR113-108"	23	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Congenital malformations, deformations and chromosomal abnormalities"	"GR113-109"	10	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Symptoms, signs and abnormal clinical and laboratory findings, not elsewhere classified"	"GR113-110"	985	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: All other diseases (Residual)"	"GR113-111"	141	Not Applicable	Not Applicable
+	"Not Stated"	"NS"	"Non-Injury: Complications of medical and surgical care"	"GR113-135"	3	Not Applicable	Not Applicable
+"Total"	"Not Stated"	"NS"			3383	Not Applicable	Not Applicable
+"Total"					29176040	3530708204	826.4
+"---"
+"Dataset: Underlying Cause of Death, 1999-2010"
+"Query Parameters:"
+"Title:"
+"Autopsy: All"
+"Five-Year Age Groups: All"
+"Gender: All"
+"Hispanic Origin: All"
+"ICD-10 Codes: All"
+"Place of Death: All"
+"Race: All"
+"States: All"
+"Urbanization: All"
+"Weekday: All"
+"Year/Month: All"
+"Group By: Five-Year Age Groups, Injury Mechanism & All Other Leading Causes"
+"Show Totals: True"
+"Show Zero Values: True"
+"Show Suppressed: True"
+"Calculate Rates Per: 100,000"
+"Rate Options: Default intercensal populations for years 2001-2009 (except Infant Age Groups)"
+"---"
+"Help: See http://wonder.cdc.gov/wonder/help/ucd.html for more information."
+"---"
+"Query Date: May 28, 2014 6:09:08 PM"
+"---"
+"Suggested Citation: Centers for Disease Control and Prevention, National Center for Health Statistics. Underlying Cause of Death"
+"1999-2010 on CDC WONDER Online Database, released 2012. Data are from the Multiple Cause of Death Files, 1999-2010, as compiled"
+"from data provided by the 57 vital statistics jurisdictions through the Vital Statistics Cooperative Program. Accessed at"
+"http://wonder.cdc.gov/ucd-icd10.html on May 28, 2014 6:09:08 PM"
+"---"
+Caveats:
+"1. Population and rates are labeled 'Not Applicable' when they include a subset of ages 85-100+ because populations are not"
+"available for those ages. More information: http://wonder.cdc.gov/wonder/help/ucd.html#Ages 85-100."
+"2. Circumstances in Georgia for the year 2008 have resulted in unusually high death counts for the ICD-10 cause of death code"
+"R99, ""Symptoms, signs and abnormal clinical and laboratory findings, not elsewhere classified"". Caution should be used in"
+"interpreting these data. More information: http://wonder.cdc.gov/wonder/help/ucd.html#Georgia-Reporting-Anomalies."
+"3. Circumstances in New Jersey for the year 2009 have resulted in unusually high death counts for the ICD-10 cause of death code"
+"R99, ""Symptoms, signs and abnormal clinical and laboratory findings, not elsewhere classified"" and therefore unusually low"
+"death counts in other ICD-10 codes, most notably R95, ""Sudden Infant Death Syndrome"" and X40-X49, ""Unintentional poisoning."""
+"Caution should be used in interpreting these data. More information:"
+"http://wonder.cdc.gov/wonder/help/ucd.html#New-Jersey-Reporting-Anomalies."
+"4. Death rates are flagged as Unreliable when the rate is calculated with a numerator of 20 or less. More information:"
+"http://wonder.cdc.gov/wonder/help/ucd.html#Unreliable."
+"5. Deaths of persons with Age ""Not Stated"" are included in ""All"" counts and rates, but are not distributed among age groups,"
+"so are not included in age-specific counts, age-specific rates or in any age-adjusted rates. More information:"
+"http://wonder.cdc.gov/wonder/help/ucd.html#Not Stated."
+"6. Population figures for 2010 are April 1 Census counts. The population figures for years 2001 - 2009, other than the infant"
+"age groups, are bridged-race estimates of the July 1 resident population, from the revised intercensal county-level 2000 - 2009"
+"series released by NCHS on October 26, 2012. Population figures for 2000 are April 1 Census counts. Population figures for 1999"
+"are from the 1990-1999 intercensal series of July 1 estimates. <br/><b>Note:</b> Rates and population figures for years 2001 -"
+"2009 differ slightly from previously published reports, due to use of the population estimates which were available at the time"
+"of release."
+"7. The population figures used in the calculation of death rates for the age group 'under 1 year' are the estimates of the"
+"resident population that is under one year of age. More information: http://wonder.cdc.gov/wonder/help/ucd.html#Age Group."

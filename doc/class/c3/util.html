@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset='UTF-8'>
+  <title>C3 Documentation</title>
+  <script src='../../javascript/application.js'></script>
+  <script src='../../javascript/search.js'></script>
+  <link rel='stylesheet' href='../../stylesheets/application.css' type='text/css'>
+</head>
+  <body>
+    <div id='base' data-path='../../'></div>
+<div id='header'>
+  <div id='menu'>
+    <a href='../../alphabetical_index.html' title='Index'>
+      Index
+    </a>
+    &raquo;
+    <span class='title'>c3</span>
+    &raquo;
+    <span class='title'>util</span>
+  </div>
+</div>
+    <div id='content'>
+      <h1>
+        Class:
+        c3.util
+      </h1>
+      <table class='box'>
+        <tr>
+          <td>Defined in:</td>
+          <td>js\c3.coffee</td>
+        </tr>
+      </table>
+      <h2>Overview</h2>
+      <div class='docstring'>
+  <p>##################################################################
+Utility Functions</p><p>##################################################################</p>
+</div>
+<div class='tags'>
+</div>
+      <h2>Class Method Summary</h2>
+      <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#extend-static'>
+        .
+(Object)
+<b>extend</b><span>(dest, src)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Extend an object with the properties in another 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#defaults-static'>
+        .
+(Object)
+<b>defaults</b><span>(dest, src)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Fill in properties of an object based on another iff not already defined 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#spin-static'>
+        .
+(void)
+<b>spin</b><span>(ms)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Spin Wait 
+    </span>
+  </li>
+</ul>
+      <h2>Class Method Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='extend-static'>
+      .
+(Object)
+<b>extend</b><span>(dest, src)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Extend an object with the properties in another</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>dest</span>
+      <span class='type'>
+        (
+          <tt>Object</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>Destination object that will get all properties of the src object </span>
+    </li>
+    <li>
+      <span class='name'>src</span>
+      <span class='type'>
+        (
+          <tt>Object</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>Source object </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt>Object</tt>
+      )
+      &mdash;
+      <span class='desc'>Returns the destination object </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='defaults-static'>
+      .
+(Object)
+<b>defaults</b><span>(dest, src)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Fill in properties of an object based on another iff not already defined</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>dest</span>
+      <span class='type'>
+        (
+          <tt>Object</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>Destination object that will get all properties of the src object if not defined </span>
+    </li>
+    <li>
+      <span class='name'>src</span>
+      <span class='type'>
+        (
+          <tt>Object</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>Source object with default values </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt>Object</tt>
+      )
+      &mdash;
+      <span class='desc'>Returns the destination object </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='spin-static'>
+      .
+(void)
+<b>spin</b><span>(ms)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Spin Wait</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>ms</span>
+      <span class='type'>
+        (
+          <tt>Number</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>Number of milliseconds to spin </span>
+    </li>
+  </ul>
+</div>
+  </div>
+</div>
+    </div>
+    <div id='footer'>
+  March 01, 16 10:15:34 by
+  <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
+    Codo
+  </a>
+  2.0.11
+  &#10034;
+  Press H to see the keyboard shortcuts
+  &#10034;
+  <a href='http://twitter.com/netzpirat' target='_parent'>@netzpirat</a>
+  &#10034;
+  <a href='http://twitter.com/_inossidabile' target='_parent'>@_inossidabile</a>
+</div>
+<iframe id='search_frame'></iframe>
+<div id='fuzzySearch'>
+  <input type='text'>
+  <ol></ol>
+</div>
+<div id='help'>
+  <p>
+    Quickly fuzzy find classes, mixins, methods, file:
+  </p>
+  <ul>
+    <li>
+      <span>T</span>
+      Open fuzzy finder dialog
+    </li>
+  </ul>
+  <p>
+    Control the navigation frame:
+  </p>
+  <ul>
+    <li>
+      <span>L</span>
+      Toggle list view
+    </li>
+    <li>
+      <span>C</span>
+      Show class list
+    </li>
+    <li>
+      <span>I</span>
+      Show mixin list
+    </li>
+    <li>
+      <span>F</span>
+      Show file list
+    </li>
+    <li>
+      <span>M</span>
+      Show method list
+    </li>
+    <li>
+      <span>E</span>
+      Show extras list
+    </li>
+  </ul>
+  <p>
+    You can focus and blur the search input:
+  </p>
+  <ul>
+    <li>
+      <span>S</span>
+      Focus search input
+    </li>
+    <li>
+      <span>Esc</span>
+      Blur search input
+    </li>
+  </ul>
+</div>
+  </body>
+</html>

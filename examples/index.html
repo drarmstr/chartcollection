@@ -1,0 +1,210 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>C3 Examples</title>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="../favicon.ico" type="image/x-icon" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    
+    <link rel="stylesheet" href="../css/doc.css" />
+    <style>
+        body {
+            display: flex;
+            -ms-flex-direction: column;
+            -webkit-flex-direction: column;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        body > div:first-of-type {
+            -ms-flex: 1;
+            -webkit-flex: 1;
+            flex: 1;
+        }
+        main {
+            display: flex;
+        }
+        iframe, main > article {
+            height: 100%;
+            -ms-flex: 1;
+            -webkit-flex: 1;
+            flex: 1;
+        }
+        main > article {
+            padding: 1em;
+        }
+        aside {
+            overflow-y: scroll;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: steelblue;
+        }
+        aside section {
+            cursor: pointer;
+        }
+        aside section:hover, aside section.active {
+            background-color: lightblue;
+        }
+        aside h3 {
+            margin: 0.5em 0.25em 0 0.5em;
+        }
+        aside ul {
+            list-style-type: none;
+            padding-left: 2em;
+            margin: 0 0.5em 0 0;
+        }
+        aside a {
+            padding: 0 0.25em;
+            border-radius: 0.25em;
+            text-decoration: none;
+        }
+        aside a:hover, aside a.active {
+            background-color: aliceblue;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Quick and dirty listing of examples without pulling in any external dependencies. -->
+    <header>
+        <h1>
+            <strong><a href=".."><img src="../img/c3.jpg" height=32 width=32 /></a> <a href="#">Examples</a></strong>
+            <small id="title"></small>
+        </h1>
+    </header>
+    <div style="position:relative; height:100%; width:100%"> <!-- Workaround Firefox bug -->
+        <main style="position:absolute; height:100%; width:100%">
+            <aside>
+                <template>
+                    <div onclick="location.hash = '#' + '{example}/';">
+                        <h3>
+                            {example.title}<a href="{example}_example.html" target="_blank"
+                                              title="Open in new tab">↗</a>
+                        </h3>
+                        <ul>
+                            <li><a href="#{example}/source">Annotated Source</a></li>
+                            <li><a href="#{example}/html">HTML</a></li>
+                        </ul>
+                    </div>
+                </template>
+            </aside>
+            <article>
+                This page contains a collection of examples for various C3 visualizations.
+                They start with simple tables and static plots and build to more complex examples
+                with multiple linked vizualizations of multivariate datasets.
+                Click on the example names in the left navigation pane to view the example.
+                The HTML and annotated source code for each example is also hosted for viewing.
+                The examples are written in <a href="http://www.typescriptlang.org">TypeScript</a>
+                which, for these examples, should basically look like JavaScript with some occasional type annotations.
+                A full <code>c3.d.ts</code> type definition file is provided for those wishing to use TypeScript, however
+                JavaScript, CoffeeScript, or any other compatible language may be used.
+                The only dependencies used by these examples are D3, jQuery, and Crossfilter.
+                Some examples may also use a polyfill for ES6 Promises.
+                Please refer to the <a href="../doc">API Documentation</a>.<br />
+                <br />
+                Back to <a href="../">C3 Documentation</a>.
+            </article>
+            <iframe frameborder="0"></iframe>
+        </main>
+    </div>
+
+
+    <script>
+        var examples = {
+            table_sortable: { title: "Sortable Table" },
+            table_selectable: { title: "Selectable Table" },
+            plot_area: { title: "Area Plot" },
+            plot_zoom: { title: "Zoomable Plot" },
+            scatterplot: { title: "Scatter Plot" },
+            stack: { title: "Stacked Charts" },
+            sync: { title: "Synced Zoom & Select" },
+            timeline: { title: "Synced Timelines" },
+            legend: { title: "Legends" },
+            swimlanes: { title: "Swimlanes" },
+            pie: { title: "Pie & Donut Charts" },
+            flamechart_sunburst: { title: "Flamechart & Sunburst" },
+            worldbank: { title: "Worldbank Multivariate" },
+        };
+
+        // Listing Template
+        var template = document.querySelector('main aside template');
+        var aside = document.querySelector('aside');
+        for (example in examples) {
+            var row = document.createElement('section');
+            row.id = example;
+            row.innerHTML = template.innerHTML.replace(new RegExp('{example}', 'g'), example);
+            row.innerHTML = row.innerHTML.replace(new RegExp('{example.title}', 'g'), examples[example].title);
+            [].forEach.call(row.querySelectorAll('a'), function (a) {
+                a.onclick = function (event) { event.stopPropagation(); }
+            });
+            aside.appendChild(row);
+        }
+
+        // Router
+        window.onhashchange = function () {
+            // Get route
+            var hash = location.hash.substring(1).split('/');
+            var example = hash[0];
+            var route = hash[1];
+
+            // Style active item in aside bar
+            [].forEach.call(document.querySelectorAll('section, aside a'), function (section) {
+                section.classList.remove('active');
+            });
+            if (example) {
+                var el = document.querySelector('#' + example);
+                if (!el) {
+                    alert("Unknown example: " + example);
+                    throw Error("Unknown example: " + example);
+                }
+                el.classList.add('active');
+            }
+            if (route) {
+                var el = document.querySelector('#' + example + ' a[href$="/' + route + '"]');
+                if (!el) {
+                    alert("Unknown route: " + route);
+                    throw Error("Unknown route: " + route);
+                }
+                el.classList.add('active');
+            }
+
+
+            // Set content of <iframe>
+            document.querySelector('main > article').style.display = example ? 'none' : '';
+            document.querySelector('main > iframe').style.display = example ? '' : 'none';
+            if (example) {
+                var iframe = document.querySelector('iframe');
+                iframe.onload = function () {
+                    document.querySelector('#title').textContent = document.title =
+                        (iframe.contentDocument || iframe.contentWindow.document).title;
+                };
+                switch (route) {
+                    case 'source':
+                        iframe.src = 'doc/' + example + '_example.html';
+                        break;
+                    case 'html':
+                        //iframe.src = 'about:blank';
+                        var xhr = new XMLHttpRequest();
+                        xhr.onload = function () {
+                            if (xhr.status === 200) {
+                                var frame_body = (iframe.contentDocument || iframe.contentWindow.document).querySelector('body');
+                                frame_body.textContent = xhr.responseText;
+                                frame_body.style['font-family'] = '"Courier New", Courier, monospace';
+                                frame_body.style['font-weight'] = 'bold';
+                                frame_body.style['white-space'] = 'pre';
+                            }
+                        }
+                        xhr.open('GET', example + '_example.html');
+                        xhr.send();
+                        document.querySelector('#title').textContent = document.title = examples[example].title + " HTML and CSS";
+                        break;
+                    case '':
+                    case undefined:
+                        iframe.src = example + '_example.html';
+                        break;
+                    default: alert("Invalide Route: "+route);
+                }
+            }
+        };
+        onhashchange();
+    </script>
+</body>
+</html>

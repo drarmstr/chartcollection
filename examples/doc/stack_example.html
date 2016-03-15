@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>C3 Stacked Bar Chart</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="flamechart_sunburst_example.html">
+                  flamechart_sunburst_example.ts
+                </a>
+              
+                
+                <a class="source" href="legend_example.html">
+                  legend_example.ts
+                </a>
+              
+                
+                <a class="source" href="pie_example.html">
+                  pie_example.ts
+                </a>
+              
+                
+                <a class="source" href="plot_area_example.html">
+                  plot_area_example.ts
+                </a>
+              
+                
+                <a class="source" href="plot_zoom_example.html">
+                  plot_zoom_example.ts
+                </a>
+              
+                
+                <a class="source" href="scatterplot_example.html">
+                  scatterplot_example.ts
+                </a>
+              
+                
+                <a class="source" href="stack_example.html">
+                  stack_example.ts
+                </a>
+              
+                
+                <a class="source" href="swimlanes_example.html">
+                  swimlanes_example.ts
+                </a>
+              
+                
+                <a class="source" href="sync_example.html">
+                  sync_example.ts
+                </a>
+              
+                
+                <a class="source" href="table_selectable_example.html">
+                  table_selectable_example.ts
+                </a>
+              
+                
+                <a class="source" href="table_sortable_example.html">
+                  table_sortable_example.ts
+                </a>
+              
+                
+                <a class="source" href="timeline_example.html">
+                  timeline_example.ts
+                </a>
+              
+                
+                <a class="source" href="worldbank_example.html">
+                  worldbank_example.ts
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <h1 id="c3-stacked-bar-chart">C3 Stacked Bar Chart</h1>
+<p><em>This example explores a few different types of <strong>stacked</strong> charts.</em>
+<em>It shows the flexibility in how the data may be organized for stacked visualzations.</em></p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Instead of attaching charts to existing div anchors in the html, this example
+dynamically creates and attached them to the DOM.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> div_selection = d3.select(<span class="hljs-string">'#stack_example_plots'</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Create <strong>ordinal</strong> scales to manage the <em>age group</em> and <em>race</em> 
+categories provided by the CDC.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> five_year_age_group_scale = d3.scale.ordinal().domain([
+    <span class="hljs-string">'1'</span>, <span class="hljs-string">'1-4'</span>, <span class="hljs-string">'5-9'</span>, <span class="hljs-string">'10-14'</span>, <span class="hljs-string">'15-19'</span>, <span class="hljs-string">'20-24'</span>, <span class="hljs-string">'25-29'</span>, <span class="hljs-string">'30-34'</span>, <span class="hljs-string">'35-39'</span>,
+    <span class="hljs-string">'40-44'</span>, <span class="hljs-string">'45-49'</span>, <span class="hljs-string">'50-54'</span>, <span class="hljs-string">'55-59'</span>, <span class="hljs-string">'60-64'</span>, <span class="hljs-string">'65-69'</span>, <span class="hljs-string">'70-74'</span>, <span class="hljs-string">'75-79'</span>,
+    <span class="hljs-string">'80-84'</span>, <span class="hljs-string">'85-89'</span>, <span class="hljs-string">'90-94'</span>, <span class="hljs-string">'95-99'</span>, <span class="hljs-string">'100+'</span>, <span class="hljs-string">'NS'</span>
+]);
+<span class="hljs-keyword">var</span> ten_year_age_group_scale = d3.scale.ordinal().domain([
+    <span class="hljs-string">'1'</span>, <span class="hljs-string">'1-4'</span>, <span class="hljs-string">'5-14'</span>, <span class="hljs-string">'15-24'</span>, <span class="hljs-string">'25-34'</span>, <span class="hljs-string">'35-44'</span>,
+    <span class="hljs-string">'45-54'</span>, <span class="hljs-string">'55-64'</span>, <span class="hljs-string">'65-74'</span>, <span class="hljs-string">'75-84'</span>, <span class="hljs-string">'85+'</span>
+]);
+<span class="hljs-keyword">var</span> race_scale = d3.scale.ordinal().domain([<span class="hljs-string">'native'</span>, <span class="hljs-string">'asian'</span>, <span class="hljs-string">'black'</span>, <span class="hljs-string">'white'</span>]);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Create scales to select colors for the various causes of death and regions.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> cause_color = d3.scale.category20();
+<span class="hljs-keyword">var</span> region_color = d3.scale.category10();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>The <strong>data</strong> for the cause of death data we load from the CDC below.
+It’s an array of records where each record has the following fields:</p>
+<ul>
+<li><code>age_group</code> - A string with the age group, see above.</li>
+<li><code>cause</code> - String for the cause of death.</li>
+<li><code>deaths</code> - Number of deaths.</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>interface CDCDeathData {
+    age_group: string
+    cause: string
+    deaths: number
+}
+
+div_selection.append('p').text("\
+    These stacked area charts use a single normalized data array.\
+    Each element in the array is a data point for a particular age and stack.\
+    There is a key function to determine which stack each data item belongs to.");
+div_selection.append('p').text("\
+    These examples also demonstrate loading chart data dynamically via AJAX.");</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <h2 id="stacked-area-chart">Stacked Area Chart</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>The first example is a stacked area graph.
+Create a <code>c3.Plot</code> and assign it to a newly attached div node.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> stacked_area_chart = <span class="hljs-keyword">new</span> c3.Plot&lt;CDCDeathData&gt;({
+    anchor: &lt;HTMLElement&gt;div_selection.append(<span class="hljs-string">'div'</span>).node(),
+    height: <span class="hljs-number">300</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>The <strong>vertical scale</strong> is a normal linear scale for the number of deaths.
+Note that for the <strong>horizontal scale</strong> we are using an <strong>ordinal </strong> scale!</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    h: five_year_age_group_scale,
+    v: d3.scale.linear().domain([<span class="hljs-number">0</span>, <span class="hljs-number">4500000</span>]),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Accessors describing how to get the <strong>x</strong> and <strong>y</strong> values from the data.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    x: (d) =&gt; d.age_group,
+    y: (d) =&gt; d.deaths,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Create an <strong>area</strong> layer for the plot.
+Setting <code>stack_options</code> will enable the <strong>stacking</strong> functionality.
+For normalized data use <code>stack_options.key</code> to define an accessor which provides
+a key that uniquely describes the stack that each data element should belong to.
+Here we stack the data based on cause of death.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    layers: [
+        <span class="hljs-keyword">new</span> c3.Plot.Layer.Area&lt;CDCDeathData&gt;({
+            interpolate: <span class="hljs-string">'cardinal'</span>,
+            stack_options: {
+                key: (d) =&gt; &lt;<span class="hljs-built_in">any</span>&gt;d.cause,
+                styles: { <span class="hljs-string">'fill'</span>: (stack) =&gt; cause_color(stack.key) },
+                title: (stack) =&gt; stack.key,  <span class="hljs-comment">// Setup tooltips</span>
+            },
+        }),
+    ],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>Setup <strong>margins</strong> and <strong>axes</strong> to polish up the example.
+Notice how <em>grid lines</em>, scale <em>tick marks</em>, and <em>labels</em> can be enabled/disabled
+and custom <code>tick_label</code> formatters setup.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    margins: { right: <span class="hljs-number">20</span> },
+    axes: [
+        <span class="hljs-keyword">new</span> c3.Axis.X({
+            label: <span class="hljs-string">"Causes of Death"</span>,
+            orient: <span class="hljs-string">'top'</span>,
+            scale: <span class="hljs-literal">false</span>,
+        }),
+        <span class="hljs-keyword">new</span> c3.Axis.X({
+            label: <span class="hljs-string">"Age"</span>,
+            scale: d3.scale.linear().domain([<span class="hljs-number">0</span>, <span class="hljs-number">100</span>]),
+            tick_size: <span class="hljs-number">0</span>,
+        }),
+        <span class="hljs-keyword">new</span> c3.Axis.Y({
+            label: <span class="hljs-string">"Deaths"</span>,
+            tick_label: (d) =&gt; (d/<span class="hljs-number">1000000</span>)+<span class="hljs-string">"m"</span>,
+            grid: <span class="hljs-literal">true</span>,
+        }),
+    ],
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <h2 id="expanded-area-chart">Expanded Area Chart</h2>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>div_selection.append(<span class="hljs-string">'hr'</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>The second example is the same as the first except it <strong>expands</strong> the stacked data
+to represent a breakdown of percentages of deaths instead of an absolute count of deaths.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> expand_area_chart = <span class="hljs-keyword">new</span> c3.Plot&lt;CDCDeathData&gt;({
+    anchor: &lt;HTMLElement&gt;div_selection.append(<span class="hljs-string">'div'</span>).node(),
+    height: <span class="hljs-number">300</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>Note that since we are using percentages, the default vertical scale of 0-1 works fine.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    h: five_year_age_group_scale,
+    x: (d) =&gt; d.age_group,
+    y: (d) =&gt; d.deaths,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>Specify <code>offset: &#39;expand&#39;</code> here to <strong>stack</strong> the data normalized from 0-1 instead of by
+absolute values.  This effectively provides a breakdown of the relative contribution
+from each stack.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    layers: [
+        <span class="hljs-keyword">new</span> c3.Plot.Layer.Area&lt;CDCDeathData&gt;({
+            interpolate: <span class="hljs-string">'cardinal'</span>,
+            stack_options: {
+                key: (d) =&gt; &lt;<span class="hljs-built_in">any</span>&gt;d.cause,
+                offset: <span class="hljs-string">'expand'</span>,
+                styles: { <span class="hljs-string">'fill'</span>: (stack) =&gt; cause_color(stack.key) },
+                title: (stack) =&gt; stack.key,  <span class="hljs-comment">// Setup tooltips</span>
+            },
+        }),
+    ],
+
+    margins: { right: <span class="hljs-number">20</span> },
+    axes: [
+        <span class="hljs-keyword">new</span> c3.Axis.X({
+            label: <span class="hljs-string">"Causes of Death"</span>,
+            orient: <span class="hljs-string">'top'</span>,
+            scale: <span class="hljs-literal">false</span>,
+        }),
+        <span class="hljs-keyword">new</span> c3.Axis.X({
+            label: <span class="hljs-string">"Age"</span>,
+            scale: d3.scale.linear().domain([<span class="hljs-number">0</span>, <span class="hljs-number">100</span>]),
+            tick_size: <span class="hljs-number">0</span>,
+        }),
+        <span class="hljs-keyword">new</span> c3.Axis.Y({
+            label: <span class="hljs-string">"Percentage of Deaths"</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>Convert the factor to a percentage when displaying.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            tick_label: (d) =&gt; (d * <span class="hljs-number">100</span>) + <span class="hljs-string">'%'</span>,
+            grid: <span class="hljs-literal">true</span>,
+        }),
+    ],
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <h2 id="expanded-bar-chart">Expanded Bar Chart</h2>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>div_selection.append('hr')
+div_selection.append('p').text("\
+    This stacked bar chart has a single data array where each data item contains data for all stacks.\
+    Each stack is defined with a custom accessor to obtain its value from the data array.");</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>Create the <code>c3.Plot</code>.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> expanded_bar_chart = <span class="hljs-keyword">new</span> c3.Plot({
+    anchor: &lt;HTMLElement&gt;div_selection.append(<span class="hljs-string">'div'</span>).style(<span class="hljs-string">'display'</span>, <span class="hljs-string">'inline-block'</span>).node(),
+    height: <span class="hljs-number">300</span>,
+    width: <span class="hljs-number">400</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>Sometimes we <em>don’t</em> have fully <strong>normalized data</strong>.  Here we have a dataset with one
+entry per x value (race), and each object contains the values for all of the stacks.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    data: [
+        { race: <span class="hljs-string">'native'</span>, northeast: <span class="hljs-number">6111</span>, midwest: <span class="hljs-number">29616</span>, south: <span class="hljs-number">43688</span>, west: <span class="hljs-number">81546</span> },
+        { race: <span class="hljs-string">'asian'</span>, northeast: <span class="hljs-number">71853</span>, midwest: <span class="hljs-number">37443</span>, south: <span class="hljs-number">68215</span>, west: <span class="hljs-number">328879</span> },
+        { race: <span class="hljs-string">'black'</span>, northeast: <span class="hljs-number">569686</span>, midwest: <span class="hljs-number">662679</span>, south: <span class="hljs-number">1940938</span>, west: <span class="hljs-number">288980</span> },
+        { race: <span class="hljs-string">'white'</span>, northeast: <span class="hljs-number">5041763</span>, midwest: <span class="hljs-number">6159459</span>, south: <span class="hljs-number">8954636</span>, west: <span class="hljs-number">4890548</span> },
+    ],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>Setup <strong>scales</strong> and <strong>x</strong> accessor.
+Note we are using an <em>ordinal</em> horizontal scale and the default vertical scale.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    h: race_scale,
+    x: (d) =&gt; d.race,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p>Create the <strong>stacked bar</strong> layer.
+Here we manually specify the set of stacks that are present.
+Because we don’t have a <code>stack_options.key</code> defined, each layer will get its own copy
+of the data.However, each stack can have its own <strong>y </strong> accessor to get its
+particular value for that stack with the datum.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    layers: [
+        <span class="hljs-keyword">new</span> c3.Plot.Layer.Bar({
+            name: <span class="hljs-string">"Region"</span>,
+            bar_width: <span class="hljs-string">'75%'</span>,
+            stack_options: {
+                offset: <span class="hljs-string">'expand'</span>,
+                styles: { <span class="hljs-string">'fill'</span>: (stack) =&gt; region_color(stack.key) },
+                title: (stack) =&gt; stack.key,  <span class="hljs-comment">// Setup tooltips</span>
+                name: (key) =&gt; key,
+            },
+            stacks: [
+                <span class="hljs-keyword">new</span> c3.Plot.Layer.Stackable.Stack&lt;<span class="hljs-built_in">any</span>&gt;({
+                    key: &lt;<span class="hljs-built_in">any</span>&gt;<span class="hljs-string">'northeast'</span>,
+                    y: (d) =&gt; d.northeast
+                }),
+                <span class="hljs-keyword">new</span> c3.Plot.Layer.Stackable.Stack&lt;<span class="hljs-built_in">any</span>&gt;({
+                    key: &lt;<span class="hljs-built_in">any</span>&gt;<span class="hljs-string">'midwest'</span>,
+                    y: (d) =&gt; d.midwest,
+                }),
+                <span class="hljs-keyword">new</span> c3.Plot.Layer.Stackable.Stack&lt;<span class="hljs-built_in">any</span>&gt;({
+                    key: &lt;<span class="hljs-built_in">any</span>&gt;<span class="hljs-string">'south'</span>,
+                    y: (d) =&gt; d.south,
+                }),
+                <span class="hljs-keyword">new</span> c3.Plot.Layer.Stackable.Stack&lt;<span class="hljs-built_in">any</span>&gt;({
+                    key: &lt;<span class="hljs-built_in">any</span>&gt;<span class="hljs-string">'west'</span>,
+                    y: (d) =&gt; d.west,
+                }),
+            ],
+        }),
+    ],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p><em>Alternatively</em>, instead of specifying a y accessor for each stack above,
+we could have just used this single <strong>y accessor</strong> for the layer:</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <pre><code>   y: (d, i, stack) -&gt; d[stack.key]
+</code></pre>
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <p>Add <strong>margins </strong> and <strong>axes </strong> to polish the example</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    margins: { top: <span class="hljs-number">10</span>, right: <span class="hljs-number">20</span> },
+    axes: [
+        <span class="hljs-keyword">new</span> c3.Axis.X({
+            label: <span class="hljs-string">"Where People Die"</span>,
+            orient: <span class="hljs-string">'top'</span>,
+            scale: <span class="hljs-literal">false</span>,
+        }),
+        <span class="hljs-keyword">new</span> c3.Axis.Y({
+            label: <span class="hljs-string">"Percentage of Deaths"</span>,
+            tick_label: (d) =&gt; (d * <span class="hljs-number">100</span>) + <span class="hljs-string">'%'</span>,
+        }),
+        <span class="hljs-keyword">new</span> c3.Axis.X({
+            label: <span class="hljs-string">"Race"</span>,
+        }),
+    ],
+}).render();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-25">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-25">&#182;</a>
+              </div>
+              <p>Create an associated <strong>legend</strong> for this chart</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">new</span> c3.Legend.PlotLegend({
+    anchor: &lt;HTMLElement&gt;div_selection.append(<span class="hljs-string">'div'</span>).node(),
+    anchor_styles: {
+        <span class="hljs-string">'display'</span>: <span class="hljs-string">'inline-block'</span>,
+        <span class="hljs-string">'vertical-align'</span>: <span class="hljs-string">'5em'</span>,
+    },
+    plot: expanded_bar_chart,
+}).render();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-26">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-26">&#182;</a>
+              </div>
+              <h2 id="stacked-bar-chart">Stacked Bar Chart</h2>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>div_selection.append('hr')
+div_selection.append('p').text("\
+    This stacked bar chart contains seperate data arrays for each stack.");</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-27">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-27">&#182;</a>
+              </div>
+              <p>Format for death by age data</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">interface</span> DeathByAgeData {
+    age_group: <span class="hljs-built_in">string</span>
+    deaths: <span class="hljs-built_in">number</span>
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-28">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-28">&#182;</a>
+              </div>
+              <p>Create the <code>c3.Plot</code>.
+Just for kicks this time we don’t attach it to an anchor at all.  In this case
+C3 will create a div when we render which we will attach to the DOM later.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> stacked_bar_chart = <span class="hljs-keyword">new</span> c3.Plot&lt;DeathByAgeData&gt;({
+    height: <span class="hljs-number">300</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-29">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-29">&#182;</a>
+              </div>
+              <p>Setup <strong>scales </strong> and <strong>x </strong> and <strong>y </strong> accessors.
+Note we are using an <em>ordinal</em> horizontal scale.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    v: d3.scale.linear().domain([<span class="hljs-number">0</span>, <span class="hljs-number">10000000</span>]),
+    h: ten_year_age_group_scale,
+    x: (d) =&gt; d.age_group,
+    y: (d) =&gt; d.deaths,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-30">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-30">&#182;</a>
+              </div>
+              <p>Add the <strong>stacked bar</strong> layer</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    layers: [
+        <span class="hljs-keyword">new</span> c3.Plot.Layer.Bar({</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-31">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-31">&#182;</a>
+              </div>
+              <p>This represents an <em>alternative</em> way to specify how to <strong>stack</strong> the data.
+Instead of providing layer <code>data</code> you can manually specify which <code>stacks</code>
+should be present and a <code>data</code> array for each stack.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            stacks: [
+                <span class="hljs-keyword">new</span> c3.Plot.Layer.Stackable.Stack({
+                    key: <span class="hljs-string">'Male'</span>,
+                    options: {
+                        title: <span class="hljs-string">'Male'</span>,
+                        styles: { <span class="hljs-string">'fill'</span>: <span class="hljs-string">'blue'</span> },
+                    },
+                    data: [
+                        { age_group: <span class="hljs-string">'1'</span>, deaths: <span class="hljs-number">146034</span> },
+                        { age_group: <span class="hljs-string">'1-4'</span>, deaths: <span class="hljs-number">24962</span> },
+                        { age_group: <span class="hljs-string">'5-14'</span>, deaths: <span class="hljs-number">32467</span> },
+                        { age_group: <span class="hljs-string">'15-24'</span>, deaths: <span class="hljs-number">101373</span> },
+                        { age_group: <span class="hljs-string">'25-34'</span>, deaths: <span class="hljs-number">153299</span> },
+                        { age_group: <span class="hljs-string">'35-44'</span>, deaths: <span class="hljs-number">371670</span> },
+                        { age_group: <span class="hljs-string">'45-54'</span>, deaths: <span class="hljs-number">802359</span> },
+                        { age_group: <span class="hljs-string">'55-64'</span>, deaths: <span class="hljs-number">1300745</span> },
+                        { age_group: <span class="hljs-string">'65-74'</span>, deaths: <span class="hljs-number">2172914</span> },
+                        { age_group: <span class="hljs-string">'75-84'</span>, deaths: <span class="hljs-number">4139948</span> },
+                        { age_group: <span class="hljs-string">'85+'</span>, deaths: <span class="hljs-number">5520554</span> },
+                    ],
+                }),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-32">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-32">&#182;</a>
+              </div>
+              <p>I am manually entering the data here just as another perspective.
+<code>data</code> arrays can always be defined inline, passed as a variable,
+and even dynamically updated followed with a call to <code>redraw()</code>.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">new</span> c3.Plot.Layer.Stackable.Stack({
+                    key: <span class="hljs-string">'Female'</span>,
+                    options: {
+                        title: <span class="hljs-string">'Female'</span>,
+                        styles: { <span class="hljs-string">'fill'</span>: <span class="hljs-string">'pink'</span> },
+                    },
+                    data: [
+                        { age_group: <span class="hljs-string">'1'</span>, deaths: <span class="hljs-number">186663</span> },
+                        { age_group: <span class="hljs-string">'1-4'</span>, deaths: <span class="hljs-number">32567</span> },
+                        { age_group: <span class="hljs-string">'5-14'</span>, deaths: <span class="hljs-number">46053</span> },
+                        { age_group: <span class="hljs-string">'15-24'</span>, deaths: <span class="hljs-number">288145</span> },
+                        { age_group: <span class="hljs-string">'25-34'</span>, deaths: <span class="hljs-number">347909</span> },
+                        { age_group: <span class="hljs-string">'35-44'</span>, deaths: <span class="hljs-number">633523</span> },
+                        { age_group: <span class="hljs-string">'45-54'</span>, deaths: <span class="hljs-number">1316448</span> },
+                        { age_group: <span class="hljs-string">'55-64'</span>, deaths: <span class="hljs-number">1957880</span> },
+                        { age_group: <span class="hljs-string">'65-74'</span>, deaths: <span class="hljs-number">2775456</span> },
+                        { age_group: <span class="hljs-string">'75-84'</span>, deaths: <span class="hljs-number">3969547</span> },
+                        { age_group: <span class="hljs-string">'85+'</span>, deaths: <span class="hljs-number">2852141</span> },
+                    ],
+                }),
+            ],
+        }),
+    ],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-33">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-33">&#182;</a>
+              </div>
+              <p>Setup <strong>margins </strong> and <strong>axes </strong> to polish up the example.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    margins: { right: <span class="hljs-number">20</span> },
+    axes: [
+        <span class="hljs-keyword">new</span> c3.Axis.X({
+            label: <span class="hljs-string">"Deaths by Gender"</span>,
+            orient: <span class="hljs-string">'top'</span>,
+            scale: <span class="hljs-literal">false</span>,
+        }),
+        <span class="hljs-keyword">new</span> c3.Axis.Y({
+            label: <span class="hljs-string">"Deaths"</span>,
+            grid: <span class="hljs-literal">true</span>,
+            tick_label: (d) =&gt; (d/<span class="hljs-number">1000000</span>) + <span class="hljs-string">"m"</span>,
+        }),
+        <span class="hljs-keyword">new</span> c3.Axis.X({
+            label: <span class="hljs-string">"Age Group"</span>,
+        }),
+    ],
+}).render();
+
+$(<span class="hljs-string">'#stack_example_plots'</span>).append(&lt;HTMLElement&gt;stacked_bar_chart.anchor);
+$(stacked_bar_chart.anchor).width(<span class="hljs-string">'100%'</span>);
+stacked_bar_chart.resize();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-34">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-34">&#182;</a>
+              </div>
+              <h2 id="resize-charts">Resize Charts</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-35">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-35">&#182;</a>
+              </div>
+              <p>Resize the charts if the window resizes</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">window</span>.onresize = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    stacked_area_chart.resize();
+    expand_area_chart.resize();
+    stacked_bar_chart.resize();
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-36">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-36">&#182;</a>
+              </div>
+              <h2 id="load-the-tsv-data">Load the TSV data</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-37">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-37">&#182;</a>
+              </div>
+              <p>Use D3 to load the <strong>tsv</strong> data for the students using an AJAX request.
+The <code>row</code> callback is used to determine how to parse the rows based on the TSV data;
+notie how the numerical values use a <code>+</code> to parse the string into a number.</p>
+<p>When the data is loaded the <code>get</code> callback is called which we use to call the
+rendering function with the loaded data.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>d3.tsv(<span class="hljs-string">"data/injury_cause.tsv"</span>)
+    .row((row) =&gt; ({
+        age_group: row[<span class="hljs-string">"Five-Year Age Groups Code"</span>],
+        cause: row[<span class="hljs-string">"Injury Mechanism &amp; All Other Leading Causes"</span>],
+        deaths: +row[<span class="hljs-string">"Deaths"</span>],
+    }))
+    .get((error, data) =&gt; {
+        <span class="hljs-keyword">if</span> (error) alert(<span class="hljs-string">"AJAX error downloading CDC data: "</span>+error.statusText);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-38">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-38">&#182;</a>
+              </div>
+              <p>Filter invalid rows from the CDC’s tsv file.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        data = data.filter((row) =&gt; !!row.cause);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-39">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-39">&#182;</a>
+              </div>
+              <p>Bind <strong>data</strong> to the charts and render them.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        stacked_area_chart.data = data;
+        stacked_area_chart.render();
+        expand_area_chart.data = data;
+        expand_area_chart.render();
+    });</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

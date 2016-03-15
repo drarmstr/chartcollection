@@ -1,0 +1,30 @@
+name,id,parent_id
+World,001,
+Africa,002,001
+Eastern Africa,014,002
+Middle Africa,017,002
+Northern Africa,015,002
+Southern Africa,018,002
+Western Africa,011,002
+Americas,019,001
+Latin America,419,019
+Caribbean,029,419
+Central America,013,419
+South America,005,419
+North America,021,019
+Asia,142,001
+Central Asia,143,142
+Eastern Asia,030,142
+Southern Asia,034,142
+South-Eastern Asia,035,142
+Western Asia,145,142
+Europe,150,001
+Eastern Europe,151,150
+Northern Europe,154,150
+Southern Europe,039,150
+Western Europe,155,150
+Oceania,009,001
+Australia and New Zealand,053,009
+Melanesia,054,009
+Micronesia,057,009
+Polynesia,061,009

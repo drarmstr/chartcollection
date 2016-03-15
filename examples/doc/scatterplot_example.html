@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>C3 Scatter Plot</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="flamechart_sunburst_example.html">
+                  flamechart_sunburst_example.ts
+                </a>
+              
+                
+                <a class="source" href="legend_example.html">
+                  legend_example.ts
+                </a>
+              
+                
+                <a class="source" href="pie_example.html">
+                  pie_example.ts
+                </a>
+              
+                
+                <a class="source" href="plot_area_example.html">
+                  plot_area_example.ts
+                </a>
+              
+                
+                <a class="source" href="plot_zoom_example.html">
+                  plot_zoom_example.ts
+                </a>
+              
+                
+                <a class="source" href="scatterplot_example.html">
+                  scatterplot_example.ts
+                </a>
+              
+                
+                <a class="source" href="stack_example.html">
+                  stack_example.ts
+                </a>
+              
+                
+                <a class="source" href="swimlanes_example.html">
+                  swimlanes_example.ts
+                </a>
+              
+                
+                <a class="source" href="sync_example.html">
+                  sync_example.ts
+                </a>
+              
+                
+                <a class="source" href="table_selectable_example.html">
+                  table_selectable_example.ts
+                </a>
+              
+                
+                <a class="source" href="table_sortable_example.html">
+                  table_sortable_example.ts
+                </a>
+              
+                
+                <a class="source" href="timeline_example.html">
+                  timeline_example.ts
+                </a>
+              
+                
+                <a class="source" href="worldbank_example.html">
+                  worldbank_example.ts
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <h1 id="c3-scatter-plot">C3 Scatter Plot</h1>
+<p><em>This example covers a scatter plot using different C3 concepts as discussed in the
+API Overview.</em></p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <h2 id="student-data">Student Data</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Create student <strong>data array</strong>.</p>
+<p>An <code>interface</code> is just for TypeScript type annotation and can be ignored for JavaScript.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">interface</span> StudentData {
+    name: <span class="hljs-built_in">string</span>
+    id: <span class="hljs-built_in">number</span>
+    gender: <span class="hljs-built_in">string</span>
+    age: <span class="hljs-built_in">number</span>
+    grade: <span class="hljs-built_in">number</span>
+}
+<span class="hljs-keyword">var</span> student_id = <span class="hljs-number">0</span>;
+<span class="hljs-keyword">var</span> student_data = [
+    { name: <span class="hljs-string">"Joe"</span>, id: ++student_id, gender: <span class="hljs-string">"male"</span>, age: <span class="hljs-number">16</span>, grade: <span class="hljs-number">3.2</span> },
+    { name: <span class="hljs-string">"Lisa"</span>, id: ++student_id, gender: <span class="hljs-string">"female"</span>, age: <span class="hljs-number">18</span>, grade: <span class="hljs-number">2.3</span> },
+    { name: <span class="hljs-string">"Patrick"</span>, id: ++student_id, gender: <span class="hljs-string">"male"</span>, age: <span class="hljs-number">28</span>, grade: <span class="hljs-number">1.4</span> },
+    { name: <span class="hljs-string">"Mandy"</span>, id: ++student_id, gender: <span class="hljs-string">"female"</span>, age: <span class="hljs-number">32</span>, grade: <span class="hljs-number">3.8</span> },
+    { name: <span class="hljs-string">"Tommy"</span>, id: ++student_id, gender: <span class="hljs-string">"male"</span>, age: <span class="hljs-number">9</span>, grade: <span class="hljs-number">1.7</span> },
+];</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Create a <strong>quantize</strong> scale to translate from numeric to letter grades.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> grade_scale = d3.scale.quantize&lt;<span class="hljs-built_in">string</span>&gt;()
+    .domain([<span class="hljs-number">0</span>, <span class="hljs-number">4</span>])
+    .range([<span class="hljs-string">'F'</span>, <span class="hljs-string">'D'</span>, <span class="hljs-string">'C'</span>, <span class="hljs-string">'B'</span>, <span class="hljs-string">'A'</span>]);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <h2 id="scatter-plot">Scatter Plot</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Create the <strong>scatter plot</strong> and attach to the DOM.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> my_chart = <span class="hljs-keyword">new</span> c3.Plot&lt;StudentData&gt;({
+    anchor: <span class="hljs-string">'#scatter_plot_example'</span>,
+    height: <span class="hljs-number">300</span>,
+    width: <span class="hljs-string">'50%'</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <h3 id="scales">Scales</h3>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>Setup the <strong>scales</strong> for student ages 0-50 and grades 0-4.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    h: d3.scale.linear().domain([<span class="hljs-number">0</span>, <span class="hljs-number">50</span>]),
+    v: d3.scale.linear().domain([<span class="hljs-number">0</span>, <span class="hljs-number">4</span>]),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <h3 id="axes">Axes</h3>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Add <strong>margins</strong> and disable <strong>cropping</strong> so the dots can extend past the edge of the plot.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    margins: <span class="hljs-number">10</span>,
+    crop_margins: <span class="hljs-literal">false</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>Add <strong>axes</strong> for grid lines and labels</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    axes: [
+        <span class="hljs-keyword">new</span> c3.Axis.X({
+            grid: <span class="hljs-literal">true</span>,
+            label: <span class="hljs-string">"Age"</span>,
+        }),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>The y axis will display letter grades</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">new</span> c3.Axis.Y({
+            grid: <span class="hljs-literal">true</span>,
+            label: <span class="hljs-string">"Grade"</span>,
+            tick_values: [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>],
+            tick_label: grade_scale,
+        }),
+    ],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <h3 id="layers">Layers</h3>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>Setup the plot <strong>layers</strong></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    layers: [</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>Create a <code>c3.Plot.Layer.Scatter</code> <strong>scatter layer</strong></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">new</span> c3.Plot.Layer.Scatter&lt;StudentData&gt;({</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <h3 id="data-set-accessors">Data set accessors</h3>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>Bind with student <strong>data</strong></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            data: student_data,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p><strong>key</strong> accessor to assign unique id.
+This aids in animations when students are added and removed.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            key: (student) =&gt; student.id,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>Accessors for <strong>x</strong> and <strong>y</strong> positions based on the age and grade of the students.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            x: (student) =&gt; student.age,
+            y: (student) =&gt; student.grade,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>All dots have a <strong>radius</strong> of 10</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            r: <span class="hljs-number">10</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p><strong>Filter</strong> data for underage students</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            filter: (student) =&gt; student.age &gt;= <span class="hljs-number">16</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <h2 id="selection-options">Selection Options</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <p>Enable <strong>animation</strong> in the chart when updating data</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            point_options: {
+                animate: <span class="hljs-literal">true</span>,
+                duration: <span class="hljs-number">1000</span>,
+            },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <p>Enable <strong>labels</strong></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            label_options: {
+                text: (student) =&gt; student.grade.toFixed(<span class="hljs-number">1</span>),
+                styles: {
+                    <span class="hljs-string">'fill'</span>: (student) =&gt; student.gender === <span class="hljs-string">'male'</span> ? <span class="hljs-string">"white"</span> : <span class="hljs-string">"black"</span>,
+                    <span class="hljs-string">'font-size'</span>: <span class="hljs-string">"x-small"</span>,
+                },
+            },
+
+            circle_options: {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-25">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-25">&#182;</a>
+              </div>
+              <h2 id="styles">Styles</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-26">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-26">&#182;</a>
+              </div>
+              <p>Set CSS <strong>classes</strong> based on the data.  There is a corresponding CSS rule in 
+the <code>&lt;style&gt;</code> section of the example’s HTML to give failing students a red stroke.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                classes: {
+                    <span class="hljs-string">'passing'</span>: (student) =&gt; student.grade &gt;= <span class="hljs-number">2</span>,
+                    <span class="hljs-string">'failing'</span>: (student) =&gt; student.grade &lt; <span class="hljs-number">2</span>,
+                },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-27">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-27">&#182;</a>
+              </div>
+              <p><strong>Style</strong> the circles by <strong>coloring</strong> the dots based on the student’s gender</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                styles: {
+                    <span class="hljs-string">'fill'</span>: (student) =&gt; student.gender === <span class="hljs-string">'male'</span> ? <span class="hljs-string">"blue"</span> : <span class="hljs-string">"pink"</span>,
+                },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-28">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-28">&#182;</a>
+              </div>
+              <h2 id="event-handlers">Event Handlers</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-29">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-29">&#182;</a>
+              </div>
+              <p>Add <strong>event</strong> handlers to expand the size of the circle when the user hovers over
+them and displays detailed student information for that particular 
+student in an info box elsewhere on the page.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                events: {
+                    <span class="hljs-string">'mouseenter'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">student</span>) </span>{
+                        d3.select(<span class="hljs-string">'#info_box'</span>).html(<span class="hljs-string">"&lt;b&gt;"</span> + student.name + <span class="hljs-string">"&lt;/b&gt; "</span> +
+                            (student.gender === <span class="hljs-string">'male'</span> ? <span class="hljs-string">'m'</span> : <span class="hljs-string">'f'</span>) + <span class="hljs-string">"&lt;br/&gt;"</span> +
+                            <span class="hljs-string">"age: "</span> + <span class="hljs-built_in">Math</span>.round(student.age) + <span class="hljs-string">"&lt;br/&gt;"</span> +
+                            <span class="hljs-string">"grade: "</span> + <span class="hljs-built_in">Math</span>.round(student.grade * <span class="hljs-number">10</span>) / <span class="hljs-number">10</span>);
+                        d3.select(<span class="hljs-keyword">this</span>).transition().duration(<span class="hljs-number">500</span>).attr(<span class="hljs-string">'r'</span>, <span class="hljs-number">20</span>);
+                    },
+                    <span class="hljs-string">'mouseleave'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+                        d3.select(<span class="hljs-string">'#info_box'</span>).html(<span class="hljs-string">"&lt;i&gt;Hover over student to view info&lt;/i&gt;"</span>);
+                        d3.select(<span class="hljs-keyword">this</span>).transition().duration(<span class="hljs-number">500</span>).attr(<span class="hljs-string">'r'</span>, <span class="hljs-number">10</span>);
+                    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-30">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-30">&#182;</a>
+              </div>
+              <p>Add <code>click</code> <strong>event</strong> to delete an existing student.
+<code>redraw()</code> must be called for the chart to reflect the updated dataset.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                    <span class="hljs-string">'click'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">student</span>) </span>{
+                        <span class="hljs-keyword">var</span> index = student_data.indexOf(student);
+                        <span class="hljs-keyword">if</span> (index &gt;= <span class="hljs-number">0</span>) {
+                            alert(<span class="hljs-string">"Deleting "</span> + student.name);
+                            student_data.splice(student_data.indexOf(student), <span class="hljs-number">1</span>);
+                            my_chart.redraw();
+                        }
+                        (&lt;MouseEvent&gt;d3.event).stopPropagation();
+                    },
+                },
+            },
+        }),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-31">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-31">&#182;</a>
+              </div>
+              <p>Create a horizontal line <strong>layer</strong> for the class grade average.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">new</span> c3.Plot.Layer.Line.Horizontal&lt;<span class="hljs-built_in">number</span>&gt;({
+            data: [],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-32">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-32">&#182;</a>
+              </div>
+              <p>Assign the layer with the CSS <strong>class</strong> <code>average-grade</code>.
+There is a corresponding CSS rule in the HTML <code>&lt;style&gt;</code> to give this layer a purple stroke.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">class</span>: <span class="hljs-string">'average-grade'</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-33">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-33">&#182;</a>
+              </div>
+              <p>Give the line a <strong>label</strong>.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            label_options: {
+                text: (grade)=&gt; <span class="hljs-string">"Avg Grade: "</span>+grade.toFixed(<span class="hljs-number">2</span>),
+            },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-34">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-34">&#182;</a>
+              </div>
+              <h3 id="extend-custom-functionality">Extend Custom Functionality</h3>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-35">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-35">&#182;</a>
+              </div>
+              <p>Extend custom functionality with a <strong>handler</strong> to update the layer’s data based on the
+average grade of the class by adding a <code>redraw_start</code> callback to the layer.  This is called
+everytime the data is updated or resized, but before any built-in functionality, so you can
+use it to update the dataset in advance.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            handlers: {
+                redraw_start: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+                    <span class="hljs-keyword">var</span> students = student_data.filter((student) =&gt; student.age &gt;= <span class="hljs-number">16</span>);
+                    <span class="hljs-keyword">var</span> average_grade = d3.sum(students, (student) =&gt; student.grade) / students.length;
+                    <span class="hljs-keyword">this</span>.data = <span class="hljs-built_in">isNaN</span>(average_grade) ? [] : [average_grade];
+                },
+            }
+        }),
+    ],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-36">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-36">&#182;</a>
+              </div>
+              <p>Setup <strong>handlers</strong> to extend custom functionality</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    handlers: {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-37">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-37">&#182;</a>
+              </div>
+              <p>Add a <strong>render</strong> callback to add <em>guidelines</em> to track cursor movement using D3.
+<code>render</code> is used for custom initialization and is only called once when the plot is first rendered.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        render: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+            <span class="hljs-keyword">this</span>.content.all.append(<span class="hljs-string">'line'</span>).attr(<span class="hljs-string">'class'</span>, <span class="hljs-string">'guideline x'</span>);
+            <span class="hljs-keyword">this</span>.content.all.append(<span class="hljs-string">'line'</span>).attr(<span class="hljs-string">'class'</span>, <span class="hljs-string">'guideline y'</span>);
+            <span class="hljs-keyword">this</span>.content.all.selectAll(<span class="hljs-string">'line.guideline'</span>)
+                .style(<span class="hljs-string">'display'</span>, <span class="hljs-string">'none'</span>)
+                .style(<span class="hljs-string">'stroke'</span>, <span class="hljs-string">'orange'</span>)
+                .style(<span class="hljs-string">'pointer-events'</span>, <span class="hljs-string">'none'</span>)
+                .style(<span class="hljs-string">'shape-rendering'</span>, <span class="hljs-string">'crispEdges'</span>);
+        },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-38">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-38">&#182;</a>
+              </div>
+              <p>Add a <strong>resize</strong> callback to properly size the <em>guidelines</em>.
+<code>resize</code> is called whenever the chart is resized.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        resize: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+            <span class="hljs-keyword">this</span>.content.all.selectAll(<span class="hljs-string">'line.guideline.x'</span>).attr(<span class="hljs-string">'y2'</span>, <span class="hljs-keyword">this</span>.content.height);
+            <span class="hljs-keyword">this</span>.content.all.selectAll(<span class="hljs-string">'line.guideline.y'</span>).attr(<span class="hljs-string">'x2'</span>, <span class="hljs-keyword">this</span>.content.width);
+        },
+    },
+
+    content_options: {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-39">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-39">&#182;</a>
+              </div>
+              <p>Add <strong>event</strong> callbacks for custom behavior.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        events: {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-40">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-40">&#182;</a>
+              </div>
+              <p>Setup <code>mousemove</code> and <code>mouseleave</code> event callbacks to track the mouse movement
+with the <em>guidelines</em>.</p>
+<p>Note use of <a href="https://github.com/mbostock/d3/wiki/Selections#d3_mouse"><code>d3.mouse()</code></a> to identify the mouse location.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-string">'mousemove'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+                <span class="hljs-keyword">var</span> [x, y] = d3.mouse(<span class="hljs-keyword">this</span>);
+                my_chart.content.all.selectAll(<span class="hljs-string">'line.guideline.x'</span>)
+                    .style(<span class="hljs-string">'display'</span>, <span class="hljs-string">''</span>)
+                    .attr(<span class="hljs-string">'x1'</span>, x)
+                    .attr(<span class="hljs-string">'x2'</span>, x);
+                my_chart.content.all.selectAll(<span class="hljs-string">'line.guideline.y'</span>)
+                    .style(<span class="hljs-string">'display'</span>, <span class="hljs-string">''</span>)
+                    .attr(<span class="hljs-string">'y1'</span>, y)
+                    .attr(<span class="hljs-string">'y2'</span>, y);
+            },
+            <span class="hljs-string">'mouseleave'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+                my_chart.content.all.selectAll(<span class="hljs-string">'line.guideline'</span>)
+                    .style(<span class="hljs-string">'display'</span>, <span class="hljs-string">'none'</span>);
+            },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-41">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-41">&#182;</a>
+              </div>
+              <p>Setup a <code>click</code> <strong>event</strong> handler to add a new student with an age and grade based
+on where the user clicked.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-string">'click'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+
+                <span class="hljs-keyword">var</span> [x, y] = d3.mouse(<span class="hljs-keyword">this</span>);
+                <span class="hljs-keyword">var</span> student = {
+                    name: d3.scale.quantize&lt;<span class="hljs-built_in">string</span>&gt;().range([<span class="hljs-string">"Chris"</span>, <span class="hljs-string">"Alex"</span>, <span class="hljs-string">"Pat"</span>, <span class="hljs-string">"Ryan"</span>])(<span class="hljs-built_in">Math</span>.random()),
+                    id: ++student_id,
+                    gender: <span class="hljs-built_in">Math</span>.random() &gt; <span class="hljs-number">0.5</span> ? <span class="hljs-string">'male'</span> : <span class="hljs-string">'female'</span>,
+                    age: (&lt;d3.scale.Linear&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">number</span>&gt;&gt;my_chart.h).invert(x),
+                    grade: (&lt;d3.scale.Linear&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">number</span>&gt;&gt;my_chart.v).invert(y),
+                };
+                <span class="hljs-keyword">if</span> (student.age &lt; <span class="hljs-number">16</span>) alert(<span class="hljs-string">"Student is too young to track"</span>);
+                <span class="hljs-keyword">else</span> {
+                    student_data.push(student);
+                    my_chart.redraw();
+                }
+            },
+        },
+    },
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-42">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-42">&#182;</a>
+              </div>
+              <h2 id="render">Render</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-43">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-43">&#182;</a>
+              </div>
+              <p>Render your chart</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>my_chart.render();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-44">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-44">&#182;</a>
+              </div>
+              <h2 id="resize">Resize</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-45">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-45">&#182;</a>
+              </div>
+              <p>Resize the chart when the window is resized</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">window</span>.onresize = () =&gt; {
+    my_chart.resize();
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-46">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-46">&#182;</a>
+              </div>
+              <h2 id="data-update-and-redraw">Data update and redraw</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-47">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-47">&#182;</a>
+              </div>
+              <p>Randomly adjust the student grades and call <code>redraw()</code> to update.  Because we 
+enabled <strong>animation</strong> in this chart, the student dots will smoothly transition to
+their new locations.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>d3.select(<span class="hljs-string">'#event_regrade_button'</span>).on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> student of student_data) {
+        student.grade += <span class="hljs-number">2</span> * <span class="hljs-built_in">Math</span>.random() - <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">if</span> (student.grade &gt; <span class="hljs-number">4</span>) student.grade -= (student.grade - <span class="hljs-number">4</span>) * <span class="hljs-number">2</span>;
+        <span class="hljs-keyword">if</span> (student.grade &lt; <span class="hljs-number">0</span>) student.grade += -student.grade * <span class="hljs-number">2</span>;
+    }
+    my_chart.redraw();
+});</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

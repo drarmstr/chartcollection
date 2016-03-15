@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Scatter Plot Example</title>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Dependencies -->
+    <script src="lib/d3.js"></script>
+    <script src="lib/jquery-2.1.1.js"></script>
+    <script src="lib/crossfilter.js"></script>
+
+    <!-- C3 -->
+    <link rel="stylesheet" href="../css/c3.css" />
+    <script src="../js/c3.js"></script>
+    <script src="../js/c3-plot.js"></script>
+    <script src="../js/c3-layers.js"></script>
+
+    <!-- Chart Styles -->
+    <style>
+        .c3.plot {
+            font-family: sans-serif;
+        }
+
+        .c3.plot .layer.average-grade {
+            stroke: purple;
+        }
+
+        .c3.plot .layer.scatter circle.failing {
+            stroke: red;
+        }
+
+        .info-box {
+            padding: 0.5em;
+            border-radius: 0.25em;
+            background-color: black;
+            color: white;
+            font-family: sans-serif;
+        }
+
+        .c3.axis .tick line {
+            stroke: darkgray;
+        }
+        .c3.axis line.grid {
+            stroke-dasharray: 2,2;
+        }
+    </style>
+</head>
+
+<body>
+    <p>
+        This example demonstrates a scatter plot that is discussed during
+        the <a href="../api.html">API Overview</a> documentation.
+    </p>
+    <p>
+        Hover over the scatter plot to render guidelines, hover over data points to see student info.
+        Click in the plot to add and remove students.
+    </p>
+
+    <p>
+        <button id="event_regrade_button">Regrade Students</button>
+    </p>
+
+    <div id="scatter_plot_example" style="display:inline-block"></div>
+
+    <p id="info_box" class="info-box" style="width:100px; height:4em; display:inline-block; vertical-align:top">
+        <i>Hover over student to view info</i>
+    </p>
+
+    <script src="scatterplot_example.js"></script>
+</body>
+</html>

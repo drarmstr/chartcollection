@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Synchronized Charts Example</title>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Dependencies -->
+    <script src="lib/d3.js"></script>
+    <script src="lib/jquery-2.1.1.js"></script>
+    <script src="lib/crossfilter.js"></script>
+
+    <!-- C3 -->
+    <link rel="stylesheet" href="../css/c3.css" />
+    <script src="../js/c3.js"></script>
+    <script src="../js/c3-plot.js"></script>
+    <script src="../js/c3-layers.js"></script>
+
+    <!-- Chart Styles -->
+    <style>
+        body {
+            overflow-y: scroll;
+        }
+
+        .c3.plot {
+            font-family: sans-serif;
+        }
+
+        .c3.plot .brush .extent {
+            fill: black;
+            opacity: 0.125;
+        }
+        .c3.plot .brush .unbrush {
+            fill: black;
+            opacity: 0.6;
+        }
+
+        .c3.plot .layer.line path {
+            stroke-width: 2px;
+        }
+
+        .c3.plot .layer.area path {
+            fill-opacity: 0.75;
+        }
+
+        .c3.axis .tick line {
+            stroke: darkgray;
+        }
+        .c3.axis line.grid {
+            stroke-dasharray: 2,2;
+        }
+    </style>
+</head>
+
+<body>
+    <p>
+        This example demonstrates the common practice of having two charts for the same
+        data at different zoom levels.  Make a selection in the top chart and the lower
+        chart will adjust to zoom in on that selection.  Use the mouse wheel or pinch to
+        zoom and drag to pan in the lower chart and the selection will update in the top chart.
+    </p>
+
+    <form>
+        <button id="sync_generate_button" type="button">Generate Random Data</button>
+        Sync: <select id="sync_end_select">
+            <option value="" selected>Continusouly</option>
+            <option value="end">After Action</option>
+        </select>
+        <label><input id="move_selection" type="checkbox" checked/>Selection is draggable</label>
+    </form>
+
+    <div id="sync_select_example_plot"></div>
+    <div id="sync_zoom_example_plot"></div>
+
+    <script src="sync_example.js"></script>
+</body>
+</html>

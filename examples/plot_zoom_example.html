@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Zoomable Plot Chart Example</title>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Dependencies -->
+    <script src="lib/d3.js"></script>
+    <script src="lib/jquery-2.1.1.js"></script>
+    <script src="lib/crossfilter.js"></script>
+
+    <!-- C3 -->
+    <link rel="stylesheet" href="../css/c3.css" />
+    <script src="../js/c3.js"></script>
+    <script src="../js/c3-plot.js"></script>
+    <script src="../js/c3-layers.js"></script>
+
+    <!-- Chart Styles -->
+    <style>
+        .c3.plot {
+            font-family: sans-serif;
+        }
+
+        .c3.plot .layer.line path {
+            stroke-width: 2px;
+        }
+
+        .c3.axis .tick line {
+            stroke: darkgray;
+        }
+        .c3.axis line.grid {
+            stroke-dasharray: 2,2;
+        }
+    </style>
+</head>
+
+<body>
+    <p>This chart demonstrates a plot that is zoomable using the mouse wheel or pinching and panning using mouse or touch dragging.</p>
+    <p>Function: <button id="zoom_sin_button">sine wave</button> <button id="zoom_square_button">square wave</button> <button id="zoom_parabolic_button">parabolic</button></p>
+    <p>Color: <button id="zoom_red_button">red</button> <button id="zoom_green_button">green</button></p>
+    <p>
+        <button id="zoom_bell_button">Add a bell curve!</button>
+        Variance: <select id="zoom_bell_variance_select">
+            <option value="2">2</option>
+            <option value="5">5</option>
+            <option value="10" selected>10</option>
+            <option value="20">20</option>
+        </select>
+    </p>
+
+    <div id="zoom_example_plot" style="height:300px"></div>
+
+
+    <script src="plot_zoom_example.js"></script>
+</body>
+</html>

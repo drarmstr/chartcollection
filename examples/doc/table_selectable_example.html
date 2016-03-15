@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>table_selectable_example.ts</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="flamechart_sunburst_example.html">
+                  flamechart_sunburst_example.ts
+                </a>
+              
+                
+                <a class="source" href="legend_example.html">
+                  legend_example.ts
+                </a>
+              
+                
+                <a class="source" href="pie_example.html">
+                  pie_example.ts
+                </a>
+              
+                
+                <a class="source" href="plot_area_example.html">
+                  plot_area_example.ts
+                </a>
+              
+                
+                <a class="source" href="plot_zoom_example.html">
+                  plot_zoom_example.ts
+                </a>
+              
+                
+                <a class="source" href="scatterplot_example.html">
+                  scatterplot_example.ts
+                </a>
+              
+                
+                <a class="source" href="stack_example.html">
+                  stack_example.ts
+                </a>
+              
+                
+                <a class="source" href="swimlanes_example.html">
+                  swimlanes_example.ts
+                </a>
+              
+                
+                <a class="source" href="sync_example.html">
+                  sync_example.ts
+                </a>
+              
+                
+                <a class="source" href="table_selectable_example.html">
+                  table_selectable_example.ts
+                </a>
+              
+                
+                <a class="source" href="table_sortable_example.html">
+                  table_sortable_example.ts
+                </a>
+              
+                
+                <a class="source" href="timeline_example.html">
+                  timeline_example.ts
+                </a>
+              
+                
+                <a class="source" href="worldbank_example.html">
+                  worldbank_example.ts
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>table_selectable_example.ts</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <p>C3 Table
+<em>A simple data table example with that is selectable.</em></p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Create the datatable
+Create a <code>c3.Table</code> object and set its options.Bind to an <strong>anchor </strong> DOM element using a <em>string selector</em>.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> table = <span class="hljs-keyword">new</span> c3.Table({
+    anchor: <span class="hljs-string">'#table_example'</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Specify the <strong>width </strong> to set the anchor node.Setting the height and width is optional.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    width: <span class="hljs-number">250</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>The raw <strong>data </strong> to visualize.  The data must be provided as an array.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    data: [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Only include data elements that are greater than 0</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    filter: (d) =&gt; d &gt; <span class="hljs-number">0</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Enable the user to <strong>select</strong> rows in this table.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    selectable: <span class="hljs-string">'multi'</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Create an array of <strong>column </strong> objects to describe the table columns.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    columns: [</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>The first column <code>header</code> is labeled “x”.  The <code>cells.text</code> callback describes
+how to generate the text content for the cells based on the data.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        {
+            header: { text: <span class="hljs-string">"x"</span> },
+            cells: {
+                text: (d) =&gt; d,
+                styles: { color: <span class="hljs-string">'darkblue'</span> }
+            },
+            value: (d) =&gt; d,
+            vis: <span class="hljs-string">'bar'</span>,
+            total_value: <span class="hljs-number">5</span>,
+        },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Create a second column that displays the data value squared for each row.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        {
+            header: { html: <span class="hljs-string">"x&lt;sup&gt;2&lt;/sup&gt;"</span> },
+            cells: { text: (d) =&gt; d * d },
+            value: (d) =&gt; d * d,
+        },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Create a third column that displays the negative data value for each row.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        {
+            header: { text: <span class="hljs-string">"-x"</span> },
+            cells: { text: (d) =&gt; -d },
+            value: (d) =&gt; -d,
+        },
+    ],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>Setup <strong>event handler</strong> to do something with the selection.
+This could also have been added imperatively with <code>table.on(&#39;select&#39;, function(selections) { ... });</code></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    handlers: {
+        <span class="hljs-string">'select'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">selections</span>) </span>{
+            (&lt;HTMLElement&gt;<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'#current_selection'</span>)).innerText = selections;
+        }
+    },
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>Render the table!</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>table.render();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <h2 id="set-table-selectability">Set table selectability</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>Change the table selectability mode</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>$(<span class="hljs-string">'input[name=selectable]'</span>).on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">var</span> value = $(<span class="hljs-string">'input[name=selectable]:checked'</span>).val();
+    <span class="hljs-keyword">switch</span> (value) {
+        <span class="hljs-keyword">case</span> <span class="hljs-string">'true'</span>: table.selectable = <span class="hljs-literal">true</span>; <span class="hljs-keyword">break</span>;
+        <span class="hljs-keyword">case</span> <span class="hljs-string">'false'</span>: table.selectable = <span class="hljs-literal">false</span>; <span class="hljs-keyword">break</span>;
+        <span class="hljs-keyword">default</span>: table.selectable = value;
+    }
+    table.render();
+});</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

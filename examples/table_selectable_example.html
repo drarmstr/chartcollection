@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Selectable Table Example</title>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Dependencies -->
+    <script src="lib/d3.js"></script>
+    <script src="lib/jquery-2.1.1.js"></script>
+    <script src="lib/crossfilter.js"></script>
+
+    <!-- C3 -->
+    <link rel="stylesheet" href="../css/c3.css" />
+    <script src="../js/c3.js"></script>
+    <script src="../js/c3-table.js"></script>
+
+    <style>
+        .c3.table {
+            border: 1px solid black;
+            font-family: sans-serif;
+        }
+
+        .c3.table th {
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            padding: 0.25em;
+            border: 1px solid black;
+            border-bottom: 2px solid black;
+            background-color: lightgray;
+        }
+
+        .c3.table tr:nth-child(2n) {
+            background-color: whitesmoke;
+        }
+        .c3.table tr.selected {
+            background-image: linear-gradient(#ffeda0,#f9da4d);
+        }
+        .c3.table tr.deselected:not(:hover) {
+            opacity: 0.4;
+        }
+        .c3.table.selectable tr:hover {
+            background-color: wheat;
+        }
+
+        .c3.table td {
+            text-align: center;
+            border-left: 1px solid black;
+            border-right: 1px solid black;
+            padding: 0.25em;
+        }
+    </style>
+</head>
+
+<body>
+    A selectable table.  Click on the rows to select them.
+    <br /><br />
+    <div id="table_example"></div>
+    <br /><br />
+
+    Selection: <span id="current_selection"></span>
+    <br /><br />
+
+    <form>
+        Selectable:<br />
+        <label><input type="radio" name="selectable" value="multi" checked />Multiple</label><br />
+        <label><input type="radio" name="selectable" value="single" />Single</label><br />
+        <label><input type="radio" name="selectable" value="true" />Single or <kbd>Ctrl</kbd>-click for multiple</label><br />
+        <label><input type="radio" name="selectable" value="false" />Disabled</label>
+    </form>
+
+    <script src="table_selectable_example.js"></script>
+</body>
+</html>
