@@ -13,14 +13,18 @@
         li a {
             font-size: larger;
         }
+        header img {
+            float: left;
+            margin: 0.15em 0.5em 0 0;
+        }
     </style>
 </head>
 
 <body>
     <header>
         <h1>
-            <img src="img/c3.jpg" height=32 width=32 /> Configurable Chart Collection
-            <br/>
+            <img src="img/c3.jpg" height=64 width=64 />
+            Configurable Chart Collection<br />
             <small>Visualization Library</small>
         </h1>
     </header>
@@ -110,11 +114,10 @@
         <section>
             <h1>Usage</h1>
             <p>
-                To use C3, simply include the necessary dependencies, <code>c3.css</code>, <code>c3.js</code>,
+                To use C3, simply include <code>d3.js</code>, <code>c3.js</code>, <code>c3.css</code>,
                 and any desired C3 visualizations.  For example:
                 <blockquote><pre>
 &lt;script src="d3.js"&gt;&lt;/script&gt;
-&lt;script src="jquery-2.1.1.js"&gt;&lt;/script&gt;
 &lt;link rel="stylesheet" href="c3.css"&gt;
 &lt;script src="c3.js"&gt;&lt;/script&gt;
 &lt;script src="c3-table.js"&gt;&lt;/script&gt;
@@ -123,6 +126,15 @@
 &lt;script src="c3-legend.js"&gt;&lt;/script&gt;
 &lt;script src="c3-polar.js"&gt;&lt;/script&gt;
 </pre></blockquote>
+            </p>
+            <p>
+                <a href="http://d3js.org">D3</a> is the only hard dependency for C3.
+                Many thanks to Mike Bostok for creating this wonderful toolbox.
+                Be sure to include the D3 script before including the C3 script.
+            </p>
+            <p>
+                For additional performaance, the <a href="http://square.github.io/crossfilter/">Crossfilter</a>
+                library can also be included before C3 to improve some sorting operations.
             </p>
             <p>
                 C3 is also bundeled with a TypeScript definitions file <code>c3.d.ts</code> for those who
@@ -181,23 +193,21 @@
         </section>
 
         <section>
-            <h1>Dependencies</h1>
-            <p>
-                There are some dependencies that the client needs to include before running C3.
-            </p>
-            <ul>
-                <li><a href="http://d3js.org">D3</a></li>
-                <li><a href="http://jquery.com">JQuery</a> - <i>It is planned to remove this dependency.</i></li>
-                <li><a href="http://square.github.io/crossfilter/">Crossfilter</a> - <i>Optional for improved sorting performance</i></li>
-            </ul>
-        </section>
-
-        <section>
             <h1>License</h1>
             <p>
                 C3 has been released under the <a href="LICENSE.txt">BSD 3-Clause</a> open source license.
             </p>
         </section>
     </main>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-43632406-4', 'auto');
+        ga('require', 'linkid');
+        ga('send', 'pageview');
+    </script>
 </body>
 </html>

@@ -109,8 +109,8 @@ function download_data() {
             });
         }),
     ]).then(function () {
-        $('#waiting').remove();
-        $('main').css('display', '');
+        d3.selectAll('#waiting').remove();
+        d3.selectAll('main').style('display', '');
         for (var _i = 0, _a = gdp_data.filter(function (record) { return !countries[record.country_code]; }); _i < _a.length; _i++) {
             var record = _a[_i];
             throw Error("Missing country: " + record.country_code + " - " + record.country_name);
@@ -121,7 +121,6 @@ function download_data() {
 // ## Create and Render the Charts
 // This function will create the various charts and tables for this example.
 function render() {
-    var _this = this;
     // ### Prepare the data
     // Output the data set to the console if you want to take a look.
     console.log("Data:", gdp_data);
@@ -286,8 +285,8 @@ function render() {
                         this.data = [year];
                         year = Math.round(year);
                         year_dim.filter(year);
-                        $('#sync_example_year').text(year);
-                        $('#total_population').text(d3.format(',')(total_population.value()));
+                        d3.selectAll('#sync_example_year').text(year);
+                        d3.selectAll('#total_population').text(d3.format(',')(total_population.value()));
                         redraw();
                     },
                     // Filter the data based on the initial year selection
@@ -484,7 +483,7 @@ function render() {
                     // div in the right column to display information about this particular country.
                     events: {
                         mouseenter: function (d) {
-                            $(_this).css('stroke-width', 5);
+                            d3.select(this).style('stroke-width', 5);
                             d3.select('#hover_country_info').html("\
                                 <b>Country:</b> " + countries[d.key].name + "<br/>\
                                <b>Population:</b> " + d.value.population + "<br/>\
@@ -494,7 +493,7 @@ function render() {
                             restyle();
                         },
                         mouseleave: function () {
-                            $(_this).css('stroke-width', 1);
+                            d3.select(this).style('stroke-width', 1);
                             d3.select('#hover_country_info').html("<i>Hover over dot to view country info.</i>");
                             hover_country = null;
                             restyle();

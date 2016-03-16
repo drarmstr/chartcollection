@@ -402,8 +402,7 @@ class c3.Plot.Zoomable extends c3.Plot
             extent[0] = domain[0]
             extent[1] = domain[1]
         
-        # Calculate the scale and translate factors.
-        # We can't use d3.event.scale/translate here becuase they aren't defined for the 'zoomend' event
+        # Calculate the scale and translate factors based on our tweaked extent.
         scale = (domain_width) / (extent[1]-extent[0])
         translate = (domain[0]-extent[0]) * scale * (@content.width/domain_width)
         

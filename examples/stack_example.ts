@@ -343,8 +343,9 @@ var stacked_bar_chart = new c3.Plot<DeathByAgeData>({
     ],
 }).render();
 
-$('#stack_example_plots').append(<HTMLElement>stacked_bar_chart.anchor);
-$(stacked_bar_chart.anchor).width('100%');
+// Attach chart to the DOM
+document.querySelector('#stack_example_plots').appendChild(<HTMLElement>stacked_bar_chart.anchor);
+(<HTMLElement>stacked_bar_chart.anchor).style.width = '100%';
 stacked_bar_chart.resize();
 
 

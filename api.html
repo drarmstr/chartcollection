@@ -52,10 +52,6 @@ var my_chart = <b>new c3.Plot</b>({
     ...  // Options to specify what the new chart should be
 });
 my_chart.<b>render()</b>;  // Render your new chart!
-
-window.onresize = function() {
-    my_chart.<b>resize()</b>;  // Resize your chart when the window resizes
-}
 </pre>
                 </blockquote>
             </p>
@@ -131,6 +127,14 @@ window.onresize = function() {
                         changes in the data set or other changed options.  Use the other methods below
                         for those types of changes.
                     </p>
+                    <blockquote>
+                        <pre>
+// Resize your chart when the window resizes
+window.onresize = function() {
+    my_chart.<b>resize()</b>;
+}
+</pre>
+                    </blockquote>
                 </dd>
                 <dt><code>redraw([origin])</code></dt>
                 <dd>
@@ -148,11 +152,19 @@ window.onresize = function() {
                         For performance reasons, <code>redraw()</code> may not update the styles of
                         existing elements.  Use <code>restyle()</code> for this.
                     </p>
+                    <blockquote>
+                        <pre>
+student_data.push({ name: "Bella", gender: "female", age: 27, grade: 3.4 });
+my_chart.<b>redraw()</b>;
+</pre>
+                    </blockquote>
                 </dd>
                 <dt><code>restyle()</code></dt>
                 <dd>
                     Update the CSS styles and classes of all data elements to reflect what is specified in the
-                    <a href="#selection_options">C3 selection options</a>.
+                    <a href="#selection_options">C3 Selection Options</a>.
+                    Use this either if you change the selection options or you change the data that might
+                    affect their dynamic styling based on the selection options.
                 </dd>
             </dl>
             <p>
@@ -615,6 +627,7 @@ var student_data = [
     { name: "Tommy", gender: "male", age: 9, grade: 1.7 },
 ];
 
+
 var my_chart = <b>new c3.Plot</b>({
     <b>anchor</b>: '#scatter_plot_example',
     <b>height</b>: 300,
@@ -670,21 +683,35 @@ var my_chart = <b>new c3.Plot</b>({
     ],
 });
 
+
 // Render your new chart!
 my_chart.<b>render()</b>;
+
 
 // Resize your chart when the window resizes
 window.onresize = function() {
     my_chart.<b>resize()</b>;
 }
 
+
 // Add a new student and redraw
-my_data.push({ name: "Bella", gender: "female", age: 27, grade: 3.4 });
+student_data.push({ name: "Bella", gender: "female", age: 27, grade: 3.4 });
 my_chart.<b>redraw()</b>;
 </pre></blockquote>
             </p>
+            <hr />
             <p>View other <a href="examples/">C3 Examples</a>.</p>
         </section>
     </main>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-43632406-4', 'auto');
+        ga('require', 'linkid');
+        ga('send', 'pageview');
+    </script>
 </body>
 </html>

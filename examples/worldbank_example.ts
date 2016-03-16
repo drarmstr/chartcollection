@@ -149,8 +149,8 @@ function download_data() {
     // After all the CSV data has been loaded and processed, remove the wait notification and check
     // the dataset if any countries referenced by the World Bank data are missing from the countries table.
     ]).then(function () {
-        $('#waiting').remove();
-        $('main').css('display', '');
+        d3.selectAll('#waiting').remove();
+        d3.selectAll('main').style('display', '');
         for (let record of gdp_data.filter((record) => !countries[record.country_code]))
             throw Error("Missing country: " + record.country_code + " - " + record.country_name);
     });
@@ -340,8 +340,8 @@ function render() {
                         this.data = [year];
                         year = Math.round(year);
                         year_dim.filter(year);
-                        $('#sync_example_year').text(year);
-                        $('#total_population').text(d3.format(',')(total_population.value()));
+                        d3.selectAll('#sync_example_year').text(year);
+                        d3.selectAll('#total_population').text(d3.format(',')(total_population.value()));
                         redraw();
                     },
                     // Filter the data based on the initial year selection
@@ -578,8 +578,8 @@ function render() {
                     // and restyles all the charts to reflect this.  It also populates an informational
                     // div in the right column to display information about this particular country.
                     events: {
-                        mouseenter: (d) => {
-                            $(this).css('stroke-width', 5);
+                        mouseenter: function(d) {
+                            d3.select(this).style('stroke-width', 5);
                             d3.select('#hover_country_info').html("\
                                 <b>Country:</b> "+ countries[d.key].name + "<br/>\
                                <b>Population:</b> "+ d.value.population + "<br/>\
@@ -588,8 +588,8 @@ function render() {
                             hover_country = countries[d.key];
                             restyle();
                         },
-                        mouseleave: () => {
-                            $(this).css('stroke-width', 1);
+                        mouseleave: function() {
+                            d3.select(this).style('stroke-width', 1);
                             d3.select('#hover_country_info').html("<i>Hover over dot to view country info.</i>");
                             hover_country = null;
                             restyle();

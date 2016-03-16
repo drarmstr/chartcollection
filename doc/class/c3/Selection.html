@@ -361,10 +361,6 @@ properties, which will then be used as appropriate when redraw() or restyle() is
       <br>
     </p>
     <div class='docstring'>
-  <div class='note todo'>
-    <strong>TODO:</strong>
-    Remove JQuery dependency.  If prepend is used then we lose D3&#39;s automatic SVG namespacing of elements, need to do this manually 
-  </div>
   <p>Create a child node for each node in the parent&#39;s selection with a 1:1 mapping to the same data.
 For example, if the parent selection had a set of svg:g nodes, then <em>inheriting</em> from that
 with a <code>circle</code> query would create an svg:circle node nested in each svg:g node.</p>
@@ -400,7 +396,7 @@ with a <code>circle</code> query would create an svg:circle node nested in each 
         )
       </span>
       &mdash;
-      <span class='desc'>If true, then prepend child nodes instead of appending them. </span>
+      <span class='desc'>If true, then prepend child nodes instead of appending them. Note that this will not prepend in front of any text content, only child nodes. </span>
     </li>
   </ul>
 </div>
@@ -668,7 +664,7 @@ and callbacks set in attrs.</p>
 </div>
     </div>
     <div id='footer'>
-  March 01, 16 10:15:34 by
+  March 11, 16 17:00:15 by
   <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
     Codo
   </a>

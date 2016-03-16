@@ -480,8 +480,8 @@ the dataset if any countries referenced by the World Bank data are missing from 
             </div>
             
             <div class="content"><div class='highlight'><pre>    ]).then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-        $(<span class="hljs-string">'#waiting'</span>).remove();
-        $(<span class="hljs-string">'main'</span>).css(<span class="hljs-string">'display'</span>, <span class="hljs-string">''</span>);
+        d3.selectAll(<span class="hljs-string">'#waiting'</span>).remove();
+        d3.selectAll(<span class="hljs-string">'main'</span>).style(<span class="hljs-string">'display'</span>, <span class="hljs-string">''</span>);
         <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> record of gdp_data.filter((record) =&gt; !countries[record.country_code]))
             <span class="hljs-keyword">throw</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Missing country: "</span> + record.country_code + <span class="hljs-string">" - "</span> + record.country_name);
     });
@@ -987,8 +987,8 @@ all charts to reflect the updated dataset filtering.</p>
                         <span class="hljs-keyword">this</span>.data = [year];
                         year = <span class="hljs-built_in">Math</span>.round(year);
                         year_dim.filter(year);
-                        $(<span class="hljs-string">'#sync_example_year'</span>).text(year);
-                        $(<span class="hljs-string">'#total_population'</span>).text(d3.format(<span class="hljs-string">','</span>)(total_population.value()));
+                        d3.selectAll(<span class="hljs-string">'#sync_example_year'</span>).text(year);
+                        d3.selectAll(<span class="hljs-string">'#total_population'</span>).text(d3.format(<span class="hljs-string">','</span>)(total_population.value()));
                         redraw();
                     },</pre></div></div>
             
@@ -1602,8 +1602,8 @@ div in the right column to display information about this particular country.</p
             </div>
             
             <div class="content"><div class='highlight'><pre>                    events: {
-                        mouseenter: (d) =&gt; {
-                            $(this).css('stroke-width', 5);
+                        mouseenter: function(d) {
+                            d3.select(this).style('stroke-width', 5);
                             d3.select('#hover_country_info').html("\
                                 &lt;b&gt;Country:&lt;/b&gt; "+ countries[d.key].name + "&lt;br/&gt;\
                                &lt;b&gt;Population:&lt;/b&gt; "+ d.value.population + "&lt;br/&gt;\
@@ -1612,8 +1612,8 @@ div in the right column to display information about this particular country.</p
                             hover_country = countries[d.key];
                             restyle();
                         },
-                        mouseleave: () =&gt; {
-                            $(this).css('stroke-width', 1);
+                        mouseleave: function() {
+                            d3.select(this).style('stroke-width', 1);
                             d3.select('#hover_country_info').html("&lt;i&gt;Hover over dot to view country info.&lt;/i&gt;");
                             hover_country = null;
                             restyle();

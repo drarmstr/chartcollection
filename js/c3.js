@@ -26,10 +26,6 @@
     throw Error("D3 library is required for C3");
   }
 
-  if (typeof jQuery === "undefined" || jQuery === null) {
-    throw Error("JQuery library is required for C3");
-  }
-
   c3.util = (function() {
     function util() {}
 
@@ -293,7 +289,7 @@
     };
 
     Selection.prototype.inherit = function(query, create, prepend) {
-      var child, node, nodes, _i, _j, _len, _len1, _ref;
+      var child;
       if (create == null) {
         create = true;
       }
@@ -301,30 +297,14 @@
         prepend = false;
       }
       child = new c3.Selection(null, query);
-      if (create && prepend) {
-        _ref = this["new"];
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          nodes = _ref[_i];
-          for (_j = 0, _len1 = nodes.length; _j < _len1; _j++) {
-            node = nodes[_j];
-            if (node) {
-              $(node).prepend("<" + child.tag + " class='" + child._query_class + "'></" + child.tag + ">");
-            }
-          }
+      if (create) {
+        child["new"] = this["new"].insert(child.tag, (prepend ? ':first-child' : null));
+        if (child._query_class != null) {
+          child["new"].classed(child._query_class, true);
         }
-        child["new"] = this["new"].select(query);
-        child.all = this.all.select(query);
-        child.old = this.old.select(query);
-      } else {
-        if (create) {
-          child["new"] = this["new"].append(child.tag);
-          if (child._query_class != null) {
-            child["new"].classed(child._query_class, true);
-          }
-        }
-        child.all = this.all.select(query);
-        child.old = this.old.select(query);
       }
+      child.all = this.all.select(query);
+      child.old = this.old.select(query);
       return child;
     };
 

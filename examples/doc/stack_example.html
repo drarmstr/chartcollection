@@ -826,11 +826,7 @@ and even dynamically updated followed with a call to <code>redraw()</code>.</p>
             label: <span class="hljs-string">"Age Group"</span>,
         }),
     ],
-}).render();
-
-$(<span class="hljs-string">'#stack_example_plots'</span>).append(&lt;HTMLElement&gt;stacked_bar_chart.anchor);
-$(stacked_bar_chart.anchor).width(<span class="hljs-string">'100%'</span>);
-stacked_bar_chart.resize();</pre></div></div>
+}).render();</pre></div></div>
             
         </li>
         
@@ -841,9 +837,13 @@ stacked_bar_chart.resize();</pre></div></div>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-34">&#182;</a>
               </div>
-              <h2 id="resize-charts">Resize Charts</h2>
+              <p>Attach chart to the DOM</p>
 
             </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'#stack_example_plots'</span>).appendChild(&lt;HTMLElement&gt;stacked_bar_chart.anchor);
+(&lt;HTMLElement&gt;stacked_bar_chart.anchor).style.width = <span class="hljs-string">'100%'</span>;
+stacked_bar_chart.resize();</pre></div></div>
             
         </li>
         
@@ -853,6 +853,19 @@ stacked_bar_chart.resize();</pre></div></div>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-35">&#182;</a>
+              </div>
+              <h2 id="resize-charts">Resize Charts</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-36">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-36">&#182;</a>
               </div>
               <p>Resize the charts if the window resizes</p>
 
@@ -867,11 +880,11 @@ stacked_bar_chart.resize();</pre></div></div>
         </li>
         
         
-        <li id="section-36">
+        <li id="section-37">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-36">&#182;</a>
+                <a class="pilcrow" href="#section-37">&#182;</a>
               </div>
               <h2 id="load-the-tsv-data">Load the TSV data</h2>
 
@@ -880,11 +893,11 @@ stacked_bar_chart.resize();</pre></div></div>
         </li>
         
         
-        <li id="section-37">
+        <li id="section-38">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-37">&#182;</a>
+                <a class="pilcrow" href="#section-38">&#182;</a>
               </div>
               <p>Use D3 to load the <strong>tsv</strong> data for the students using an AJAX request.
 The <code>row</code> callback is used to determine how to parse the rows based on the TSV data;
@@ -906,11 +919,11 @@ rendering function with the loaded data.</p>
         </li>
         
         
-        <li id="section-38">
+        <li id="section-39">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-38">&#182;</a>
+                <a class="pilcrow" href="#section-39">&#182;</a>
               </div>
               <p>Filter invalid rows from the CDC’s tsv file.</p>
 
@@ -921,11 +934,11 @@ rendering function with the loaded data.</p>
         </li>
         
         
-        <li id="section-39">
+        <li id="section-40">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-39">&#182;</a>
+                <a class="pilcrow" href="#section-40">&#182;</a>
               </div>
               <p>Bind <strong>data</strong> to the charts and render them.</p>
 

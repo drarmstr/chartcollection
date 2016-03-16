@@ -2,6 +2,7 @@
 // _This example covers a scatter plot using different C3 concepts as discussed in the
 // API Overview._
 var student_id = 0;
+// Create **student_data** _array_.
 var student_data = [
     { name: "Joe", id: ++student_id, gender: "male", age: 16, grade: 3.2 },
     { name: "Lisa", id: ++student_id, gender: "female", age: 18, grade: 2.3 },
@@ -9,10 +10,6 @@ var student_data = [
     { name: "Mandy", id: ++student_id, gender: "female", age: 32, grade: 3.8 },
     { name: "Tommy", id: ++student_id, gender: "male", age: 9, grade: 1.7 },
 ];
-// Create a **quantize** scale to translate from numeric to letter grades.
-var grade_scale = d3.scale.quantize()
-    .domain([0, 4])
-    .range(['F', 'D', 'C', 'B', 'A']);
 // ## Scatter Plot
 // Create the **scatter plot** and attach to the DOM.
 var my_chart = new c3.Plot({
@@ -38,7 +35,10 @@ var my_chart = new c3.Plot({
             grid: true,
             label: "Grade",
             tick_values: [0, 1, 2, 3, 4],
-            tick_label: grade_scale,
+            // Create a **quantize scale** to translate from numeric to letter grades.
+            tick_label: d3.scale.quantize()
+                .domain([0, 4])
+                .range(['F', 'D', 'C', 'B', 'A']),
         }),
     ],
     // ### Layers

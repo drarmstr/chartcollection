@@ -1,11 +1,9 @@
-﻿# c3 Visualization Library
+﻿# C3 Visualization Library
 
-# @note **Please refer to {c3.base} for an overview of the c3 visualization interface.**
+# @note **Please refer to {c3.Base} for an overview of the c3 visualization interface.**
 # ## Dependencies: 
 # * **D3**
-# * **JQuery** - _TODO: Remove this._
 # * **Crossfilter** - Optional to improve sorting performance
-# @todo Remove JQuery dependency
 class c3
     @version: "0.1"
 
@@ -23,7 +21,6 @@ this.c3 = c3
 
 # Check for dependencies
 if not d3? then throw Error "D3 library is required for C3"
-if not jQuery? then throw Error "JQuery library is required for C3"
 
 
 ###################################################################
@@ -333,25 +330,14 @@ class c3.Selection
     # @param query [String] Node type to create as nested nodes in the current selection
     # @param create [Boolean] Create missing child nodes
     # @param prepend [Boolean] If true, then prepend child nodes instead of appending them.
-    # @todo Remove JQuery dependency.  If prepend is used then we lose D3's automatic SVG namespacing of elements, need to do this manually
+    #   Note that this will not prepend in front of any text content, only child nodes.
     inherit: (query, create=true, prepend=false)=>
         child = new c3.Selection null, query
-        if create and prepend
-            # Instead of relying on D3's insert(...,':first-child') we will used JQuery's prepend().
-            # This is because D3 doesn't insert before text content of a node, only child nodes,
-            # which affected legend items.
-            for nodes in @new
-                for node in nodes when node
-                    $(node).prepend "<#{child.tag} class='#{child._query_class}'></#{child.tag}>"
-            child.new = @new.select query
-            child.all = @all.select query
-            child.old = @old.select query
-        else
-            if create
-                child.new = @new.append child.tag
-                if child._query_class? then child.new.classed child._query_class, true
-            child.all = @all.select query
-            child.old = @old.select query
+        if create
+            child.new = @new.insert child.tag, (if prepend then ':first-child' else null)
+            if child._query_class? then child.new.classed child._query_class, true
+        child.all = @all.select query
+        child.old = @old.select query
         return child
     
     # Create a single DOM node based on the passed in data.  Ensure that only one node will be created
