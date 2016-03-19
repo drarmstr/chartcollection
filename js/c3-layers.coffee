@@ -1016,14 +1016,19 @@ class c3.Plot.Layer.Swimlane.Segment extends c3.Plot.Layer.Swimlane
     # IE10/11 doesn't support vector-effects: non-scaling-stroke, so avoid using scaled SVG.
     # This is a performance hit, because then we have to adjust the position of all rects for each redraw
     # TODO: Investigate if they added support for this in Edge.
-    scaled = !window.navigator.userAgent.match(/MSIE|Trident/) # MSIE==IE10, Trident==IE11, Edge==Edge
+    #scaled = !window.navigator.userAgent.match(/MSIE|Trident/) # MSIE==IE10, Trident==IE11, Edge==Edge
+    # [3/18/2016] Disable the SVG scaled layer optimization completely for now.
+    # If there are very large domains (e.g. a billion) then there is a floating-point precision problem
+    # relying on SVG transformations to do the scaling/translation.
+    # This doesn't seem to be a problem if we do the scaling ourselves in JavaScript.
+    scaled = false
     
     _init: =>
         super
         @g.classed 'segment', true # Manually do this so inherited types also have this class
         if scaled then @scaled_g = @g.append('g').attr('class','scaled')
         @rects_group = c3.select((@scaled_g ? @g),'g.segments').singleton()
-        if @label_options? then @labels = c3.select(@g,'g.labels').singleton().select('svg')
+        if @label_options? then @labels_clip = c3.select(@g,'g.labels').singleton().select('svg')
     
     _hover_datum: (x, swimlane)=>
         right = @h.invert @h(x)+1 # Get the pixel width
@@ -1060,29 +1065,29 @@ class c3.Plot.Layer.Swimlane.Segment extends c3.Plot.Layer.Swimlane
         # Position the rects
         h = if @scaled_g? then (@chart.orig_h ? @h) else @h
         zero_pos = h(0)
+        (if origin is 'resize' then @rects.all else @rects.new).attr 'height', @dy
         (if !scaled or !@key? or origin=='resize' or (origin=='redraw' and this instanceof c3.Plot.Layer.Swimlane.Flamechart) 
         then @rects.all else @rects.new).attr
             x: (d)=> h @x(d)
             width: (d)=> (h @dx(d)) - zero_pos
             y: if not @y? then 0 else (d)=> @_v @y(d)
-            height: @dy
         
         # Bind and render lables here (not in _update() since the set is dynamic based on zooming and resizing)
         if @label_options?
             # Create labels in a nested SVG node so we can crop them based on the segment size.
             zero_pos = @h(0)
             current_labels = (datum for datum in data when (@h @dx datum)-zero_pos>50)
-            @labels.bind(current_labels, @key)
-            @labels_text = @labels.inherit('text').options(@label_options).update()
+            @labels_clip.bind(current_labels, @key)
+            @labels = @labels_clip.inherit('text').options(@label_options).update()
 
-            (if origin is 'resize' then @labels.all else @labels.new).attr 'height', @dy
-            @labels.position
+            (if origin is 'resize' then @labels_clip.all else @labels_clip.new).attr 'height', @dy
+            @labels_clip.position
                 x: (d)=> @h @x(d)
                 y: if not @y? then 0 else (d,i)=> @_v @y(d,i)
                 width: (d)=> (@h @dx(d)) - zero_pos
             self = this
-            (if origin is 'resize' then @labels_text.all else @labels_text.new).attr 'y', self.dy/2
-            @labels_text.position
+            (if origin is 'resize' then @labels.all else @labels.new).attr 'y', self.dy/2
+            @labels.position
                 x: (d)->
                     x = self.x(d)
                     dx = self.dx(d)
@@ -1103,12 +1108,12 @@ class c3.Plot.Layer.Swimlane.Segment extends c3.Plot.Layer.Swimlane
         else c3.select(@g,'g.labels').all.remove()
         
         # Style any new elements we added by resizing larger that allowed new relevant elements to be drawn
-        if origin is 'resize' and not @rects.new.empty() then @_style true
+        if origin is 'resize' and (not @rects.new.empty() or not @labels.new.empty()) then @_style true
     
     _style: (style_new)=>
         super
         @rects.style(style_new)
-        @labels_text?.style(style_new)
+        @labels?.style(style_new)
 
 
 ###################################################################

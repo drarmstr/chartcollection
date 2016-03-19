@@ -177,7 +177,6 @@
     <TypeScriptCompile Include="examples\timeline_example.ts" />
     <TypeScriptCompile Include="examples\typings\crossfilter\crossfilter.d.ts" />
     <TypeScriptCompile Include="examples\typings\d3\d3.d.ts" />
-    <TypeScriptCompile Include="examples\typings\d3\plugins\d3.superformula.d.ts" />
     <TypeScriptCompile Include="examples\typings\es6-promise\es6-promise.d.ts" />
     <TypeScriptCompile Include="examples\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="examples\worldbank_example.ts" />

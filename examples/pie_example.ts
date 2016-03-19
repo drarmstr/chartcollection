@@ -301,11 +301,13 @@ $('#enable_sorting').on('change', function () {
 
 // Limit the number of elements that will be drawn.
 // If there are too many elements, then the ones with the smallest value won't be drawn.
-$('#limit_segment_count').on('input', function () {
-    (<c3.Polar.Layer.Pie<any>>pie_chart.layers[0]).limit_elements = +$(this).val();
-    pie_chart.redraw();
-    (<c3.Polar.Layer.Pie<any>>half_moon_chart.layers[0]).limit_elements = +$(this).val();
-    half_moon_chart.redraw();
-    (<c3.Polar.Layer.Arc<any>>polar_segment_chart.layers[0]).limit_elements = +$(this).val();
-    polar_segment_chart.redraw();
-});
+for (let event_name of ['input', 'change']) { // 'input' event is not supported in IE
+    $('#limit_segment_count').on(event_name, function () {
+        (<c3.Polar.Layer.Pie<any>>pie_chart.layers[0]).limit_elements = +$(this).val();
+        pie_chart.redraw();
+        (<c3.Polar.Layer.Pie<any>>half_moon_chart.layers[0]).limit_elements = +$(this).val();
+        half_moon_chart.redraw();
+        (<c3.Polar.Layer.Arc<any>>polar_segment_chart.layers[0]).limit_elements = +$(this).val();
+        polar_segment_chart.redraw();
+    });
+}

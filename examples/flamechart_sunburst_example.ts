@@ -151,26 +151,27 @@ window.onresize = function () {
 }
 
 // ## Modify Chart Options
+for (let event_name of ['input', 'change']) { // 'input' event is not supported in IE
+    // Decimate the number of elements drawn in the Call Trace
+    $('#limit_call_trace_elements').on(event_name, function () {
+        (<c3.Plot.Layer.Swimlane.Flamechart<any>>flamechart_calltrace.layers[0]).limit_elements = +$(this).val();
+        flamechart_calltrace.redraw();
+    });
 
-// Decimate the number of elements drawn in the Call Trace
-$('#limit_call_trace_elements').on('input', function () {
-    (<c3.Plot.Layer.Swimlane.Flamechart<any>>flamechart_calltrace.layers[0]).limit_elements = +$(this).val();
-    flamechart_calltrace.redraw();
-});
-
-// Decimate the number of elements drawn in the Call Tree
-$('#limit_call_tree_elements').on('input', function () {
-    sunburst_layer.arc_options.animate = false;
-    sunburst_layer.limit_elements = +$(this).val();
-    sunburst_calltree.redraw();
-    sunburst_layer.arc_options.animate = true;
-});
-$('#limit_call_tree_angle').on('input', function () {
-    sunburst_layer.arc_options.animate = false;
-    sunburst_layer.limit_angle_percentage = +$(this).val();
-    sunburst_calltree.redraw();
-    sunburst_layer.arc_options.animate = true;
-});
+    // Decimate the number of elements drawn in the Call Tree
+    $('#limit_call_tree_elements').on(event_name, function () {
+        sunburst_layer.arc_options.animate = false;
+        sunburst_layer.limit_elements = +$(this).val();
+        sunburst_calltree.redraw();
+        sunburst_layer.arc_options.animate = true;
+    });
+    $('#limit_call_tree_angle').on(event_name, function () {
+        sunburst_layer.arc_options.animate = false;
+        sunburst_layer.limit_angle_percentage = +$(this).val();
+        sunburst_calltree.redraw();
+        sunburst_layer.arc_options.animate = true;
+    });
+}
 
 // Test organizing the sample data by either providing the children or the parent of each node.
 $('input[name=hierarchy]').on('change', function () {

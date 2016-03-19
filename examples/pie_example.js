@@ -250,12 +250,15 @@ $('#enable_sorting').on('change', function () {
 });
 // Limit the number of elements that will be drawn.
 // If there are too many elements, then the ones with the smallest value won't be drawn.
-$('#limit_segment_count').on('input', function () {
-    pie_chart.layers[0].limit_elements = +$(this).val();
-    pie_chart.redraw();
-    half_moon_chart.layers[0].limit_elements = +$(this).val();
-    half_moon_chart.redraw();
-    polar_segment_chart.layers[0].limit_elements = +$(this).val();
-    polar_segment_chart.redraw();
-});
+for (var _i = 0, _a = ['input', 'change']; _i < _a.length; _i++) {
+    var event_name = _a[_i];
+    $('#limit_segment_count').on(event_name, function () {
+        pie_chart.layers[0].limit_elements = +$(this).val();
+        pie_chart.redraw();
+        half_moon_chart.layers[0].limit_elements = +$(this).val();
+        half_moon_chart.redraw();
+        polar_segment_chart.layers[0].limit_elements = +$(this).val();
+        polar_segment_chart.redraw();
+    });
+}
 //# sourceMappingURL=pie_example.js.map

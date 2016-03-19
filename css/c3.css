@@ -104,6 +104,9 @@
 .c3.plot .layer.bar {
   shape-rendering: crispEdges;
 }
+.c3.plot .layer.segment {
+  shape-rendering: crispEdges;
+}
 .c3.plot .layer.segment rect {
   vector-effect: non-scaling-stroke;
 }

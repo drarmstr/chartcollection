@@ -1420,7 +1420,7 @@
 
     Segment.prototype.label_options = void 0;
 
-    scaled = !window.navigator.userAgent.match(/MSIE|Trident/);
+    scaled = false;
 
     Segment.prototype._init = function() {
       var _ref;
@@ -1431,7 +1431,7 @@
       }
       this.rects_group = c3.select((_ref = this.scaled_g) != null ? _ref : this.g, 'g.segments').singleton();
       if (this.label_options != null) {
-        return this.labels = c3.select(this.g, 'g.labels').singleton().select('svg');
+        return this.labels_clip = c3.select(this.g, 'g.labels').singleton().select('svg');
       }
     };
 
@@ -1502,6 +1502,7 @@
       this.rects = this.rects_group.select('rect.segment').options(this.rect_options).bind(data, this.key).update();
       h = this.scaled_g != null ? (_ref2 = this.chart.orig_h) != null ? _ref2 : this.h : this.h;
       zero_pos = h(0);
+      (origin === 'resize' ? this.rects.all : this.rects["new"]).attr('height', this.dy);
       (!scaled || (this.key == null) || origin === 'resize' || (origin === 'redraw' && this instanceof c3.Plot.Layer.Swimlane.Flamechart) ? this.rects.all : this.rects["new"]).attr({
         x: (function(_this) {
           return function(d) {
@@ -1517,8 +1518,7 @@
           return function(d) {
             return _this._v(_this.y(d));
           };
-        })(this),
-        height: this.dy
+        })(this)
       });
       if (this.label_options != null) {
         zero_pos = this.h(0);
@@ -1533,10 +1533,10 @@
           }
           return _results;
         }).call(this);
-        this.labels.bind(current_labels, this.key);
-        this.labels_text = this.labels.inherit('text').options(this.label_options).update();
-        (origin === 'resize' ? this.labels.all : this.labels["new"]).attr('height', this.dy);
-        this.labels.position({
+        this.labels_clip.bind(current_labels, this.key);
+        this.labels = this.labels_clip.inherit('text').options(this.label_options).update();
+        (origin === 'resize' ? this.labels_clip.all : this.labels_clip["new"]).attr('height', this.dy);
+        this.labels_clip.position({
           x: (function(_this) {
             return function(d) {
               return _this.h(_this.x(d));
@@ -1554,8 +1554,8 @@
           })(this)
         });
         self = this;
-        (origin === 'resize' ? this.labels_text.all : this.labels_text["new"]).attr('y', self.dy / 2);
-        this.labels_text.position({
+        (origin === 'resize' ? this.labels.all : this.labels["new"]).attr('y', self.dy / 2);
+        this.labels.position({
           x: function(d) {
             var left, right;
             x = self.x(d);
@@ -1568,7 +1568,7 @@
       } else {
         c3.select(this.g, 'g.labels').all.remove();
       }
-      if (origin === 'resize' && !this.rects["new"].empty()) {
+      if (origin === 'resize' && (!this.rects["new"].empty() || !this.labels["new"].empty())) {
         return this._style(true);
       }
     };
@@ -1577,7 +1577,7 @@
       var _ref;
       Segment.__super__._style.apply(this, arguments);
       this.rects.style(style_new);
-      return (_ref = this.labels_text) != null ? _ref.style(style_new) : void 0;
+      return (_ref = this.labels) != null ? _ref.style(style_new) : void 0;
     };
 
     return Segment;

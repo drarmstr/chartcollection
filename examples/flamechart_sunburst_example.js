@@ -102,24 +102,27 @@ window.onresize = function () {
     sunburst_calltree.resize();
 };
 // ## Modify Chart Options
-// Decimate the number of elements drawn in the Call Trace
-$('#limit_call_trace_elements').on('input', function () {
-    flamechart_calltrace.layers[0].limit_elements = +$(this).val();
-    flamechart_calltrace.redraw();
-});
-// Decimate the number of elements drawn in the Call Tree
-$('#limit_call_tree_elements').on('input', function () {
-    sunburst_layer.arc_options.animate = false;
-    sunburst_layer.limit_elements = +$(this).val();
-    sunburst_calltree.redraw();
-    sunburst_layer.arc_options.animate = true;
-});
-$('#limit_call_tree_angle').on('input', function () {
-    sunburst_layer.arc_options.animate = false;
-    sunburst_layer.limit_angle_percentage = +$(this).val();
-    sunburst_calltree.redraw();
-    sunburst_layer.arc_options.animate = true;
-});
+for (var _i = 0, _a = ['input', 'change']; _i < _a.length; _i++) {
+    var event_name = _a[_i];
+    // Decimate the number of elements drawn in the Call Trace
+    $('#limit_call_trace_elements').on(event_name, function () {
+        flamechart_calltrace.layers[0].limit_elements = +$(this).val();
+        flamechart_calltrace.redraw();
+    });
+    // Decimate the number of elements drawn in the Call Tree
+    $('#limit_call_tree_elements').on(event_name, function () {
+        sunburst_layer.arc_options.animate = false;
+        sunburst_layer.limit_elements = +$(this).val();
+        sunburst_calltree.redraw();
+        sunburst_layer.arc_options.animate = true;
+    });
+    $('#limit_call_tree_angle').on(event_name, function () {
+        sunburst_layer.arc_options.animate = false;
+        sunburst_layer.limit_angle_percentage = +$(this).val();
+        sunburst_calltree.redraw();
+        sunburst_layer.arc_options.animate = true;
+    });
+}
 // Test organizing the sample data by either providing the children or the parent of each node.
 $('input[name=hierarchy]').on('change', function () {
     if ($('input[name=hierarchy]:checked').val() === 'parents') {
