@@ -372,6 +372,11 @@ class c3.Selection
         else @old.remove()
         return this
 
+    # Remove this selection
+    remove: =>
+        if @_animate then @all.duration(@opt.duration).style('opacity',0).remove()
+        else @all.remove()
+
     # Set persistent user-configurable options.  A reference to these options are stored in the 
     # selection and are used for future manipulation in {c3.Selection#update `update()`}
     # and {c3.Selection#style `style()`}.

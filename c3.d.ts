@@ -138,9 +138,11 @@ declare module c3 {
         sortable?: boolean;
         sort_column?: c3.Table.Column<D>;
         limit_rows?: number;
-        table_options?: c3.Selection.Options<D>;
-        table_header_options?: c3.Selection.Options<D>;
-        header_options?: c3.Selection.Options<D>;
+        pagination?: boolean | number;
+        table_options?: c3.Selection.Options<void>;
+        table_header_options?: c3.Selection.Options<void>;
+        header_options?: c3.Selection.Options<Table.Column<D>>;
+        footer_options?: c3.Selection.Options<void>;
         table_body_options?: c3.Selection.Options<D>;
         row_options?: c3.Selection.Options<D>;
         cell_options?: c3.Selection.Options<D>;

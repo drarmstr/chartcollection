@@ -28,11 +28,15 @@
 
     Table.prototype.limit_rows = void 0;
 
+    Table.prototype.pagination = false;
+
     Table.prototype.table_options = void 0;
 
     Table.prototype.table_header_options = void 0;
 
     Table.prototype.header_options = void 0;
+
+    Table.prototype.footer_options = void 0;
 
     Table.prototype.table_body_options = void 0;
 
@@ -138,7 +142,7 @@
     };
 
     Table.prototype._update = function(origin) {
-      var cell_contents, column, d, datum, i, self, _i, _j, _len, _len1, _ref, _ref1, _ref2, _ref3;
+      var cell_contents, column, d, data, datum, first_button, i, last_button, next_button, next_ellipses, num_pages, page_buttons, pages_per_side, prev_button, prev_ellipses, self, _i, _j, _k, _len, _len1, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _results;
       self = this;
       _ref = this.columns;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -177,7 +181,8 @@
           this.current_data.reverse();
         }
       }
-      this.rows = this.body.select('tr').bind((this.limit_rows ? this.current_data.slice(0, +(this.limit_rows - 1) + 1 || 9e9) : this.current_data), this.key);
+      data = this.limit_rows == null ? this.current_data : (this.pagination === true ? this.pagination = 1 : void 0, this.pagination = Math.max(1, Math.min(Math.ceil(this.current_data.length / this.limit_rows), this.pagination)), this.current_data.slice(this.limit_rows * (this.pagination - 1), +((this.limit_rows * this.pagination) - 1) + 1 || 9e9));
+      this.rows = this.body.select('tr').bind(data, this.key);
       this.rows.options(this.row_options).update();
       if (this.key != null) {
         this.rows.all.order();
@@ -234,9 +239,72 @@
             return _this.select(c3.Table.set_select(_this.selections, item, _this.selectable === 'multi' || (_this.selectable === true && d3.event.ctrlKey)));
           };
         })(this));
-        return this.highlight();
+        this.highlight();
       } else if (origin === 'render') {
-        return this.rows.all.on('click.select', null);
+        this.rows.all.on('click.select', null);
+      }
+      if (this.pagination && this.current_data.length > this.limit_rows) {
+        this.footer = this.table.select('caption').singleton().options(this.footer_options).update();
+        num_pages = Math.ceil(this.current_data.length / this.limit_rows);
+        pages_per_side = 3;
+        first_button = this.footer.select('span.first.button').singleton();
+        first_button["new"].text('◀◀').on('click', (function(_this) {
+          return function() {
+            _this.pagination = 1;
+            return _this.redraw();
+          };
+        })(this));
+        first_button.all.classed('disabled', this.pagination <= 1);
+        prev_button = this.footer.select('span.prev.button').singleton();
+        prev_button["new"].text('◀').on('click', (function(_this) {
+          return function() {
+            _this.pagination--;
+            return _this.redraw();
+          };
+        })(this));
+        prev_button.all.classed('disabled', this.pagination <= 1);
+        prev_ellipses = this.footer.select('span.prev_ellipses').singleton();
+        prev_ellipses["new"].text('…');
+        prev_ellipses.all.style('display', this.pagination > pages_per_side + 1 ? '' : 'none');
+        page_buttons = this.footer.select('ul.pagination').singleton().select('li').bind((function() {
+          _results = [];
+          for (var _k = _ref4 = Math.max(1, this.pagination - pages_per_side), _ref5 = Math.min(num_pages, this.pagination + pages_per_side); _ref4 <= _ref5 ? _k <= _ref5 : _k >= _ref5; _ref4 <= _ref5 ? _k++ : _k--){ _results.push(_k); }
+          return _results;
+        }).apply(this));
+        page_buttons.all.classed('active', (function(_this) {
+          return function(p) {
+            return p === _this.pagination;
+          };
+        })(this)).on('click', (function(_this) {
+          return function(p) {
+            _this.pagination = p;
+            return _this.redraw();
+          };
+        })(this));
+        page_buttons.inherit('a').all.text(function(p, i) {
+          return p;
+        });
+        next_ellipses = this.footer.select('span.next_ellipses').singleton();
+        next_ellipses["new"].text('…');
+        next_ellipses.all.style('display', num_pages - this.pagination > pages_per_side ? '' : 'none');
+        next_button = this.footer.select('span.next.button').singleton();
+        next_button["new"].text('▶').on('click', (function(_this) {
+          return function() {
+            _this.pagination++;
+            return _this.redraw();
+          };
+        })(this));
+        next_button.all.classed('disabled', this.pagination >= this.current_data.length / this.limit_rows);
+        last_button = this.footer.select('span.last.button').singleton();
+        last_button["new"].text('▶▶').on('click', (function(_this) {
+          return function() {
+            _this.pagination = Math.ceil(_this.current_data.length / _this.limit_rows);
+            return _this.redraw();
+          };
+        })(this));
+        return last_button.all.classed('disabled', this.pagination >= this.current_data.length / this.limit_rows);
+      } else {
+        return this.table.select('caption').remove();
       }
     };
 

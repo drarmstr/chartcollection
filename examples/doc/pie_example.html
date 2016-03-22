@@ -910,14 +910,16 @@ If there are too many elements, then the ones with the smallest value won’t be
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>$(<span class="hljs-string">'#limit_segment_count'</span>).on(<span class="hljs-string">'input'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-    (&lt;c3.Polar.Layer.Pie&lt;<span class="hljs-built_in">any</span>&gt;&gt;pie_chart.layers[<span class="hljs-number">0</span>]).limit_elements = +$(<span class="hljs-keyword">this</span>).val();
-    pie_chart.redraw();
-    (&lt;c3.Polar.Layer.Pie&lt;<span class="hljs-built_in">any</span>&gt;&gt;half_moon_chart.layers[<span class="hljs-number">0</span>]).limit_elements = +$(<span class="hljs-keyword">this</span>).val();
-    half_moon_chart.redraw();
-    (&lt;c3.Polar.Layer.Arc&lt;<span class="hljs-built_in">any</span>&gt;&gt;polar_segment_chart.layers[<span class="hljs-number">0</span>]).limit_elements = +$(<span class="hljs-keyword">this</span>).val();
-    polar_segment_chart.redraw();
-});</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> event_name of [<span class="hljs-string">'input'</span>, <span class="hljs-string">'change'</span>]) { <span class="hljs-comment">// 'input' event is not supported in IE</span>
+    $(<span class="hljs-string">'#limit_segment_count'</span>).on(event_name, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+        (&lt;c3.Polar.Layer.Pie&lt;<span class="hljs-built_in">any</span>&gt;&gt;pie_chart.layers[<span class="hljs-number">0</span>]).limit_elements = +$(<span class="hljs-keyword">this</span>).val();
+        pie_chart.redraw();
+        (&lt;c3.Polar.Layer.Pie&lt;<span class="hljs-built_in">any</span>&gt;&gt;half_moon_chart.layers[<span class="hljs-number">0</span>]).limit_elements = +$(<span class="hljs-keyword">this</span>).val();
+        half_moon_chart.redraw();
+        (&lt;c3.Polar.Layer.Arc&lt;<span class="hljs-built_in">any</span>&gt;&gt;polar_segment_chart.layers[<span class="hljs-number">0</span>]).limit_elements = +$(<span class="hljs-keyword">this</span>).val();
+        polar_segment_chart.redraw();
+    });
+}</pre></div></div>
             
         </li>
         

@@ -254,6 +254,7 @@
       this.position_tweens = __bind(this.position_tweens, this);
       this.position = __bind(this.position, this);
       this.update = __bind(this.update, this);
+      this.remove = __bind(this.remove, this);
       this.bind = __bind(this.bind, this);
       this.singleton = __bind(this.singleton, this);
       this.inherit = __bind(this.inherit, this);
@@ -336,6 +337,14 @@
         this.old.remove();
       }
       return this;
+    };
+
+    Selection.prototype.remove = function() {
+      if (this._animate) {
+        return this.all.duration(this.opt.duration).style('opacity', 0).remove();
+      } else {
+        return this.all.remove();
+      }
     };
 
     Selection.prototype.options = function(opt, opt_accessor) {

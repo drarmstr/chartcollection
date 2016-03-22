@@ -74,6 +74,11 @@ class c3.Table extends c3.Base
     sort_column: undefined
     # [Number] Limit the number of table rows to the top N
     limit_rows: undefined
+    # [Boolean, Number] Page between multiple pages, each the size of `limit_rows`.
+    #   Set to `true` to enable or to the page number you would like to display.
+    #   This will be set to the currently active page number.
+    #   The pagination footer will only render if there is more than one page.
+    pagination: false
     # [{c3.Selection.Options}] Options for the `table` node.
     table_options: undefined
     # [{c3.Selection.Options}] Options for the table `thead` header.
@@ -81,6 +86,8 @@ class c3.Table extends c3.Base
     # [{c3.Selection.Options}] Options for the table `th` headers.  Callbacks are called with two arguments:
     # The first is the column object and the second is the column index.
     header_options: undefined
+    # [{c3.Selection.Options}] Options for the table `caption` footer used for pagination.
+    footer_options: undefined
     # [{c3.Selection.Options}] Options for the table `tbody`.
     table_body_options: undefined
     # [{c3.Selection.Options}] Options for the table `tr` rows.  Callbacks are called with two arguments.
@@ -135,6 +142,7 @@ class c3.Table extends c3.Base
         
         @_update_headers()
 
+
     _update_headers: =>
         self = this
         # Update the headers
@@ -144,6 +152,7 @@ class c3.Table extends c3.Base
         if @sortable then @headers.all.each (column)-> if column is self.sort_column
             title = d3.select(this)
             title.html title.html()+"<span class='arrow' style='float:right'>#{if column.sort_ascending then '▲' else '▼'}</span>"
+
 
     _update: (origin)=>
         self = this
@@ -165,7 +174,11 @@ class c3.Table extends c3.Base
             if not @sort_column.sort_ascending then @current_data.reverse()
         
         # Update the rows
-        @rows = @body.select('tr').bind (if @limit_rows then @current_data[..@limit_rows-1] else @current_data), @key
+        data = if not @limit_rows? then @current_data else
+            if @pagination is true then @pagination = 1
+            @pagination = Math.max(1, Math.min(Math.ceil(@current_data.length/@limit_rows), @pagination))
+            @current_data[@limit_rows*(@pagination-1)..(@limit_rows*@pagination)-1]
+        @rows = @body.select('tr').bind data, @key
         @rows.options(@row_options).update()
         if @key? then @rows.all.order()
         
@@ -197,6 +210,60 @@ class c3.Table extends c3.Base
                     @selectable is 'multi' or (@selectable is true and d3.event.ctrlKey)
             @highlight()
         else if origin is 'render' then @rows.all.on 'click.select', null
+
+        # Pagination
+        if @pagination and @current_data.length > @limit_rows
+            @footer = @table.select('caption').singleton().options(@footer_options).update()
+            num_pages = Math.ceil @current_data.length / @limit_rows
+            pages_per_side = 3
+            
+            # First page button
+            first_button = @footer.select('span.first.button').singleton()
+            first_button.new
+                .text '◀◀'
+                .on 'click', => @pagination=1; @redraw()
+            first_button.all.classed 'disabled', @pagination <= 1
+            
+            # Previous page button
+            prev_button = @footer.select('span.prev.button').singleton()
+            prev_button.new
+                .text '◀'
+                .on 'click', => @pagination--; @redraw()
+            prev_button.all.classed 'disabled', @pagination <= 1
+            
+            prev_ellipses = @footer.select('span.prev_ellipses').singleton()
+            prev_ellipses.new.text '…'
+            prev_ellipses.all.style 'display', if @pagination>pages_per_side+1 then '' else 'none'
+            
+            # Page buttons (compatible with Bootstrap pagination styling if present)
+            page_buttons = @footer.select('ul.pagination').singleton().select('li').bind(
+                [Math.max(1,@pagination-pages_per_side) .. Math.min(num_pages,@pagination+pages_per_side)] )
+            page_buttons.all
+                .classed 'active', (p)=> p == @pagination
+                .on 'click', (p)=> @pagination=p; @redraw()
+            page_buttons.inherit('a').all
+                .text (p,i)-> p
+            
+            next_ellipses = @footer.select('span.next_ellipses').singleton()
+            next_ellipses.new.text '…'
+            next_ellipses.all.style 'display', if num_pages-@pagination>pages_per_side then '' else 'none'
+            
+            # Next page button
+            next_button = @footer.select('span.next.button').singleton()
+            next_button.new
+                .text '▶'
+                .on 'click', => @pagination++; @redraw()
+            next_button.all.classed 'disabled', @pagination >= @current_data.length / @limit_rows
+            
+            # Last page button
+            last_button = @footer.select('span.last.button').singleton()
+            last_button.new
+                .text '▶▶'
+                .on 'click', => @pagination=Math.ceil @current_data.length / @limit_rows; @redraw()
+            last_button.all.classed 'disabled', @pagination >= @current_data.length / @limit_rows
+        else
+            @table.select('caption').remove()
+
 
     _style: (style_new)=>
         self = this

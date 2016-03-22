@@ -1568,7 +1568,7 @@
       } else {
         c3.select(this.g, 'g.labels').all.remove();
       }
-      if (origin === 'resize' && (!this.rects["new"].empty() || !this.labels["new"].empty())) {
+      if (origin === 'resize' && (!this.rects["new"].empty() || ((this.labels != null) && !this.labels["new"].empty()))) {
         return this._style(true);
       }
     };

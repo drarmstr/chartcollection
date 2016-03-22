@@ -9,9 +9,13 @@ var table = new c3.Table({
     // Specify the **width ** to set the anchor node.  Setting the height and width is optional.
     width: 250,
     // The raw **data ** to visualize.  The data must be provided as an array.
-    data: [0, 1, 2, 3, 4],
+    data: [0, 1, 2, 3, 4, 5, 6, 7, 8],
     // Only include data elements that are greater than 0
     filter: function (d) { return d > 0; },
+    // **Limit** the table to only show pages of 4 at a time,
+    // and enable **pagination** to change pages.
+    limit_rows: 4,
+    pagination: true,
     // Enable the user to **sort ** this table.
     sortable: true,
     // Create an array of **column ** objects to describe the table columns.

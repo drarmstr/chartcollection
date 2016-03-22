@@ -586,6 +586,8 @@ a nested node.</p>
 
             </div>
             
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> event_name of [<span class="hljs-string">'input'</span>, <span class="hljs-string">'change'</span>]) { <span class="hljs-comment">// 'input' event is not supported in IE</span></pre></div></div>
+            
         </li>
         
         
@@ -599,10 +601,10 @@ a nested node.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>$(<span class="hljs-string">'#limit_call_trace_elements'</span>).on(<span class="hljs-string">'input'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-    (&lt;c3.Plot.Layer.Swimlane.Flamechart&lt;<span class="hljs-built_in">any</span>&gt;&gt;flamechart_calltrace.layers[<span class="hljs-number">0</span>]).limit_elements = +$(<span class="hljs-keyword">this</span>).val();
-    flamechart_calltrace.redraw();
-});</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    $(<span class="hljs-string">'#limit_call_trace_elements'</span>).on(event_name, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+        (&lt;c3.Plot.Layer.Swimlane.Flamechart&lt;<span class="hljs-built_in">any</span>&gt;&gt;flamechart_calltrace.layers[<span class="hljs-number">0</span>]).limit_elements = +$(<span class="hljs-keyword">this</span>).val();
+        flamechart_calltrace.redraw();
+    });</pre></div></div>
             
         </li>
         
@@ -617,18 +619,19 @@ a nested node.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>$(<span class="hljs-string">'#limit_call_tree_elements'</span>).on(<span class="hljs-string">'input'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-    sunburst_layer.arc_options.animate = <span class="hljs-literal">false</span>;
-    sunburst_layer.limit_elements = +$(<span class="hljs-keyword">this</span>).val();
-    sunburst_calltree.redraw();
-    sunburst_layer.arc_options.animate = <span class="hljs-literal">true</span>;
-});
-$(<span class="hljs-string">'#limit_call_tree_angle'</span>).on(<span class="hljs-string">'input'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-    sunburst_layer.arc_options.animate = <span class="hljs-literal">false</span>;
-    sunburst_layer.limit_angle_percentage = +$(<span class="hljs-keyword">this</span>).val();
-    sunburst_calltree.redraw();
-    sunburst_layer.arc_options.animate = <span class="hljs-literal">true</span>;
-});</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    $(<span class="hljs-string">'#limit_call_tree_elements'</span>).on(event_name, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+        sunburst_layer.arc_options.animate = <span class="hljs-literal">false</span>;
+        sunburst_layer.limit_elements = +$(<span class="hljs-keyword">this</span>).val();
+        sunburst_calltree.redraw();
+        sunburst_layer.arc_options.animate = <span class="hljs-literal">true</span>;
+    });
+    $(<span class="hljs-string">'#limit_call_tree_angle'</span>).on(event_name, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+        sunburst_layer.arc_options.animate = <span class="hljs-literal">false</span>;
+        sunburst_layer.limit_angle_percentage = +$(<span class="hljs-keyword">this</span>).val();
+        sunburst_calltree.redraw();
+        sunburst_layer.arc_options.animate = <span class="hljs-literal">true</span>;
+    });
+}</pre></div></div>
             
         </li>
         

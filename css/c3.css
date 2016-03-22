@@ -207,6 +207,52 @@ table.c3.table td div.bar {
   background-color: lightgray;
   border-radius: 0.4em;
 }
+table.c3.table caption {
+  caption-side: bottom;
+  padding: 0;
+  text-align: center;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+  user-select: none;
+}
+table.c3.table caption span {
+  margin: 0 0.25em;
+  cursor: default;
+}
+table.c3.table caption span.button {
+  letter-spacing: -0.2em;
+  cursor: pointer;
+}
+table.c3.table caption span.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+table.c3.table caption ul {
+  display: inline;
+  padding: 0;
+  margin: 0;
+}
+table.c3.table caption ul li {
+  display: inline;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+table.c3.table caption ul li.active {
+  font-weight: bold;
+  pointer-events: none;
+}
+table.c3.table caption ul li:not(.active) {
+  text-decoration: underline;
+  cursor: pointer;
+}
+table.c3.table caption ul li a {
+  float: none;
+  padding: 0 0.25em;
+  margin: 0;
+}
 table.c3.table.selectable {
   -webkit-touch-callout: none;
   -webkit-user-select: none;

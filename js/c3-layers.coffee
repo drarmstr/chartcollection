@@ -1108,7 +1108,8 @@ class c3.Plot.Layer.Swimlane.Segment extends c3.Plot.Layer.Swimlane
         else c3.select(@g,'g.labels').all.remove()
         
         # Style any new elements we added by resizing larger that allowed new relevant elements to be drawn
-        if origin is 'resize' and (not @rects.new.empty() or not @labels.new.empty()) then @_style true
+        if origin is 'resize' and (not @rects.new.empty() or (@labels? and not @labels.new.empty()))
+            @_style true
     
     _style: (style_new)=>
         super

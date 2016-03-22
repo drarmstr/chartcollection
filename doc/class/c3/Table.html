@@ -11,6 +11,10 @@
     <div id='base' data-path='../../'></div>
 <div id='header'>
   <div id='menu'>
+    <a href='../../extra/README.md.html' title='C3'>
+      C3
+    </a>
+    &raquo;
     <a href='../../alphabetical_index.html' title='Index'>
       Index
     </a>
@@ -201,6 +205,18 @@ The bars may be styled using _vis<em>options.styles</em>.</li>
 <div class='tags'>
 </div>
   </dd>
+  <dt id='pagination-variable'>
+    pagination
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>false</code></pre>
+    <div class='docstring'>
+  <p>[Boolean, Number] Page between multiple pages, each the size of <code>limit_rows</code>. Set to <code>true</code> to enable or to the page number you would like to display. This will be set to the currently active page number. The pagination footer will only render if there is more than one page.</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
   <dt id='table_options-variable'>
     table_options
     =
@@ -234,6 +250,18 @@ The bars may be styled using _vis<em>options.styles</em>.</li>
     <div class='docstring'>
   <p>[<a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a>] Options for the table <code>th</code> headers.  Callbacks are called with two arguments:
 The first is the column object and the second is the column index.</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='footer_options-variable'>
+    footer_options
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>undefined</code></pre>
+    <div class='docstring'>
+  <p>[<a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a>] Options for the table <code>caption</code> footer used for pagination.</p>
 </div>
 <div class='tags'>
 </div>
@@ -642,7 +670,7 @@ the column index, and the third as the row index.</p>
 </div>
     </div>
     <div id='footer'>
-  March 11, 16 17:00:15 by
+  March 22, 16 14:44:11 by
   <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
     Codo
   </a>
