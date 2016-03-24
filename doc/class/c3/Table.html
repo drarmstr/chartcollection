@@ -50,6 +50,7 @@ is changed, then please call <code>render()</code> to update the table; this flo
 tested yet, but I can fix any issues that come up if this is needed.</p><h2 id="events">Events</h2>
 <ul>
 <li><strong>select</strong> - Triggered when a row is selected/unselected.  The event is called with an argument: <em>single</em> select tables are passed with their selection while <em>multi</em> select tables are passed with an array of the selections. Selections are references to items in the data array.</li>
+<li><strong>match</strong> - Triggered when a search is performed.  The event is called with the search string, the datum for the row, and the row index. If there was no match, the datum and index will be <code>null</code>.</li>
 </ul>
 <h2 id="extensibility">Extensibility</h2><p>The following members are created which represent <a href='../../class/c3/Selection.html'>c3.Selection</a>&#39;s:</p><ul>
 <li><strong>table</strong> - The HTML <code>table</code></li>
@@ -213,6 +214,42 @@ The bars may be styled using _vis<em>options.styles</em>.</li>
     <pre><code class='coffeescript'>false</code></pre>
     <div class='docstring'>
   <p>[Boolean, Number] Page between multiple pages, each the size of <code>limit_rows</code>. Set to <code>true</code> to enable or to the page number you would like to display. This will be set to the currently active page number. The pagination footer will only render if there is more than one page.</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='max_pages_in_paginator-variable'>
+    max_pages_in_paginator
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>9</code></pre>
+    <div class='docstring'>
+  <p>[Number] Maximum number of pages to show at a time in the footer pagination selection. Minimum value is <code>3</code>.</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='searchable-variable'>
+    searchable
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>false</code></pre>
+    <div class='docstring'>
+  <p>[Boolean, Function] Set to enable searching in the footer. If set to <code>true</code>, then the content of all columns will be searched. Otherwise, it can be set to an accessor function that will be called with the row data and index. This function should return the string content of the row to be used for searching. If a match is found the current page is changed so the found row is visible. The <code>match</code> event will be triggered with the search string used. If a match was found the second and third arguments will be the row data and index of the match, otherwise they will be <code>null</code>. The user may use regular expressions in their search string.</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='searchable_if_not_paginated-variable'>
+    searchable_if_not_paginated
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>true</code></pre>
+    <div class='docstring'>
+  <p>[Boolean] Allow table to be searchable even if it isn&#39;t paginated</p>
 </div>
 <div class='tags'>
 </div>
@@ -670,7 +707,7 @@ the column index, and the third as the row index.</p>
 </div>
     </div>
     <div id='footer'>
-  March 22, 16 14:44:11 by
+  March 23, 16 23:24:46 by
   <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
     Codo
   </a>

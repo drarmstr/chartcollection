@@ -81,6 +81,7 @@
     <Content Include="examples\legend_example.html" />
     <Content Include="examples\swimlanes_example.html" />
     <Content Include="examples\pie_example.html" />
+    <Content Include="examples\table_searchable_example.html" />
     <Content Include="examples\timeline_example.html" />
     <Content Include="examples\plot_zoom_example.html" />
     <Content Include="examples\sync_example.html" />
@@ -173,6 +174,7 @@
     <TypeScriptCompile Include="examples\pie_example.ts" />
     <TypeScriptCompile Include="examples\sync_example.ts" />
     <TypeScriptCompile Include="examples\table_selectable_example.ts" />
+    <TypeScriptCompile Include="examples\table_searchable_example.ts" />
     <TypeScriptCompile Include="examples\table_sortable_example.ts" />
     <TypeScriptCompile Include="examples\timeline_example.ts" />
     <TypeScriptCompile Include="examples\typings\crossfilter\crossfilter.d.ts" />

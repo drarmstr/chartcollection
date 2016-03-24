@@ -757,8 +757,10 @@ function render() {
         // **Limit** this table to only show the top 10 countries and not to display any countries
         // that have a 0 value.
         limit_rows: 10,
-        pagination: true,
         filter: function (d) { return d.value.gdp > 0.000000001; },
+        // Divide the table up into pages and allow user to **search** the table
+        pagination: true,
+        searchable: true,
         // Setup **columns** for this table
         columns: [
             {
@@ -855,6 +857,11 @@ function render() {
                 else
                     country_dim2.filterAll();
                 redraw();
+            },
+            // The `match` event is triggered for a row that is found with a user search
+            'match': function (search, d) {
+                hover_country = d != null ? countries[d.key] : null;
+                restyle();
             },
         },
     }));

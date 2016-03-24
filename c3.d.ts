@@ -139,6 +139,9 @@ declare module c3 {
         sort_column?: c3.Table.Column<D>;
         limit_rows?: number;
         pagination?: boolean | number;
+        max_pages_in_paginator?: number;
+        searchable?: boolean | { (d: D, i: number): string };
+        searchable_if_not_paginated?: boolean;
         table_options?: c3.Selection.Options<void>;
         table_header_options?: c3.Selection.Options<void>;
         header_options?: c3.Selection.Options<Table.Column<D>>;
@@ -167,6 +170,7 @@ declare module c3 {
 
         on(event: string, handler: (...args: any[]) => void): void;
         on(event: 'select', handler: (selection: D[]) => void): void;
+        on(event: 'match', handler: (search: string, datum: D, i: number) => void): void;
     }
     module Table {
         interface Column<D> {

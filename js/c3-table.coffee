@@ -17,6 +17,9 @@
 # * **select** - Triggered when a row is selected/unselected.  The event is called with an argument:
 #   _single_ select tables are passed with their selection while _multi_ select tables are passed with an array of the selections.
 #   Selections are references to items in the data array.
+# * **match** - Triggered when a search is performed.  The event is called with the search string,
+#   the datum for the row, and the row index.
+#   If there was no match, the datum and index will be `null`.
 # 
 # ## Extensibility
 # The following members are created which represent {c3.Selection}'s:
@@ -79,6 +82,21 @@ class c3.Table extends c3.Base
     #   This will be set to the currently active page number.
     #   The pagination footer will only render if there is more than one page.
     pagination: false
+    # [Number] Maximum number of pages to show at a time in the footer pagination selection.
+    #   Minimum value is `3`.
+    max_pages_in_paginator: 9
+    # [Boolean, Function] Set to enable searching in the footer.
+    #   If set to `true`, then the content of all columns will be searched.
+    #   Otherwise, it can be set to an accessor function that will be called with the row data and index.
+    #   This function should return the string content of the row to be used for searching.
+    #   If a match is found the current page is changed so the found row is visible.
+    #   The `match` event will be triggered with the search string used.
+    #   If a match was found the second and third arguments will be the row data and index of the match,
+    #   otherwise they will be `null`.
+    #   The user may use regular expressions in their search string.
+    searchable: false
+    # [Boolean] Allow table to be searchable even if it isn't paginated
+    searchable_if_not_paginated: true
     # [{c3.Selection.Options}] Options for the `table` node.
     table_options: undefined
     # [{c3.Selection.Options}] Options for the table `thead` header.
@@ -174,10 +192,13 @@ class c3.Table extends c3.Base
             if not @sort_column.sort_ascending then @current_data.reverse()
         
         # Update the rows
-        data = if not @limit_rows? then @current_data else
-            if @pagination is true then @pagination = 1
-            @pagination = Math.max(1, Math.min(Math.ceil(@current_data.length/@limit_rows), @pagination))
-            @current_data[@limit_rows*(@pagination-1)..(@limit_rows*@pagination)-1]
+        data = if not @limit_rows then @current_data else
+            @limit_rows = Math.floor @limit_rows
+            if isNaN @limit_rows then throw Error "limit_rows set to non-numeric value: "+@limit_rows
+            current_page = if isNaN(@pagination) then 1 else @pagination
+            current_page = Math.max(1, Math.min(Math.ceil(@current_data.length/@limit_rows), current_page))
+            if @pagination then @pagination = current_page
+            @current_data[@limit_rows*(current_page-1)..(@limit_rows*current_page)-1]
         @rows = @body.select('tr').bind data, @key
         @rows.options(@row_options).update()
         if @key? then @rows.all.order()
@@ -211,58 +232,99 @@ class c3.Table extends c3.Base
             @highlight()
         else if origin is 'render' then @rows.all.on 'click.select', null
 
-        # Pagination
-        if @pagination and @current_data.length > @limit_rows
-            @footer = @table.select('caption').singleton().options(@footer_options).update()
-            num_pages = Math.ceil @current_data.length / @limit_rows
-            pages_per_side = 3
+        # Footer
+        @footer = @table.select('caption')
+        paginate = !!@limit_rows and @pagination and @current_data.length > @limit_rows
+        searchable = @searchable and (@searchable_if_not_paginated or paginate)
+        if searchable or paginate
+            @footer.singleton().options(@footer_options).update()
             
-            # First page button
-            first_button = @footer.select('span.first.button').singleton()
-            first_button.new
-                .text '◀◀'
-                .on 'click', => @pagination=1; @redraw()
-            first_button.all.classed 'disabled', @pagination <= 1
+            # Pagination
+            paginator = @footer.select('span.pagination', ':first-child')
+            if paginate
+                paginator.singleton()
+                num_pages = Math.ceil @current_data.length / @limit_rows
+                @max_pages_in_paginator = Math.floor Math.max @max_pages_in_paginator, 3
+                left_pages = Math.ceil (@max_pages_in_paginator-3) / 2
+                right_pages = Math.floor (@max_pages_in_paginator-3) / 2
             
-            # Previous page button
-            prev_button = @footer.select('span.prev.button').singleton()
-            prev_button.new
-                .text '◀'
-                .on 'click', => @pagination--; @redraw()
-            prev_button.all.classed 'disabled', @pagination <= 1
+                # Previous page button
+                prev_button = paginator.select('span.prev.button').singleton()
+                prev_button.new
+                    .text '◀'
+                    .on 'click', => @pagination--; @redraw()
+                prev_button.all.classed 'disabled', current_page <= 1
             
-            prev_ellipses = @footer.select('span.prev_ellipses').singleton()
-            prev_ellipses.new.text '…'
-            prev_ellipses.all.style 'display', if @pagination>pages_per_side+1 then '' else 'none'
+                # Prepare the set of pages to show in the paginator
+                pages = [
+                    1
+                    (if num_pages > 2 then \
+                     [Math.max(2, Math.min(@pagination-left_pages, num_pages-1-left_pages-right_pages)) .. \
+                        Math.min(num_pages-1, Math.max(current_page+right_pages, 2+left_pages+right_pages))] \
+                     else [])...
+                    num_pages
+                ]
+                # Add ellipses if there are too many page options to show
+                if pages[1]-pages[0] > 1 then pages.splice(1,0,'…')
+                if pages[pages.length-1]-pages[pages.length-2] > 1 then pages.splice(pages.length-1,0,'…')
             
-            # Page buttons (compatible with Bootstrap pagination styling if present)
-            page_buttons = @footer.select('ul.pagination').singleton().select('li').bind(
-                [Math.max(1,@pagination-pages_per_side) .. Math.min(num_pages,@pagination+pages_per_side)] )
-            page_buttons.all
-                .classed 'active', (p)=> p == @pagination
-                .on 'click', (p)=> @pagination=p; @redraw()
-            page_buttons.inherit('a').all
-                .text (p,i)-> p
+                # Render the page 
+                page_buttons = paginator.select('ul').singleton().select('li').bind pages
+                page_buttons.new
+                    .on 'click', (p)=> @pagination=p; @redraw()
+                page_buttons.all
+                    .classed 'active', (p)=> p == current_page
+                    .classed 'disabled', (p)=> p == '…'
+                    .text (p,i)-> p
+                
+                # Next page button
+                next_button = paginator.select('span.next.button').singleton()
+                next_button.new
+                    .text '▶'
+                    .on 'click', => @pagination++; @redraw()
+                next_button.all.classed 'disabled', current_page >= @current_data.length / @limit_rows
+            else paginator.remove()
             
-            next_ellipses = @footer.select('span.next_ellipses').singleton()
-            next_ellipses.new.text '…'
-            next_ellipses.all.style 'display', if num_pages-@pagination>pages_per_side then '' else 'none'
-            
-            # Next page button
-            next_button = @footer.select('span.next.button').singleton()
-            next_button.new
-                .text '▶'
-                .on 'click', => @pagination++; @redraw()
-            next_button.all.classed 'disabled', @pagination >= @current_data.length / @limit_rows
-            
-            # Last page button
-            last_button = @footer.select('span.last.button').singleton()
-            last_button.new
-                .text '▶▶'
-                .on 'click', => @pagination=Math.ceil @current_data.length / @limit_rows; @redraw()
-            last_button.all.classed 'disabled', @pagination >= @current_data.length / @limit_rows
-        else
-            @table.select('caption').remove()
+            # Searchable
+            search_control = @footer.select('span.search')
+            # Not searchable if rows are limited but pagination is disabled
+            if searchable and not (not paginate and @current_data.length > @limit_rows)
+                last_search = ""
+                last_found = -1
+                search_control.singleton()
+                search_control.inherit('span.button').new
+                    .text '🔎'
+                    .on 'click', =>
+                        search_input.node().classList.remove 'notfound'
+                        value = search_input.node().value
+                        if not value then return
+                        re = RegExp value, 'i' # Case insensitive regular expression
+                        if value isnt last_search # if already found, find the next one
+                            last_found = -1
+                            last_search = value
+                        content = if @searchable is true # Search all columns if searchable is `true`
+                            column_contents = (c3.functor(column.cells.html ? column.cells.text ? @cell_options.html ? @cell_options.text) \
+                                        for column in @columns)
+                            (d)-> (column_content(d) for column_content in column_contents).join(' ')
+                        else @searchable
+                        for d,i in @current_data when i>last_found
+                            if re.test content(d,i)
+                                last_found = i
+                                @pagination = Math.ceil (i+1)/@limit_rows
+                                @redraw()
+                                @trigger 'match', value, d, i
+                                return
+                        last_found = -1
+                        search_input.node().classList.add 'notfound'
+                        @trigger 'match', value, null, null
+                search_input = search_control.inherit('input').new
+                    .attr 'type', 'text'
+                    .on 'keydown', ->
+                        this.classList.remove 'notfound'
+                        if this.value and d3.event.keyCode is 13 # When user presses ENTER
+                            search_control.select('.button').node().click()
+            else search_control.remove()
+        else @footer.remove()
 
 
     _style: (style_new)=>
@@ -274,6 +336,8 @@ class c3.Table extends c3.Base
             'selectable': @selectable
             'single_select': @selectable is 'single'
             'multi_select': @selectable is 'multi'
+            'paginated': @pagination and @limit_rows and @current_data.length > @limit_rows
+            'searchable': !!@searchable
         if @class?
             @table.all.classed klass, true for klass in @class.split(' ')
         

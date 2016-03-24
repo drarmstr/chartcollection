@@ -1,15 +1,15 @@
-﻿// C3 Table
+﻿// # C3 Table
 // _A simple data table example with that is selectable._
 
-// Create the datatable
-// Create a `c3.Table` object and set its options.Bind to an **anchor ** DOM element using a _string selector_.
+// ## Create the Data Table
+// Create a `c3.Table` object and set its options.Bind to an **anchor** DOM element using a _string selector_.
 var table = new c3.Table({
     anchor: '#table_example',
 
-    // Specify the **width ** to set the anchor node.Setting the height and width is optional.
+    // Specify the **width** to set the anchor node.Setting the height and width is optional.
     width: 250,
 
-    // The raw **data ** to visualize.  The data must be provided as an array.
+    // The raw **data** to visualize.  The data must be provided as an array.
     data: [0, 1, 2, 3, 4],
     
     // Only include data elements that are greater than 0

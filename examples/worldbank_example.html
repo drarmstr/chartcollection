@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>World Bank Cross Filter Example</title>
+    <title>World Bank Crossfilter Example</title>
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
@@ -72,6 +72,9 @@
         }
         .c3.table caption {
             border: 1px solid black;
+        }
+        .c3.table tr {
+            background-color: white;
         }
         .c3.table tr:nth-child(2n) {
             background-color: whitesmoke;
@@ -186,7 +189,7 @@
         </aside>
 
         <div id="worldbank_timeline" style="margin-right: 20em"></div>
-        <br/>
+        <br />
 
         <aside style="width:18em; float:right">
             <div id="worldbank_region_table" style="width:18em"></div>
@@ -218,7 +221,11 @@
     </main>
 
     <hr />
-    <p>Data Source: <a href="http://data.worldbank.org"><i>The World Bank: World Development Indicators</i></a></p>
+    <p>
+        Data Source: <a href="http://data.worldbank.org" target="_blank">
+            <i>The World Bank: World Development Indicators</i>
+        </a>
+    </p>
 
     <script src="worldbank_example.js"></script>
 </body>

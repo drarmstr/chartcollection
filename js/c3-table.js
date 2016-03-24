@@ -3,6 +3,7 @@
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    __slice = [].slice,
     __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   c3.Table = (function(_super) {
@@ -29,6 +30,12 @@
     Table.prototype.limit_rows = void 0;
 
     Table.prototype.pagination = false;
+
+    Table.prototype.max_pages_in_paginator = 9;
+
+    Table.prototype.searchable = false;
+
+    Table.prototype.searchable_if_not_paginated = true;
 
     Table.prototype.table_options = void 0;
 
@@ -142,7 +149,7 @@
     };
 
     Table.prototype._update = function(origin) {
-      var cell_contents, column, d, data, datum, first_button, i, last_button, next_button, next_ellipses, num_pages, page_buttons, pages_per_side, prev_button, prev_ellipses, self, _i, _j, _k, _len, _len1, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _results;
+      var cell_contents, column, current_page, d, data, datum, i, last_found, last_search, left_pages, next_button, num_pages, page_buttons, pages, paginate, paginator, prev_button, right_pages, search_control, search_input, searchable, self, _i, _j, _k, _len, _len1, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _results;
       self = this;
       _ref = this.columns;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -181,7 +188,22 @@
           this.current_data.reverse();
         }
       }
-      data = this.limit_rows == null ? this.current_data : (this.pagination === true ? this.pagination = 1 : void 0, this.pagination = Math.max(1, Math.min(Math.ceil(this.current_data.length / this.limit_rows), this.pagination)), this.current_data.slice(this.limit_rows * (this.pagination - 1), +((this.limit_rows * this.pagination) - 1) + 1 || 9e9));
+      data = (function() {
+        if (!this.limit_rows) {
+          return this.current_data;
+        } else {
+          this.limit_rows = Math.floor(this.limit_rows);
+          if (isNaN(this.limit_rows)) {
+            throw Error("limit_rows set to non-numeric value: " + this.limit_rows);
+          }
+          current_page = isNaN(this.pagination) ? 1 : this.pagination;
+          current_page = Math.max(1, Math.min(Math.ceil(this.current_data.length / this.limit_rows), current_page));
+          if (this.pagination) {
+            this.pagination = current_page;
+          }
+          return this.current_data.slice(this.limit_rows * (current_page - 1), +((this.limit_rows * current_page) - 1) + 1 || 9e9);
+        }
+      }).call(this);
       this.rows = this.body.select('tr').bind(data, this.key);
       this.rows.options(this.row_options).update();
       if (this.key != null) {
@@ -243,68 +265,134 @@
       } else if (origin === 'render') {
         this.rows.all.on('click.select', null);
       }
-      if (this.pagination && this.current_data.length > this.limit_rows) {
-        this.footer = this.table.select('caption').singleton().options(this.footer_options).update();
-        num_pages = Math.ceil(this.current_data.length / this.limit_rows);
-        pages_per_side = 3;
-        first_button = this.footer.select('span.first.button').singleton();
-        first_button["new"].text('◀◀').on('click', (function(_this) {
-          return function() {
-            _this.pagination = 1;
-            return _this.redraw();
-          };
-        })(this));
-        first_button.all.classed('disabled', this.pagination <= 1);
-        prev_button = this.footer.select('span.prev.button').singleton();
-        prev_button["new"].text('◀').on('click', (function(_this) {
-          return function() {
-            _this.pagination--;
-            return _this.redraw();
-          };
-        })(this));
-        prev_button.all.classed('disabled', this.pagination <= 1);
-        prev_ellipses = this.footer.select('span.prev_ellipses').singleton();
-        prev_ellipses["new"].text('…');
-        prev_ellipses.all.style('display', this.pagination > pages_per_side + 1 ? '' : 'none');
-        page_buttons = this.footer.select('ul.pagination').singleton().select('li').bind((function() {
-          _results = [];
-          for (var _k = _ref4 = Math.max(1, this.pagination - pages_per_side), _ref5 = Math.min(num_pages, this.pagination + pages_per_side); _ref4 <= _ref5 ? _k <= _ref5 : _k >= _ref5; _ref4 <= _ref5 ? _k++ : _k--){ _results.push(_k); }
-          return _results;
-        }).apply(this));
-        page_buttons.all.classed('active', (function(_this) {
-          return function(p) {
-            return p === _this.pagination;
-          };
-        })(this)).on('click', (function(_this) {
-          return function(p) {
-            _this.pagination = p;
-            return _this.redraw();
-          };
-        })(this));
-        page_buttons.inherit('a').all.text(function(p, i) {
-          return p;
-        });
-        next_ellipses = this.footer.select('span.next_ellipses').singleton();
-        next_ellipses["new"].text('…');
-        next_ellipses.all.style('display', num_pages - this.pagination > pages_per_side ? '' : 'none');
-        next_button = this.footer.select('span.next.button').singleton();
-        next_button["new"].text('▶').on('click', (function(_this) {
-          return function() {
-            _this.pagination++;
-            return _this.redraw();
-          };
-        })(this));
-        next_button.all.classed('disabled', this.pagination >= this.current_data.length / this.limit_rows);
-        last_button = this.footer.select('span.last.button').singleton();
-        last_button["new"].text('▶▶').on('click', (function(_this) {
-          return function() {
-            _this.pagination = Math.ceil(_this.current_data.length / _this.limit_rows);
-            return _this.redraw();
-          };
-        })(this));
-        return last_button.all.classed('disabled', this.pagination >= this.current_data.length / this.limit_rows);
+      this.footer = this.table.select('caption');
+      paginate = !!this.limit_rows && this.pagination && this.current_data.length > this.limit_rows;
+      searchable = this.searchable && (this.searchable_if_not_paginated || paginate);
+      if (searchable || paginate) {
+        this.footer.singleton().options(this.footer_options).update();
+        paginator = this.footer.select('span.pagination', ':first-child');
+        if (paginate) {
+          paginator.singleton();
+          num_pages = Math.ceil(this.current_data.length / this.limit_rows);
+          this.max_pages_in_paginator = Math.floor(Math.max(this.max_pages_in_paginator, 3));
+          left_pages = Math.ceil((this.max_pages_in_paginator - 3) / 2);
+          right_pages = Math.floor((this.max_pages_in_paginator - 3) / 2);
+          prev_button = paginator.select('span.prev.button').singleton();
+          prev_button["new"].text('◀').on('click', (function(_this) {
+            return function() {
+              _this.pagination--;
+              return _this.redraw();
+            };
+          })(this));
+          prev_button.all.classed('disabled', current_page <= 1);
+          pages = [1].concat(__slice.call((num_pages > 2 ? (function() {
+              _results = [];
+              for (var _k = _ref4 = Math.max(2, Math.min(this.pagination - left_pages, num_pages - 1 - left_pages - right_pages)), _ref5 = Math.min(num_pages - 1, Math.max(current_page + right_pages, 2 + left_pages + right_pages)); _ref4 <= _ref5 ? _k <= _ref5 : _k >= _ref5; _ref4 <= _ref5 ? _k++ : _k--){ _results.push(_k); }
+              return _results;
+            }).apply(this) : [])), [num_pages]);
+          if (pages[1] - pages[0] > 1) {
+            pages.splice(1, 0, '…');
+          }
+          if (pages[pages.length - 1] - pages[pages.length - 2] > 1) {
+            pages.splice(pages.length - 1, 0, '…');
+          }
+          page_buttons = paginator.select('ul').singleton().select('li').bind(pages);
+          page_buttons["new"].on('click', (function(_this) {
+            return function(p) {
+              _this.pagination = p;
+              return _this.redraw();
+            };
+          })(this));
+          page_buttons.all.classed('active', (function(_this) {
+            return function(p) {
+              return p === current_page;
+            };
+          })(this)).classed('disabled', (function(_this) {
+            return function(p) {
+              return p === '…';
+            };
+          })(this)).text(function(p, i) {
+            return p;
+          });
+          next_button = paginator.select('span.next.button').singleton();
+          next_button["new"].text('▶').on('click', (function(_this) {
+            return function() {
+              _this.pagination++;
+              return _this.redraw();
+            };
+          })(this));
+          next_button.all.classed('disabled', current_page >= this.current_data.length / this.limit_rows);
+        } else {
+          paginator.remove();
+        }
+        search_control = this.footer.select('span.search');
+        if (searchable && !(!paginate && this.current_data.length > this.limit_rows)) {
+          last_search = "";
+          last_found = -1;
+          search_control.singleton();
+          search_control.inherit('span.button')["new"].text('🔎').on('click', (function(_this) {
+            return function() {
+              var column_contents, content, re, value, _l, _len2, _ref6;
+              search_input.node().classList.remove('notfound');
+              value = search_input.node().value;
+              if (!value) {
+                return;
+              }
+              re = RegExp(value, 'i');
+              if (value !== last_search) {
+                last_found = -1;
+                last_search = value;
+              }
+              content = _this.searchable === true ? (column_contents = (function() {
+                var _l, _len2, _ref6, _ref7, _ref8, _ref9, _results1;
+                _ref6 = this.columns;
+                _results1 = [];
+                for (_l = 0, _len2 = _ref6.length; _l < _len2; _l++) {
+                  column = _ref6[_l];
+                  _results1.push(c3.functor((_ref7 = (_ref8 = (_ref9 = column.cells.html) != null ? _ref9 : column.cells.text) != null ? _ref8 : this.cell_options.html) != null ? _ref7 : this.cell_options.text));
+                }
+                return _results1;
+              }).call(_this), function(d) {
+                var column_content;
+                return ((function() {
+                  var _l, _len2, _results1;
+                  _results1 = [];
+                  for (_l = 0, _len2 = column_contents.length; _l < _len2; _l++) {
+                    column_content = column_contents[_l];
+                    _results1.push(column_content(d));
+                  }
+                  return _results1;
+                })()).join(' ');
+              }) : _this.searchable;
+              _ref6 = _this.current_data;
+              for (i = _l = 0, _len2 = _ref6.length; _l < _len2; i = ++_l) {
+                d = _ref6[i];
+                if (i > last_found) {
+                  if (re.test(content(d, i))) {
+                    last_found = i;
+                    _this.pagination = Math.ceil((i + 1) / _this.limit_rows);
+                    _this.redraw();
+                    _this.trigger('match', value, d, i);
+                    return;
+                  }
+                }
+              }
+              last_found = -1;
+              search_input.node().classList.add('notfound');
+              return _this.trigger('match', value, null, null);
+            };
+          })(this));
+          return search_input = search_control.inherit('input')["new"].attr('type', 'text').on('keydown', function() {
+            this.classList.remove('notfound');
+            if (this.value && d3.event.keyCode === 13) {
+              return search_control.select('.button').node().click();
+            }
+          });
+        } else {
+          return search_control.remove();
+        }
       } else {
-        return this.table.select('caption').remove();
+        return this.footer.remove();
       }
     };
 
@@ -317,7 +405,9 @@
         'sortable': this.sortable,
         'selectable': this.selectable,
         'single_select': this.selectable === 'single',
-        'multi_select': this.selectable === 'multi'
+        'multi_select': this.selectable === 'multi',
+        'paginated': this.pagination && this.limit_rows && this.current_data.length > this.limit_rows,
+        'searchable': !!this.searchable
       });
       if (this["class"] != null) {
         _ref = this["class"].split(' ');

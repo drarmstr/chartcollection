@@ -295,19 +295,15 @@ table.c3.table {
         }
     }
 
-    // Pagination Footer
+    // Pagination/Search Footer
     caption {
         caption-side: bottom;
-        padding: 0;
-        text-align: center;
         .no-highlight;
 
         span {
             margin: 0 0.25em;
-            cursor: default;
 
             &.button {
-                letter-spacing: -0.2em; // For first/last button double arrows
                 cursor: pointer;
             }
 
@@ -326,22 +322,47 @@ table.c3.table {
                 display: inline;
                 list-style-type: none;
                 margin: 0;
-                padding: 0;
+                padding: 0 0.25em;
+                border: 1px solid gray;
+
+                &:first-of-type {
+                    border-top-left-radius: 0.4em;
+                    border-bottom-left-radius: 0.4em;
+                }
+                &:last-of-type {
+                    border-top-right-radius: 0.4em;
+                    border-bottom-right-radius: 0.4em;
+                }
 
                 &.active {
                     font-weight: bold;
                     pointer-events: none;
+                    color: white;
+                    background-color: gray;
                 }
 
                 &:not(.active) {
-                    text-decoration: underline;
                     cursor: pointer;
                 }
 
-                a { // Override Bootstrap Pagination if present
-                    float: none;
-                    padding: 0 0.25em;
-                    margin: 0;
+                &.disabled {
+                    pointer-events: none;
+                }
+            }
+        }
+
+        span.pagination {
+            float: left;
+        }
+
+        span.search {
+            white-space: nowrap;
+            
+            input {
+                vertical-align: text-bottom;
+
+                &.notfound {
+                    color: red;
                 }
             }
         }

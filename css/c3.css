@@ -209,8 +209,6 @@ table.c3.table td div.bar {
 }
 table.c3.table caption {
   caption-side: bottom;
-  padding: 0;
-  text-align: center;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: -moz-none;
@@ -219,10 +217,8 @@ table.c3.table caption {
 }
 table.c3.table caption span {
   margin: 0 0.25em;
-  cursor: default;
 }
 table.c3.table caption span.button {
-  letter-spacing: -0.2em;
   cursor: pointer;
 }
 table.c3.table caption span.disabled {
@@ -238,20 +234,40 @@ table.c3.table caption ul li {
   display: inline;
   list-style-type: none;
   margin: 0;
-  padding: 0;
+  padding: 0 0.25em;
+  border: 1px solid gray;
+}
+table.c3.table caption ul li:first-of-type {
+  border-top-left-radius: 0.4em;
+  border-bottom-left-radius: 0.4em;
+}
+table.c3.table caption ul li:last-of-type {
+  border-top-right-radius: 0.4em;
+  border-bottom-right-radius: 0.4em;
 }
 table.c3.table caption ul li.active {
   font-weight: bold;
   pointer-events: none;
+  color: white;
+  background-color: gray;
 }
 table.c3.table caption ul li:not(.active) {
-  text-decoration: underline;
   cursor: pointer;
 }
-table.c3.table caption ul li a {
-  float: none;
-  padding: 0 0.25em;
-  margin: 0;
+table.c3.table caption ul li.disabled {
+  pointer-events: none;
+}
+table.c3.table caption span.pagination {
+  float: left;
+}
+table.c3.table caption span.search {
+  white-space: nowrap;
+}
+table.c3.table caption span.search input {
+  vertical-align: text-bottom;
+}
+table.c3.table caption span.search input.notfound {
+  color: red;
 }
 table.c3.table.selectable {
   -webkit-touch-callout: none;

@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>table_sortable_example.ts</title>
+  <title>C3 Table</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -65,6 +65,11 @@
                 </a>
               
                 
+                <a class="source" href="table_searchable_example.html">
+                  table_searchable_example.ts
+                </a>
+              
+                
                 <a class="source" href="table_selectable_example.html">
                   table_selectable_example.ts
                 </a>
@@ -91,12 +96,6 @@
     
     <ul class="sections">
         
-          <li id="title">
-              <div class="annotation">
-                  <h1>table_sortable_example.ts</h1>
-              </div>
-          </li>
-        
         
         
         <li id="section-1">
@@ -105,8 +104,8 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <p>C3 Table
-<em>A simple data table example with three columns that is sortable.</em></p>
+              <h1 id="c3-table">C3 Table</h1>
+<p><em>A simple data table example with three columns that is sortable.</em></p>
 
             </div>
             
@@ -134,8 +133,8 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p>Create the datatable
-Create a <code>c3.Table</code> object and set its options.  Bind to an <strong>anchor </strong> DOM element using a <em>string selector</em>.</p>
+              <h2 id="create-the-data-table">Create the Data Table</h2>
+<p>Create a <code>c3.Table</code> object and set its options.  Bind to an <strong>anchor</strong> DOM element using a <em>string selector</em>.</p>
 
             </div>
             
@@ -151,7 +150,7 @@ Create a <code>c3.Table</code> object and set its options.  Bind to an <strong>a
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
-              <p>Specify the <strong>width </strong> to set the anchor node.  Setting the height and width is optional.</p>
+              <p>Specify the <strong>width</strong> to set the anchor node.  Setting the height and width is optional.</p>
 
             </div>
             
@@ -166,11 +165,11 @@ Create a <code>c3.Table</code> object and set its options.  Bind to an <strong>a
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
-              <p>The raw <strong>data </strong> to visualize.  The data must be provided as an array.</p>
+              <p>The raw <strong>data</strong> to visualize.  The data must be provided as an array.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    data: [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>],</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    data: [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>],</pre></div></div>
             
         </li>
         
@@ -196,13 +195,11 @@ Create a <code>c3.Table</code> object and set its options.  Bind to an <strong>a
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
-              <p><strong>Limit</strong> the table to only show pages of 4 at a time,
-and enable <strong>pagination</strong> to change pages.</p>
+              <p>Enable the user to <strong>sort</strong> this table.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    limit_rows: <span class="hljs-number">4</span>,
-    pagination: <span class="hljs-literal">true</span>,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    sortable: <span class="hljs-literal">true</span>,</pre></div></div>
             
         </li>
         
@@ -213,11 +210,11 @@ and enable <strong>pagination</strong> to change pages.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
-              <p>Enable the user to <strong>sort </strong> this table.</p>
+              <p>Create an array of <strong>column</strong> objects to describe the table columns.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    sortable: <span class="hljs-literal">true</span>,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    columns: [</pre></div></div>
             
         </li>
         
@@ -228,24 +225,9 @@ and enable <strong>pagination</strong> to change pages.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
-              <p>Create an array of <strong>column </strong> objects to describe the table columns.</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>    columns: [</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-10">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-10">&#182;</a>
-              </div>
               <p>The first column <code>header</code> is labeled “x”.The <code>cells.text</code> callback describes
 how to generate the text content for the cells based on the data.
-<code>sortable</code> enables <strong>sorting </strong> for this column based on the <strong>value </strong> of the <code>value</code> callback.
+<code>sortable</code> enables <strong>sorting</strong> for this column based on the <strong>value</strong> of the <code>value</code> callback.
 Assign this column to a variable <code>sort_column</code> so we can reference it later.</p>
 
             </div>
@@ -263,11 +245,11 @@ Assign this column to a variable <code>sort_column</code> so we can reference it
         </li>
         
         
-        <li id="section-11">
+        <li id="section-10">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-11">&#182;</a>
+                <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
               <p>Create a second column that displays the data value squared for each row.</p>
 
@@ -283,11 +265,11 @@ Assign this column to a variable <code>sort_column</code> so we can reference it
         </li>
         
         
-        <li id="section-12">
+        <li id="section-11">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-12">&#182;</a>
+                <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
               <p>Create a third column that displays the negative data value for each row.</p>
 
@@ -304,13 +286,13 @@ Assign this column to a variable <code>sort_column</code> so we can reference it
         </li>
         
         
-        <li id="section-13">
+        <li id="section-12">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-13">&#182;</a>
+                <a class="pilcrow" href="#section-12">&#182;</a>
               </div>
-              <p>Configure the initial column to <strong>sort </strong> the data on based on the column varible <code>x_column</code> we created above.</p>
+              <p>Configure the initial column to <strong>sort</strong> the data on based on the column varible <code>x_column</code> we created above.</p>
 
             </div>
             
@@ -320,11 +302,11 @@ Assign this column to a variable <code>sort_column</code> so we can reference it
         </li>
         
         
-        <li id="section-14">
+        <li id="section-13">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-14">&#182;</a>
+                <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
               <p>Render the table!</p>
 

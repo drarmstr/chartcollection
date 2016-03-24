@@ -65,6 +65,11 @@
                 </a>
               
                 
+                <a class="source" href="table_searchable_example.html">
+                  table_searchable_example.ts
+                </a>
+              
+                
                 <a class="source" href="table_selectable_example.html">
                   table_selectable_example.ts
                 </a>
@@ -2332,7 +2337,6 @@ that have a 0 value.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>        limit_rows: <span class="hljs-number">10</span>,
-        pagination: <span class="hljs-literal">true</span>,
         filter: (d) =&gt; d.value.gdp &gt; <span class="hljs-number">0.000000001</span>,</pre></div></div>
             
         </li>
@@ -2343,6 +2347,22 @@ that have a 0 value.</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-112">&#182;</a>
+              </div>
+              <p>Divide the table up into pages and allow user to <strong>search</strong> the table</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        pagination: <span class="hljs-literal">true</span>,
+        searchable: <span class="hljs-literal">true</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-113">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-113">&#182;</a>
               </div>
               <p>Setup <strong>columns</strong> for this table</p>
 
@@ -2357,11 +2377,11 @@ that have a 0 value.</p>
         </li>
         
         
-        <li id="section-113">
+        <li id="section-114">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-113">&#182;</a>
+                <a class="pilcrow" href="#section-114">&#182;</a>
               </div>
               <p>The “Region” column is styled to have a background that matches the color for the
 region this country is in.</p>
@@ -2380,11 +2400,11 @@ region this country is in.</p>
         </li>
         
         
-        <li id="section-114">
+        <li id="section-115">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-114">&#182;</a>
+                <a class="pilcrow" href="#section-115">&#182;</a>
               </div>
               <p>These columns use custom formatters to set the html content of the cell 
 adding commas, units, rounding, etc.  You can add raw HTML if you like.
@@ -2407,11 +2427,11 @@ graph based on the cell value.</p>
         </li>
         
         
-        <li id="section-115">
+        <li id="section-116">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-115">&#182;</a>
+                <a class="pilcrow" href="#section-116">&#182;</a>
               </div>
               <p>Assign this column to a variable <code>gdp_column</code> so we can refer to it below for setting the default sort.</p>
 
@@ -2427,11 +2447,11 @@ graph based on the cell value.</p>
         </li>
         
         
-        <li id="section-116">
+        <li id="section-117">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-116">&#182;</a>
+                <a class="pilcrow" href="#section-117">&#182;</a>
               </div>
               <p>By default, the <code>bar</code> visualization will base the bar width as a percentage of the
 total value of all cells.  This isn’t always appropriate, though, such as in the case
@@ -2451,11 +2471,11 @@ per capita value.  Look out for Monaco!</p>
         </li>
         
         
-        <li id="section-117">
+        <li id="section-118">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-117">&#182;</a>
+                <a class="pilcrow" href="#section-118">&#182;</a>
               </div>
               <p>Initial column to <strong>sort</strong> on.</p>
 
@@ -2466,11 +2486,11 @@ per capita value.  Look out for Monaco!</p>
         </li>
         
         
-        <li id="section-118">
+        <li id="section-119">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-118">&#182;</a>
+                <a class="pilcrow" href="#section-119">&#182;</a>
               </div>
               <p>Add some padding to each cell using <code>cell_options.styles</code> to assign <strong>styles</strong> to <strong>cells</strong></p>
 
@@ -2485,11 +2505,11 @@ per capita value.  Look out for Monaco!</p>
         </li>
         
         
-        <li id="section-119">
+        <li id="section-120">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-119">&#182;</a>
+                <a class="pilcrow" href="#section-120">&#182;</a>
               </div>
               <p>Use <code>row_options.classes</code> to enable <strong>CSS classes</strong> on table <strong>rows</strong>.  The classes can be
 whatever class you want for your styling.  Here we turn on the <code>hover</code> class if this
@@ -2507,11 +2527,11 @@ in this case giving them a wheat-colored background.</p>
         </li>
         
         
-        <li id="section-120">
+        <li id="section-121">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-120">&#182;</a>
+                <a class="pilcrow" href="#section-121">&#182;</a>
               </div>
               <p><code>row_options.events</code> adds <strong>event handlers</strong> to table <strong>rows</strong>.  These handlers set the global
 hover country when the user hovers the mouse over a row.  <code>restyle()</code> is then called
@@ -2534,11 +2554,11 @@ for all charts to update based on this new focus country.</p>
         </li>
         
         
-        <li id="section-121">
+        <li id="section-122">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-121">&#182;</a>
+                <a class="pilcrow" href="#section-122">&#182;</a>
               </div>
               <p><code>handlers</code> adds <strong>event handlers</strong> to the chart object itself.  Here we tie into the
 <code>select</code> event when the user selects one or more row to <strong>filter</strong> the data on only that country.
@@ -2560,23 +2580,7 @@ the scatter plot and this table.</p>
                 <span class="hljs-keyword">else</span>
                     country_dim2.filterAll();
                 redraw();
-            },
-        },
-    }));</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-122">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-122">&#182;</a>
-              </div>
-              <p>#########################################################################################</p>
-<h3 id="initial-rendering">Initial Rendering</h3>
-
-            </div>
+            },</pre></div></div>
             
         </li>
         
@@ -2586,6 +2590,40 @@ the scatter plot and this table.</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-123">&#182;</a>
+              </div>
+              <p>The <code>match</code> event is triggered for a row that is found with a user search</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-string">'match'</span>: (search, d) =&gt; {
+                hover_country = d != <span class="hljs-literal">null</span> ? countries[d.key] : <span class="hljs-literal">null</span>;
+                restyle();
+            },
+        },
+    }));</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-124">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-124">&#182;</a>
+              </div>
+              <p>#########################################################################################</p>
+<h3 id="initial-rendering">Initial Rendering</h3>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-125">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-125">&#182;</a>
               </div>
               <p>Perform the initial <code>render()</code></p>
 
@@ -2597,11 +2635,11 @@ the scatter plot and this table.</p>
         </li>
         
         
-        <li id="section-124">
+        <li id="section-126">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-124">&#182;</a>
+                <a class="pilcrow" href="#section-126">&#182;</a>
               </div>
               <p><strong>Resize</strong> charts if the window is resized.</p>
 
@@ -2616,11 +2654,11 @@ the scatter plot and this table.</p>
         </li>
         
         
-        <li id="section-125">
+        <li id="section-127">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-125">&#182;</a>
+                <a class="pilcrow" href="#section-127">&#182;</a>
               </div>
               <p>#########################################################################################</p>
 <h1 id="start-here">Start Here</h1>
@@ -2630,11 +2668,11 @@ the scatter plot and this table.</p>
         </li>
         
         
-        <li id="section-126">
+        <li id="section-128">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-126">&#182;</a>
+                <a class="pilcrow" href="#section-128">&#182;</a>
               </div>
               <p>The loading and rendering are initiated here..  It calls the <code>download_data()</code> function to 
 download the data which returns a Promise.  We setup a <em>then</em> callback function to be 
@@ -2648,11 +2686,11 @@ calling the <code>render()</code> function.</p>
         </li>
         
         
-        <li id="section-127">
+        <li id="section-129">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-127">&#182;</a>
+                <a class="pilcrow" href="#section-129">&#182;</a>
               </div>
               <p>The reason to have setTimeout call the render function instead of calling it directly is
 just a trick to help with debugging in the browser when using promises.  The callback function
@@ -2669,11 +2707,11 @@ debugger.  In production code you could use this instead:</p>
         </li>
         
         
-        <li id="section-128">
+        <li id="section-130">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-128">&#182;</a>
+                <a class="pilcrow" href="#section-130">&#182;</a>
               </div>
               <pre><code>download_data().then(render)
 </code></pre>
