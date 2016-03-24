@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Searchable Paginated Table Example</title>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Dependencies -->
+    <script src="lib/d3.js"></script>
+
+    <!-- C3 -->
+    <link rel="stylesheet" href="../css/c3.css" />
+    <script src="../js/c3.js"></script>
+    <script src="../js/c3-table.js"></script>
+
+    <style>
+        .c3.table {
+            border: 1px solid black;
+            font-family: sans-serif;
+        }
+
+        .c3.table th {
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            padding: 0.25em;
+            border: 1px solid black;
+            border-bottom: 2px solid black;
+            background-color: lightgray;
+        }
+        .c3.table th.sorted {
+            background-color: steelblue;
+        }
+
+        .c3.table tr {
+            background-color: white;
+        }
+        .c3.table tr:nth-child(2n) {
+            background-color: whitesmoke;
+        }
+        .c3.table tr.match {
+            background: wheat;
+        }
+
+        .c3.table td {
+            text-align: center;
+            border-left: 1px solid black;
+            border-right: 1px solid black;
+            padding: 0.25em;
+        }
+        .c3.table td.sorted {
+            background-color: rgba(128,128,128,0.1);
+        }
+
+        .c3.table caption {
+            border: 1px solid black;
+        }
+
+        .c3.table .vis.bar {
+            background-color: darkgray;
+        }
+
+        form {
+            margin: 1em 0;
+        }
+        form label {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    A searchable table of world country data.
+    Click on the table headers to select which column to sort on.
+    Search using the search box in the table footer, regular expressions are allowed.
+    Pressing enter multiple times will search for the next match.
+
+    <form>
+        <label>
+            <input id="limit_rows" type="checkbox" checked />
+            Limit the number of rows in the table
+        </label>
+        <label>
+            <input id="pagination" type="checkbox" checked />
+            Enable pagination selection
+        </label>
+        <label>
+            Rows per page
+            <input id="number_of_rows" type="number" value="10" min="1" max="200" />
+        </label>
+        <label>
+            Max pages in paginator list
+            <input id="number_of_pages" type="number" value="9" min="3" max="20" />
+        </label>
+        <label>
+            <input id="searchable_if_not_paginated" type="checkbox" checked />
+            Searchable if not paginated
+        </label>
+    </form>
+
+    <span id="loading"><b>Loading World Bank Data...</b></span>
+    <div id="country_table_example" style="overflow:auto"></div>
+    <br />
+
+    <p>
+        Data Source: <a href="http://data.worldbank.org" target="_blank">
+            <i>The World Bank: World Development Indicators</i>
+        </a>
+    </p>
+
+    <script src="table_searchable_example.js"></script>
+</body>
+</html>

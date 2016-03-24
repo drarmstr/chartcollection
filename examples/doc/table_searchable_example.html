@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>C3 Searchable Table</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="flamechart_sunburst_example.html">
+                  flamechart_sunburst_example.ts
+                </a>
+              
+                
+                <a class="source" href="legend_example.html">
+                  legend_example.ts
+                </a>
+              
+                
+                <a class="source" href="pie_example.html">
+                  pie_example.ts
+                </a>
+              
+                
+                <a class="source" href="plot_area_example.html">
+                  plot_area_example.ts
+                </a>
+              
+                
+                <a class="source" href="plot_zoom_example.html">
+                  plot_zoom_example.ts
+                </a>
+              
+                
+                <a class="source" href="scatterplot_example.html">
+                  scatterplot_example.ts
+                </a>
+              
+                
+                <a class="source" href="stack_example.html">
+                  stack_example.ts
+                </a>
+              
+                
+                <a class="source" href="swimlanes_example.html">
+                  swimlanes_example.ts
+                </a>
+              
+                
+                <a class="source" href="sync_example.html">
+                  sync_example.ts
+                </a>
+              
+                
+                <a class="source" href="table_searchable_example.html">
+                  table_searchable_example.ts
+                </a>
+              
+                
+                <a class="source" href="table_selectable_example.html">
+                  table_selectable_example.ts
+                </a>
+              
+                
+                <a class="source" href="table_sortable_example.html">
+                  table_sortable_example.ts
+                </a>
+              
+                
+                <a class="source" href="timeline_example.html">
+                  timeline_example.ts
+                </a>
+              
+                
+                <a class="source" href="worldbank_example.html">
+                  worldbank_example.ts
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <h1 id="c3-searchable-table">C3 Searchable Table</h1>
+<p><em>A table of country data that is sortable, paginated, and searchable.</em></p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Remember the column to specify sorting by it.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> gdp_column: c3.Table.Column&lt;CountryData&gt;;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Keep track of the country we searched for</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> match_country: CountryData;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <h2 id="create-the-data-table">Create the Data Table</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Create a <code>c3.Table</code> object and set its options.  Bind to an <strong>anchor</strong> DOM element using a <em>string selector</em>.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> country_table: c3.Table&lt;CountryData&gt; = <span class="hljs-keyword">new</span> c3.Table&lt;CountryData&gt;({
+    anchor: <span class="hljs-string">'#country_table_example'</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Enable the user to <strong>sort</strong> this table.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    sortable: <span class="hljs-literal">true</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p><strong>Limit</strong> the table to only show pages of 4 at a time,
+and enable <strong>pagination</strong> to change pages.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    limit_rows: <span class="hljs-number">10</span>,
+    pagination: <span class="hljs-literal">true</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>Make the table <strong>searchable</strong></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    searchable: <span class="hljs-literal">true</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Create an array of <strong>column</strong> objects to describe the table columns.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    columns: [
+        {
+            header: { text: <span class="hljs-string">"Country"</span> },
+            cells: { html: (country) =&gt; <span class="hljs-string">'&lt;b&gt;'</span> + country.name + <span class="hljs-string">'&lt;/b&gt;'</span> },
+        }, {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>These columns use custom formatters to set the html content of the cell 
+adding commas, units, rounding, etc.  You can add raw HTML if you like.
+These column also use the <code>vis</code> visualization support to render a bar
+graph based on the cell value.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            header: { text: <span class="hljs-string">"Population"</span> },
+            cells: { text: (country) =&gt; d3.format(<span class="hljs-string">','</span>)(country.population) },
+            sort: (country) =&gt; country.population,
+            vis: <span class="hljs-string">'bar'</span>,
+        }, {
+            header: { text: <span class="hljs-string">"Urbanization"</span> },
+            cells: { text: (country) =&gt; country.urban_population.toFixed(<span class="hljs-number">1</span>)+<span class="hljs-string">'%'</span> },
+            sort: (country) =&gt; country.urban_population,
+            vis: <span class="hljs-string">'bar'</span>,
+            total_value: <span class="hljs-number">100</span>,
+        }, {
+            header: { text: <span class="hljs-string">"Land Area"</span> },
+            cells: { html: (country) =&gt; (d3.format(<span class="hljs-string">','</span>)(<span class="hljs-built_in">Math</span>.round(country.land_area))) + <span class="hljs-string">"km&lt;sup&gt;2&lt;/sup&gt;"</span> },
+            sort: (country) =&gt; <span class="hljs-built_in">Math</span>.round(country.land_area),
+            vis: <span class="hljs-string">'bar'</span>,
+        },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>Assign this column to a variable <code>gdp_column</code> so we can refer to it below for setting the default sort.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        gdp_column = {
+            header: { text: <span class="hljs-string">"GDP"</span> },
+            cells: { text: (country) =&gt; <span class="hljs-string">"$"</span> + (d3.format(<span class="hljs-string">','</span>)(<span class="hljs-built_in">Math</span>.round(country.gdp))) + <span class="hljs-string">"m"</span> },
+            sort: (country) =&gt; <span class="hljs-built_in">Math</span>.round(country.gdp),
+            vis: <span class="hljs-string">'bar'</span>,
+        }, {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>By default, the <code>bar</code> visualization will base the bar width as a percentage of the
+total value of all cells.  This isn’t always appropriate, though, such as in the case
+of GDP per capita.  So, here we manually set the <code>total_value</code> to be the maximum
+per capita value.  Look out for Monaco!</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            header: { text: <span class="hljs-string">"GDP per capita"</span> },
+            cells: { html: (country) =&gt; <span class="hljs-string">"$"</span> + (d3.format(<span class="hljs-string">','</span>)(<span class="hljs-built_in">Math</span>.round(country.gdp_per_capita))) },
+            sort: (country) =&gt; <span class="hljs-built_in">Math</span>.round(country.gdp_per_capita),
+            vis: <span class="hljs-string">'bar'</span>,
+            total_value: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{ <span class="hljs-keyword">return</span> d3.max(country_table.data, (country) =&gt; country.gdp_per_capita); },
+        },
+    ],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>Configure the initial column to <strong>sort </strong> the data on based on the column varible <code>x_column</code> we created above.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    sort_column: gdp_column,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>Style the row with class <code>match</code> if the country matches the one found in the search.
+<code>match_country</code> is set in the match handler below.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    row_options: {
+        classes: {
+            <span class="hljs-string">'match'</span>: (country)=&gt; country === match_country,
+        },
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>Add an <strong>event handler</strong> to highlight which row was found in a <strong>search</strong></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    handlers: {
+        match: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">search, found_country, i</span>) </span>{
+            match_country = found_country;
+            <span class="hljs-keyword">this</span>.redraw();
+        },
+    },
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <h2 id="modify-table-options">Modify Table Options</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p><strong>Limit</strong> the number of rows</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'#limit_rows'</span>).addEventListener(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    country_table.limit_rows = <span class="hljs-keyword">this</span>.checked ?
+        +(&lt;HTMLInputElement&gt;<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'#number_of_rows'</span>)).value : <span class="hljs-literal">undefined</span>;
+    country_table.redraw();
+});
+<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'#number_of_rows'</span>).addEventListener(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    country_table.limit_rows = (&lt;HTMLInputElement&gt;<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'#limit_rows'</span>)).checked ? 
+        +<span class="hljs-keyword">this</span>.value : <span class="hljs-literal">undefined</span>;
+    country_table.redraw();
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>Enable <strong>pagination</strong> to select a different page</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'#pagination'</span>).addEventListener(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    country_table.pagination = <span class="hljs-keyword">this</span>.checked;
+    country_table.redraw();
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>Set how many pages are shown in the paginator</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'#number_of_pages'</span>).addEventListener(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    country_table.max_pages_in_paginator = +<span class="hljs-keyword">this</span>.value;
+    country_table.redraw();
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>Allow table to be searchable if table isn’t paginated</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'#searchable_if_not_paginated'</span>).addEventListener(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    country_table.searchable_if_not_paginated = <span class="hljs-keyword">this</span>.checked;
+    country_table.redraw();
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <h2 id="load-the-country-data">Load the Country Data</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>The <strong>interface</strong> is just a type definition for TypeScript.
+Ignore this for JavaScript.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">interface</span> CountryData {
+    name: <span class="hljs-built_in">string</span>;
+    code: <span class="hljs-built_in">string</span>;
+    population: <span class="hljs-built_in">number</span>;
+    urban_population: <span class="hljs-built_in">number</span>;
+    gdp: <span class="hljs-built_in">number</span>;
+    gdp_per_capita: <span class="hljs-built_in">number</span>;
+    land_area: <span class="hljs-built_in">number</span>;
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <p>Load the country <strong>CSV data</strong> using D3.
+This loads and merges the data from multiple tables.
+The data is loaded this way to work with the file format as provided by the World Bank data source.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>d3.csv(<span class="hljs-string">'data/countries.csv'</span>)
+    .row((row) =&gt; ({
+        name: row[<span class="hljs-string">'name'</span>],
+        code: row[<span class="hljs-string">'world_bank_code'</span>],
+    })).get((error, countries:CountryData[]) =&gt; {
+        <span class="hljs-keyword">var</span> country_lookup = {};
+        countries.filter((row) =&gt; !!row.code).forEach((row) =&gt; {
+            country_lookup[row.code] = row;
+        });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <p>Load the country data statistics for the year 2000
+from the World Bank data format.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        d3.csv(<span class="hljs-string">'data/gdp.csv'</span>)
+            .row((row) =&gt; ({
+                country_name: row[<span class="hljs-string">'Country Name'</span>],
+                country_code: row[<span class="hljs-string">'Country Code'</span>],
+                indicator: row[<span class="hljs-string">'Indicator Code'</span>],
+                value: +row[<span class="hljs-string">'Value'</span>],
+                year: +row[<span class="hljs-string">'Year'</span>],
+            })).get((error, rows) =&gt; {
+                <span class="hljs-keyword">var</span> indicator_mapping = {
+                    <span class="hljs-string">'SP.POP.TOTL'</span>: <span class="hljs-string">'population'</span>,
+                    <span class="hljs-string">'EN.URB.MCTY.TL.ZS'</span>: <span class="hljs-string">'urban_population'</span>,
+                    <span class="hljs-string">'AG.LND.TOTL.K2'</span>: <span class="hljs-string">'land_area'</span>,
+                    <span class="hljs-string">'NY.GDP.MKTP.CD'</span>: <span class="hljs-string">'gdp'</span>,
+                    <span class="hljs-string">'NY.GDP.PCAP.CD'</span>: <span class="hljs-string">'gdp_per_capita'</span>,
+                };
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> row of rows) {
+                    <span class="hljs-keyword">if</span> (!row.country_code) <span class="hljs-keyword">continue</span>;
+                    <span class="hljs-keyword">if</span> (row.year !== <span class="hljs-number">2000</span>) <span class="hljs-keyword">continue</span>;
+                    <span class="hljs-keyword">if</span> (!(row.indicator <span class="hljs-keyword">in</span> indicator_mapping)) <span class="hljs-keyword">continue</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-25">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-25">&#182;</a>
+              </div>
+              <p>Convert GDP to millions of dollars</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">if</span> (indicator_mapping[row.indicator] === <span class="hljs-string">'gdp'</span>) row.value /= <span class="hljs-number">1000000</span>;
+                    country_lookup[row.country_code][indicator_mapping[row.indicator]] = row.value;
+                }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-26">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-26">&#182;</a>
+              </div>
+              <p>Setup the table the <strong>data</strong> and <strong>render</strong>!</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                d3.selectAll(<span class="hljs-string">'#loading'</span>).remove();
+                country_table.data = countries.filter((country) =&gt; country.gdp &gt; <span class="hljs-number">0.000000001</span>);
+                country_table.render();
+            });
+    });</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
