@@ -61,6 +61,14 @@
       }
     };
 
+    util.isEmpty = function(obj) {
+      var property;
+      for (property in obj) {
+        return false;
+      }
+      return true;
+    };
+
     return util;
 
   })();
@@ -298,6 +306,9 @@
         prepend = false;
       }
       child = new c3.Selection(null, query);
+      if (typeof options !== "undefined" && options !== null) {
+        child.options(options);
+      }
       if (create) {
         child["new"] = this["new"].insert(child.tag, (prepend ? ':first-child' : null));
         if (child._query_class != null) {

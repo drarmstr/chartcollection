@@ -352,14 +352,14 @@
                   _results1.push(c3.functor((_ref7 = (_ref8 = (_ref9 = column.cells.html) != null ? _ref9 : column.cells.text) != null ? _ref8 : this.cell_options.html) != null ? _ref7 : this.cell_options.text));
                 }
                 return _results1;
-              }).call(_this), function(d) {
-                var column_content;
+              }).call(_this), function(d, i) {
+                var column_content, j;
                 return ((function() {
                   var _l, _len2, _results1;
                   _results1 = [];
-                  for (_l = 0, _len2 = column_contents.length; _l < _len2; _l++) {
-                    column_content = column_contents[_l];
-                    _results1.push(column_content(d));
+                  for (j = _l = 0, _len2 = column_contents.length; _l < _len2; j = ++_l) {
+                    column_content = column_contents[j];
+                    _results1.push(column_content(d, i, j));
                   }
                   return _results1;
                 })()).join(' ');

@@ -103,20 +103,20 @@ window.onresize = function () {
 };
 // ## Modify Chart Options
 for (var _i = 0, _a = ['input', 'change']; _i < _a.length; _i++) {
-    var event_name = _a[_i];
+    var event_name_1 = _a[_i];
     // Decimate the number of elements drawn in the Call Trace
-    $('#limit_call_trace_elements').on(event_name, function () {
+    $('#limit_call_trace_elements').on(event_name_1, function () {
         flamechart_calltrace.layers[0].limit_elements = +$(this).val();
         flamechart_calltrace.redraw();
     });
     // Decimate the number of elements drawn in the Call Tree
-    $('#limit_call_tree_elements').on(event_name, function () {
+    $('#limit_call_tree_elements').on(event_name_1, function () {
         sunburst_layer.arc_options.animate = false;
         sunburst_layer.limit_elements = +$(this).val();
         sunburst_calltree.redraw();
         sunburst_layer.arc_options.animate = true;
     });
-    $('#limit_call_tree_angle').on(event_name, function () {
+    $('#limit_call_tree_angle').on(event_name_1, function () {
         sunburst_layer.arc_options.animate = false;
         sunburst_layer.limit_angle_percentage = +$(this).val();
         sunburst_calltree.redraw();

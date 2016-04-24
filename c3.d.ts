@@ -81,7 +81,7 @@ declare module c3 {
         interface Options<D> {
             class?: string | { (d: D, i: number, j?: number): string };
             classes?: { [key: string]: boolean | { (d: D, i: number, j?: number): boolean } };
-            styles?: { [key: string]: string | number | { (d: D, i: number, j?: number): string | number } };
+            styles?: { [key: string]: string | number | d3.Color | { (d: D, i: number, j?: number): string | number | d3.Color } };
             events?: { [key: string]: (d: D, i: number, j?: number) => any };
             text?: string | number | { (d: D, i: number, j?: number): string | number };
             html?: string | number | { (d: D, i: number, j?: number): string };
@@ -775,5 +775,73 @@ declare module c3 {
                 get_leaf(position: number): D;
             }
         }
+    }
+
+
+    //////////////////////////////////////////////////////////////////////////////////////
+    // Graphs
+    //////////////////////////////////////////////////////////////////////////////////////
+    export interface GraphOptions<D,L> extends ChartOptions {
+        data?: D[];
+        links?: L[];
+    }
+    interface Graph<D,L> extends GraphOptions<D,L> { }
+    class Graph<D,L> extends Chart implements GraphOptions<D,L> {
+        constructor(opt?: GraphOptions<D,L>);
+        render(opt?: GraphOptions<D,L>): this;
+    }
+
+
+    //////////////////////////////////////////////////////////////////////////////////////
+    // Sankey Flow Chart
+    //////////////////////////////////////////////////////////////////////////////////////
+    export interface SankeyOptions<D, L> extends GraphOptions<D, L> {
+        key?: (d: D) => number | string;
+        value?: (d: D) => number;
+        link_key?: (l: L) => number | string;
+        link_source?: (l: L) => number | string;
+        link_target?: (l: L) => number | string;
+        link_value?: (l: L) => number;
+
+        iterations?: number;
+        alpha?: number;
+        node_padding?: number | string;
+        node_width?: number | string;
+        align?: string;
+        link_path?: string;
+        link_path_curvature?: number;
+
+        nodes_options?: c3.Selection.Options<void>;
+        node_options?: c3.Selection.Options<D>;
+        rect_options?: c3.Selection.Options<D>;
+        links_options?: c3.Selection.Options<void>;
+        link_options?: c3.Selection.Options<L>;
+        path_options?: c3.Selection.Options<L>;
+        node_label_options?: c3.Selection.Options<D>;
+        link_label_options?: c3.Selection.Options<L>;
+    }
+    interface Sankey<D,L> extends SankeyOptions<D,L> { }
+    class Sankey<D, L> extends Graph<D, L> implements SankeyOptions<D, L> {
+        nodes_layer: c3.Selection<void>;
+        node_g: c3.Selection<D>;
+        rects: c3.Selection<D>;
+        links_layer: c3.Selection<void>;
+        link_g: c3.Selection<L>;
+        paths: c3.Selection<L>;
+
+        constructor(opt?: SankeyOptions<D,L>);
+        render(opt?: SankeyOptions<D,L>): this;
+    }
+
+
+    //////////////////////////////////////////////////////////////////////////////////////
+    // Butterfly Flow Chart
+    //////////////////////////////////////////////////////////////////////////////////////
+    export interface ButterflyOptions<D, L> extends SankeyOptions<D, L> {
+    }
+    interface Butterfly<D, L> extends ButterflyOptions<D, L> { }
+    class Butterfly<D, L> extends Sankey<D, L> implements ButterflyOptions<D, L> {
+        constructor(opt?: ButterflyOptions<D, L>);
+        render(opt?: ButterflyOptions<D, L>): this;
     }
 }

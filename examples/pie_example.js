@@ -251,8 +251,8 @@ $('#enable_sorting').on('change', function () {
 // Limit the number of elements that will be drawn.
 // If there are too many elements, then the ones with the smallest value won't be drawn.
 for (var _i = 0, _a = ['input', 'change']; _i < _a.length; _i++) {
-    var event_name = _a[_i];
-    $('#limit_segment_count').on(event_name, function () {
+    var event_name_1 = _a[_i];
+    $('#limit_segment_count').on(event_name_1, function () {
         pie_chart.layers[0].limit_elements = +$(this).val();
         pie_chart.redraw();
         half_moon_chart.layers[0].limit_elements = +$(this).val();

@@ -175,15 +175,21 @@ html.grabbing * {
   stroke-opacity: 0.5;
   stroke-dasharray: 5,2;
 }
-.c3.butterfly g.nodes rect {
+.c3.sankey rect {
   shape-rendering: crispEdges;
-  cursor: pointer;
 }
-.c3.butterfly g.nodes text {
-  cursor: pointer;
-}
-.c3.butterfly path {
+.c3.sankey path {
   fill: none;
+  opacity: 0.5;
+}
+.c3.sankey .links.curve {
+  stroke: black;
+}
+.c3.sankey .links.straight {
+  fill: black;
+}
+.c3.butterfly .navigatable .node rect {
+  cursor: pointer;
 }
 table.c3.table {
   border-collapse: collapse;

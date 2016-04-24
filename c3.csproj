@@ -73,6 +73,8 @@
     <Content Include="css\doc.min.css">
       <DependentUpon>doc.css</DependentUpon>
     </Content>
+    <Content Include="examples\butterfly_example.html" />
+    <Content Include="examples\sankey_example.html" />
     <Content Include="examples\scatterplot_example.html" />
     <Content Include="examples\index.html" />
     <Content Include="examples\flamechart_sunburst_example.html" />
@@ -94,6 +96,12 @@
     <Content Include="examples\worldbank_example.html" />
     <Content Include="api.html" />
     <Content Include="index.html" />
+    <Content Include="js\c3-graph.js">
+      <DependentUpon>c3-graph.coffee</DependentUpon>
+    </Content>
+    <Content Include="js\c3-graph.min.js">
+      <DependentUpon>c3-graph.js</DependentUpon>
+    </Content>
     <Content Include="js\c3-layers.js">
       <DependentUpon>c3-layers.coffee</DependentUpon>
     </Content>
@@ -154,6 +162,7 @@
     <Content Include="js\c3-polar.coffee" />
     <Content Include="css\doc.less" />
     <Content Include="examples\data\injury_cause.tsv" />
+    <Content Include="js\c3-graph.coffee" />
     <None Include="Properties\PublishProfiles\demo.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -164,6 +173,8 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="c3.d.ts" />
+    <TypeScriptCompile Include="examples\butterfly_example.ts" />
+    <TypeScriptCompile Include="examples\sankey_example.ts" />
     <TypeScriptCompile Include="examples\scatterplot_example.ts" />
     <TypeScriptCompile Include="examples\legend_example.ts" />
     <TypeScriptCompile Include="examples\flamechart_sunburst_example.ts" />
