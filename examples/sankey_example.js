@@ -1,5 +1,6 @@
 // # C3 Sankey Energy Use Flow Chart
 // _Demonstrates a Sankey flow chart of the energy production and use in the United States_.
+// ## TODO: Add source annotations
 var source_color = d3.scale.category20b();
 var us_sankey = new c3.Sankey({
     anchor: '#us_sankey_flowchart',
@@ -18,7 +19,7 @@ var us_sankey = new c3.Sankey({
         animate: true,
     },
     link_options: {
-        title: function (l) { return l.source + " → " + l.target; },
+        title: function (l) { return l.source + " → " + l.target + ": " + l.btu; },
     },
     path_options: {
         styles: {
@@ -44,7 +45,7 @@ var uk_sankey = new c3.Sankey({
         },
     },
     link_options: {
-        title: function (l) { return uk_energy_data.nodes[l.source].name + " → " + uk_energy_data.nodes[l.target].name; },
+        title: function (l) { return uk_energy_data.nodes[l.source].name + " → " + uk_energy_data.nodes[l.target].name + ": " + l.value; },
     },
     path_options: {
         styles: {

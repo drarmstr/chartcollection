@@ -49,6 +49,8 @@
 
     Sankey.prototype.link_target = void 0;
 
+    Sankey.prototype.link_key = void 0;
+
     Sankey.prototype.link_value = void 0;
 
     Sankey.prototype.iterations = 32;
@@ -121,7 +123,7 @@
     };
 
     Sankey.prototype._update = function(origin) {
-      var current_data, current_links, datum, detect_backedge, key, link, link_key, link_value, next_nodes, node, node_links, nodes, remaining_nodes, stack, target_key, visited, x, _i, _j, _k, _l, _len, _len1, _len2, _len3, _name, _name1, _ref, _ref1, _ref2, _ref3;
+      var current_data, current_links, datum, detect_backedge, key, link, link_key, link_value, next_nodes, node, node_links, nodes, remaining_nodes, stack, target_key, visited, x, _i, _j, _k, _l, _len, _len1, _len2, _len3, _name, _name1, _ref, _ref1, _ref2, _ref3, _ref4;
       if (origin === 'render' && !isNaN(this.node_padding)) {
         return;
       }
@@ -190,22 +192,35 @@
           throw Error("Missing nodes are not currently supported");
         }
       }
-      visited = {};
       _ref1 = this.nodes;
       for (key in _ref1) {
         node = _ref1[key];
+        node.links_sum = d3.sum(node.source_links, (function(_this) {
+          return function(l) {
+            return _this.node_links[_this.link_key(l)].value;
+          };
+        })(this)) + d3.sum(node.target_links, (function(_this) {
+          return function(l) {
+            return _this.node_links[_this.link_key(l)].value;
+          };
+        })(this));
+      }
+      visited = {};
+      _ref2 = this.nodes;
+      for (key in _ref2) {
+        node = _ref2[key];
         if (!(!visited[key])) {
           continue;
         }
         stack = [];
         (detect_backedge = (function(_this) {
           return function(key, node) {
-            var target, target_key, _l, _len3, _ref2;
+            var target, target_key, _l, _len3, _ref3;
             visited[key] = true;
             stack.push(node);
-            _ref2 = node.target_links;
-            for (_l = 0, _len3 = _ref2.length; _l < _len3; _l++) {
-              link = _ref2[_l];
+            _ref3 = node.target_links;
+            for (_l = 0, _len3 = _ref3.length; _l < _len3; _l++) {
+              link = _ref3[_l];
               target_key = _this.link_target(link);
               target = nodes[target_key];
               node_links[_this.link_key(link)].backedge = __indexOf.call(stack, target) >= 0;
@@ -224,9 +239,9 @@
         for (key in remaining_nodes) {
           node = remaining_nodes[key];
           node.x = x;
-          _ref2 = node.target_links;
-          for (_l = 0, _len3 = _ref2.length; _l < _len3; _l++) {
-            link = _ref2[_l];
+          _ref3 = node.target_links;
+          for (_l = 0, _len3 = _ref3.length; _l < _len3; _l++) {
+            link = _ref3[_l];
             if (!(!node_links[this.link_key(link)].backedge)) {
               continue;
             }
@@ -239,9 +254,9 @@
       }
       x--;
       if (this.align === 'both') {
-        _ref3 = this.nodes;
-        for (key in _ref3) {
-          node = _ref3[key];
+        _ref4 = this.nodes;
+        for (key in _ref4) {
+          node = _ref4[key];
           if (!node.target_links.length) {
             node.x = x;
           }
@@ -252,7 +267,7 @@
     };
 
     Sankey.prototype._layout = function(origin, current_data, current_links) {
-      var alpha, collision_detection, column, columns, delta, i, iteration, j, key, layout_links, link, link_key, node, node_link, node_links, nodes, r, source_link_value, tmp, v_domain, weighted_y, y, _base, _i, _j, _k, _l, _len, _len1, _len10, _len11, _len2, _len3, _len4, _len5, _len6, _len7, _len8, _len9, _m, _n, _o, _p, _q, _r, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _s, _t, _u;
+      var alpha, collision_detection, column, columns, delta, i, iteration, j, key, layout_links, link, link_key, node, node_link, node_links, nodes, r, source_link_value, tmp, v_domain, weighted_y, y, _base, _i, _j, _k, _l, _len, _len1, _len10, _len11, _len2, _len3, _len4, _len5, _len6, _len7, _len8, _len9, _m, _n, _o, _p, _q, _r, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _s, _t, _u;
       nodes = this.nodes;
       node_links = this.node_links;
       this.columns = columns = d3.nest().key(function(node) {
@@ -430,9 +445,6 @@
           node = _ref1[_m];
           node.y = y;
           y += node.value + column.padding;
-          if (isNaN(y)) {
-            throw "BLARG";
-          }
         }
       }
       for (j = _n = 0, _len5 = columns.length; _n < _len5; j = ++_n) {
@@ -462,35 +474,22 @@
       alpha = 1;
       for (iteration = _q = 0, _ref3 = this.iterations; 0 <= _ref3 ? _q < _ref3 : _q > _ref3; iteration = 0 <= _ref3 ? ++_q : --_q) {
         alpha *= this.alpha;
-        _ref4 = this.nodes;
-        for (key in _ref4) {
-          node = _ref4[key];
-          node.links_sum = d3.sum(node.source_links, (function(_this) {
-            return function(l) {
-              return _this.node_links[_this.link_key(l)].value;
-            };
-          })(this)) + d3.sum(node.target_links, (function(_this) {
-            return function(l) {
-              return _this.node_links[_this.link_key(l)].value;
-            };
-          })(this));
-        }
         for (_r = 0, _len8 = columns.length; _r < _len8; _r++) {
           column = columns[_r];
           for (_s = 0, _len9 = column.length; _s < _len9; _s++) {
             node = column[_s];
             delta = 0;
-            _ref5 = node.source_links;
-            for (_t = 0, _len10 = _ref5.length; _t < _len10; _t++) {
-              link = _ref5[_t];
+            _ref4 = node.source_links;
+            for (_t = 0, _len10 = _ref4.length; _t < _len10; _t++) {
+              link = _ref4[_t];
               node_link = this.node_links[this.link_key(link)];
               if (!node_link.backedge) {
                 delta += (node_link.sy - node_link.ty) * node_link.value;
               }
             }
-            _ref6 = node.target_links;
-            for (_u = 0, _len11 = _ref6.length; _u < _len11; _u++) {
-              link = _ref6[_u];
+            _ref5 = node.target_links;
+            for (_u = 0, _len11 = _ref5.length; _u < _len11; _u++) {
+              link = _ref5[_u];
               node_link = this.node_links[this.link_key(link)];
               if (!node_link.backedge) {
                 delta += (node_link.ty - node_link.sy) * node_link.value;

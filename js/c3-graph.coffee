@@ -5,6 +5,8 @@
 # Graph
 ###################################################################
 
+# Graph
+# @abstract
 class c3.Graph extends c3.Chart
     @version: 0.1
     type: 'graph'
@@ -14,47 +16,96 @@ class c3.Graph extends c3.Chart
 # Sankey
 ###################################################################
 
-# Directed Graph
-# Unlike D3 Sankey
-## Does not modify provided dataset
-## Animate changing datasets
-## Provide accessors for working with custom data types
-## Allows nodes to have a value larger then the incoming and outgoing links
-## Padding and node widths in terms of pixels or percentage
-## Cycles/Back Edges allowed
-## Links to missing nodes
-## Tweaked layout algorithm
-## Zoom and Pan
-## Draggable nodes horizontally as well as vertically
-
+# Directed graph [**Sankey**](https://en.wikipedia.org/wiki/Sankey_diagram) visualization.
+# Provide a set of nodes and weighted links between them.  Various configuration options are available
+# to adjust the layout algorithm.
+# 
+# The implementation is based on the [D3 Sankey plugin](https://bost.ocks.org/mike/sankey/).
+# However, it has been extended with the following:
+#
+# * User can define their own data structures for nodes and links.
+# * Does not modify the original dataset.
+# * Cycles / Back Edges are allowed.
+# * Animation of dynamic datasets.
+# * Nodes may have a value larger than incoming and outgoing links
+# * Configurable padding and node widths based on either pixels or percentages.
+# * Tweaked layout algorithm.
+#
+# Features that are planned:
+#
+# * Labels
+# * Links to missing nodes
+# * Draggable nodes
+# * Zoom/pan navigation
+# @author Douglas Armstrong
+# @todo Labels
 class c3.Sankey extends c3.Graph
     @version: 0.1
     type: 'sankey'
     
+    # [Array<>] Array of user-defined node objects
     data: []
+    # [Array<>] Array of user-defined link objects
     links: []
+    # [Function] Accessor function to get the key for a node object
     key: undefined
+    # [Function] Accessor function to get the value for a node object.
+    # If not defined, then the maximum value of the input or output links of a node will be used.
     value: undefined
+    # [Function] Accessor function to get the key of the source node for a link.
+    # This defaults to using the `source` member of the link object.
     link_source: undefined
+    # [Function] Accessor function to get the key of the target node for a link.
+    # This defaults to using the `target` member of the link object.
     link_target: undefined
+    # [Function] Accessor function to get the key of a link.
+    # This defaults to combining the `link_source` and `link_target` accessors
+    link_key: undefined
+    # [Function] Accessor function to get the value of a link.
+    # This defaults to using the `value` member of the link object.
     link_value: undefined
     
+    # [Number] Number of iterations to run the iterative layout algorithm.
     iterations: 32
+    # [Number] An alpha factor to adjust the subsequent strength of each iteration.
+    # Smaller numbers will quiesce faster.
     alpha: 0.99
+    # [Number, String] The vertical padding between nodes.
+    # This can be the number of pixels to attempt to use between each node.  If there are too many
+    # nodes for the vertical space, then fewer may be used.
+    # It can also be a string that represents the percentage of the vertical space to use for padding
+    # divided among all of the nodes.
     node_padding: '20%'
+    # [Number, String] The horzontal width of each node.
+    # This may be a number of pixels for the node width or else a string which is the percentage of 
+    # the horizontal space to use for nodes.
     node_width: 30
+    # [String] The type of alignment to use for the nodes:
+    # * **both** - Align nodes with no inputs on the left and no outputs on the right
+    # * **left** - Align nodes with no inputs on the left
     align: 'both'
+    # [String] The type of path to use for links between nodes:
+    # * **curve** - A curved path
+    # * **straight** - A stright line
     link_path: 'curve'
-    # From 0-1
+    # [Number] A number representing the curvature to use for curved link paths.  Ranges from 0-1.
     link_path_curvature: 0.5
     
+    # [{c3.Selection.Options}] Options for the svg:g layer of all nodes
     nodes_options: undefined
+    # [{c3.Selection.Options}] Options for the svg:g node elements
     node_options: undefined
+    # [{c3.Selection.Options}] Options for the svg:rect node elements
     rect_options: undefined
+    # [{c3.Selection.Options}] Options for the svg:g layer of all links
     links_options: undefined
+    # [{c3.Selection.Options}] Options for the svg:g link elements
     link_options: undefined
+    # [{c3.Selection.Options}] Options for the svg:path link elements
     path_options: undefined
+    # [{c3.Selection.Options}] Options for the svg:text node labels
     node_label_options: undefined
+    # [{c3.Selection.Options}] Options for the svg:text link labels
     link_label_options: undefined
     
     _init: =>
@@ -114,6 +165,11 @@ class c3.Sankey extends c3.Graph
         for key,node of nodes when not node.value?
             throw Error "Missing nodes are not currently supported"
         
+        # Pre-compute the sums of link values  BLARG only do once, not per iteration
+        for key, node of @nodes
+            node.links_sum = 
+                d3.sum(node.source_links, (l)=> @node_links[@link_key l].value) +
+                d3.sum(node.target_links, (l)=> @node_links[@link_key l].value)
         
         # Detect back edges / cycles
         visited = {}
@@ -153,7 +209,6 @@ class c3.Sankey extends c3.Graph
         # Compute horizontal domain
         @h.domain [0,x]
         
-        
         @_layout origin, current_data, current_links
     
     
@@ -161,18 +216,14 @@ class c3.Sankey extends c3.Graph
         nodes = @nodes
         node_links = @node_links
         
-
-        
         # Prepare set of columns
         @columns = columns = d3.nest()
             .key (node)-> node.x
             .sortKeys d3.ascending
-#            .sortValues d3.descending
+            #.sortValues d3.descending
             .entries (node for key,node of @nodes)
             .map (g)-> g.values
         c3.array.sort_up @columns, (column)-> column[0].x # d3's sortKeys didn't work?
-#        for column in columns
-#            c3.array.sort_up column, (node)-> node.value
 
         # Calculate node padding and the vertical domain
         # Start by determining the percentage of each column to use for padding
@@ -204,26 +255,6 @@ class c3.Sankey extends c3.Graph
                     dy = y - node.y
                     if dy > 0 then node.y += dy
                     y = node.y + node.value + column.padding
-
-#                for node, i in column
-#                    overlap = y - node.y
-#                    if overlap > 0
-#                        if i
-#                            #move_up = overlap * (node.links_sum / (node.links_sum+column[i-1].links_sum))
-#                            #move_down = overlap * (column[i-1].links_sum / (node.links_sum+column[i-1].links_sum))
-#                            move_up = move_down = overlap / 2
-#                        else 
-#                            move_up = 0
-#                            move_down = overlap
-#                        
-#                        j=i-1
-#                        while j >= 0 and move_up > 1e-11
-#                            column[j].y -= move_up
-#                            if not j then break
-#                            move_up = column[j].y - column[j-1].y + column[j-1].value + column.padding
-#                        
-#                        node.y += move_down
-#                    y = node.y + node.value + column.padding
                 
                 # If they extend past the bottom, then push some back up
                 if node.y+node.value > @v.domain()[1]
@@ -233,16 +264,6 @@ class c3.Sankey extends c3.Graph
                         if dy > 0 then node.y -= dy
                         else break
                         y = node.y - column.padding
-                
-#                # If they extend past the top, then push some back down
-#                c3.array.sort_up column, (node)-> node.y
-#                y = 0
-#                for node in column
-#                    overlap = y - node.y
-#                    if overlap > 0 then node.y += overlap
-#                    else break
-#                    y = node.y + node.value + column.padding
-                        
         
         # Layout the links along the nodes
         layout_links = =>
@@ -275,9 +296,6 @@ class c3.Sankey extends c3.Graph
             for node in columns[0]
                 node.y = y
                 y += node.value + column.padding
-                if isNaN y then throw "BLARG"
-#            # For the first column, place by ordinal to make it easier for first iteration to re-order
-#            node.y = i for node,i in columns[0]
         for column,j in columns when j
             # For each subsequent column, align the nodes to the right of their sources to attempt flatter links
             for node in column
@@ -290,30 +308,17 @@ class c3.Sankey extends c3.Graph
                     weighted_y += nodes[@link_source link].y * node_link.value
                     source_link_value += node_link.value
                 node.y = weighted_y / source_link_value
+        ## Give nodes and links an initial position
+        #for column in columns
+        #     node.y = i for node,i in column
         collision_detection()
-
-#        # Give nodes and links an initial position
-#        for column in columns
-##            node.y = i for node,i in column
-#            y = 0
-#            for node in column
-#                node.y = y
-#                y += node.value + column.padding
-##        collision_detection()
-
         layout_links()
 
         # Shift nodes closer to their neighbors based on the value of their links
         # Iterate back and forth across the nodes left and right.
         alpha = 1
         for iteration in [0...@iterations]
-            alpha *= @alpha # BLARG 0.99
-            
-            # Pre-compute the sums of link values  BLARG only do once, not per iteration
-            for key, node of @nodes
-                node.links_sum = 
-                    d3.sum(node.source_links, (l)=> @node_links[@link_key l].value) +
-                    d3.sum(node.target_links, (l)=> @node_links[@link_key l].value)
+            alpha *= @alpha
 
             for column in columns
                 for node in column
@@ -330,84 +335,6 @@ class c3.Sankey extends c3.Graph
                     node.y += delta * alpha
             collision_detection()
             layout_links()
-
-#            for column in columns
-#                for node in column
-#                    y = 0
-#                    if node.source_links.length
-#                        y += d3.sum(node.source_links, (link)=>
-#                            link_value = @link_value link
-#                            (@node_links[@link_key link].sy + link_value/2) * link_value )
-#                    if node.target_links.length
-#                        y += d3.sum(node.target_links, (link)=>
-#                            link_value = @link_value link
-#                            (@node_links[@link_key link].ty + link_value/2) * link_value )
-#                    y /= node.links_sum
-#                    node.y += (y - (node.y+node.value/2)) * alpha
-#            collision_detection()
-#            layout_links()
-                                    
-#            for column in columns
-#                for node in column
-#                    y = 0
-#                    if node.source_links.length
-#                        y += d3.sum(node.source_links, (link)=>
-#                                source_node = @nodes[@link_source link]
-#                                (source_node.y+source_node.value/2) * @link_value(link) )
-#                    if node.target_links.length
-#                        y += d3.sum(node.target_links, (link)=>
-#                                target_node = @nodes[@link_target link]
-#                                (target_node.y+target_node.value/2) * @link_value(link) )
-#                    y /= node.links_sum
-#                    node.y += (y - (node.y+node.value/2)) * alpha
-#            collision_detection()
-
-#            # Pre-compute the sums of link values
-#            for key, node of @nodes
-#                node.source_links_sum = d3.sum node.source_links, @link_value
-#                node.target_links_sum = d3.sum node.target_links, @link_value
-#                
-#            # Iterate right -> left
-#            for column in columns by -1
-#                for node in column
-#                    if node.source_links.length
-#                        y = d3.sum(node.source_links, (link)=>
-#                                source_node = @nodes[@link_source link]
-#                                (source_node.y+source_node.value/2) * @link_value(link) ) / \
-#                            node.source_links_sum
-#                        node.y += (y - (node.y+node.value/2)) * alpha
-##            collision_detection()
-#
-#            # Iterate left -> right
-#            for column in columns
-#                for node in column
-#                    if node.target_links.length
-#                        y = d3.sum(node.target_links, (link)=>
-#                                target_node = @nodes[@link_target link]
-#                                (target_node.y+target_node.value/2) * @link_value(link) ) / \
-#                            node.target_links_sum
-#                        node.y += (y - (node.y+node.value/2)) * alpha
-#            collision_detection()
-        
-        #collision_detection()
-        
-        
-#        # Layout the links along the nodes
-#        @node_links = {}
-#        @node_links[@link_key link] = {} for link in @links
-#        for node in (@nodes[@key datum] for datum in current_data)
-#            c3.array.sort_up node.source_links, (link)=> @nodes[@link_source link].y
-#            y = node.y
-#            for link in node.source_links
-#                @node_links[@link_key link].ty = y
-#                y += @link_value link
-#                
-#            c3.array.sort_up node.target_links, (link)=> @nodes[@link_target link].y
-#            y = node.y
-#            for link in node.target_links
-#                @node_links[@link_key link].sy = y
-#                y += @link_value link
-        
         
         # Bind data to the DOM
         @nodes_layer = @content.select('g.nodes').singleton().options(@nodes_options).update()
@@ -433,9 +360,7 @@ class c3.Sankey extends c3.Graph
         
         # Set the horizontal range here in case @node_width is a percentage
         @h.rangeRound [0, @width-node_width]
-    
-#        @node_g.animate(origin is 'redraw').position
-#            'transform': (d,i)=> 'translate('+@h((node=@nodes[@key d]).x)+','+@v(node.y)+')'
+        
         @rects.animate(origin isnt 'render' and origin isnt 'resize').position
             x: (d)=> @h @nodes[@key d].x
             y: (d)=> @v @nodes[@key d].y
@@ -493,6 +418,9 @@ class c3.Sankey extends c3.Graph
 # Butterfly
 ###################################################################
 
+# Butterfly flow visualization.
+# **This is a work in progress.**
+# @author Douglas Armstrong
 class c3.Butterfly extends c3.Sankey
     @version: 0.1
     type: 'butterfly'

@@ -21,78 +21,70 @@
     &raquo;
     <span class='title'>c3</span>
     &raquo;
-    <span class='title'>Axis</span>
-    &raquo;
-    <span class='title'>X</span>
+    <span class='title'>Graph</span>
   </div>
 </div>
     <div id='content'>
       <h1>
         Class:
-        c3.Axis.X
+        c3.Graph
+        <span class='note title'>Abstract</span>
       </h1>
       <table class='box'>
         <tr>
           <td>Defined in:</td>
-          <td>js\c3-plot.coffee</td>
+          <td>js\c3-graph.coffee</td>
         </tr>
         <tr>
           <td>Inherits:</td>
           <td>
-            <a href='../../class/c3/Axis.html'>c3.Axis</a>
+            <a href='../../class/c3/Chart.html'>c3.Chart</a>
           </td>
         </tr>
       </table>
       <h2>Overview</h2>
       <div class='docstring'>
-  <p>Horizontal X-Axis</p>
+  <div class='abstract note'>
+    <strong>
+      This
+      class
+      is abstract.
+    </strong>
+    
+  </div>
+  <p>Graph</p>
 </div>
 <div class='tags'>
-  <h3>See also:</h3>
-  <ul class='see'>
-    <li>
-      <a href='../../class/c3/Axis.html'>c3.Axis</a>
-    </li>
-  </ul>
 </div>
+      <h2>Direct Known Subclasses</h2>
+      <p class='children'>
+        <a href='../../class/c3/Sankey.html'>c3.Sankey</a>
+      </p>
       <h2>Variables Summary</h2>
       <dl class='constants'>
+  <dt id='version-variable'>
+    version
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>0.1</code></pre>
+    
+  </dd>
   <dt id='type-variable'>
     type
     =
   </dt>
   <dd>
-    <pre><code class='coffeescript'>&#39;x&#39;</code></pre>
-    
-  </dd>
-  <dt id='orient-variable'>
-    orient
-    =
-  </dt>
-  <dd>
-    <pre><code class='coffeescript'>&#39;bottom&#39;</code></pre>
+    <pre><code class='coffeescript'>&#39;graph&#39;</code></pre>
     
   </dd>
 </dl>
       <h3 class='inherited'>
         Variable inherited from
-        <a href='../../class/c3/Axis.html'>c3.Axis</a>
+        <a href='../../class/c3/Chart.html'>c3.Chart</a>
       </h3>
       <p class='inherited'>
-        <a href='../../class/c3/Axis.html#version-variable'>version</a>
-        <a href='../../class/c3/Axis.html#type-variable'>type</a>
-        <a href='../../class/c3/Axis.html#_next_uid-variable'>_next_uid</a>
-        <a href='../../class/c3/Axis.html#scale-variable'>scale</a>
-        <a href='../../class/c3/Axis.html#orient-variable'>orient</a>
-        <a href='../../class/c3/Axis.html#grid-variable'>grid</a>
-        <a href='../../class/c3/Axis.html#label-variable'>label</a>
-        <a href='../../class/c3/Axis.html#ticks-variable'>ticks</a>
-        <a href='../../class/c3/Axis.html#tick_label-variable'>tick_label</a>
-        <a href='../../class/c3/Axis.html#tick_values-variable'>tick_values</a>
-        <a href='../../class/c3/Axis.html#tick_count-variable'>tick_count</a>
-        <a href='../../class/c3/Axis.html#tick_size-variable'>tick_size</a>
-        <a href='../../class/c3/Axis.html#path_size-variable'>path_size</a>
-        <a href='../../class/c3/Axis.html#axis_size-variable'>axis_size</a>
+        <a href='../../class/c3/Chart.html#type-variable'>type</a>
         <a href='../../class/c3/Chart.html#class-variable'>class</a>
         <a href='../../class/c3/Chart.html#options-variable'>options</a>
         <a href='../../class/c3/Chart.html#content_options-variable'>content_options</a>
@@ -102,54 +94,13 @@
         <a href='../../class/c3/Base.html#anchor_styles-variable'>anchor_styles</a>
         <a href='../../class/c3/Base.html#handlers-variable'>handlers</a>
       </p>
-      <h2>Instance Method Summary</h2>
-      <ul class='summary'>
-  <li>
-    <span class='signature'>
-      <a href='#_init-dynamic'>
-        #
-(void)
-<b>_init</b><span>()</span>
-      </a>
-    </span>
-    <span class='bound note title'>Bound</span>
-    <span class='desc'>
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#_size-dynamic'>
-        #
-(void)
-<b>_size</b><span>()</span>
-      </a>
-    </span>
-    <span class='bound note title'>Bound</span>
-    <span class='desc'>
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#_draw-dynamic'>
-        #
-(void)
-<b>_draw</b><span>()</span>
-      </a>
-    </span>
-    <span class='bound note title'>Bound</span>
-    <span class='desc'>
-    </span>
-  </li>
-</ul>
       <h2>
         <small>Inherited Method Summary</small>
         <h3 class='inherited'>
           Methods inherited from
-          <a href='../../class/c3/Axis.html'>c3.Axis</a>
+          <a href='../../class/c3/Chart.html'>c3.Chart</a>
         </h3>
         <p class='inherited'>
-          <a href='../../class/c3/Axis.html#_init-dynamic'>#_init</a>
-          <a href='../../class/c3/Axis.html#_draw-dynamic'>#_draw</a>
           <a href='../../class/c3/Chart.html#init-dynamic'>#init</a>
           <a href='../../class/c3/Chart.html#style-dynamic'>#style</a>
           <a href='../../class/c3/Base.html#render-dynamic'>#render</a>
@@ -157,48 +108,17 @@
           <a href='../../class/c3/Base.html#redraw-dynamic'>#redraw</a>
           <a href='../../class/c3/Base.html#restyle-dynamic'>#restyle</a>
           <a href='../../class/c3/Base.html#_prep-dynamic'>#_prep</a>
+          <a href='../../class/c3/Base.html#_init-dynamic'>#_init</a>
           <a href='../../class/c3/Base.html#size-dynamic'>#size</a>
           <a href='../../class/c3/Base.html#_size-dynamic'>#_size</a>
           <a href='../../class/c3/Base.html#update-dynamic'>#update</a>
           <a href='../../class/c3/Base.html#_update-dynamic'>#_update</a>
           <a href='../../class/c3/Base.html#draw-dynamic'>#draw</a>
+          <a href='../../class/c3/Base.html#_draw-dynamic'>#_draw</a>
           <a href='../../class/c3/Base.html#_style-dynamic'>#_style</a>
           <a href='../../class/c3/Base.html#on-dynamic'>#on</a>
         </p>
       </h2>
-      <h2>Instance Method Details</h2>
-      <div class='methods'>
-  <div class='method_details'>
-    <p class='signature' id='_init-dynamic'>
-      #
-(void)
-<b>_init</b><span>()</span>
-      <span class='bound note'>Bound</span>
-      <br>
-    </p>
-    
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='_size-dynamic'>
-      #
-(void)
-<b>_size</b><span>()</span>
-      <span class='bound note'>Bound</span>
-      <br>
-    </p>
-    
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='_draw-dynamic'>
-      #
-(void)
-<b>_draw</b><span>()</span>
-      <span class='bound note'>Bound</span>
-      <br>
-    </p>
-    
-  </div>
-</div>
     </div>
     <div id='footer'>
   April 26, 16 16:14:20 by

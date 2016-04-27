@@ -21,78 +21,104 @@
     &raquo;
     <span class='title'>c3</span>
     &raquo;
-    <span class='title'>Axis</span>
-    &raquo;
-    <span class='title'>X</span>
+    <span class='title'>Butterfly</span>
   </div>
 </div>
     <div id='content'>
       <h1>
         Class:
-        c3.Axis.X
+        c3.Butterfly
       </h1>
       <table class='box'>
         <tr>
           <td>Defined in:</td>
-          <td>js\c3-plot.coffee</td>
+          <td>js\c3-graph.coffee</td>
         </tr>
         <tr>
           <td>Inherits:</td>
           <td>
-            <a href='../../class/c3/Axis.html'>c3.Axis</a>
+            <a href='../../class/c3/Sankey.html'>c3.Sankey</a>
           </td>
         </tr>
       </table>
       <h2>Overview</h2>
       <div class='docstring'>
-  <p>Horizontal X-Axis</p>
+  <p>Butterfly flow visualization.
+<strong>This is a work in progress.</strong></p>
 </div>
 <div class='tags'>
-  <h3>See also:</h3>
-  <ul class='see'>
+  <h3>Author:</h3>
+  <ul class='author'>
     <li>
-      <a href='../../class/c3/Axis.html'>c3.Axis</a>
+      Douglas Armstrong 
     </li>
   </ul>
 </div>
       <h2>Variables Summary</h2>
       <dl class='constants'>
+  <dt id='version-variable'>
+    version
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>0.1</code></pre>
+    
+  </dd>
   <dt id='type-variable'>
     type
     =
   </dt>
   <dd>
-    <pre><code class='coffeescript'>&#39;x&#39;</code></pre>
+    <pre><code class='coffeescript'>&#39;butterfly&#39;</code></pre>
     
   </dd>
-  <dt id='orient-variable'>
-    orient
+  <dt id='navigatable-variable'>
+    navigatable
     =
   </dt>
   <dd>
-    <pre><code class='coffeescript'>&#39;bottom&#39;</code></pre>
+    <pre><code class='coffeescript'>true</code></pre>
+    
+  </dd>
+  <dt id='depth_of_field-variable'>
+    depth_of_field
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>2</code></pre>
     
   </dd>
 </dl>
       <h3 class='inherited'>
         Variable inherited from
-        <a href='../../class/c3/Axis.html'>c3.Axis</a>
+        <a href='../../class/c3/Sankey.html'>c3.Sankey</a>
       </h3>
       <p class='inherited'>
-        <a href='../../class/c3/Axis.html#version-variable'>version</a>
-        <a href='../../class/c3/Axis.html#type-variable'>type</a>
-        <a href='../../class/c3/Axis.html#_next_uid-variable'>_next_uid</a>
-        <a href='../../class/c3/Axis.html#scale-variable'>scale</a>
-        <a href='../../class/c3/Axis.html#orient-variable'>orient</a>
-        <a href='../../class/c3/Axis.html#grid-variable'>grid</a>
-        <a href='../../class/c3/Axis.html#label-variable'>label</a>
-        <a href='../../class/c3/Axis.html#ticks-variable'>ticks</a>
-        <a href='../../class/c3/Axis.html#tick_label-variable'>tick_label</a>
-        <a href='../../class/c3/Axis.html#tick_values-variable'>tick_values</a>
-        <a href='../../class/c3/Axis.html#tick_count-variable'>tick_count</a>
-        <a href='../../class/c3/Axis.html#tick_size-variable'>tick_size</a>
-        <a href='../../class/c3/Axis.html#path_size-variable'>path_size</a>
-        <a href='../../class/c3/Axis.html#axis_size-variable'>axis_size</a>
+        <a href='../../class/c3/Sankey.html#version-variable'>version</a>
+        <a href='../../class/c3/Sankey.html#type-variable'>type</a>
+        <a href='../../class/c3/Sankey.html#data-variable'>data</a>
+        <a href='../../class/c3/Sankey.html#links-variable'>links</a>
+        <a href='../../class/c3/Sankey.html#key-variable'>key</a>
+        <a href='../../class/c3/Sankey.html#value-variable'>value</a>
+        <a href='../../class/c3/Sankey.html#link_source-variable'>link_source</a>
+        <a href='../../class/c3/Sankey.html#link_target-variable'>link_target</a>
+        <a href='../../class/c3/Sankey.html#link_key-variable'>link_key</a>
+        <a href='../../class/c3/Sankey.html#link_value-variable'>link_value</a>
+        <a href='../../class/c3/Sankey.html#iterations-variable'>iterations</a>
+        <a href='../../class/c3/Sankey.html#alpha-variable'>alpha</a>
+        <a href='../../class/c3/Sankey.html#node_padding-variable'>node_padding</a>
+        <a href='../../class/c3/Sankey.html#node_width-variable'>node_width</a>
+        <a href='../../class/c3/Sankey.html#align-variable'>align</a>
+        <a href='../../class/c3/Sankey.html#link_path-variable'>link_path</a>
+        <a href='../../class/c3/Sankey.html#link_path_curvature-variable'>link_path_curvature</a>
+        <a href='../../class/c3/Sankey.html#nodes_options-variable'>nodes_options</a>
+        <a href='../../class/c3/Sankey.html#node_options-variable'>node_options</a>
+        <a href='../../class/c3/Sankey.html#rect_options-variable'>rect_options</a>
+        <a href='../../class/c3/Sankey.html#links_options-variable'>links_options</a>
+        <a href='../../class/c3/Sankey.html#link_options-variable'>link_options</a>
+        <a href='../../class/c3/Sankey.html#path_options-variable'>path_options</a>
+        <a href='../../class/c3/Sankey.html#node_label_options-variable'>node_label_options</a>
+        <a href='../../class/c3/Sankey.html#link_label_options-variable'>link_label_options</a>
         <a href='../../class/c3/Chart.html#class-variable'>class</a>
         <a href='../../class/c3/Chart.html#options-variable'>options</a>
         <a href='../../class/c3/Chart.html#content_options-variable'>content_options</a>
@@ -106,10 +132,10 @@
       <ul class='summary'>
   <li>
     <span class='signature'>
-      <a href='#_init-dynamic'>
+      <a href='#_update-dynamic'>
         #
 (void)
-<b>_init</b><span>()</span>
+<b>_update</b><span>(origin)</span>
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -118,10 +144,10 @@
   </li>
   <li>
     <span class='signature'>
-      <a href='#_size-dynamic'>
+      <a href='#_butterfly_update-dynamic'>
         #
 (void)
-<b>_size</b><span>()</span>
+<b>_butterfly_update</b><span>()</span>
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -130,10 +156,22 @@
   </li>
   <li>
     <span class='signature'>
-      <a href='#_draw-dynamic'>
+      <a href='#_style-dynamic'>
         #
 (void)
-<b>_draw</b><span>()</span>
+<b>_style</b><span>(style_new)</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#focus-dynamic'>
+        #
+(void)
+<b>focus</b><span>(focus)</span>
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -145,11 +183,15 @@
         <small>Inherited Method Summary</small>
         <h3 class='inherited'>
           Methods inherited from
-          <a href='../../class/c3/Axis.html'>c3.Axis</a>
+          <a href='../../class/c3/Sankey.html'>c3.Sankey</a>
         </h3>
         <p class='inherited'>
-          <a href='../../class/c3/Axis.html#_init-dynamic'>#_init</a>
-          <a href='../../class/c3/Axis.html#_draw-dynamic'>#_draw</a>
+          <a href='../../class/c3/Sankey.html#_init-dynamic'>#_init</a>
+          <a href='../../class/c3/Sankey.html#_size-dynamic'>#_size</a>
+          <a href='../../class/c3/Sankey.html#_update-dynamic'>#_update</a>
+          <a href='../../class/c3/Sankey.html#_layout-dynamic'>#_layout</a>
+          <a href='../../class/c3/Sankey.html#_draw-dynamic'>#_draw</a>
+          <a href='../../class/c3/Sankey.html#_style-dynamic'>#_style</a>
           <a href='../../class/c3/Chart.html#init-dynamic'>#init</a>
           <a href='../../class/c3/Chart.html#style-dynamic'>#style</a>
           <a href='../../class/c3/Base.html#render-dynamic'>#render</a>
@@ -158,41 +200,48 @@
           <a href='../../class/c3/Base.html#restyle-dynamic'>#restyle</a>
           <a href='../../class/c3/Base.html#_prep-dynamic'>#_prep</a>
           <a href='../../class/c3/Base.html#size-dynamic'>#size</a>
-          <a href='../../class/c3/Base.html#_size-dynamic'>#_size</a>
           <a href='../../class/c3/Base.html#update-dynamic'>#update</a>
-          <a href='../../class/c3/Base.html#_update-dynamic'>#_update</a>
           <a href='../../class/c3/Base.html#draw-dynamic'>#draw</a>
-          <a href='../../class/c3/Base.html#_style-dynamic'>#_style</a>
           <a href='../../class/c3/Base.html#on-dynamic'>#on</a>
         </p>
       </h2>
       <h2>Instance Method Details</h2>
       <div class='methods'>
   <div class='method_details'>
-    <p class='signature' id='_init-dynamic'>
+    <p class='signature' id='_update-dynamic'>
       #
 (void)
-<b>_init</b><span>()</span>
+<b>_update</b><span>(origin)</span>
       <span class='bound note'>Bound</span>
       <br>
     </p>
     
   </div>
   <div class='method_details'>
-    <p class='signature' id='_size-dynamic'>
+    <p class='signature' id='_butterfly_update-dynamic'>
       #
 (void)
-<b>_size</b><span>()</span>
+<b>_butterfly_update</b><span>()</span>
       <span class='bound note'>Bound</span>
       <br>
     </p>
     
   </div>
   <div class='method_details'>
-    <p class='signature' id='_draw-dynamic'>
+    <p class='signature' id='_style-dynamic'>
       #
 (void)
-<b>_draw</b><span>()</span>
+<b>_style</b><span>(style_new)</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='focus-dynamic'>
+      #
+(void)
+<b>focus</b><span>(focus)</span>
       <span class='bound note'>Bound</span>
       <br>
     </p>

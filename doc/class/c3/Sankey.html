@@ -21,23 +21,23 @@
     &raquo;
     <span class='title'>c3</span>
     &raquo;
-    <span class='title'>Plot</span>
+    <span class='title'>Sankey</span>
   </div>
 </div>
     <div id='content'>
       <h1>
         Class:
-        c3.Plot
+        c3.Sankey
       </h1>
       <table class='box'>
         <tr>
           <td>Defined in:</td>
-          <td>js\c3-plot.coffee</td>
+          <td>js\c3-graph.coffee</td>
         </tr>
         <tr>
           <td>Inherits:</td>
           <td>
-            <a href='../../class/c3/Chart.html'>c3.Chart</a>
+            <a href='../../class/c3/Graph.html'>c3.Graph</a>
           </td>
         </tr>
       </table>
@@ -45,19 +45,24 @@
       <div class='docstring'>
   <div class='note todo'>
     <strong>TODO:</strong>
-    Avoid negative plot height/width&#39;s when div is too small to fit margins and axes. 
+    Labels 
   </div>
-  <p>An XY Plot is a chart with an X and a Y axis.  This chart doesn&#39;t visualize data directly itself, but
-contains a set of <a href='../../class/c3/Plot.Layer.html'>layers</a> on top of each other.
-Layers provide for such charts as bar charts, area graphs, scatter plots, segment stripcharts, etc.
-The data, scales, and x/y accessors are all required, but may be provided either to the plot itself as a
-default for all layers or individually as an override on each layer or some combination.</p><h2 id="styling">Styling</h2>
-<ul>
-<li>An svg:rect.background is created for styling the background of the plot content</li>
-</ul>
-<h2 id="extensibility">Extensibility</h2><p>c3 will set the following members of the <code>content</code> selection:</p><ul>
-<li><strong>width</strong> - width of the content of the plot layers</li>
-<li><strong>height</strong> - height of the content of the plot layers</li>
+  <p>Directed graph <a href="https://en.wikipedia.org/wiki/Sankey_diagram"><strong>Sankey</strong></a> visualization.
+Provide a set of nodes and weighted links between them.  Various configuration options are available
+to adjust the layout algorithm.</p><p>The implementation is based on the <a href="https://bost.ocks.org/mike/sankey/">D3 Sankey plugin</a>.
+However, it has been extended with the following:</p><ul>
+<li>User can define their own data structures for nodes and links.</li>
+<li>Does not modify the original dataset.</li>
+<li>Cycles / Back Edges are allowed.</li>
+<li>Animation of dynamic datasets.</li>
+<li>Nodes may have a value larger than incoming and outgoing links</li>
+<li>Configurable padding and node widths based on either pixels or percentages.</li>
+<li>Tweaked layout algorithm.</li>
+</ul><p>Features that are planned:</p><ul>
+<li>Labels</li>
+<li>Links to missing nodes</li>
+<li>Draggable nodes</li>
+<li>Zoom/pan navigation</li>
 </ul>
 
 </div>
@@ -71,8 +76,7 @@ default for all layers or individually as an override on each layer or some comb
 </div>
       <h2>Direct Known Subclasses</h2>
       <p class='children'>
-        <a href='../../class/c3/Plot.Selectable.html'>c3.Plot.Selectable</a>
-        <a href='../../class/c3/Plot.Zoomable.html'>c3.Plot.Zoomable</a>
+        <a href='../../class/c3/Butterfly.html'>c3.Butterfly</a>
       </p>
       <h2>Variables Summary</h2>
       <dl class='constants'>
@@ -89,32 +93,8 @@ default for all layers or individually as an override on each layer or some comb
     =
   </dt>
   <dd>
-    <pre><code class='coffeescript'>&#39;plot&#39;</code></pre>
+    <pre><code class='coffeescript'>&#39;sankey&#39;</code></pre>
     
-  </dd>
-  <dt id='layers-variable'>
-    layers
-    =
-  </dt>
-  <dd>
-    <pre><code class='coffeescript'>[]</code></pre>
-    <div class='docstring'>
-  <p>[Array&lt;<a href='../../class/c3/Plot.Layer.html'>c3.Plot.Layer</a>&gt;] Array of <a href='../../class/c3/Plot.Layer.html'>layers</a> that constitute this XY Plot</p>
-</div>
-<div class='tags'>
-</div>
-  </dd>
-  <dt id='axes-variable'>
-    axes
-    =
-  </dt>
-  <dd>
-    <pre><code class='coffeescript'>[]</code></pre>
-    <div class='docstring'>
-  <p>[Array&lt;<a href='../../class/c3/Axis.html'>c3.Axis</a>&gt;] Array of <a href='../../class/c3/Axis.html'>axis</a> objects to attach to this plot.</p>
-</div>
-<div class='tags'>
-</div>
   </dd>
   <dt id='data-variable'>
     data
@@ -123,146 +103,291 @@ default for all layers or individually as an override on each layer or some comb
   <dd>
     <pre><code class='coffeescript'>[]</code></pre>
     <div class='docstring'>
-  <p>[Array] Default data array for layers in this plot.
-<em>This can be set for each individual layer or a default for the entire chart.</em></p>
+  <p>[Array&lt;&gt;] Array of user-defined node objects</p>
 </div>
 <div class='tags'>
 </div>
   </dd>
-  <dt id='h-variable'>
-    h
+  <dt id='links-variable'>
+    links
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>[]</code></pre>
+    <div class='docstring'>
+  <p>[Array&lt;&gt;] Array of user-defined link objects</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='key-variable'>
+    key
     =
   </dt>
   <dd>
     <pre><code class='coffeescript'>undefined</code></pre>
     <div class='docstring'>
-  <p>[<a href='https://github.com/mbostock/d3/wiki/Scales'>d3.scale</a>] Scale for the <em>horizontal</em> X axis.
-Please set the <em>domain()</em>, c3 will set the <em>range()</em>.
-<em>This can be set for each individual layer or a default for the entire chart.</em></p>
+  <p>[Function] Accessor function to get the key for a node object</p>
 </div>
 <div class='tags'>
 </div>
   </dd>
-  <dt id='v-variable'>
-    v
+  <dt id='value-variable'>
+    value
     =
   </dt>
   <dd>
     <pre><code class='coffeescript'>undefined</code></pre>
     <div class='docstring'>
-  <p>[<a href='https://github.com/mbostock/d3/wiki/Scales'>d3.scale</a>] Scale for the <em>vertical</em> Y axis.
-Please set the <em>domain()</em>, c3 will set the <em>range()</em>.
-<em>This can be set for each individual layer or a default for the entire chart.</em></p>
+  <p>[Function] Accessor function to get the value for a node object.
+If not defined, then the maximum value of the input or output links of a node will be used.</p>
 </div>
 <div class='tags'>
 </div>
   </dd>
-  <dt id='x-variable'>
-    x
+  <dt id='link_source-variable'>
+    link_source
     =
   </dt>
   <dd>
     <pre><code class='coffeescript'>undefined</code></pre>
     <div class='docstring'>
-  <p>[Function] An accessor function to get the X value from a data item.
-<em>This can be set for each individual layer or a default for the entire chart.</em>
-Some plots support calling this accessor with the index of the data as well as the datum itself.</p>
+  <p>[Function] Accessor function to get the key of the source node for a link.
+This defaults to using the <code>source</code> member of the link object.</p>
 </div>
 <div class='tags'>
 </div>
   </dd>
-  <dt id='y-variable'>
-    y
+  <dt id='link_target-variable'>
+    link_target
     =
   </dt>
   <dd>
     <pre><code class='coffeescript'>undefined</code></pre>
     <div class='docstring'>
-  <p>[Function] An accessor function to get the Y value from a data item.
-<em>This can be set for each individual layer or a default for the entire chart.</em>
-Some plots support calling this accessor with the index of the data as well as the datum itself.</p>
+  <p>[Function] Accessor function to get the key of the target node for a link.
+This defaults to using the <code>target</code> member of the link object.</p>
 </div>
 <div class='tags'>
 </div>
   </dd>
-  <dt id='h_domain-variable'>
-    h_domain
+  <dt id='link_key-variable'>
+    link_key
     =
   </dt>
   <dd>
     <pre><code class='coffeescript'>undefined</code></pre>
     <div class='docstring'>
-  <p>[Function | Array&lt;Number|String]] Automatic scaling for horizontal domain.  <em>EXPERIMENTAL</em>
-Optional domain which is used to set the <code>h</code> scale at render time or with <code>rescale()</code>.
-It may be a callback to allow for dynamic domains.
-Either min or max values may be <code>auto</code> which will map to <code>min_x()</code> or <code>max_x()</code>.</p>
+  <p>[Function] Accessor function to get the key of a link.
+This defaults to combining the <code>link_source</code> and <code>link_target</code> accessors</p>
 </div>
 <div class='tags'>
 </div>
   </dd>
-  <dt id='v_domain-variable'>
-    v_domain
+  <dt id='link_value-variable'>
+    link_value
     =
   </dt>
   <dd>
     <pre><code class='coffeescript'>undefined</code></pre>
     <div class='docstring'>
-  <p>[Function | Array&lt;Number|String]] Automatic scaling for vertical domain.  <em>EXPERIMENTAL</em>
-Optional domain which is used to set the <code>v</code> scale at render time or with <code>rescale()</code>.
-It may be a callback to allow for dynamic domains.
-Either min or max values may be <code>auto</code> which will map to <code>min_y()</code> or <code>max_y()</code>.</p>
+  <p>[Function] Accessor function to get the value of a link.
+This defaults to using the <code>value</code> member of the link object.</p>
 </div>
 <div class='tags'>
 </div>
   </dd>
-  <dt id='margins-variable'>
-    margins
+  <dt id='iterations-variable'>
+    iterations
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>32</code></pre>
+    <div class='docstring'>
+  <p>[Number] Number of iterations to run the iterative layout algorithm.</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='alpha-variable'>
+    alpha
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>0.99</code></pre>
+    <div class='docstring'>
+  <p>[Number] An alpha factor to adjust the subsequent strength of each iteration.
+Smaller numbers will quiesce faster.</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='node_padding-variable'>
+    node_padding
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>&#39;20%&#39;</code></pre>
+    <div class='docstring'>
+  <p>[Number, String] The vertical padding between nodes.
+This can be the number of pixels to attempt to use between each node.  If there are too many
+nodes for the vertical space, then fewer may be used.
+It can also be a string that represents the percentage of the vertical space to use for padding
+divided among all of the nodes.</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='node_width-variable'>
+    node_width
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>30</code></pre>
+    <div class='docstring'>
+  <p>[Number, String] The horzontal width of each node.
+This may be a number of pixels for the node width or else a string which is the percentage of 
+the horizontal space to use for nodes.</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='align-variable'>
+    align
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>&#39;both&#39;</code></pre>
+    <div class='docstring'>
+  <p>[String] The type of alignment to use for the nodes:</p><ul>
+<li><strong>both</strong> - Align nodes with no inputs on the left and no outputs on the right</li>
+<li><strong>left</strong> - Align nodes with no inputs on the left</li>
+</ul>
+
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='link_path-variable'>
+    link_path
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>&#39;curve&#39;</code></pre>
+    <div class='docstring'>
+  <p>[String] The type of path to use for links between nodes:</p><ul>
+<li><strong>curve</strong> - A curved path</li>
+<li><strong>straight</strong> - A stright line</li>
+</ul>
+
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='link_path_curvature-variable'>
+    link_path_curvature
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>0.5</code></pre>
+    <div class='docstring'>
+  <p>[Number] A number representing the curvature to use for curved link paths.  Ranges from 0-1.</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='nodes_options-variable'>
+    nodes_options
     =
   </dt>
   <dd>
     <pre><code class='coffeescript'>undefined</code></pre>
     <div class='docstring'>
-  <p>[Number, Object] Set margins around the plot in pixels.
-Can either be a number to set all margins or an object to individually set the <em>top</em>, <em>bottom</em>, <em>left</em>, and <em>right</em> margins.</p>
+  <p>[<a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a>] Options for the svg:g layer of all nodes</p>
 </div>
 <div class='tags'>
 </div>
   </dd>
-  <dt id='crop_margins-variable'>
-    crop_margins
-    =
-  </dt>
-  <dd>
-    <pre><code class='coffeescript'>true</code></pre>
-    <div class='docstring'>
-  <p>[Boolean] Crop the plot rendering at the edge of the plot so it doesn&#39;t overlap the axis and margins.
-Set to true or false to enable/disable, or set to &#39;<code>x</code>&#39; or &#39;<code>y</code>&#39; to only crop in one direction.</p>
-</div>
-<div class='tags'>
-</div>
-  </dd>
-  <dt id='layer_options-variable'>
-    layer_options
+  <dt id='node_options-variable'>
+    node_options
     =
   </dt>
   <dd>
     <pre><code class='coffeescript'>undefined</code></pre>
     <div class='docstring'>
-  <p>[<a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a>] Options to apply to each layer.  For callbacks, the first argument
-is the layer object and the second argument is the index of the layer</p>
+  <p>[<a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a>] Options for the svg:g node elements</p>
 </div>
 <div class='tags'>
 </div>
   </dd>
-  <dt id='axis_options-variable'>
-    axis_options
+  <dt id='rect_options-variable'>
+    rect_options
     =
   </dt>
   <dd>
     <pre><code class='coffeescript'>undefined</code></pre>
     <div class='docstring'>
-  <p>[<a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a>] Options to apply to each axis.  For callbacks, the first argument
-is the axis object and the second argument is the index of the axis</p>
+  <p>[<a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a>] Options for the svg:rect node elements</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='links_options-variable'>
+    links_options
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>undefined</code></pre>
+    <div class='docstring'>
+  <p>[<a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a>] Options for the svg:g layer of all links</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='link_options-variable'>
+    link_options
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>undefined</code></pre>
+    <div class='docstring'>
+  <p>[<a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a>] Options for the svg:g link elements</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='path_options-variable'>
+    path_options
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>undefined</code></pre>
+    <div class='docstring'>
+  <p>[<a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a>] Options for the svg:path link elements</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='node_label_options-variable'>
+    node_label_options
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>undefined</code></pre>
+    <div class='docstring'>
+  <p>[<a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a>] Options for the svg:text node labels</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='link_label_options-variable'>
+    link_label_options
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>undefined</code></pre>
+    <div class='docstring'>
+  <p>[<a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a>] Options for the svg:text link labels</p>
 </div>
 <div class='tags'>
 </div>
@@ -270,10 +395,11 @@ is the axis object and the second argument is the index of the axis</p>
 </dl>
       <h3 class='inherited'>
         Variable inherited from
-        <a href='../../class/c3/Chart.html'>c3.Chart</a>
+        <a href='../../class/c3/Graph.html'>c3.Graph</a>
       </h3>
       <p class='inherited'>
-        <a href='../../class/c3/Chart.html#type-variable'>type</a>
+        <a href='../../class/c3/Graph.html#version-variable'>version</a>
+        <a href='../../class/c3/Graph.html#type-variable'>type</a>
         <a href='../../class/c3/Chart.html#class-variable'>class</a>
         <a href='../../class/c3/Chart.html#options-variable'>options</a>
         <a href='../../class/c3/Chart.html#content_options-variable'>content_options</a>
@@ -323,6 +449,18 @@ is the axis object and the second argument is the index of the axis</p>
   </li>
   <li>
     <span class='signature'>
+      <a href='#_layout-dynamic'>
+        #
+(void)
+<b>_layout</b><span>(origin, current_data, current_links)</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
       <a href='#_draw-dynamic'>
         #
 (void)
@@ -345,88 +483,12 @@ is the axis object and the second argument is the index of the axis</p>
     <span class='desc'>
     </span>
   </li>
-  <li>
-    <span class='signature'>
-      <a href='#scale-dynamic'>
-        #
-(Boolean)
-<b>scale</b><span>(origin)</span>
-      </a>
-    </span>
-    <span class='bound note title'>Bound</span>
-    <span class='desc'>
-      EXPERIMENTAL RESCALE Update any automatic scales
-
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#rescale-dynamic'>
-        #
-(void)
-<b>rescale</b><span>()</span>
-      </a>
-    </span>
-    <span class='bound note title'>Bound</span>
-    <span class='desc'>
-      <p>EXPERIMENTAL RESCALE An addition <code>re*</code> API which will adjust the scales for any domains with callbacks
-See <code>h_domain</code> and <code>v_domain</code>.</p>
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#min_x-dynamic'>
-        #
-(void)
-<b>min_x</b><span>()</span>
-      </a>
-    </span>
-    <span class='bound note title'>Bound</span>
-    <span class='desc'>
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#max_x-dynamic'>
-        #
-(void)
-<b>max_x</b><span>()</span>
-      </a>
-    </span>
-    <span class='bound note title'>Bound</span>
-    <span class='desc'>
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#min_y-dynamic'>
-        #
-(void)
-<b>min_y</b><span>()</span>
-      </a>
-    </span>
-    <span class='bound note title'>Bound</span>
-    <span class='desc'>
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#max_y-dynamic'>
-        #
-(void)
-<b>max_y</b><span>()</span>
-      </a>
-    </span>
-    <span class='bound note title'>Bound</span>
-    <span class='desc'>
-    </span>
-  </li>
 </ul>
       <h2>
         <small>Inherited Method Summary</small>
         <h3 class='inherited'>
           Methods inherited from
-          <a href='../../class/c3/Chart.html'>c3.Chart</a>
+          <a href='../../class/c3/Graph.html'>c3.Graph</a>
         </h3>
         <p class='inherited'>
           <a href='../../class/c3/Chart.html#init-dynamic'>#init</a>
@@ -480,6 +542,16 @@ See <code>h_domain</code> and <code>v_domain</code>.</p>
     
   </div>
   <div class='method_details'>
+    <p class='signature' id='_layout-dynamic'>
+      #
+(void)
+<b>_layout</b><span>(origin, current_data, current_links)</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
     <p class='signature' id='_draw-dynamic'>
       #
 (void)
@@ -494,92 +566,6 @@ See <code>h_domain</code> and <code>v_domain</code>.</p>
       #
 (void)
 <b>_style</b><span>(style_new)</span>
-      <span class='bound note'>Bound</span>
-      <br>
-    </p>
-    
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='scale-dynamic'>
-      #
-(Boolean)
-<b>scale</b><span>(origin)</span>
-      <span class='bound note'>Bound</span>
-      <br>
-    </p>
-    <div class='docstring'>
-  <div class='note'>
-    <strong>Note:</strong>
-    Needs to happen after update() so that stacked layers are computed 
-  </div>
-  <p>EXPERIMENTAL RESCALE
-Update any automatic scales</p>
-</div>
-<div class='tags'>
-  <h3>Returns:</h3>
-  <ul class='return'>
-    <li>
-      <span class='type'></span>
-      (
-        <tt>Boolean</tt>
-      )
-      &mdash;
-      <span class='desc'>Returns true if any domains were changed </span>
-    </li>
-  </ul>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='rescale-dynamic'>
-      #
-(void)
-<b>rescale</b><span>()</span>
-      <span class='bound note'>Bound</span>
-      <br>
-    </p>
-    <div class='docstring'>
-  <p>EXPERIMENTAL RESCALE
-An addition <code>re*</code> API which will adjust the scales for any domains with callbacks
-See <code>h_domain</code> and <code>v_domain</code>.</p>
-</div>
-<div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='min_x-dynamic'>
-      #
-(void)
-<b>min_x</b><span>()</span>
-      <span class='bound note'>Bound</span>
-      <br>
-    </p>
-    
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='max_x-dynamic'>
-      #
-(void)
-<b>max_x</b><span>()</span>
-      <span class='bound note'>Bound</span>
-      <br>
-    </p>
-    
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='min_y-dynamic'>
-      #
-(void)
-<b>min_y</b><span>()</span>
-      <span class='bound note'>Bound</span>
-      <br>
-    </p>
-    
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='max_y-dynamic'>
-      #
-(void)
-<b>max_y</b><span>()</span>
       <span class='bound note'>Bound</span>
       <br>
     </p>
