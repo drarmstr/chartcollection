@@ -238,17 +238,14 @@ $('#limit_segments').on('change', function () {
     swimlane_timeline.redraw();
 });
 
-// Adjust the number of elements to limit as the slider is changed
-$('#limit_segment_count').on('input', function () { // `input` event not supported in IE
-    segment_layer.limit_elements = +$(this).val();
-    swimlane_timeline.redraw();
-});
-
+// Adjust the number of elements to limit as the slider is changed.
 // The `input` event not supported in IE
-$('#limit_segment_count').on('change', function () {
-    segment_layer.limit_elements = +$(this).val();
-    swimlane_timeline.redraw();
-});
+for (var event_name of ['input', 'change']) {
+    $('#limit_segment_count').on(event_name, function () {
+        segment_layer.limit_elements = +$(this).val();
+        swimlane_timeline.redraw();
+    });
+}
 
 // Resize the chart to fit the window
 window.onresize = () => {

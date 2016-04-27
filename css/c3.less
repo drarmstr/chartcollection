@@ -248,22 +248,33 @@ html.grabbing, html.grabbing * {
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
-// Butterfly Flow
+// Sankey Flow
 ///////////////////////////////////////////////////////////////////////////////////////////////
-.c3.butterfly {
-    g.nodes {
-        rect {
-            shape-rendering: crispEdges;
-            cursor: pointer;
-        }
-
-        text {
-            cursor: pointer;
-        }
+.c3.sankey {
+    rect {
+        shape-rendering: crispEdges;
     }
 
     path {
         fill: none;
+        opacity: 0.5;
+    }
+
+    .links {
+        &.curve {
+            stroke: black;
+        }
+        &.straight {
+            fill: black;
+        }
+    }
+}
+
+.c3.butterfly {
+    .navigatable {
+        .node rect {
+            cursor: pointer;
+        }
     }
 }
 

@@ -16,10 +16,6 @@
     "inputFile": "js/c3-layers.coffee"
   },
   {
-    "outputFile": "examples/css/examples.css",
-    "inputFile": "examples/css/examples.less"
-  },
-  {
     "outputFile": "js/c3-table.js",
     "inputFile": "js/c3-table.coffee"
   },
@@ -30,6 +26,10 @@
   {
     "outputFile": "js/c3-polar.js",
     "inputFile": "js/c3-polar.coffee"
+  },
+  {
+    "outputFile": "js/c3-graph.js",
+    "inputFile": "js/c3-graph.coffee"
   },
   {
     "outputFile": "css/doc.css",

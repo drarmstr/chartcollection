@@ -57,6 +57,11 @@ class c3.util
 #        new_obj[key] = value for key, value of obj
 #        return new_obj
 
+    # Test if an object is empty
+    @isEmpty: (obj)->
+        return false for property of obj
+        return true
+
 
 ###################################################################
 # Array Helpers
@@ -333,6 +338,7 @@ class c3.Selection
     #   Note that this will not prepend in front of any text content, only child nodes.
     inherit: (query, create=true, prepend=false)=>
         child = new c3.Selection null, query
+        if options? then child.options options
         if create
             child.new = @new.insert child.tag, (if prepend then ':first-child' else null)
             if child._query_class? then child.new.classed child._query_class, true

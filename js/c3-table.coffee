@@ -305,7 +305,7 @@ class c3.Table extends c3.Base
                         content = if @searchable is true # Search all columns if searchable is `true`
                             column_contents = (c3.functor(column.cells.html ? column.cells.text ? @cell_options.html ? @cell_options.text) \
                                         for column in @columns)
-                            (d)-> (column_content(d) for column_content in column_contents).join(' ')
+                            (d,i)-> (column_content(d,i,j) for column_content,j in column_contents).join(' ')
                         else @searchable
                         for d,i in @current_data when i>last_found
                             if re.test content(d,i)

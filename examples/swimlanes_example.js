@@ -194,16 +194,15 @@ $('#limit_segments').on('change', function () {
     }
     swimlane_timeline.redraw();
 });
-// Adjust the number of elements to limit as the slider is changed
-$('#limit_segment_count').on('input', function () {
-    segment_layer.limit_elements = +$(this).val();
-    swimlane_timeline.redraw();
-});
+// Adjust the number of elements to limit as the slider is changed.
 // The `input` event not supported in IE
-$('#limit_segment_count').on('change', function () {
-    segment_layer.limit_elements = +$(this).val();
-    swimlane_timeline.redraw();
-});
+for (var _i = 0, _a = ['input', 'change']; _i < _a.length; _i++) {
+    var event_name = _a[_i];
+    $('#limit_segment_count').on(event_name, function () {
+        segment_layer.limit_elements = +$(this).val();
+        swimlane_timeline.redraw();
+    });
+}
 // Resize the chart to fit the window
 window.onresize = function () {
     swimlane_timeline.resize();

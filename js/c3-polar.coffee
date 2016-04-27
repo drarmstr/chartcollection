@@ -713,7 +713,6 @@ class c3.Polar.Layer.Sunburst extends c3.Polar.Layer.Segment
     rebase_key: (key)=>
         @root_node = if key? then @nodes[key] else null
         @trigger 'rebase_start', @root_node?.datum
-        #@redraw 'rebase'
         @chart.redraw 'rebase' # redraw all layers
         @trigger 'rebase', @root_node?.datum
 
