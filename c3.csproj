@@ -164,6 +164,7 @@
     <Content Include="examples\data\injury_cause.tsv" />
     <Content Include="js\c3-graph.coffee" />
     <None Include="Properties\PublishProfiles\demo.pubxml" />
+    <Content Include="README.md" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
