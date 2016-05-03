@@ -838,6 +838,8 @@ declare module c3 {
     // Butterfly Flow Chart
     //////////////////////////////////////////////////////////////////////////////////////
     export interface ButterflyOptions<D, L> extends SankeyOptions<D, L> {
+        navigatable?: boolean;
+        depth_of_field?: number;
     }
     interface Butterfly<D, L> extends ButterflyOptions<D, L> { }
     class Butterfly<D, L> extends Sankey<D, L> implements ButterflyOptions<D, L> {

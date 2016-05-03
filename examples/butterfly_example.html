@@ -25,6 +25,10 @@
         .c3.sankey .link.backedge path {
             stroke: red !important;
         }
+
+        .c3.sankey .link path:hover {
+            stroke: gold !important;
+        }
     </style>
 </head>
 
@@ -34,75 +38,37 @@
         To help better comprehend these graphs it can help to focus on just part of the flow at a time.
         With the <i>Butterfly</i> flow graph you can click on a node to focus on just the flow that
         goes through that node.  Because it starts with a single node in the center and fans out
-        left and right with multiple source and target nodes it is called a "butterfly".
+        left and right with multiple source and target nodes, it is called a "butterfly".
+        Click in the chart outside of any node to revert to viewing the entire graph.
     </p>
     <p>
         This example visualizes the aggregated execution flow of a program.  It is not a timeline.
         The nodes represent functions and the links represent function calls.
         The size of the link is weighted based on the <i>total time</i> of the function call.
         A node will be larger then the links leaving it when the function has <i>self time</i>.
+        This is similar to a <b>caller/callee</b> type visualization, except it can represent an 
+        arbitrary depth from the focus node, not just the immediate callers and callees.
+    </p>
+    <p>
+        <b>Note: </b><i>Butterfly graphs are still under initial development.</i>
     </p>
 
-        <form>
-            <label>
-                Data set:
-                <select id="dataset">
-                    <option value="libpthread" selected>libpthread</option>
-                    <option value="schedule">scedule</option>
-                </select>
-            </label>
-            <br/>
-            <label>
-                Layout algorithm iterations:
-                <input id="us_iterations" type="range" min=0 max=64 value=32 />
-            </label>
-            <br/>
-            <label>
-                Layout alpha factor:
-                <input id="us_alpha" type="range" min=0.1 max=0.99 step=0.01 value=0.99 />
-            </label>
-            <br/>
-            <label>
-                Node Width:
-                <input id="us_node_width" type="range" min=1 max=100 value=30 />
-            </label>
-            <label>
-                <input type="radio" name="us_node_width_type" value="pixels" checked />
-                Pixels
-            </label>
-            <label>
-                <input type="radio" name="us_node_width_type" value="percent" />
-                Percent
-            </label>
-            <br/>
-            <label>
-                Node Padding:
-                <input id="us_node_padding" type="range" min=1 max=100 value=20 />
-            </label>
-            <label>
-                <input type="radio" name="us_node_padding_type" value="pixels" />
-                Pixels
-            </label>
-            <label>
-                <input type="radio" name="us_node_padding_type" value="percent" checked />
-                Percent
-            </label>
-            <br/>
-            <label>
-                Link paths:
-                <select id="us_link_path">
-                    <option value="curve" selected>Curved</option>
-                    <option value="straight">Straight</option>
-                </select>
-            </label>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <label>
-                Curvature:
-                <input type="range" id="us_link_path_curvature" min=0 max=1 value=0.5 step=0.01 />
-            </label>
-        </form>
+    <form>
+        <label>
+            Data set:
+            <select id="dataset">
+                <option value="libpthread" selected>libpthread</option>
+                <option value="schedule">scedule</option>
+            </select>
+        </label>
+        <br />
+        <label>
+            Depth of Field
+            <input id="depth_of_field" type="range" min=1 max=5 value=2 />
+        </label>
+    </form>
 
-        <div id="cfg_butterfly"></div>
+    <div id="cfg_butterfly"></div>
 
 
     <script src="butterfly_example.js"></script>

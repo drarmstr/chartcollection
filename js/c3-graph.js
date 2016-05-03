@@ -110,13 +110,23 @@
           return l.target;
         };
       }
-      return this.link_value != null ? this.link_value : this.link_value = function(l) {
-        return l.value;
-      };
+      if (this.link_value == null) {
+        this.link_value = function(l) {
+          return l.value;
+        };
+      }
+      return this.background = this.content.select('rect.background').singleton().position({
+        x: 0,
+        y: 0
+      });
     };
 
     Sankey.prototype._size = function() {
       this.v.range([0, this.height]);
+      this.background.position({
+        width: this.width,
+        height: this.height
+      });
       if (!isNaN(this.node_padding)) {
         return this._update();
       }
@@ -263,25 +273,24 @@
         }
       }
       this.h.domain([0, x]);
-      return this._layout(origin, current_data, current_links);
+      return this._layout(origin, current_data, current_links, this.nodes);
     };
 
-    Sankey.prototype._layout = function(origin, current_data, current_links) {
-      var alpha, collision_detection, column, columns, delta, i, iteration, j, key, layout_links, link, link_key, node, node_link, node_links, nodes, r, source_link_value, tmp, v_domain, weighted_y, y, _base, _i, _j, _k, _l, _len, _len1, _len10, _len11, _len2, _len3, _len4, _len5, _len6, _len7, _len8, _len9, _m, _n, _o, _p, _q, _r, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _s, _t, _u;
-      nodes = this.nodes;
+    Sankey.prototype._layout = function(origin, current_data, current_links, nodes) {
+      var alpha, collision_detection, column, columns, delta, i, iteration, j, key, layout_links, link, node, node_link, node_links, r, source_link_value, source_node, target_link_value, target_node, tmp, total_source_link_value, total_weighted_y, v_domain, weighted_y, y, _base, _i, _j, _k, _l, _len, _len1, _len10, _len11, _len12, _len2, _len3, _len4, _len5, _len6, _len7, _len8, _len9, _m, _n, _o, _p, _q, _r, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _s, _t, _u, _v;
+      this.current_nodes = nodes;
       node_links = this.node_links;
       this.columns = columns = d3.nest().key(function(node) {
         return node.x;
       }).sortKeys(d3.ascending).entries((function() {
-        var _ref, _results;
-        _ref = this.nodes;
+        var _results;
         _results = [];
-        for (key in _ref) {
-          node = _ref[key];
+        for (key in nodes) {
+          node = nodes[key];
           _results.push(node);
         }
         return _results;
-      }).call(this)).map(function(g) {
+      })()).map(function(g) {
         return g.values;
       });
       c3.array.sort_up(this.columns, function(column) {
@@ -366,49 +375,81 @@
       })(this);
       layout_links = (function(_this) {
         return function() {
-          var datum, link, link_key, link_source, link_target, node_link, y, _l, _len3, _len4, _m, _ref, _ref1, _results;
+          var column_padding, link, link_key, link_source, link_target, node_link, trailing_padding, trailing_y, y, _l, _len3, _results;
           link_key = _this.link_key;
           link_source = _this.link_source;
           link_target = _this.link_target;
-          _ref = (function() {
-            var _len3, _m, _results1;
-            _results1 = [];
-            for (_m = 0, _len3 = current_data.length; _m < _len3; _m++) {
-              datum = current_data[_m];
-              _results1.push(this.nodes[this.key(datum)]);
-            }
-            return _results1;
-          }).call(_this);
           _results = [];
-          for (_l = 0, _len3 = _ref.length; _l < _len3; _l++) {
-            node = _ref[_l];
-            c3.array.sort_up(node.source_links, function(link) {
-              return nodes[link_source(link)].y;
-            });
-            y = node.y;
-            _ref1 = node.source_links;
-            for (_m = 0, _len4 = _ref1.length; _m < _len4; _m++) {
-              link = _ref1[_m];
-              node_link = node_links[link_key(link)];
-              node_link.ty = y;
-              y += node_link.value;
-            }
-            c3.array.sort_up(node.target_links, function(link) {
-              return nodes[link_target(link)].y;
-            });
-            y = node.y;
+          for (_l = 0, _len3 = columns.length; _l < _len3; _l++) {
+            column = columns[_l];
+            column_padding = column.length > 1 ? column.padding : column.length === 1 ? _this.v.domain()[1] - column[0].value : 0;
             _results.push((function() {
-              var _len5, _n, _ref2, _results1;
-              _ref2 = node.target_links;
+              var _len4, _len5, _m, _n, _ref, _results1;
               _results1 = [];
-              for (_n = 0, _len5 = _ref2.length; _n < _len5; _n++) {
-                link = _ref2[_n];
-                node_link = node_links[link_key(link)];
-                node_link.sy = y;
-                _results1.push(y += node_link.value);
+              for (_m = 0, _len4 = column.length; _m < _len4; _m++) {
+                node = column[_m];
+                c3.array.sort_up(node.source_links, (function(_this) {
+                  return function(link) {
+                    return _this.nodes[link_source(link)].y;
+                  };
+                })(this));
+                trailing_y = node.y - column_padding / 2;
+                trailing_padding = column_padding / (node.source_links.length - 1);
+                y = node.y;
+                _ref = node.source_links;
+                for (_n = 0, _len5 = _ref.length; _n < _len5; _n++) {
+                  link = _ref[_n];
+                  node_link = node_links[link_key(link)];
+                  node_link.ty = y;
+                  y += node_link.value;
+                  node_link.tx = node.x;
+                  if (!(link_source(link) in nodes)) {
+                    node_link.sx = node.x - 0.5;
+                    node_link.sy = trailing_y;
+                    if (this.v(node_link.value) > this.h(0.25)) {
+                      node_link.sx -= this.h.invert(this.v(node_link.value));
+                    }
+                    if (this.v(node_link.sy).toFixed(3) === this.v(node_link.ty).toFixed(3)) {
+                      node_link.sy += this.v.invert(1);
+                    }
+                  }
+                  trailing_y += node_link.value + trailing_padding;
+                }
+                c3.array.sort_up(node.target_links, (function(_this) {
+                  return function(link) {
+                    return _this.nodes[link_target(link)].y;
+                  };
+                })(this));
+                y = node.y;
+                trailing_y = node.y - column_padding / 2;
+                trailing_padding = column_padding / (node.target_links.length - 1);
+                _results1.push((function() {
+                  var _len6, _o, _ref1, _results2;
+                  _ref1 = node.target_links;
+                  _results2 = [];
+                  for (_o = 0, _len6 = _ref1.length; _o < _len6; _o++) {
+                    link = _ref1[_o];
+                    node_link = node_links[link_key(link)];
+                    node_link.sy = y;
+                    y += node_link.value;
+                    node_link.sx = node.x;
+                    if (!(link_target(link) in nodes)) {
+                      node_link.tx = node.x + 0.5;
+                      node_link.ty = trailing_y;
+                      if (this.v(node_link.value) > this.h(0.25)) {
+                        node_link.tx += this.h.invert(this.v(node_link.value));
+                      }
+                      if (this.v(node_link.sy).toFixed(3) === this.v(node_link.ty).toFixed(3)) {
+                        node_link.ty += this.v.invert(1);
+                      }
+                    }
+                    _results2.push(trailing_y += node_link.value + trailing_padding);
+                  }
+                  return _results2;
+                }).call(this));
               }
               return _results1;
-            })());
+            }).call(_this));
           }
           return _results;
         };
@@ -444,7 +485,7 @@
         for (_m = 0, _len4 = _ref1.length; _m < _len4; _m++) {
           node = _ref1[_m];
           node.y = y;
-          y += node.value + column.padding;
+          y += node.value + columns[0].padding;
         }
       }
       for (j = _n = 0, _len5 = columns.length; _n < _len5; j = ++_n) {
@@ -454,42 +495,70 @@
             node = column[_o];
             weighted_y = 0;
             source_link_value = 0;
+            total_weighted_y = 0;
+            total_source_link_value = 0;
             _ref2 = node.source_links;
             for (_p = 0, _len7 = _ref2.length; _p < _len7; _p++) {
               link = _ref2[_p];
-              link_key = this.link_key(link);
-              node_link = this.node_links[link_key];
-              if (node_link.backedge) {
+              node_link = this.node_links[this.link_key(link)];
+              source_node = nodes[this.link_source(link)];
+              if (source_node == null) {
                 continue;
               }
-              weighted_y += nodes[this.link_source(link)].y * node_link.value;
+              total_weighted_y += source_node.y * node_link.value;
+              total_source_link_value += node_link.value;
+              if (source_node.x >= node.x) {
+                continue;
+              }
+              weighted_y += source_node.y * node_link.value;
               source_link_value += node_link.value;
             }
-            node.y = weighted_y / source_link_value;
+            if (source_link_value) {
+              node.y = weighted_y / source_link_value;
+            } else if (total_source_link_value) {
+              node.y = total_weighted_y / total_source_link_value;
+            } else {
+              target_link_value = 0;
+              _ref3 = node.target_links;
+              for (_q = 0, _len8 = _ref3.length; _q < _len8; _q++) {
+                link = _ref3[_q];
+                node_link = this.node_links[this.link_key(link)];
+                target_node = nodes[this.link_target(link)];
+                if (target_node == null) {
+                  continue;
+                }
+                weighted_y += target_node.y * node_link.value;
+                target_link_value += node_link.value;
+              }
+              if (!target_link_value) {
+                throw "assertion error: Orphan node";
+              }
+              node.y = weighted_y / target_link_value;
+            }
           }
         }
       }
       collision_detection();
       layout_links();
       alpha = 1;
-      for (iteration = _q = 0, _ref3 = this.iterations; 0 <= _ref3 ? _q < _ref3 : _q > _ref3; iteration = 0 <= _ref3 ? ++_q : --_q) {
+      for (iteration = _r = 0, _ref4 = this.iterations; 0 <= _ref4 ? _r < _ref4 : _r > _ref4; iteration = 0 <= _ref4 ? ++_r : --_r) {
         alpha *= this.alpha;
-        for (_r = 0, _len8 = columns.length; _r < _len8; _r++) {
-          column = columns[_r];
-          for (_s = 0, _len9 = column.length; _s < _len9; _s++) {
-            node = column[_s];
+        for (_s = 0, _len9 = columns.length; _s < _len9; _s++) {
+          column = columns[_s];
+          for (_t = 0, _len10 = column.length; _t < _len10; _t++) {
+            node = column[_t];
             delta = 0;
-            _ref4 = node.source_links;
-            for (_t = 0, _len10 = _ref4.length; _t < _len10; _t++) {
-              link = _ref4[_t];
+            _ref5 = node.source_links;
+            for (_u = 0, _len11 = _ref5.length; _u < _len11; _u++) {
+              link = _ref5[_u];
               node_link = this.node_links[this.link_key(link)];
               if (!node_link.backedge) {
                 delta += (node_link.sy - node_link.ty) * node_link.value;
               }
             }
-            _ref5 = node.target_links;
-            for (_u = 0, _len11 = _ref5.length; _u < _len11; _u++) {
-              link = _ref5[_u];
+            _ref6 = node.target_links;
+            for (_v = 0, _len12 = _ref6.length; _v < _len12; _v++) {
+              link = _ref6[_v];
               node_link = this.node_links[this.link_key(link)];
               if (!node_link.backedge) {
                 delta += (node_link.ty - node_link.sy) * node_link.value;
@@ -502,17 +571,17 @@
         collision_detection();
         layout_links();
       }
-      this.nodes_layer = this.content.select('g.nodes').singleton().options(this.nodes_options).update();
-      this.node_g = this.nodes_layer.select('g.node').options(this.node_options).animate(origin !== 'render').bind(current_data, this.key).update();
-      this.rects = this.node_g.inherit('rect').options(this.rect_options).update();
-      this.links_layer = this.content.select('g.links', ':first-child').singleton().options(this.links_options).update();
+      this.links_layer = this.content.select('g.links').singleton().options(this.links_options).update();
       this.link_g = this.links_layer.select('g.link').options(this.link_options).animate(origin !== 'render').bind(current_links, this.link_key).update();
       this.paths = this.link_g.inherit('path').options(this.path_options).update();
-      return this.link_g.all.classed('backedge', (function(_this) {
+      this.link_g.all.classed('backedge', (function(_this) {
         return function(link) {
           return _this.node_links[_this.link_key(link)].backedge;
         };
       })(this));
+      this.nodes_layer = this.content.select('g.nodes').singleton().options(this.nodes_options).update();
+      this.node_g = this.nodes_layer.select('g.node').options(this.node_options).animate(origin !== 'render').bind(current_data, this.key).update();
+      return this.rects = this.node_g.inherit('rect').options(this.rect_options).update();
     };
 
     Sankey.prototype._draw = function(origin) {
@@ -547,12 +616,10 @@
       this.paths.animate(origin !== 'render' && origin !== 'resize').position({
         d: (function(_this) {
           return function(link) {
-            var curvature, node_link, source_node, sx, sy, target_node, tx, ty, x_interpolator;
+            var curvature, node_link, sx, sy, tx, ty, x_interpolator;
             node_link = _this.node_links[_this.link_key(link)];
-            source_node = _this.nodes[_this.link_source(link)];
-            target_node = _this.nodes[_this.link_target(link)];
-            sx = _this.h(source_node.x) + node_width;
-            tx = _this.h(target_node.x);
+            sx = _this.h(node_link.sx) + node_width;
+            tx = _this.h(node_link.tx);
             switch (_this.link_path) {
               case 'straight':
                 sy = _this.v(node_link.sy);
@@ -601,8 +668,10 @@
     function Butterfly() {
       this.focus = __bind(this.focus, this);
       this._style = __bind(this._style, this);
+      this._butterfly_layout = __bind(this._butterfly_layout, this);
       this._butterfly_update = __bind(this._butterfly_update, this);
       this._update = __bind(this._update, this);
+      this._init = __bind(this._init, this);
       return Butterfly.__super__.constructor.apply(this, arguments);
     }
 
@@ -614,37 +683,69 @@
 
     Butterfly.prototype.depth_of_field = 2;
 
+    Butterfly.prototype._init = function() {
+      Butterfly.__super__._init.apply(this, arguments);
+      return this.background["new"].on('click', (function(_this) {
+        return function() {
+          return _this.focus(null);
+        };
+      })(this));
+    };
+
     Butterfly.prototype._update = function(origin) {
-      Butterfly.__super__._update.apply(this, arguments);
-      return this._butterfly_update();
+      var _ref;
+      if (_ref = this.focal, __indexOf.call(this.data, _ref) < 0) {
+        this.focal = null;
+      }
+      if (origin !== 'focus' || (this.focal == null)) {
+        Butterfly.__super__._update.apply(this, arguments);
+        this._butterfly_update();
+        this._style(true);
+      }
+      if (this.focal != null) {
+        this._butterfly_layout();
+        this._butterfly_update();
+        return this._style(true);
+      }
     };
 
     Butterfly.prototype._butterfly_update = function() {
       if (this.navigatable) {
-        return this.rects["new"].on('click', (function(_this) {
+        this.rects["new"].on('click', (function(_this) {
           return function(datum) {
+            d3.event.stopPropagation;
             return _this.focus(datum);
           };
         })(this));
       }
+      return this.paths.all.attr('mask', (function(_this) {
+        return function(link) {
+          if (!(_this.link_source(link) in _this.current_nodes)) {
+            return 'url(#mask_fade_left)';
+          } else if (!(_this.link_target(link) in _this.current_nodes)) {
+            return 'url(#mask_fade_right)';
+          } else {
+            return null;
+          }
+        };
+      })(this));
     };
 
-    Butterfly.prototype._style = function(style_new) {
-      Butterfly.__super__._style.apply(this, arguments);
-      return this.content.all.classed('navigatable', this.navigatable);
-    };
-
-    Butterfly.prototype.focus = function(focus) {
-      var current_data, current_links, datum, focus_key, focus_node, nodes, walk;
-      console.debug(focus);
-      focus_key = this.key(focus);
+    Butterfly.prototype._butterfly_layout = function() {
+      var current_data, current_links, datum, focus_key, focus_node, nodes, visited_keys, walk;
+      focus_key = this.key(this.focal);
       focus_node = this.nodes[focus_key];
       nodes = {};
       nodes[focus_key] = focus_node;
       current_links = [];
+      visited_keys = {};
       walk = (function(_this) {
         return function(key, direction, depth) {
           var link, links, node, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _results;
+          if (visited_keys[key]) {
+            return;
+          }
+          visited_keys[key] = true;
           node = nodes[key] = _this.nodes[key];
           node.x = _this.depth_of_field + (depth * direction);
           _ref = [node.source_links, node.target_links];
@@ -667,6 +768,7 @@
         };
       })(this);
       walk(focus_key, 1, 0);
+      delete visited_keys[focus_key];
       walk(focus_key, -1, 0);
       current_data = (function() {
         var _i, _len, _ref, _results;
@@ -680,11 +782,19 @@
         }
         return _results;
       }).call(this);
-      this.h.domain([0, this.depth_of_field * 2]);
-      this._layout('focus', current_data, current_links);
-      this._butterfly_update();
-      this._draw('focus');
-      return this._style(true);
+      this.h.domain([-0.5, this.depth_of_field * 2 + 0.5]);
+      return this._layout('focus', current_data, current_links, nodes);
+    };
+
+    Butterfly.prototype._style = function(style_new) {
+      Butterfly.__super__._style.apply(this, arguments);
+      return this.content.all.classed('navigatable', this.navigatable);
+    };
+
+    Butterfly.prototype.focus = function(focal) {
+      this.focal = focal;
+      this._update('focus');
+      return this._draw('focus');
     };
 
     return Butterfly;

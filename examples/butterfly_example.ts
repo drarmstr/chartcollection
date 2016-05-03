@@ -1,16 +1,23 @@
 ﻿// # C3 Butterfly Execution Flow
-// _Demonstrates a Butterfly Sankey flow chart for a program execution_.
+// _Demonstrates a Butterfly Caller/Callee flow chart for program execution_.
 
-//interface FunctionRecord {
-//    id: number;
-//    name: string;
-//    module: string;
-//}
-//interface CFGLinkRecord {
-//    source: number;
-//    target: number;
-//    value: number;
-//}
+// ## Example data sets for function-level control flow graph.
+
+// Function records contain an `id`, their `name`, and the name of the `module` they belong to.
+interface FunctionRecord {
+    id: number;
+    name: string;
+    module: string; // Not used in this example
+}
+// Function call links records contain the function id for the `source` and `target` of the call.
+// `source` is the **caller** and `target` is the **callee**.
+// `value` is the total amount of time for the function call (and any nested calls).
+interface CFGLinkRecord {
+    source: number;
+    target: number;
+    value: number;
+}
+// Example data sets
 var cfg_datasets = {
     libpthread: {
         functions: [{ "id": 255, "name": "start_thread", "module": "libpthread-2.17.so" }, { "id": 318, "name": "libpthread-2.17.so@56e0", "module": "libpthread-2.17.so" }, { "id": 321, "name": "libpthread-2.17.so@55c0", "module": "libpthread-2.17.so" }, { "id": 325, "name": "(__kmp_launch_worker, void)", "module": "libomp.so" }, { "id": 345, "name": "(__kmp_itt_thr_name_set_init_3_0, const char, int)", "module": "libomp.so" }, { "id": 346, "name": "(__kmp_itt_thread_set_name_init_3_0, const char)", "module": "libomp.so" }, { "id": 350, "name": "libomp.so@17270", "module": "libomp.so" }, { "id": 352, "name": "__GI___pthread_mutex_lock", "module": "libpthread-2.17.so" }, { "id": 354, "name": "__lll_lock_wait", "module": "libpthread-2.17.so" }, { "id": 366, "name": "libomp.so@16ee0", "module": "libomp.so" }, { "id": 477, "name": "libomp.so@16e90", "module": "libomp.so" }, { "id": 479, "name": "__pthread_mutex_unlock", "module": "libpthread-2.17.so" }, { "id": 481, "name": "__lll_unlock_wake", "module": "libpthread-2.17.so" }, { "id": 502, "name": "(__kmp_set_stack_info, int, kmp_info)", "module": "libomp.so" }, { "id": 503, "name": "libomp.so@16c90", "module": "libomp.so" }, { "id": 506, "name": "libpthread-2.17.so@5690", "module": "libpthread-2.17.so" }, { "id": 508, "name": "libomp.so@168a0", "module": "libomp.so" }, { "id": 510, "name": "libpthread-2.17.so@5700", "module": "libpthread-2.17.so" }, { "id": 512, "name": "pthread_getaffinity_np@@GLIBC_2.3.4", "module": "libpthread-2.17.so" }, { "id": 521, "name": "libpthread-2.17.so@5540", "module": "libpthread-2.17.so" }, { "id": 524, "name": "libomp.so@17110", "module": "libomp.so" }, { "id": 527, "name": "libpthread-2.17.so@5430", "module": "libpthread-2.17.so" }, { "id": 530, "name": "__kmp_launch_thread", "module": "libomp.so" }, { "id": 541, "name": "__kmp_fork_barrier(int, int)", "module": "libomp.so" }, { "id": 547, "name": "__kmp_suspend_64", "module": "libomp.so" }, { "id": 555, "name": "libomp.so@16a30", "module": "libomp.so" }, { "id": 567, "name": "__pthread_mutex_unlock_usercnt", "module": "libpthread-2.17.so" }, { "id": 568, "name": "__pthread_enable_asynccancel", "module": "libpthread-2.17.so" }, { "id": 569, "name": "__pthread_disable_asynccancel", "module": "libpthread-2.17.so" }, { "id": 570, "name": "__pthread_mutex_cond_lock", "module": "libpthread-2.17.so" }, { "id": 583, "name": "__kmp_get_global_thread_id_reg", "module": "libomp.so" }, { "id": 603, "name": "__nptl_deallocate_tsd", "module": "libpthread-2.17.so" }, { "id": 606, "name": "libpthread-2.17.so@5620", "module": "libpthread-2.17.so" }, { "id": 615, "name": "libpthread-2.17.so@5770", "module": "libpthread-2.17.so" }, { "id": 782, "name": "libomp.so@16940", "module": "libomp.so" }, { "id": 805, "name": "__kmp_allocate_team", "module": "libomp.so" }, { "id": 810, "name": "__kmp_allocate_thread", "module": "libomp.so" }, { "id": 811, "name": "__kmp_create_monitor", "module": "libomp.so" }, { "id": 824, "name": "libomp.so@16860", "module": "libomp.so" }, { "id": 827, "name": "libpthread-2.17.so@5520", "module": "libpthread-2.17.so" }, { "id": 836, "name": "libpthread-2.17.so@57c0", "module": "libpthread-2.17.so" }, { "id": 844, "name": "libpthread-2.17.so@5790", "module": "libpthread-2.17.so" }, { "id": 846, "name": "do_clone.constprop.4", "module": "libpthread-2.17.so" }, { "id": 847, "name": "libpthread-2.17.so@5420", "module": "libpthread-2.17.so" }, { "id": 910, "name": "__kmp_create_worker", "module": "libomp.so" }, { "id": 927, "name": "main", "module": "a.out" }, { "id": 945, "name": "a.out@400600", "module": "a.out" }, { "id": 950, "name": "__GI_exit", "module": "libc-2.17.so" }, { "id": 951, "name": "__run_exit_handlers", "module": "libc-2.17.so" }, { "id": 953, "name": "_dl_fini", "module": "ld-2.17.so" }, { "id": 960, "name": "__kmp_internal_end_dtor", "module": "libomp.so" }, { "id": 970, "name": "(__kmp_reap_thread, kmp_info, int)", "module": "libomp.so" }, { "id": 977, "name": "__kmp_str_format", "module": "libomp.so" }, { "id": 997, "name": "libomp.so@16b90", "module": "libomp.so" }, { "id": 1012, "name": "libomp.so@170b0", "module": "libomp.so" }, { "id": 1015, "name": "_pthread_cleanup_push", "module": "libpthread-2.17.so" }, { "id": 1016, "name": "__pthread_cleanup_pop", "module": "libpthread-2.17.so" }, { "id": 1017, "name": "__free_tcb", "module": "libpthread-2.17.so" }, { "id": 1028, "name": "libomp.so@171b0", "module": "libomp.so" }, { "id": 1034, "name": "__kmp_cleanup", "module": "libomp.so" }, { "id": 1041, "name": "__kmp_runtime_destroy", "module": "libomp.so" }, { "id": 1042, "name": "__kmp_itt_destroy()", "module": "libomp.so" }, { "id": 1046, "name": "libomp.so@171f0", "module": "libomp.so" }, { "id": 1092, "name": "__do_global_dtors_aux", "module": "libpthread-2.17.so" }, { "id": 1093, "name": "libpthread-2.17.so@5880", "module": "libpthread-2.17.so" }, { "id": 1095, "name": "deregister_tm_clones", "module": "libpthread-2.17.so" }, { "id": 1096, "name": "_fini", "module": "libpthread-2.17.so" }, { "id": 1401, "name": "_dl_init", "module": "ld-2.17.so" }, { "id": 1402, "name": "_init", "module": "libpthread-2.17.so" }, { "id": 1403, "name": "__pthread_initialize_minimal", "module": "libpthread-2.17.so" }, { "id": 1405, "name": "__libc_sigaction", "module": "libpthread-2.17.so" }, { "id": 1412, "name": "libpthread-2.17.so@57f0", "module": "libpthread-2.17.so" }, { "id": 1415, "name": "libpthread-2.17.so@54d0", "module": "libpthread-2.17.so" }, { "id": 1418, "name": "libpthread-2.17.so@5440", "module": "libpthread-2.17.so" }, { "id": 1424, "name": "libpthread-2.17.so@5780", "module": "libpthread-2.17.so" }, { "id": 1426, "name": "libpthread-2.17.so@56d0", "module": "libpthread-2.17.so" }, { "id": 1430, "name": "frame_dummy", "module": "libpthread-2.17.so" }, { "id": 1455, "name": "a.out@4005d0", "module": "a.out" }, { "id": 1482, "name": "(__kmp_do_serial_initialize, void)", "module": "libomp.so" }, { "id": 1484, "name": "__kmp_register_library_startup()", "module": "libomp.so" }, { "id": 1488, "name": "ptmalloc_init.part.8", "module": "libc-2.17.so" }, { "id": 1489, "name": "_dl_addr", "module": "libc-2.17.so" }, { "id": 1535, "name": "sysconf", "module": "libc-2.17.so" }, { "id": 1569, "name": "__kmp_env_initialize(const char)", "module": "libomp.so" }, { "id": 1570, "name": "(__kmp_stg_init, void)", "module": "libomp.so" }, { "id": 1572, "name": "get_phys_pages", "module": "libc-2.17.so" }, { "id": 1574, "name": "_IO_new_fopen", "module": "libc-2.17.so" }, { "id": 1576, "name": "_IO_file_init@@GLIBC_2.2.5", "module": "libc-2.17.so" }, { "id": 1577, "name": "__GI__IO_link_in", "module": "libc-2.17.so" }, { "id": 1578, "name": "_pthread_cleanup_push_defer", "module": "libpthread-2.17.so" }, { "id": 1579, "name": "_pthread_cleanup_pop_restore", "module": "libpthread-2.17.so" }, { "id": 1646, "name": "__GI_sscanf", "module": "libc-2.17.so" }, { "id": 1647, "name": "vsscanf", "module": "libc-2.17.so" }, { "id": 1649, "name": "_IO_vfscanf", "module": "libc-2.17.so" }, { "id": 1653, "name": "fclose@@GLIBC_2.2.5", "module": "libc-2.17.so" }, { "id": 1654, "name": "__GI__IO_un_link", "module": "libc-2.17.so" }, { "id": 1757, "name": "(__kmp_launch_monitor, void)", "module": "libomp.so" }, { "id": 1758, "name": "(__kmp_itt_thr_ignore_init_3_0, void)", "module": "libomp.so" }, { "id": -1, "name": "<Unknown>", "module": "<Unknown>" }],
@@ -21,20 +28,30 @@ var cfg_datasets = {
         links: [{ "source": 36, "target": 37, "value": 88 }, { "source": 33, "target": 34, "value": 40 }, { "source": 32, "target": 33, "value": 118 }, { "source": 30, "target": 32, "value": 134 }, { "source": 29, "target": 30, "value": 244 }, { "source": 30, "target": 31, "value": 22 }, { "source": 15, "target": 16, "value": 234 }, { "source": 14, "target": 15, "value": 806 }, { "source": 13, "target": 14, "value": 814 }, { "source": 12, "target": 13, "value": 228 }, { "source": 11, "target": 12, "value": 308 }, { "source": 29, "target": 11, "value": 200 }, { "source": 52, "target": 53, "value": 60 }, { "source": 311, "target": 312, "value": 3472 }, { "source": 0, "target": 311, "value": 3492 }, { "source": 214, "target": 0, "value": 23990 }, { "source": 17, "target": 19, "value": 56 }, { "source": 9, "target": 17, "value": 492 }, { "source": 8, "target": 9, "value": 1324 }, { "source": 17, "target": 13, "value": 228 }, { "source": 17, "target": 18, "value": 88 }, { "source": 10, "target": 11, "value": 200 }, { "source": 9, "target": 10, "value": 228 }, { "source": 2, "target": 5, "value": 16 }, { "source": 2, "target": 4, "value": 52 }, { "source": 2, "target": 3, "value": 24 }, { "source": 282, "target": 16, "value": 108 }, { "source": 281, "target": 282, "value": 216 }, { "source": 314, "target": 320, "value": 1460 }, { "source": 312, "target": 314, "value": 3136 }, { "source": 314, "target": 318, "value": 36 }, { "source": 314, "target": 319, "value": 16 }, { "source": 314, "target": 317, "value": 50 }, { "source": 314, "target": 316, "value": 16 }, { "source": 314, "target": 315, "value": 18 }, { "source": 312, "target": 313, "value": 22 }, { "source": 309, "target": 310, "value": 48 }, { "source": 0, "target": 309, "value": 230 }, { "source": 309, "target": 36, "value": 136 }, { "source": 0, "target": 308, "value": 18 }, { "source": 306, "target": 307, "value": 24 }, { "source": 304, "target": 306, "value": 30 }, { "source": 0, "target": 304, "value": 64 }, { "source": 304, "target": 305, "value": 12 }, { "source": 294, "target": 120, "value": 68 }, { "source": 293, "target": 294, "value": 1448 }, { "source": 284, "target": 293, "value": 1466 }, { "source": 280, "target": 284, "value": 2154 }, { "source": 278, "target": 280, "value": 2502 }, { "source": 0, "target": 278, "value": 2564 }, { "source": 301, "target": 5, "value": 64 }, { "source": 300, "target": 301, "value": 304 }, { "source": 299, "target": 300, "value": 1056 }, { "source": 294, "target": 299, "value": 576 }, { "source": 301, "target": 16, "value": 72 }, { "source": 300, "target": 281, "value": 440 }, { "source": 303, "target": 158, "value": 40 }, { "source": 302, "target": 303, "value": 276 }, { "source": 294, "target": 302, "value": 380 }, { "source": 298, "target": 299, "value": 576 }, { "source": 296, "target": 298, "value": 792 }, { "source": 294, "target": 296, "value": 598 }, { "source": 297, "target": 191, "value": 80 }, { "source": 296, "target": 297, "value": 232 }, { "source": 297, "target": 190, "value": 64 }, { "source": 295, "target": 114, "value": 108 }, { "source": 294, "target": 295, "value": 160 }, { "source": 284, "target": 292, "value": 24 }, { "source": 284, "target": 291, "value": 36 }, { "source": 290, "target": 120, "value": 34 }, { "source": 289, "target": 290, "value": 132 }, { "source": 284, "target": 289, "value": 264 }, { "source": 290, "target": 114, "value": 36 }, { "source": 289, "target": 19, "value": 14 }, { "source": 289, "target": 18, "value": 22 }, { "source": 284, "target": 288, "value": 14 }, { "source": 286, "target": 287, "value": 66 }, { "source": 284, "target": 286, "value": 106 }, { "source": 284, "target": 285, "value": 24 }, { "source": 283, "target": 13, "value": 114 }, { "source": 280, "target": 283, "value": 126 }, { "source": 280, "target": 281, "value": 110 }, { "source": 278, "target": 279, "value": 24 }, { "source": 0, "target": 120, "value": 34 }, { "source": 274, "target": 275, "value": 80 }, { "source": 0, "target": 274, "value": 92 }, { "source": 0, "target": 114, "value": 36 }, { "source": 0, "target": 8, "value": 1516 }, { "source": 213, "target": 19, "value": 14 }, { "source": 9, "target": 213, "value": 548 }, { "source": 213, "target": 29, "value": 474 }, { "source": 213, "target": 18, "value": 22 }, { "source": 0, "target": 2, "value": 626 }, { "source": 0, "target": 1, "value": 36 }, { "source": 0, "target": 212, "value": 56 }, { "source": 170, "target": 171, "value": 64 }, { "source": 169, "target": 170, "value": 128 }, { "source": 211, "target": 169, "value": 338 }, { "source": 0, "target": 211, "value": 426 }, { "source": 207, "target": 210, "value": 12 }, { "source": 197, "target": 207, "value": 242 }, { "source": 192, "target": 197, "value": 998 }, { "source": 0, "target": 192, "value": 2422 }, { "source": 208, "target": 209, "value": 100 }, { "source": 207, "target": 208, "value": 388 }, { "source": 197, "target": 206, "value": 8 }, { "source": 203, "target": 204, "value": 144 }, { "source": 197, "target": 203, "value": 46 }, { "source": 199, "target": 205, "value": 152 }, { "source": 198, "target": 199, "value": 1092 }, { "source": 197, "target": 198, "value": 574 }, { "source": 199, "target": 203, "value": 92 }, { "source": 202, "target": 14, "value": 148 }, { "source": 201, "target": 202, "value": 168 }, { "source": 200, "target": 201, "value": 576 }, { "source": 199, "target": 200, "value": 724 }, { "source": 192, "target": 193, "value": 88 }, { "source": 0, "target": 273, "value": 16 }, { "source": 0, "target": 186, "value": 712 }, { "source": 0, "target": 272, "value": 46 }, { "source": 0, "target": 271, "value": 24 }, { "source": 0, "target": 183, "value": 126 }, { "source": 261, "target": 18, "value": 22 }, { "source": 0, "target": 261, "value": 5970 }, { "source": 261, "target": 267, "value": 44 }, { "source": 261, "target": 13, "value": 456 }, { "source": 261, "target": 264, "value": 4154 }, { "source": 269, "target": 270, "value": 960 }, { "source": 264, "target": 269, "value": 352 }, { "source": 265, "target": 142, "value": 66 }, { "source": 264, "target": 265, "value": 3250 }, { "source": 265, "target": 145, "value": 172 }, { "source": 265, "target": 143, "value": 66 }, { "source": 265, "target": 269, "value": 1208 }, { "source": 262, "target": 120, "value": 34 }, { "source": 261, "target": 262, "value": 1022 }, { "source": 262, "target": 153, "value": 218 }, { "source": 149, "target": 13, "value": 228 }, { "source": 263, "target": 149, "value": 142 }, { "source": 262, "target": 263, "value": 160 }, { "source": 262, "target": 114, "value": 36 }, { "source": 261, "target": 19, "value": 14 }, { "source": 221, "target": 159, "value": 8 }, { "source": 220, "target": 221, "value": 1544 }, { "source": 219, "target": 220, "value": 1752 }, { "source": 0, "target": 219, "value": 1776 }, { "source": 222, "target": 155, "value": 438 }, { "source": 221, "target": 222, "value": 1348 }, { "source": 222, "target": 184, "value": 76 }, { "source": 222, "target": 223, "value": 102 }, { "source": 222, "target": 187, "value": 48 }, { "source": 222, "target": 153, "value": 68 }, { "source": 152, "target": 185, "value": 32 }, { "source": 222, "target": 152, "value": 234 }, { "source": 152, "target": 184, "value": 72 }, { "source": 220, "target": 149, "value": 142 }, { "source": 0, "target": 182, "value": 52 }, { "source": 0, "target": 181, "value": 76 }, { "source": 152, "target": 260, "value": 92 }, { "source": 155, "target": 154, "value": 34 }, { "source": 155, "target": 223, "value": 34 }, { "source": 155, "target": 152, "value": 226 }, { "source": 276, "target": 0, "value": 3532 }, { "source": 0, "target": 276, "value": 3548 }, { "source": 224, "target": 207, "value": 242 }, { "source": 192, "target": 224, "value": 998 }, { "source": 224, "target": 206, "value": 8 }, { "source": 224, "target": 203, "value": 46 }, { "source": 224, "target": 198, "value": 574 }, { "source": 192, "target": 195, "value": 88 }, { "source": 188, "target": 191, "value": 84 }, { "source": 186, "target": 188, "value": 428 }, { "source": 188, "target": 190, "value": 56 }, { "source": 188, "target": 189, "value": 132 }, { "source": 186, "target": 187, "value": 48 }, { "source": 0, "target": 342, "value": 10 }, { "source": 340, "target": 341, "value": 76 }, { "source": 0, "target": 340, "value": 98 }, { "source": 339, "target": 294, "value": 822 }, { "source": 335, "target": 339, "value": 836 }, { "source": 326, "target": 335, "value": 1738 }, { "source": 0, "target": 326, "value": 2184 }, { "source": 335, "target": 338, "value": 20 }, { "source": 337, "target": 120, "value": 34 }, { "source": 336, "target": 337, "value": 796 }, { "source": 335, "target": 336, "value": 822 }, { "source": 337, "target": 296, "value": 598 }, { "source": 337, "target": 295, "value": 80 }, { "source": 326, "target": 331, "value": 12 }, { "source": 326, "target": 334, "value": 20 }, { "source": 326, "target": 333, "value": 28 }, { "source": 326, "target": 332, "value": 24 }, { "source": 329, "target": 331, "value": 12 }, { "source": 327, "target": 329, "value": 38 }, { "source": 326, "target": 327, "value": 148 }, { "source": 329, "target": 330, "value": 8 }, { "source": 328, "target": 318, "value": 18 }, { "source": 327, "target": 328, "value": 76 }, { "source": 326, "target": 281, "value": 110 }, { "source": 325, "target": 306, "value": 30 }, { "source": 0, "target": 325, "value": 56 }, { "source": 174, "target": 176, "value": 60 }, { "source": 173, "target": 174, "value": 94 }, { "source": 0, "target": 322, "value": 222 }, { "source": 174, "target": 175, "value": 12 }, { "source": 323, "target": 324, "value": 18 }, { "source": 322, "target": 323, "value": 66 }, { "source": 322, "target": 52, "value": 110 }, { "source": 312, "target": 321, "value": 22 }, { "source": 312, "target": 173, "value": 184 }, { "source": 266, "target": 268, "value": 30 }, { "source": 265, "target": 266, "value": 230 }, { "source": 266, "target": 267, "value": 22 }],
     },
 };
+// A Scale to generate colors for each function name.
 var function_color = d3.scale.category20();
 
+
+// # Create Butterly visualization
+
+// Create `Butterfly` object
 var cfg = new c3.Butterfly({
     anchor: '#cfg_butterfly',
 
     height: 600,
 
+    // Link to control flow graph `functions` and `links` **data**
     data: cfg_datasets['libpthread'].functions,
     links: cfg_datasets['libpthread'].links,
     
+    // Define unique **key** accessor for functions
     key: (func) => func.id,
 
+    // **Align** CFG to start on the `left`
     align: 'left',
 
+    // **Style** nodes based on the function name and create tooltips.
+    // **Animate** transitions for all of the nodes and links.
     node_options: {
         title: (func) => func.name,
         styles: {
@@ -49,6 +66,10 @@ var cfg = new c3.Butterfly({
         duration: 2000,
     },
     link_options: {
+        // A poor-performing method of constructing a tooltip with function names.
+        // A look-up hash could be used.  The sankey object could be extended with this
+        // functionality if requested for relatively little space cost.
+        title: (link) => cfg.data.filter((f) => f.id == link.source)[0].name + " → " + cfg.data.filter((f) => f.id == link.target)[0].name,
         animate: true,
         duration: 2000,
     },
@@ -56,88 +77,25 @@ var cfg = new c3.Butterfly({
         animate: true,
         duration: 2000,
     },
-}).render();
+});
+cfg.render();
 
 
+// # Extend dynamic Chart behavior
+
+// Resize the control flow graph when the window is resized.
 window.onresize = function () { cfg.resize(); };
 
 
-// Select example data set
+// Select example **data set**
 document.getElementById('dataset').addEventListener('change', function () {
     cfg.data = cfg_datasets[this.value].functions;
     cfg.links = cfg_datasets[this.value].links;
     cfg.redraw();
 });
 
-//// Set node alignment justification
-//document.getElementById('us_align').addEventListener('change', function () {
-//    us_sankey.align = this.value;
-//    us_sankey.redraw();
-//});
-
-//// IE doesn't support `input` events
-//for (let event_name of ['input', 'change']) {
-//    // Set layout algorithm iterations
-//    document.querySelector('#us_iterations').addEventListener(event_name, function () {
-//        us_sankey.iterations = +this.value;
-//        us_sankey.redraw();
-//    });
-
-//    // Set layout algorithm alpha
-//    document.querySelector('#us_alpha').addEventListener(event_name, function () {
-//        us_sankey.alpha = +this.value;
-//        us_sankey.redraw();
-//    });
-
-//    // Set node width
-//    document.querySelector('#us_node_width').addEventListener(event_name, function () {
-//        us_sankey.node_width = +this.value;
-//        if ((<HTMLInputElement>document.querySelector('input[name=us_node_width_type]:checked')).value === 'percent')
-//            us_sankey.node_width += '%';
-//        us_sankey.redraw();
-//    });
-
-//    // Set node padding
-//    document.querySelector('#us_node_padding').addEventListener(event_name, function () {
-//        us_sankey.node_padding = +this.value;
-//        if ((<HTMLInputElement>document.querySelector('input[name=us_node_padding_type]:checked')).value === 'percent')
-//            us_sankey.node_padding += '%';
-//        us_sankey.redraw();
-//    });
-
-//    // Set link path curvature
-//    document.getElementById('us_link_path_curvature').addEventListener(event_name, function () {
-//        us_sankey.link_path_curvature = +this.value;
-//        us_sankey.redraw();
-//    });
-//}
-
-//// Change node width when changing between percent or pixel based units.
-//for (let radio of document.forms['us_sankey'].elements['us_node_width_type']) {
-//    radio.addEventListener('change', function () {
-//        var event = document.createEvent('HTMLEvents');
-//        event.initEvent('change', true, true);
-//        document.getElementById('us_node_width').dispatchEvent(event);
-//    });
-//}
-//// Change node padding when changing between percent or pixel based units.
-//for (let radio of document.forms['us_sankey'].elements['us_node_padding_type']) {
-//    radio.addEventListener('change', function () {
-//        var event = document.createEvent('HTMLEvents');
-//        event.initEvent('change', true, true);
-//        document.getElementById('us_node_padding').dispatchEvent(event);
-//    });
-//}
-
-//// Change between straight and curved paths for links.
-//document.getElementById('us_link_path').addEventListener('change', function () {
-//    us_sankey.link_path = this.value;
-//    us_sankey.redraw();
-
-//    // NOTE: _curved paths should style the `stroke` while straight paths should style the `fill`._
-//    if (this.value === 'curve')
-//        us_sankey.path_options.styles = { fill: 'none', stroke: 'blue', opacity: 0.5 };
-//    else if (this.value === 'straight')
-//        us_sankey.path_options.styles = { fill: 'green', stroke: 'none', opacity: 0.5 };
-//    us_sankey.restyle();
-//});
+// Set **Depth of Field**
+document.getElementById('depth_of_field').addEventListener('change', function () {
+    cfg.depth_of_field = +this.value;
+    cfg.redraw();
+});

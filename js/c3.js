@@ -743,23 +743,18 @@
   })(c3.Base);
 
   document.addEventListener('DOMContentLoaded', function() {
-    var from_transparent, mask_fade_left, mask_fade_right, shadow_filter, to_transparent;
+    var fade_left, fade_right, mask_fade_left, mask_fade_right;
     if (!c3.global_svg) {
       c3.global_svg = d3.select('body').append('svg').attr('class', 'c3 global');
       c3.global_defs = c3.global_svg.append('defs');
-      shadow_filter = c3.global_defs.append('filter').attr('id', 'shadow_filter');
-      shadow_filter.append('feGaussianBlur').attr('in', 'SourceAlpha').attr('stdDeviation', 4);
-      shadow_filter.append('feSpecularLighting').attr('specularExponent', 100).attr('lighting-color', 'wheat').append('feSpotLight').attr('x', 0).attr('y', 0).attr('z', 200);
-      shadow_filter.append('feComposite').attr('in2', 'SourceGraphic').attr('operator', 'in');
-      shadow_filter.append('feComposite').attr('in2', 'SourceGraphic').attr('operator', 'arithmetic').attr('k1', 0).attr('k2', 1).attr('k3', 1).attr('k4', 0);
-      to_transparent = c3.global_defs.append('linearGradient').attr('id', 'gradient_for_mask_fade_right');
-      to_transparent.append('stop').attr('offset', 0.5).attr('stop-color', 'white').attr('stop-opacity', 1);
-      to_transparent.append('stop').attr('offset', 0.9).attr('stop-color', 'white').attr('stop-opacity', 0);
-      from_transparent = c3.global_defs.append('linearGradient').attr('id', 'gradient_for_mask_fade_left');
-      from_transparent.append('stop').attr('offset', 0.1).attr('stop-color', 'white').attr('stop-opacity', 0);
-      from_transparent.append('stop').attr('offset', 0.5).attr('stop-color', 'white').attr('stop-opacity', 1);
-      mask_fade_right = c3.global_defs.append('mask').attr('id', 'mask_fade_right').attr('maskContentUnits', 'objectBoundingBox').attr('x', -1).attr('y', -500000).attr('height', 1000000).attr('width', 2).append('rect').attr('x', -1).attr('y', -500000).attr('height', 1000000).attr('width', 2).attr('fill', "url(#" + (to_transparent.attr('id')) + ")");
-      return mask_fade_left = c3.global_defs.append('mask').attr('id', 'mask_fade_left').attr('maskContentUnits', 'objectBoundingBox').attr('y', -500000).attr('height', 1000000).attr('width', 2).append('rect').attr('y', -500000).attr('height', 1000000).attr('width', 2).attr('fill', "url(#" + (from_transparent.attr('id')) + ")");
+      fade_right = c3.global_defs.append('linearGradient').attr('id', 'gradient_for_mask_fade_right');
+      fade_right.append('stop').attr('offset', 0.5).attr('stop-color', 'white').attr('stop-opacity', 1);
+      fade_right.append('stop').attr('offset', 0.9).attr('stop-color', 'white').attr('stop-opacity', 0);
+      fade_left = c3.global_defs.append('linearGradient').attr('id', 'gradient_for_mask_fade_left');
+      fade_left.append('stop').attr('offset', 0.1).attr('stop-color', 'white').attr('stop-opacity', 0);
+      fade_left.append('stop').attr('offset', 0.5).attr('stop-color', 'white').attr('stop-opacity', 1);
+      mask_fade_right = c3.global_defs.append('mask').attr('id', 'mask_fade_right').attr('maskContentUnits', 'objectBoundingBox').attr('x', -1).attr('y', -500000).attr('height', 1000000).attr('width', 2).append('rect').attr('x', -1).attr('y', -500000).attr('height', 1000000).attr('width', 2).attr('fill', "url(#" + (fade_right.attr('id')) + ")");
+      return mask_fade_left = c3.global_defs.append('mask').attr('id', 'mask_fade_left').attr('maskContentUnits', 'objectBoundingBox').attr('y', -500000).attr('height', 1000000).attr('width', 2).append('rect').attr('y', -500000).attr('height', 1000000).attr('width', 2).attr('fill', "url(#" + (fade_left.attr('id')) + ")");
     }
   });
 
