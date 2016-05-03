@@ -178,7 +178,7 @@ html.grabbing * {
 .c3.sankey rect {
   shape-rendering: crispEdges;
 }
-.c3.sankey path {
+.c3.sankey .link path {
   fill: none;
   opacity: 0.5;
 }

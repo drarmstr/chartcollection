@@ -1,16 +1,22 @@
 // # C3 Sankey Energy Use Flow Chart
-// _Demonstrates a Sankey flow chart of the energy production and use in the United States_.
-// ## TODO: Add source annotations
+// _Demonstrates a Sankey flow chart of energy production and use_.
+// Function to set the color based on the energy node name.
 var source_color = d3.scale.category20b();
+// # Create Sankey visualization for the US
+// Create `Sankey` visualization object for **United States Energy Data**
 var us_sankey = new c3.Sankey({
+    // Bind to the DOM and set the height
     anchor: '#us_sankey_flowchart',
     height: 600,
+    // **Accessor functions** to describe how to access the US energy data.
     key: function (d) { return d.name; },
     value: function (d) { return d.btu; },
     link_value: function (l) { return l.btu; },
+    // Create **tooltips** for the energy name.
     node_options: {
         title: function (d) { return d.name + '\n' + d.btu; },
     },
+    // **Style** and **animate** the nodes based on name.
     rect_options: {
         styles: {
             fill: function (d) { return source_color(d.name); },
@@ -18,9 +24,11 @@ var us_sankey = new c3.Sankey({
         },
         animate: true,
     },
+    // Create **tooltips** for the links between nodes
     link_options: {
         title: function (l) { return l.source + " → " + l.target + ": " + l.btu; },
     },
+    // **Style** and **animate** the links between nodes.
     path_options: {
         styles: {
             stroke: 'blue',
@@ -29,24 +37,42 @@ var us_sankey = new c3.Sankey({
         animate: true,
     },
 });
+// # Creat Sankey visualization for the UK
+// Create `Sankey` visualization object for **United Kingdom Energy Data**
 var uk_sankey = new c3.Sankey({
+    // Bind to the DOM and set the height
     anchor: '#uk_sankey_flowchart',
     height: 600,
+    // **Accessor functions** to describe how to access the UK energy data.
+    // In this case, all of these link accessors happen to be the default, so not strictly required.
+    // Because no `key` accessor is provided for the nodes, the key is simply the index into the data array.
+    // Because no `value` accessor is provided for the nodes, the value of the node is derived as the
+    // maximum of the input or output links.
     link_value: function (l) { return l.value; },
+    link_source: function (l) { return l.source; },
+    link_target: function (l) { return l.target; },
+    // Set the nodes to **align** on both the left and right sides for those nodes
+    // without any inputs or outputs respectively.
     align: 'both',
+    // Set the default **vertical padding** between nodes to be `15` pixels.
+    // This could also be set to a string for a percentage, such as `20%`.
     node_padding: 15,
+    // Create **tooltips** for the energy name.
     node_options: {
         title: function (d) { return d.name; },
     },
+    // **Style** the nodes based on name.
     rect_options: {
         styles: {
             fill: function (d) { return source_color(d.name.split(' ')[0]); },
             stroke: 'black',
         },
     },
+    // Create **tooltips** for the links between nodes
     link_options: {
         title: function (l) { return uk_energy_data.nodes[l.source].name + " → " + uk_energy_data.nodes[l.target].name + ": " + l.value; },
     },
+    // **Style** the links between nodes.
     path_options: {
         styles: {
             stroke: 'blue',
@@ -54,10 +80,13 @@ var uk_sankey = new c3.Sankey({
         },
     },
 });
+// ## Configure charts based on user behavior
+// Resize the charts if the window is resized
 window.onresize = function () {
     us_sankey.resize();
     uk_sankey.resize();
 };
+// ### Adjust US flow graph from interactive form
 // Animate flow changes when changing to data for different years
 document.getElementById('us_year').addEventListener('change', function () {
     us_sankey.data = us_energy_data[+this.value].nodes;
@@ -136,6 +165,7 @@ document.getElementById('us_link_path').addEventListener('change', function () {
         us_sankey.path_options.styles = { fill: 'green', stroke: 'none', opacity: 0.5 };
     us_sankey.restyle();
 });
+// ### Adjust UK flow graph from interactive form
 // Set node alignment justification
 document.getElementById('uk_align').addEventListener('change', function () {
     uk_sankey.align = this.value;
@@ -207,6 +237,7 @@ document.getElementById('uk_backedge').addEventListener('change', function () {
     uk_sankey.links = this.checked ? d3.merge([uk_energy_data.links, uk_energy_data_backedges]) : uk_energy_data.links;
     uk_sankey.redraw();
 });
+// ### US Energy Data from Lawrence Livermore National Laboratory
 var us_energy_data = {
     2014: {
         nodes: [
@@ -661,6 +692,7 @@ var us_energy_data = {
 };
 // Render the Sankey Flow Graph with US energy data
 us_sankey.render({ data: us_energy_data[2014].nodes, links: us_energy_data[2014].links });
+// ### UK Energy Data from the UK Dept of Energy & Climate Change
 var uk_energy_data = {
     nodes: [
         { "name": "Agricultural 'waste'" },
@@ -783,7 +815,7 @@ var uk_energy_data = {
         { "source": 47, "target": 15, "value": 289.366 },
     ]
 };
-// Cycles - (Made up data)
+// **Cycles / Backedges** - _Made up data_
 var uk_energy_data_backedges = [
     { "source": 11, "target": 26, "value": 80 },
 ];
