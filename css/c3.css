@@ -188,6 +188,10 @@ html.grabbing * {
 .c3.sankey .links.straight {
   fill: black;
 }
+.c3.sankey rect.background {
+  fill: none;
+  pointer-events: all;
+}
 .c3.butterfly .navigatable .node rect {
   cursor: pointer;
 }

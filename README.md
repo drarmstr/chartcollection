@@ -12,7 +12,7 @@ _Notable visulizations include_ :
 * Swimlanes
 * Flame Chart
 * Sunburst
-* Sankey Flow Graph
+* Sankey / Butterfly Flow Graphs
 * Legends
 * Data Tables
 

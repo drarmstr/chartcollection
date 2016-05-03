@@ -1,5 +1,6 @@
 ﻿# C3 Visualization Library
 # Graphs
+# NOTE: This is still a work in progress and needs to go through a clean-up
 
 ###################################################################
 # Graph
@@ -31,14 +32,12 @@ class c3.Graph extends c3.Chart
 # * Configurable padding and node widths based on either pixels or percentages.
 # * Tweaked layout algorithm.
 #
-# Features that are planned:
-#
-# * Labels
-# * Links to missing nodes
-# * Draggable nodes
-# * Zoom/pan navigation
 # @author Douglas Armstrong
 # @todo Labels
+# @todo Links to missing nodes
+# @todo Draggable nodes
+# @todo Zoom/Pan navigation
+# @todo Highlighted sub-path(s) through graph
 class c3.Sankey extends c3.Graph
     @version: 0.1
     type: 'sankey'
@@ -119,9 +118,16 @@ class c3.Sankey extends c3.Graph
         @link_target ?= (l)-> l.target
         @link_value ?= (l)-> l.value
     
+        @background = @content.select('rect.background').singleton().position
+            x: 0
+            y: 0
+    
     _size: =>
         # The horizontal scale range is set in _draw() in case the @node_width is a percentage
         @v.range [0, @height]
+        @background.position
+            width: @width
+            height: @height
         
         # If we are resizing, need to call _update() if @node_padding is based on a pixel size
         if !isNaN @node_padding then @_update()
@@ -165,11 +171,12 @@ class c3.Sankey extends c3.Graph
         for key,node of nodes when not node.value?
             throw Error "Missing nodes are not currently supported"
         
-        # Pre-compute the sums of link values  BLARG only do once, not per iteration
+        # Pre-compute the sums of link values
         for key, node of @nodes
             node.links_sum = 
                 d3.sum(node.source_links, (l)=> @node_links[@link_key l].value) +
                 d3.sum(node.target_links, (l)=> @node_links[@link_key l].value)
+        
         
         # Detect back edges / cycles
         visited = {}
@@ -209,11 +216,11 @@ class c3.Sankey extends c3.Graph
         # Compute horizontal domain
         @h.domain [0,x]
         
-        @_layout origin, current_data, current_links
+        @_layout origin, current_data, current_links, @nodes
     
     
-    _layout: (origin, current_data, current_links)=>
-        nodes = @nodes
+    _layout: (origin, current_data, current_links, nodes)=>
+        @current_nodes = nodes
         node_links = @node_links
         
         # Prepare set of columns
@@ -221,7 +228,7 @@ class c3.Sankey extends c3.Graph
             .key (node)-> node.x
             .sortKeys d3.ascending
             #.sortValues d3.descending
-            .entries (node for key,node of @nodes)
+            .entries (node for key,node of nodes)
             .map (g)-> g.values
         c3.array.sort_up @columns, (column)-> column[0].x # d3's sortKeys didn't work?
 
@@ -270,21 +277,55 @@ class c3.Sankey extends c3.Graph
             link_key = @link_key
             link_source = @link_source
             link_target = @link_target
-            for node in (@nodes[@key datum] for datum in current_data)
-                c3.array.sort_up node.source_links, (link)-> nodes[link_source link].y
-                y = node.y
-                for link in node.source_links
-                    node_link = node_links[link_key link]
-                    node_link.ty = y
-                    y += node_link.value
-                
-                c3.array.sort_up node.target_links, (link)-> nodes[link_target link].y
-                y = node.y
-                for link in node.target_links
-                    node_link = node_links[link_key link]
-                    node_link.sy = y
-                    y += node_link.value
-
+            for column in columns
+                column_padding = 
+                    if column.length > 1 then column.padding
+                    else if column.length == 1 then @v.domain()[1] - column[0].value
+                    else 0
+                for node in column
+                    c3.array.sort_up node.source_links, (link)=> @nodes[link_source link].y
+                    trailing_y = node.y - column_padding/2
+                    trailing_padding = (column_padding) / (node.source_links.length-1)
+                    y = node.y
+                    for link in node.source_links
+                        node_link = node_links[link_key link]
+                        node_link.ty = y
+                        y += node_link.value
+                        node_link.tx = node.x
+                        # Trailing link to missing node
+                        if link_source(link) not of nodes
+                            node_link.sx = node.x - 0.5
+                            node_link.sy = trailing_y
+                            # Workaround for thick trailing links to avoid rendering artifacts
+                            if @v(node_link.value) > @h(0.25)
+                                node_link.sx -= @h.invert(@v(node_link.value))
+                            # Workaround for gradients failing with horizontal paths (Chrome 5/2/16)
+                            if @v(node_link.sy).toFixed(3) == @v(node_link.ty).toFixed(3)
+                                node_link.sy += @v.invert(1)
+                        trailing_y += node_link.value + trailing_padding
+                    
+                    # TODO: Normalize code for layout of target and source links.
+                    c3.array.sort_up node.target_links, (link)=> @nodes[link_target link].y
+                    y = node.y
+                    trailing_y = node.y - column_padding/2
+                    trailing_padding = (column_padding) / (node.target_links.length-1)
+                    for link in node.target_links
+                        node_link = node_links[link_key link]
+                        node_link.sy = y
+                        y += node_link.value
+                        node_link.sx = node.x
+                        # Trailing link to missing node
+                        if link_target(link) not of nodes
+                            node_link.tx = node.x + 0.5
+                            node_link.ty = trailing_y
+                            # Workaround for thick trailing links to avoid rendering artifacts
+                            if @v(node_link.value) > @h(0.25)
+                                node_link.tx += @h.invert(@v(node_link.value))
+                            # Workaround for gradients failing with horizontal paths (Chrome 5/2/16)
+                            if @v(node_link.sy).toFixed(3) == @v(node_link.ty).toFixed(3)
+                                node_link.ty += @v.invert(1)
+                        trailing_y += node_link.value + trailing_padding
+        
         # Give nodes and links an initial position
         y = 0
         if columns.length
@@ -295,19 +336,41 @@ class c3.Sankey extends c3.Graph
                 columns[0][i] = tmp[r]
             for node in columns[0]
                 node.y = y
-                y += node.value + column.padding
+                y += node.value + columns[0].padding
         for column,j in columns when j
             # For each subsequent column, align the nodes to the right of their sources to attempt flatter links
             for node in column
                 weighted_y = 0
                 source_link_value = 0
+                total_weighted_y = 0
+                total_source_link_value = 0
                 for link in node.source_links
-                    link_key = @link_key link
-                    node_link = @node_links[link_key]
-                    if node_link.backedge then continue
-                    weighted_y += nodes[@link_source link].y * node_link.value
+                    node_link = @node_links[@link_key link]
+                    source_node = nodes[@link_source link]
+                    if not source_node? then continue
+                    total_weighted_y += source_node.y * node_link.value
+                    total_source_link_value += node_link.value
+                    if source_node.x >= node.x then continue # Only layout initially for links that flow rightward
+                    weighted_y += source_node.y * node_link.value
                     source_link_value += node_link.value
-                node.y = weighted_y / source_link_value
+                if source_link_value
+                    node.y = weighted_y / source_link_value
+                else if total_source_link_value
+                    # If all source links come from the right, then just take the average of all of them
+                    node.y = total_weighted_y / total_source_link_value
+                else
+                    # If there are no source links at all, then the average of the target links
+                    # This can't happen with a normal Sankey, since all nodes with no sources are in the first column;
+                    # but, it can happen with a butterfly.
+                    target_link_value = 0
+                    for link in node.target_links
+                        node_link = @node_links[@link_key link]
+                        target_node = nodes[@link_target link]
+                        if not target_node? then continue
+                        weighted_y += target_node.y * node_link.value
+                        target_link_value += node_link.value
+                    if not target_link_value then throw "assertion error: Orphan node"
+                    node.y = weighted_y / target_link_value
         ## Give nodes and links an initial position
         #for column in columns
         #     node.y = i for node,i in column
@@ -337,16 +400,16 @@ class c3.Sankey extends c3.Graph
             layout_links()
         
         # Bind data to the DOM
-        @nodes_layer = @content.select('g.nodes').singleton().options(@nodes_options).update()
-        @node_g = @nodes_layer.select('g.node').options(@node_options).animate(origin isnt 'render')
-            .bind(current_data,@key).update()
-        @rects = @node_g.inherit('rect').options(@rect_options).update()
-        
-        @links_layer = @content.select('g.links',':first-child').singleton().options(@links_options).update()
+        @links_layer = @content.select('g.links').singleton().options(@links_options).update()
         @link_g = @links_layer.select('g.link').options(@link_options).animate(origin isnt 'render')
             .bind(current_links,@link_key).update()
         @paths = @link_g.inherit('path').options(@path_options).update()
         @link_g.all.classed 'backedge', (link)=> @node_links[@link_key link].backedge
+
+        @nodes_layer = @content.select('g.nodes').singleton().options(@nodes_options).update()
+        @node_g = @nodes_layer.select('g.node').options(@node_options).animate(origin isnt 'render')
+            .bind(current_data,@key).update()
+        @rects = @node_g.inherit('rect').options(@rect_options).update()
         
         
     _draw: (origin)=>
@@ -370,10 +433,8 @@ class c3.Sankey extends c3.Graph
         @paths.animate(origin isnt 'render' and origin isnt 'resize').position
             d: (link)=>
                 node_link = @node_links[@link_key link]
-                source_node = @nodes[@link_source link]
-                target_node = @nodes[@link_target link]
-                sx = @h(source_node.x) + node_width
-                tx = @h(target_node.x)
+                sx = @h(node_link.sx) + node_width
+                tx = @h node_link.tx
                 switch @link_path
                     when 'straight'
                         sy = @v node_link.sy
@@ -421,34 +482,56 @@ class c3.Sankey extends c3.Graph
 # Butterfly flow visualization.
 # **This is a work in progress.**
 # @author Douglas Armstrong
+# @todo Visually indicate focal node
+# @todo Position nodes that are on both the right and left wings in the middle?
 class c3.Butterfly extends c3.Sankey
     @version: 0.1
     type: 'butterfly'
     
+    # [Boolean] Enable or disable user navigation of nodes
     navigatable: true
+    # [Number] Number of levels of nodes to visualize to the left and right of the focus node
     depth_of_field: 2
     
-    _update: (origin)=>
+    _init: =>
         super
-        @_butterfly_update()
+        @background.new.on 'click', => @focus null
+    
+    _update: (origin)=>
+        # TODO This can be optimized and cleaned up.
+        if @focal not in @data then @focal = null
+        if origin isnt 'focus' or not @focal?
+            super
+            @_butterfly_update()
+            @_style true
+        if @focal?
+            @_butterfly_layout()
+            @_butterfly_update()
+            @_style true
         
     _butterfly_update: =>
         if (@navigatable)
-            @rects.new.on 'click', (datum)=> @focus datum
-    
-    _style: (style_new)=>
-        super
-        @content.all.classed 'navigatable', @navigatable
-    
-    focus: (focus)=>
-        console.debug focus # BLARG
+            @rects.new.on 'click', (datum)=>
+                d3.event.stopPropagation
+                @focus datum
         
-        focus_key = @key focus
+        @paths.all.attr 'mask', (link)=>
+            if @link_source(link) not of @current_nodes then 'url(#mask_fade_left)'
+            else if @link_target(link) not of @current_nodes then 'url(#mask_fade_right)'
+            else null
+    
+    _butterfly_layout: =>
+        focus_key = @key @focal
         focus_node = @nodes[focus_key]
+
+        # Find all neighboring nodes within the depth_of_field distance and layout their x value
         nodes = {}
         nodes[focus_key] = focus_node
         current_links = []
+        visited_keys = {}
         walk = (key, direction, depth)=>
+            if visited_keys[key] then return
+            visited_keys[key] = true
             node = nodes[key] = @nodes[key]
             node.x = @depth_of_field + (depth*direction)
             for links in [node.source_links, node.target_links]
@@ -457,14 +540,24 @@ class c3.Butterfly extends c3.Sankey
             if depth < @depth_of_field
                 for link in (if direction is 1 then node.target_links else node.source_links)
                     walk (if direction is 1 then @link_target else @link_source)(link), direction, depth+1
+        # First walk to the right finding nodes, then the left
         walk focus_key, 1, 0
+        delete visited_keys[focus_key]
         walk focus_key, -1, 0
         
+        # Collect nodes that we found with our walk
         current_data = (datum for datum in @data when @key(datum) of nodes)
         
-        @h.domain [0,@depth_of_field*2]
-        
-        @_layout 'focus', current_data, current_links
-        @_butterfly_update()
+        @h.domain [-0.5, @depth_of_field*2 + 0.5]
+            
+        @_layout 'focus', current_data, current_links, nodes
+    
+    _style: (style_new)=>
+        super
+        @content.all.classed 'navigatable', @navigatable
+    
+    # Focus visualization on a specified **focus** node.
+    # The graph will then fan out to the left and right of the focal node by `depth_of_field` levels.
+    focus: (@focal)=>
+        @_update 'focus'
         @_draw 'focus'
-        @_style true

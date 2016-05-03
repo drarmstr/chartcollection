@@ -43,6 +43,14 @@
       </table>
       <h2>Overview</h2>
       <div class='docstring'>
+  <div class='note todo'>
+    <strong>TODO:</strong>
+    Visually indicate focal node 
+  </div>
+  <div class='note todo'>
+    <strong>TODO:</strong>
+    Position nodes that are on both the right and left wings in the middle? 
+  </div>
   <p>Butterfly flow visualization.
 <strong>This is a work in progress.</strong></p>
 </div>
@@ -78,7 +86,11 @@
   </dt>
   <dd>
     <pre><code class='coffeescript'>true</code></pre>
-    
+    <div class='docstring'>
+  <p>[Boolean] Enable or disable user navigation of nodes</p>
+</div>
+<div class='tags'>
+</div>
   </dd>
   <dt id='depth_of_field-variable'>
     depth_of_field
@@ -86,7 +98,11 @@
   </dt>
   <dd>
     <pre><code class='coffeescript'>2</code></pre>
-    
+    <div class='docstring'>
+  <p>[Number] Number of levels of nodes to visualize to the left and right of the focus node</p>
+</div>
+<div class='tags'>
+</div>
   </dd>
 </dl>
       <h3 class='inherited'>
@@ -132,6 +148,18 @@
       <ul class='summary'>
   <li>
     <span class='signature'>
+      <a href='#_init-dynamic'>
+        #
+(void)
+<b>_init</b><span>()</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
       <a href='#_update-dynamic'>
         #
 (void)
@@ -156,6 +184,18 @@
   </li>
   <li>
     <span class='signature'>
+      <a href='#_butterfly_layout-dynamic'>
+        #
+(void)
+<b>_butterfly_layout</b><span>()</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
       <a href='#_style-dynamic'>
         #
 (void)
@@ -171,11 +211,12 @@
       <a href='#focus-dynamic'>
         #
 (void)
-<b>focus</b><span>(focus)</span>
+<b>focus</b><span>(focal)</span>
       </a>
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
+      Focus visualization on a specified <strong>focus</strong> node. 
     </span>
   </li>
 </ul>
@@ -208,6 +249,16 @@
       <h2>Instance Method Details</h2>
       <div class='methods'>
   <div class='method_details'>
+    <p class='signature' id='_init-dynamic'>
+      #
+(void)
+<b>_init</b><span>()</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
     <p class='signature' id='_update-dynamic'>
       #
 (void)
@@ -228,6 +279,16 @@
     
   </div>
   <div class='method_details'>
+    <p class='signature' id='_butterfly_layout-dynamic'>
+      #
+(void)
+<b>_butterfly_layout</b><span>()</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
     <p class='signature' id='_style-dynamic'>
       #
 (void)
@@ -241,16 +302,21 @@
     <p class='signature' id='focus-dynamic'>
       #
 (void)
-<b>focus</b><span>(focus)</span>
+<b>focus</b><span>(focal)</span>
       <span class='bound note'>Bound</span>
       <br>
     </p>
-    
+    <div class='docstring'>
+  <p>Focus visualization on a specified <strong>focus</strong> node.
+The graph will then fan out to the left and right of the focal node by <code>depth_of_field</code> levels.</p>
+</div>
+<div class='tags'>
+</div>
   </div>
 </div>
     </div>
     <div id='footer'>
-  April 26, 16 16:14:20 by
+  May 02, 16 23:08:50 by
   <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
     Codo
   </a>
