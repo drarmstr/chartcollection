@@ -10,9 +10,9 @@ _Notable visulizations include_ :
 * Pie / Donut Charts
 * Scatter Plots
 * Swimlanes
-* Flame Chart
+* Flame Chart Timeline
 * Sunburst
-* Sankey / Butterfly Flow Graphs
+* Sankey / Butterfly (caller/callee) Flow Graphs
 * Legends
 * Data Tables
 

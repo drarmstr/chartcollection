@@ -1,22 +1,28 @@
 ﻿// # C3 Sankey Energy Use Flow Chart
-// _Demonstrates a Sankey flow chart of the energy production and use in the United States_.
+// _Demonstrates a Sankey flow chart of energy production and use_.
 
-// ## TODO: Add source annotations
-
+// Function to set the color based on the energy node name.
 var source_color = d3.scale.category20b();
 
-var us_sankey = new c3.Sankey<USEnergyData,USEnergyLink>({
-    anchor: '#us_sankey_flowchart',
 
+// # Create Sankey visualization for the US
+
+// Create `Sankey` visualization object for **United States Energy Data**
+var us_sankey = new c3.Sankey<USEnergyData, USEnergyLink>({
+    // Bind to the DOM and set the height
+    anchor: '#us_sankey_flowchart',
     height: 600,
 
+    // **Accessor functions** to describe how to access the US energy data.
     key: (d) => d.name,
     value: (d) => d.btu,
     link_value: (l) => l.btu,
 
+    // Create **tooltips** for the energy name.
     node_options: {
         title: (d) => d.name + '\n' + d.btu,
     },
+    // **Style** and **animate** the nodes based on name.
     rect_options: {
         styles: {
             fill: (d) => source_color(d.name),
@@ -24,9 +30,11 @@ var us_sankey = new c3.Sankey<USEnergyData,USEnergyLink>({
         },
         animate: true,
     },
+    // Create **tooltips** for the links between nodes
     link_options: {
         title: (l) => l.source + " → " + l.target + ": " + l.btu,
     },
+    // **Style** and **animate** the links between nodes.
     path_options: {
         styles: {
             stroke: 'blue',
@@ -37,28 +45,46 @@ var us_sankey = new c3.Sankey<USEnergyData,USEnergyLink>({
 });
 
 
-var uk_sankey = new c3.Sankey<UKEnergyData, UKEnergyLink>({
-    anchor: '#uk_sankey_flowchart',
+// # Creat Sankey visualization for the UK
 
+// Create `Sankey` visualization object for **United Kingdom Energy Data**
+var uk_sankey = new c3.Sankey<UKEnergyData, UKEnergyLink>({
+    // Bind to the DOM and set the height
+    anchor: '#uk_sankey_flowchart',
     height: 600,
 
+    // **Accessor functions** to describe how to access the UK energy data.
+    // In this case, all of these link accessors happen to be the default, so not strictly required.
+    // Because no `key` accessor is provided for the nodes, the key is simply the index into the data array.
+    // Because no `value` accessor is provided for the nodes, the value of the node is derived as the
+    // maximum of the input or output links.
     link_value: (l) => l.value,
+    link_source: (l) => l.source,
+    link_target: (l) => l.target,
 
+    // Set the nodes to **align** on both the left and right sides for those nodes
+    // without any inputs or outputs respectively.
     align: 'both',
+    // Set the default **vertical padding** between nodes to be `15` pixels.
+    // This could also be set to a string for a percentage, such as `20%`.
     node_padding: 15,
 
+    // Create **tooltips** for the energy name.
     node_options: {
         title: (d) => d.name,
     },
+    // **Style** the nodes based on name.
     rect_options: {
         styles: {
             fill: (d) => source_color(d.name.split(' ')[0]),
             stroke: 'black',
         },
     },
+    // Create **tooltips** for the links between nodes
     link_options: {
         title: (l) => uk_energy_data.nodes[l.source].name + " → " + uk_energy_data.nodes[l.target].name + ": " + l.value,
     },
+    // **Style** the links between nodes.
     path_options: {
         styles: {
             stroke: 'blue',
@@ -68,11 +94,16 @@ var uk_sankey = new c3.Sankey<UKEnergyData, UKEnergyLink>({
 });
 
 
+// ## Configure charts based on user behavior
+
+// Resize the charts if the window is resized
 window.onresize = function () {
     us_sankey.resize();
     uk_sankey.resize();
 };
 
+
+// ### Adjust US flow graph from interactive form
 
 // Animate flow changes when changing to data for different years
 document.getElementById('us_year').addEventListener('change', function () {
@@ -161,6 +192,8 @@ document.getElementById('us_link_path').addEventListener('change', function () {
 });
 
 
+// ### Adjust UK flow graph from interactive form
+
 // Set node alignment justification
 document.getElementById('uk_align').addEventListener('change', function () {
     uk_sankey.align = this.value;
@@ -240,15 +273,29 @@ document.getElementById('uk_backedge').addEventListener('change', function () {
 });
 
 
+// # Sample Energy Data
+
+// ### Structure for US energy data
+
+// Structure for US energy nodes.
+// `name` for the name of the node.
+// `btu` represents the energy flow in Quads BTU units.
 interface USEnergyData {
     name: string;
     btu: number;
 }
+// Structure for the links between US energy nodes.
+// `source` is the name of the source node for each link.
+// `target` is the name of the target node for each link.
+// `btu` represents the energy flow in Quads BTU units.
 interface USEnergyLink {
     source: string;
     target: string;
     btu: number;
 }
+
+// ### US Energy Data from Lawrence Livermore National Laboratory
+
 var us_energy_data = {
     2014: {
         nodes: [
@@ -705,15 +752,25 @@ var us_energy_data = {
 // Render the Sankey Flow Graph with US energy data
 us_sankey.render({ data: us_energy_data[2014].nodes, links: us_energy_data[2014].links });
 
+// ### Structure for UK energy data
 
+// Structure for UK energy nodes
+// just contain a `name` of the node
 interface UKEnergyData {
     name: string;
 }
+// Structure for UK links between nodes.
+// `source` index of the energy node for the source side of this link.
+// `target` index of the energy node for the target side of this link.
+// `value` of the energy flow through this link.
 interface UKEnergyLink {
     source: number;
     target: number;
     value: number;
 }
+
+// ### UK Energy Data from the UK Dept of Energy & Climate Change
+
 var uk_energy_data = {
     nodes: [
         { "name": "Agricultural 'waste'" },
@@ -837,7 +894,7 @@ var uk_energy_data = {
     ]
 };
 
-// Cycles - (Made up data)
+// **Cycles / Backedges** - _Made up data_
 var uk_energy_data_backedges = [
     { "source": 11, "target": 26, "value": 80 },
 ];

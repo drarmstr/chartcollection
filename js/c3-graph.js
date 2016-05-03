@@ -732,21 +732,22 @@
     };
 
     Butterfly.prototype._butterfly_layout = function() {
-      var current_data, current_links, datum, focus_key, focus_node, nodes, visited_keys, walk;
+      var current_data, current_links, datum, focus_key, focus_node, nodes, walk;
       focus_key = this.key(this.focal);
       focus_node = this.nodes[focus_key];
       nodes = {};
-      nodes[focus_key] = focus_node;
       current_links = [];
-      visited_keys = {};
       walk = (function(_this) {
         return function(key, direction, depth) {
           var link, links, node, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _results;
-          if (visited_keys[key]) {
+          if (nodes[key]) {
             return;
           }
-          visited_keys[key] = true;
-          node = nodes[key] = _this.nodes[key];
+          node = _this.nodes[key];
+          if (node == null) {
+            return;
+          }
+          nodes[key] = node;
           node.x = _this.depth_of_field + (depth * direction);
           _ref = [node.source_links, node.target_links];
           for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -768,7 +769,7 @@
         };
       })(this);
       walk(focus_key, 1, 0);
-      delete visited_keys[focus_key];
+      delete nodes[focus_key];
       walk(focus_key, -1, 0);
       current_data = (function() {
         var _i, _len, _ref, _results;

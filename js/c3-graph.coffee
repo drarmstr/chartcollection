@@ -326,7 +326,7 @@ class c3.Sankey extends c3.Graph
                                 node_link.ty += @v.invert(1)
                         trailing_y += node_link.value + trailing_padding
         
-        # Give nodes and links an initial position
+        # Give nodes and links an initial position (TODO: clean this up)
         y = 0
         if columns.length
             # Arrange the first column with larges nodes on each end in an attempt to avoid cross-over...
@@ -378,7 +378,6 @@ class c3.Sankey extends c3.Graph
         layout_links()
 
         # Shift nodes closer to their neighbors based on the value of their links
-        # Iterate back and forth across the nodes left and right.
         alpha = 1
         for iteration in [0...@iterations]
             alpha *= @alpha
@@ -526,23 +525,24 @@ class c3.Butterfly extends c3.Sankey
 
         # Find all neighboring nodes within the depth_of_field distance and layout their x value
         nodes = {}
-        nodes[focus_key] = focus_node
         current_links = []
-        visited_keys = {}
         walk = (key, direction, depth)=>
-            if visited_keys[key] then return
-            visited_keys[key] = true
-            node = nodes[key] = @nodes[key]
+            if nodes[key] then return # If we already visited this node, then stop walking this path
+            node = @nodes[key]
+            if not node? then return # If this node is missing, then don't walk to it
+            nodes[key] = node # Record node as visited
             node.x = @depth_of_field + (depth*direction)
+            # Add this node's links in the list to be rendered
             for links in [node.source_links, node.target_links]
                 for link in links
                     current_links.push link
+            # If we are still in the depth of field, then continue walking in the same direction
             if depth < @depth_of_field
                 for link in (if direction is 1 then node.target_links else node.source_links)
                     walk (if direction is 1 then @link_target else @link_source)(link), direction, depth+1
         # First walk to the right finding nodes, then the left
         walk focus_key, 1, 0
-        delete visited_keys[focus_key]
+        delete nodes[focus_key] # Remove so we can start again from the focal node when walking left
         walk focus_key, -1, 0
         
         # Collect nodes that we found with our walk

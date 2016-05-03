@@ -36,7 +36,7 @@
     <p>
         Some flow charts can represent graphs that are very complex with many interconnected nodes.
         To help better comprehend these graphs it can help to focus on just part of the flow at a time.
-        With the <i>Butterfly</i> flow graph you can click on a node to focus on just the flow that
+        With the <i>Butterfly</i> flow graph you can click on a node to focus on the flow that
         goes through that node.  Because it starts with a single node in the center and fans out
         left and right with multiple source and target nodes, it is called a "butterfly".
         Click in the chart outside of any node to revert to viewing the entire graph.
@@ -46,11 +46,14 @@
         The nodes represent functions and the links represent function calls.
         The size of the link is weighted based on the <i>total time</i> of the function call.
         A node will be larger then the links leaving it when the function has <i>self time</i>.
-        This is similar to a <b>caller/callee</b> type visualization, except it can represent an 
+        This is similar to a <b>caller/callee</b> type visualization, except it can represent an
         arbitrary depth from the focus node, not just the immediate callers and callees.
     </p>
     <p>
-        <b>Note: </b><i>Butterfly graphs are still under initial development.</i>
+        <b>Note: </b><i>
+            Butterfly graphs are still under initial development.
+            e.g. Gradients don't work well yet with IE.
+        </i>
     </p>
 
     <form>
@@ -59,6 +62,7 @@
             <select id="dataset">
                 <option value="libpthread" selected>libpthread</option>
                 <option value="schedule">scedule</option>
+                <option value="launchthreads">launchthreads</option>
             </select>
         </label>
         <br />
