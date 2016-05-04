@@ -2,37 +2,38 @@
 
 The [**Configurable Chart Collection**](http://drarmstr.github.io/c3/) is a JavaScript library for data visualization in HTML5 built using [D3](http://d3js.org).
 
-_Notable visulizations include_ :
+## Notable visulizations include:
 
-* Line / Area Graphs
-* Bar Charts
-* Stacked Graphs
-* Pie / Donut Charts
-* Scatter Plots
-* Swimlanes
-* Flame Chart Timeline
-* Sunburst
-* Sankey / Butterfly (caller/callee) Flow Graphs
-* Legends
-* Data Tables
+* [Line / Area Graphs](examples/#plot_zoom)
+* [Bar Charts](examples/#stack)
+* [Stacked Graphs](examples/#stack)
+* [Pie / Donut Charts](examples/#pie)
+* [Scatter Plots](examples/#scatterplot)
+* [Swimlanes](examples/#swimlanes)
+* [Flame Chart Timeline](examples/#flamechart_sunburst)
+* [Sunburst](examples/#flamechart_sunburst)
+* [Sankey Flow Graph](examples/#sankey)
+* [Butterfly _caller/callee_ Flow Graph](examples/#butterfly)
+* [Legends](examples/#legend)
+* [Data Tables](examples/#table_searchable)
 
-_Notable features include_ :
+## Notable features include:
 
-* Declarative style API.
-* Flexibility with dataset organization.  Use your own structures and describe their shape via accessor functions.
-* Layering mechanism for composability of different data in the same chart.
-* Compatible with animation for linked and dynamic datasets.
-* Lots of styling options by exposing CSS directly.
-* Extensible for custom user interaction by exposing DOM events.
-* Extensible with custom functionality.
+* [Declarative style API.](api.html)
+* [Flexibility with dataset organization.  Use your own structures and describe their shape via accessor functions.](api.html#datasets)
+* [Layering mechanism for composability of different data in the same chart.](api.html#layers)
+* [Compatible with animation for linked and dynamic datasets.](api.html#selection_options)
+* [Lots of styling options by exposing CSS directly.](api.html#styling)
+* [Extensible for custom user interaction by exposing DOM events.](api.html#events)
+* [Extensible with custom functionality.](api.html#extensibility)
 * Some visualizations contain built-in support for dealing with large datasets.
-* Compatible with [Crossfilter](http://crossfilter.github.io/crossfilter/) ([_example_](http://drarmstr.github.io/c3/examples/#worldbank))
+* Compatible with [Crossfilter](http://crossfilter.github.io/crossfilter/) ([_example_](examples/#worldbank))
 
-## [Examples](http://drarmstr.github.io/c3/examples/)
+## [Examples](examples/)
 View example charts and visualizations with complete annotated sources.
 
-## [Documentation](http://drarmstr.github.io/c3/)
+## [Documentation](/)
 
-### [API Overview](http://drarmstr.github.io/c3/api.html)
+### [API Overview](api.html)
 
-### [API Reference](http://drarmstr.github.io/c3/doc/)
+### [API Reference](doc/)

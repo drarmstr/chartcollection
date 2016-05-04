@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/doc.css" />
 
     <style>
-        li a {
+        li a b {
             font-size: larger;
         }
         header img {
@@ -43,39 +43,61 @@
                 C3 is a JavaScript library for data visualization in HTML5 built using <a href="http://d3js.org">D3</a>.
                 Source is available on <a href="https://github.com/drarmstr/c3">GitHub</a>.
             </p>
-            <p>
-                <b>Notable visualizations include:</b>
-            </p>
+            <h2>Notable visualizations include:</h2>
             <ul>
-                <li>Line / Area Graphs</li>
-                <li>Bar Charts</li>
-                <li>Stacked Graphs</li>
-                <li>Pie / Donut Charts</li>
-                <li>Scatter Plots</li>
-                <li>Swimlanes</li>
-                <li>Flame Chart Timeline</li>
-                <li>Sunburst</li>
-                <li>Sankey / Butterfly (caller/callee) Flow Graphs</li>
-                <li>Legends</li>
-                <li>Data Tables</li>
+                <li><a href="examples/#plot_zoom"><b>Line / Area Graphs</b></a></li>
+                <li><a href="examples/#stack"><b>Bar Charts</b></a></li>
+                <li><a href="examples/#stack"><b>Stacked Graphs</b></a></li>
+                <li><a href="examples/#pie"><b>Pie / Donut Charts</b></a></li>
+                <li><a href="examples/#scatterplot"><b>Scatter Plots</b></a></li>
+                <li><a href="examples/#swimlanes"><b>Swimlanes</b></a></li>
+                <li><a href="examples/#flamechart_sunburst"><b>Flame Chart Timeline</b></a></li>
+                <li><a href="examples/#flamechart_sunburst"><b>Sunburst</b></a></li>
+                <li><a href="examples/#sankey"><b>Sankey Flow Graph</b></a></li>
+                <li><a href="examples/#butterfly"><b>Butterfly (caller/callee) Flow Graph</b></a></li>
+                <li><a href="examples/#legend"><b>Legends</b></a></li>
+                <li><a href="examples/#table_searchable"><b>Data Tables</b></a></li>
             </ul>
-            <p>
-                <b>Notable features include:</b>
-            </p>
+            <h2>Notable features include:</h2>
             <ul>
-                <li>Declarative style API.</li>
-                <li>Flexibility with dataset organization.  Use your own structures and describe their shape via accessor functions.</li>
-                <li>Layering mechanism for composability of different data in the same chart.</li>
-                <li>Compatible with animation for linked and dynamic datasets.</li>
-                <li>Lots of styling options by exposing CSS directly.</li>
-                <li>Extensible for custom user interaction by exposing DOM events.</li>
-                <li>Extensible with custom functionality.</li>
+                <li><a href="api.html">Declarative style API.</a></li>
+                <li>
+                    <a href="api.html#datasets">
+                        Flexibility with dataset organization.  Use your own structures and describe their shape via accessor functions.
+                    </a>
+                </li>
+                <li>
+                    <a href="api.html#layers">
+                        Layering mechanism for composability of different data in the same chart.
+                    </a>
+                </li>
+                <li>
+                    <a href="api.html#selection_options">
+                        Compatible with animation for linked and dynamic datasets.
+                    </a>
+                </li>
+                <li>
+                    <a href="api.html#styling">
+                        Lots of styling options by exposing CSS directly.
+                    </a>
+                </li>
+                <li>
+                    <a href="api.html#events">
+                        Extensible for custom user interaction by exposing DOM events.
+                    </a>
+                </li>
+                <li>
+                    <a href="api.html#extensibility">
+                        Extensible with custom functionality.
+                    </a>
+                </li>
                 <li>Some visualizations contain built-in support for dealing with large datasets.</li>
                 <li>
                     Compatible with <a href="http://crossfilter.github.io/crossfilter/">Crossfilter</a>
-                    (<a href="http://drarmstr.github.io/c3/examples/#worldbank">example</a>)
+                    (<a href="examples/#worldbank">example</a>)
                 </li>
             </ul>
+            <h2>Overview</h2>
             <p>
                 So why another JavaScript visualization library?
                 Charts can always be made with a template engine, by directly manipulating the DOM
@@ -126,17 +148,20 @@
         <section>
             <h1>Usage</h1>
             <p>
-                To use C3, simply include <code>d3.js</code>, <code>c3.js</code>, <code>c3.css</code>,
-                and any desired C3 visualizations.  For example:
+                To use C3, simply include <code>d3.js</code>, <code>c3.js</code>, and <code>c3.css</code>:
                 <blockquote><pre>
 &lt;script src="d3.js"&gt;&lt;/script&gt;
-&lt;link rel="stylesheet" href="c3.css"&gt;
 &lt;script src="c3.js"&gt;&lt;/script&gt;
+&lt;link rel="stylesheet" href="c3.css"&gt;
+</pre></blockquote>
+                And then include any desired C3 visualizations.  For example:
+                <blockquote><pre>
 &lt;script src="c3-table.js"&gt;&lt;/script&gt;
 &lt;script src="c3-plot.js"&gt;&lt;/script&gt;
 &lt;script src="c3-layers.js"&gt;&lt;/script&gt;
 &lt;script src="c3-legend.js"&gt;&lt;/script&gt;
 &lt;script src="c3-polar.js"&gt;&lt;/script&gt;
+&lt;script src="c3-graph.js"&gt;&lt;/script&gt;
 </pre></blockquote>
             </p>
             <p>
