@@ -24,6 +24,7 @@
             <li><a href="#styling">Styling</a></li>
             <li><a href="#events">Events</a></li>
             <li><a href="#extensibility">Extensibility</a></li>
+            <li><a href="#example">Example</a></li>
         </ul>
     </nav>
 
@@ -268,8 +269,8 @@ my_chart.<b>redraw()</b>;
             <h1>Layers</h1>
             <p>
                 XY <i>Plots</i> and <i>Polar</i> charts support composition of multiple <i>layers</i>.
-                A <i>plot</i> might contain an <i>area graph</i> layer with a <i>bar chart</i> layer on top
-                with a <i>line</i> layer on top of that.
+                For example, a <i>plot</i> might contain an <i>area graph</i> layer with a <i>bar chart</i>
+                layer on top and a <i>line</i> layer on top of that.
             </p>
             <p>
                 Layers are specified as an array of layer objects.  The order of the layers in the array
@@ -280,7 +281,8 @@ my_chart.<b>redraw()</b>;
                 dataset accessor options; or, they can override them.
             </p>
             <p>
-                Our scatter plot example might have two layers:<blockquote><pre>
+                Our scatter plot example might have two layers:<blockquote>
+                    <pre>
 ...
 <b>layers</b>: [
     new <b>c3.Plot.Layer.Scatter</b>({
@@ -292,11 +294,12 @@ my_chart.<b>redraw()</b>;
     }),
 ],
 ...
-</pre></blockquote>
+</pre>
+                </blockquote>
             </p>
             <p>
-                Similar to layers, <i>plots</i> also support configuring <i>axes</i> via the <code>axes</code>
-                option which should be an array of <code>c3.Axis</code> objects.
+                Similar to layers, <i>plots</i> also support configuring <b>axes</b> via the <code>axes</code>
+                option, which should be an array of <code>c3.Axis</code> objects.
             </p>
         </section>
 
