@@ -829,6 +829,8 @@ declare module c3 {
         link_g: c3.Selection<L>;
         paths: c3.Selection<L>;
 
+        current_data: D[];
+
         constructor(opt?: SankeyOptions<D,L>);
         render(opt?: SankeyOptions<D,L>): this;
     }
@@ -843,6 +845,8 @@ declare module c3 {
     }
     interface Butterfly<D, L> extends ButterflyOptions<D, L> { }
     class Butterfly<D, L> extends Sankey<D, L> implements ButterflyOptions<D, L> {
+        focal: D;
+
         constructor(opt?: ButterflyOptions<D, L>);
         render(opt?: ButterflyOptions<D, L>): this;
     }
