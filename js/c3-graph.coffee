@@ -219,8 +219,7 @@ class c3.Sankey extends c3.Graph
         @_layout origin, current_data, current_links, @nodes
     
     
-    _layout: (origin, current_data, current_links, nodes)=>
-        @current_nodes = nodes
+    _layout: (origin, @current_data, current_links, @current_nodes)=>
         node_links = @node_links
         
         # Prepare set of columns
@@ -228,7 +227,7 @@ class c3.Sankey extends c3.Graph
             .key (node)-> node.x
             .sortKeys d3.ascending
             #.sortValues d3.descending
-            .entries (node for key,node of nodes)
+            .entries (node for key,node of current_nodes)
             .map (g)-> g.values
         c3.array.sort_up @columns, (column)-> column[0].x # d3's sortKeys didn't work?
 
@@ -293,7 +292,7 @@ class c3.Sankey extends c3.Graph
                         y += node_link.value
                         node_link.tx = node.x
                         # Trailing link to missing node
-                        if link_source(link) not of nodes
+                        if link_source(link) not of current_nodes
                             node_link.sx = node.x - 0.5
                             node_link.sy = trailing_y
                             # Workaround for thick trailing links to avoid rendering artifacts
@@ -315,7 +314,7 @@ class c3.Sankey extends c3.Graph
                         y += node_link.value
                         node_link.sx = node.x
                         # Trailing link to missing node
-                        if link_target(link) not of nodes
+                        if link_target(link) not of current_nodes
                             node_link.tx = node.x + 0.5
                             node_link.ty = trailing_y
                             # Workaround for thick trailing links to avoid rendering artifacts
@@ -346,7 +345,7 @@ class c3.Sankey extends c3.Graph
                 total_source_link_value = 0
                 for link in node.source_links
                     node_link = @node_links[@link_key link]
-                    source_node = nodes[@link_source link]
+                    source_node = current_nodes[@link_source link]
                     if not source_node? then continue
                     total_weighted_y += source_node.y * node_link.value
                     total_source_link_value += node_link.value
@@ -365,7 +364,7 @@ class c3.Sankey extends c3.Graph
                     target_link_value = 0
                     for link in node.target_links
                         node_link = @node_links[@link_key link]
-                        target_node = nodes[@link_target link]
+                        target_node = current_nodes[@link_target link]
                         if not target_node? then continue
                         weighted_y += target_node.y * node_link.value
                         target_link_value += node_link.value
@@ -387,11 +386,11 @@ class c3.Sankey extends c3.Graph
                     delta = 0
                     for link in node.source_links
                         node_link = @node_links[@link_key link]
-                        if not node_link.backedge
+                        if node_link.tx > node_link.sx # Only align rightward links
                             delta += (node_link.sy - node_link.ty) * node_link.value #* (0.5+(1/(2*Math.abs(node.x-@nodes[@link_source link].x))))
                     for link in node.target_links
                         node_link = @node_links[@link_key link]
-                        if not node_link.backedge
+                        if node_link.tx > node_link.sx # Only align rightward links
                             delta += (node_link.ty - node_link.sy) * node_link.value #* (0.5+(1/(2*Math.abs(node.x-@nodes[@link_target link].x))))
                     delta /= node.links_sum
                     node.y += delta * alpha
@@ -497,13 +496,15 @@ class c3.Butterfly extends c3.Sankey
         @background.new.on 'click', => @focus null
     
     _update: (origin)=>
-        # TODO This can be optimized and cleaned up.
+        # TODO This should be optimized and cleaned up.
         if @focal not in @data then @focal = null
         if origin isnt 'focus' or not @focal?
             super
+            # TODO: These need to be called before @_butterfly_layout() so the new nodes/links are properly updated/styled
             @_butterfly_update()
             @_style true
         if @focal?
+            # TODO: @_layout is called redundantly during a redraw() with a focal set
             @_butterfly_layout()
             @_butterfly_update()
             @_style true
@@ -524,6 +525,7 @@ class c3.Butterfly extends c3.Sankey
         focus_node = @nodes[focus_key]
 
         # Find all neighboring nodes within the depth_of_field distance and layout their x value
+        # TODO: Use breadth-first instead of depth-first to get distance to focal node correct.
         nodes = {}
         current_links = []
         walk = (key, direction, depth)=>
@@ -559,5 +561,7 @@ class c3.Butterfly extends c3.Sankey
     # Focus visualization on a specified **focus** node.
     # The graph will then fan out to the left and right of the focal node by `depth_of_field` levels.
     focus: (@focal)=>
+        @trigger 'focus', focal
         @_update 'focus'
         @_draw 'focus'
+        @trigger 'focusend', focal

@@ -276,17 +276,18 @@
       return this._layout(origin, current_data, current_links, this.nodes);
     };
 
-    Sankey.prototype._layout = function(origin, current_data, current_links, nodes) {
+    Sankey.prototype._layout = function(origin, current_data, current_links, current_nodes) {
       var alpha, collision_detection, column, columns, delta, i, iteration, j, key, layout_links, link, node, node_link, node_links, r, source_link_value, source_node, target_link_value, target_node, tmp, total_source_link_value, total_weighted_y, v_domain, weighted_y, y, _base, _i, _j, _k, _l, _len, _len1, _len10, _len11, _len12, _len2, _len3, _len4, _len5, _len6, _len7, _len8, _len9, _m, _n, _o, _p, _q, _r, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _s, _t, _u, _v;
-      this.current_nodes = nodes;
+      this.current_data = current_data;
+      this.current_nodes = current_nodes;
       node_links = this.node_links;
       this.columns = columns = d3.nest().key(function(node) {
         return node.x;
       }).sortKeys(d3.ascending).entries((function() {
         var _results;
         _results = [];
-        for (key in nodes) {
-          node = nodes[key];
+        for (key in current_nodes) {
+          node = current_nodes[key];
           _results.push(node);
         }
         return _results;
@@ -403,7 +404,7 @@
                   node_link.ty = y;
                   y += node_link.value;
                   node_link.tx = node.x;
-                  if (!(link_source(link) in nodes)) {
+                  if (!(link_source(link) in current_nodes)) {
                     node_link.sx = node.x - 0.5;
                     node_link.sy = trailing_y;
                     if (this.v(node_link.value) > this.h(0.25)) {
@@ -433,7 +434,7 @@
                     node_link.sy = y;
                     y += node_link.value;
                     node_link.sx = node.x;
-                    if (!(link_target(link) in nodes)) {
+                    if (!(link_target(link) in current_nodes)) {
                       node_link.tx = node.x + 0.5;
                       node_link.ty = trailing_y;
                       if (this.v(node_link.value) > this.h(0.25)) {
@@ -501,7 +502,7 @@
             for (_p = 0, _len7 = _ref2.length; _p < _len7; _p++) {
               link = _ref2[_p];
               node_link = this.node_links[this.link_key(link)];
-              source_node = nodes[this.link_source(link)];
+              source_node = current_nodes[this.link_source(link)];
               if (source_node == null) {
                 continue;
               }
@@ -523,7 +524,7 @@
               for (_q = 0, _len8 = _ref3.length; _q < _len8; _q++) {
                 link = _ref3[_q];
                 node_link = this.node_links[this.link_key(link)];
-                target_node = nodes[this.link_target(link)];
+                target_node = current_nodes[this.link_target(link)];
                 if (target_node == null) {
                   continue;
                 }
@@ -552,7 +553,7 @@
             for (_u = 0, _len11 = _ref5.length; _u < _len11; _u++) {
               link = _ref5[_u];
               node_link = this.node_links[this.link_key(link)];
-              if (!node_link.backedge) {
+              if (node_link.tx > node_link.sx) {
                 delta += (node_link.sy - node_link.ty) * node_link.value;
               }
             }
@@ -560,7 +561,7 @@
             for (_v = 0, _len12 = _ref6.length; _v < _len12; _v++) {
               link = _ref6[_v];
               node_link = this.node_links[this.link_key(link)];
-              if (!node_link.backedge) {
+              if (node_link.tx > node_link.sx) {
                 delta += (node_link.ty - node_link.sy) * node_link.value;
               }
             }
@@ -794,8 +795,10 @@
 
     Butterfly.prototype.focus = function(focal) {
       this.focal = focal;
+      this.trigger('focus', focal);
       this._update('focus');
-      return this._draw('focus');
+      this._draw('focus');
+      return this.trigger('focusend', focal);
     };
 
     return Butterfly;
