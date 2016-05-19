@@ -1,4 +1,4 @@
-﻿# c3 Visualization Library
+# c3 Visualization Library
 # Layers for XY Plots
 
 ###################################################################
@@ -1154,9 +1154,7 @@ class c3.Plot.Layer.Swimlane.Flamechart extends c3.Plot.Layer.Swimlane.Segment
             while stack.length and frame.x >= (_frame=stack[stack.length-1]).x + _frame.dx
                 stack.length--
             stack.push frame
-            max_depth = Math.max max_depth, stack.length
-	    # here depths is rather the layer number starting from 0 than the depth
-	    # itself, so we must not reduce here 1
+            max_depth = Math.max max_depth, stack.length # stack.length is starting from 0, so don't reduce by one.
             @depths[@key datum] = stack.length - 1
         
         # Set the vertical domain and resize chart based on maximum flamechart depth
