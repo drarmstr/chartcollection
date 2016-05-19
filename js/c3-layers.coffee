@@ -1,4 +1,4 @@
-﻿# c3 Visualization Library
+# c3 Visualization Library
 # Layers for XY Plots
 
 ###################################################################
