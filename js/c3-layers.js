@@ -1633,7 +1633,7 @@
           stack.length--;
         }
         stack.push(frame);
-        max_depth = Math.max(max_depth, stack.length - 1);
+        max_depth = Math.max(max_depth, stack.length);
         this.depths[this.key(datum)] = stack.length - 1;
       }
       this.v.domain([0, max_depth]);
