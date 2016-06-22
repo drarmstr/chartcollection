@@ -19,7 +19,7 @@ class c3.Graph extends c3.Chart
 
 # Directed graph [**Sankey**](https://en.wikipedia.org/wiki/Sankey_diagram) visualization.
 # Provide a set of nodes and weighted links between them.  Various configuration options are available
-# to adjust the layout algorithm.
+# to adjust the layout algorithm.  Add a `node_label_options` with a `text` property to add labels to the nodes.
 # 
 # The implementation is based on the [D3 Sankey plugin](https://bost.ocks.org/mike/sankey/).
 # However, it has been extended with the following:
@@ -33,7 +33,6 @@ class c3.Graph extends c3.Chart
 # * Tweaked layout algorithm.
 #
 # @author Douglas Armstrong
-# @todo Labels
 # @todo Links to missing nodes
 # @todo Draggable nodes
 # @todo Zoom/Pan navigation
@@ -409,6 +408,15 @@ class c3.Sankey extends c3.Graph
             .bind(current_data,@key).update()
         @rects = @node_g.inherit('rect').options(@rect_options).update()
         
+        # Bind optional node labels
+        if @node_label_options?
+            @node_labels_clip = @node_g.inherit('svg.label','restore')
+            @node_labels = @node_labels_clip.inherit('text','restore').options(@node_label_options).update()
+        else
+            @node_labels_clip?.all.remove()
+            delete @node_labels
+            delete @node_labels_clip
+        
         
     _draw: (origin)=>
         # Calculate node_width in pixels
@@ -422,12 +430,14 @@ class c3.Sankey extends c3.Graph
         # Set the horizontal range here in case @node_width is a percentage
         @h.rangeRound [0, @width-node_width]
         
+        # Position the nodes
+        @node_g.animate(origin isnt 'render' and origin isnt 'resize').position
+            transform: (d)=> 'translate('+@h(@nodes[key=@key d].x)+','+@v(@nodes[key].y)+')'
         @rects.animate(origin isnt 'render' and origin isnt 'resize').position
-            x: (d)=> @h @nodes[@key d].x
-            y: (d)=> @v @nodes[@key d].y
             width: node_width
             height: (d)=> Math.max 1, @v @nodes[@key d].value
         
+        # Position the links
         @paths.animate(origin isnt 'render' and origin isnt 'resize').position
             d: (link)=>
                 node_link = @node_links[@link_key link]
@@ -455,22 +465,51 @@ class c3.Sankey extends c3.Graph
             'stroke-width': if @link_path is 'curve' then (link)=> Math.max 1, @v @node_links[@link_key link].value
         
         @links_layer.all.attr 'class', 'links '+@link_path
+        
+        # Position the node labels
+        # TODO: optimize to avoid `all.style` overhead for each node.
+        if @node_labels?
+            if @node_label_options.orientation isnt 'vertical'
+                # Left alight horizontal labels on the left and right align them on the right
+                @node_labels.animate(origin isnt 'render' and origin isnt 'resize').position
+                    y: (d)=> @v(@nodes[@key d].value) / 2
+                    x: (d)=> if @nodes[@key d].x > @h.domain()[1]/2 then node_width else 0
+                    dx: (d)=> if @nodes[@key d].x > @h.domain()[1]/2 then '-0.25em' else '0.25em'
+                    dy: '0.4em'
+                @nodes_layer.all.classed
+                    'horizontal_labels': true
+                    'vertical_labels': false
+                @node_labels.all.style
+                    'text-anchor': (d)=> if @nodes[@key d].x > @h.domain()[1]/2 then 'end' else 'start'
+            else
+                @node_labels.animate(origin isnt 'render' and origin isnt 'resize').position
+                    y: node_width / 2
+                    x: (d)=> -@v @nodes[@key d].value
+                    dx: '0.25em'
+                    dy: '0.4em'
+                @nodes_layer.all.classed
+                    'horizontal_labels': false
+                    'vertical_labels': true
+                @node_labels.all.style
+                    'text-anchor': 'start'
+
     
     _style: (style_new)=>
         # Apply options here in case the user updated them between restyle()'s
         @node_g.options @node_options
         @rects.options @rect_options
+        @node_labels?.options @node_label_options
         @link_g.options @link_options
         @paths.options @path_options
         
         @nodes_layer.style()
         @node_g.style style_new
         @rects.style style_new
-        #@node_labels.style style_new
+        @node_labels?.style style_new
         @links_layer.style()
         @link_g.style style_new
         @paths.style style_new
-        #@link_labels.style style_new
+        #@link_labels?.style style_new
 
 
 ###################################################################

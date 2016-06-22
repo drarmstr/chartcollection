@@ -66,14 +66,6 @@
             </label>
             <br/>
             <label>
-                Alignment:
-                <select id="us_align">
-                    <option value="left">Left</option>
-                    <option value="both" selected>Both</option>
-                </select>
-            </label>
-            <br/>
-            <label>
                 Layout algorithm iterations:
                 <input id="us_iterations" type="range" min=0 max=64 value=32 />
             </label>
@@ -85,7 +77,7 @@
             <br/>
             <label>
                 Node Width:
-                <input id="us_node_width" type="range" min=1 max=100 value=30 />
+                <input id="us_node_width" type="range" min=1 max=100 value=100 />
             </label>
             <label>
                 <input type="radio" name="us_node_width_type" value="pixels" checked />
@@ -120,6 +112,16 @@
             <label>
                 Curvature:
                 <input type="range" id="us_link_path_curvature" min=0 max=1 value=0.5 step=0.01 />
+            </label>
+            <br/>
+            Labels:
+            <label>
+                <input type="radio" name="us_node_label_orientation" value="horizontal" checked />
+                Horizontal
+            </label>
+            <label>
+                <input type="radio" name="us_node_label_orientation" value="vertical" />
+                Vertical
             </label>
         </form>
 
@@ -207,6 +209,11 @@
             <label>
                 Curvature:
                 <input type="range" id="uk_link_path_curvature" min=0 max=1 value=0.5 step=0.01 />
+            </label>
+            <br />
+            <label>
+                <input type="checkbox" id="uk_node_labels" checked />
+                Node Labels
             </label>
         </form>
 

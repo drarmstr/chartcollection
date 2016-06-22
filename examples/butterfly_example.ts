@@ -58,14 +58,14 @@ var cfg = new c3.Butterfly({
     // **Animate** transitions for all of the nodes and links.
     node_options: {
         title: (func) => func.name,
-        styles: {
-            fill: (func) => function_color(func.name),
-            stroke: 'black',
-        },
         animate: true,
         duration: 2000,
     },
     rect_options: {
+        styles: {
+            fill: (func) => function_color(func.name),
+            stroke: 'black',
+        },
         animate: true,
         duration: 2000,
     },
@@ -78,6 +78,18 @@ var cfg = new c3.Butterfly({
         duration: 2000,
     },
     path_options: {
+        animate: true,
+        duration: 2000,
+    },
+
+    // Add text **labels** for each node
+    node_label_options: {
+        text: (func) => func.name,
+        styles: {
+            'font-weight': 'bold',
+            'font-size': 'x-small',
+        },
+        orientation: 'vertical',
         animate: true,
         duration: 2000,
     },

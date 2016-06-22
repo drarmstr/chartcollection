@@ -399,11 +399,11 @@ with a <code>circle</code> query would create an svg:circle node nested in each 
       <span class='name'>create</span>
       <span class='type'>
         (
-          <tt>Boolean</tt>
+          <tt>Boolean, String</tt>
         )
       </span>
       &mdash;
-      <span class='desc'>Create missing child nodes </span>
+      <span class='desc'>Create missing child nodes for new nodes or set to <code>restore</code> to ensure that child nodes are created for existing parent nodes that don&#39;t already have them. </span>
     </li>
     <li>
       <span class='name'>prepend</span>
@@ -695,7 +695,7 @@ and callbacks set in attrs.</p>
 </div>
     </div>
     <div id='footer'>
-  May 03, 16 15:10:33 by
+  June 21, 16 17:38:22 by
   <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
     Codo
   </a>

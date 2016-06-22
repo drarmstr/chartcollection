@@ -321,6 +321,10 @@
             
             <div class="content"><div class='highlight'><pre>    node_options: {
         title: (func) =&gt; func.name,
+        animate: <span class="hljs-literal">true</span>,
+        duration: <span class="hljs-number">2000</span>,
+    },
+    rect_options: {
         styles: {
             fill: (func) =&gt; <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-title">_color</span>(<span class="hljs-params">func.name</span>),
             <span class="hljs-title">stroke</span>: '<span class="hljs-title">black</span>',
@@ -328,11 +332,7 @@
         <span class="hljs-title">animate</span>: <span class="hljs-title">true</span>,
         <span class="hljs-title">duration</span>: 2000,
     },
-    <span class="hljs-title">rect_options</span>: </span>{
-        animate: <span class="hljs-literal">true</span>,
-        duration: <span class="hljs-number">2000</span>,
-    },
-    link_options: {</pre></div></div>
+    <span class="hljs-title">link_options</span>: </span>{</pre></div></div>
             
         </li>
         
@@ -356,9 +356,7 @@ functionality if requested for relatively little additional space cost.</p>
     path_options: {
         animate: <span class="hljs-literal">true</span>,
         duration: <span class="hljs-number">2000</span>,
-    },
-});
-cfg.render();</pre></div></div>
+    },</pre></div></div>
             
         </li>
         
@@ -369,9 +367,22 @@ cfg.render();</pre></div></div>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
-              <h2 id="extend-dynamic-chart-behavior">Extend dynamic chart behavior</h2>
+              <p>Add text <strong>labels</strong> for each node</p>
 
             </div>
+            
+            <div class="content"><div class='highlight'><pre>    node_label_options: {
+        text: (func) =&gt; func.name,
+        styles: {
+            <span class="hljs-string">'font-weight'</span>: <span class="hljs-string">'bold'</span>,
+            <span class="hljs-string">'font-size'</span>: <span class="hljs-string">'x-small'</span>,
+        },
+        orientation: <span class="hljs-string">'vertical'</span>,
+        animate: <span class="hljs-literal">true</span>,
+        duration: <span class="hljs-number">2000</span>,
+    },
+});
+cfg.render();</pre></div></div>
             
         </li>
         
@@ -382,11 +393,9 @@ cfg.render();</pre></div></div>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
-              <p>Resize the control flow graph when the window is resized.</p>
+              <h2 id="extend-dynamic-chart-behavior">Extend dynamic chart behavior</h2>
 
             </div>
-            
-            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">window</span>.onresize = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{ cfg.resize(); };</pre></div></div>
             
         </li>
         
@@ -396,6 +405,21 @@ cfg.render();</pre></div></div>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>Resize the control flow graph when the window is resized.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">window</span>.onresize = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{ cfg.resize(); };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
               <p>Select example <strong>data set</strong></p>
 
@@ -410,11 +434,11 @@ cfg.render();</pre></div></div>
         </li>
         
         
-        <li id="section-18">
+        <li id="section-19">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-18">&#182;</a>
+                <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
               <p>Set <strong>Depth of Field</strong></p>
 

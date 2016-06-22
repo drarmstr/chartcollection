@@ -795,6 +795,9 @@ declare module c3 {
     //////////////////////////////////////////////////////////////////////////////////////
     // Sankey Flow Chart
     //////////////////////////////////////////////////////////////////////////////////////
+    interface SankeyLabelOptions<T> extends c3.Selection.Options<T> {
+        orientation?: string;
+    }
     export interface SankeyOptions<D, L> extends GraphOptions<D, L> {
         key?: (d: D) => number | string;
         value?: (d: D) => number;
@@ -817,8 +820,8 @@ declare module c3 {
         links_options?: c3.Selection.Options<void>;
         link_options?: c3.Selection.Options<L>;
         path_options?: c3.Selection.Options<L>;
-        node_label_options?: c3.Selection.Options<D>;
-        link_label_options?: c3.Selection.Options<L>;
+        node_label_options?: SankeyLabelOptions<D>;
+        link_label_options?: SankeyLabelOptions<L>;
     }
     interface Sankey<D,L> extends SankeyOptions<D,L> { }
     class Sankey<D, L> extends Graph<D, L> implements SankeyOptions<D, L> {

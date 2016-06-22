@@ -12,9 +12,12 @@ var us_sankey = new c3.Sankey({
     key: function (d) { return d.name; },
     value: function (d) { return d.btu; },
     link_value: function (l) { return l.btu; },
+    // Set initial **node width**
+    node_width: 100,
     // Create **tooltips** for the energy name.
     node_options: {
         title: function (d) { return d.name + '\n' + d.btu; },
+        animate: true,
     },
     // **Style** and **animate** the nodes based on name.
     rect_options: {
@@ -36,8 +39,18 @@ var us_sankey = new c3.Sankey({
         },
         animate: true,
     },
+    // Add text **labels** for each node
+    node_label_options: {
+        text: function (d) { return d.name; },
+        styles: {
+            'font-weight': 'bold',
+            'text-shadow': '1px 1px 3px whitesmoke',
+        },
+        animate: true,
+    },
 });
 // # Creat Sankey visualization for the UK
+var uk_node_label_options;
 // Create `Sankey` visualization object for **United Kingdom Energy Data**
 var uk_sankey = new c3.Sankey({
     // Bind to the DOM and set the height
@@ -79,6 +92,14 @@ var uk_sankey = new c3.Sankey({
             opacity: 0.5,
         },
     },
+    // Add text **labels** for each node
+    node_label_options: uk_node_label_options = {
+        text: function (d) { return d.name; },
+        styles: {
+            'font-weight': 'bold',
+            'text-shadow': '1px 1px 3px whitesmoke',
+        },
+    },
 });
 // ## Configure charts based on user behavior
 // Resize the charts if the window is resized
@@ -95,13 +116,10 @@ document.getElementById('us_year').addEventListener('change', function () {
 });
 // Enable animation
 document.getElementById('us_animate').addEventListener('change', function () {
+    us_sankey.node_options.animate = this.checked;
     us_sankey.rect_options.animate = this.checked;
     us_sankey.path_options.animate = this.checked;
-});
-// Set node alignment justification
-document.getElementById('us_align').addEventListener('change', function () {
-    us_sankey.align = this.value;
-    us_sankey.redraw();
+    us_sankey.node_label_options.animate = this.checked;
 });
 // IE doesn't support `input` events
 for (var _i = 0, _a = ['input', 'change']; _i < _a.length; _i++) {
@@ -165,6 +183,14 @@ document.getElementById('us_link_path').addEventListener('change', function () {
         us_sankey.path_options.styles = { fill: 'green', stroke: 'none', opacity: 0.5 };
     us_sankey.restyle();
 });
+// Select horizontal or vertical labels
+for (var _f = 0, _g = document.forms['us_sankey'].elements['us_node_label_orientation']; _f < _g.length; _f++) {
+    var radio = _g[_f];
+    radio.addEventListener('change', function () {
+        us_sankey.node_label_options.orientation = this.value;
+        us_sankey.redraw();
+    });
+}
 // ### Adjust UK flow graph from interactive form
 // Set node alignment justification
 document.getElementById('uk_align').addEventListener('change', function () {
@@ -172,8 +198,8 @@ document.getElementById('uk_align').addEventListener('change', function () {
     uk_sankey.redraw();
 });
 // IE doesn't support `input` events
-for (var _f = 0, _g = ['input', 'change']; _f < _g.length; _f++) {
-    var event_name_2 = _g[_f];
+for (var _h = 0, _j = ['input', 'change']; _h < _j.length; _h++) {
+    var event_name_2 = _j[_h];
     // Set layout algorithm iterations
     document.querySelector('#uk_iterations').addEventListener(event_name_2, function () {
         uk_sankey.iterations = +this.value;
@@ -205,8 +231,8 @@ for (var _f = 0, _g = ['input', 'change']; _f < _g.length; _f++) {
     });
 }
 // Change node width when changing between percent or pixel based units.
-for (var _h = 0, _j = document.forms['uk_sankey'].elements['uk_node_width_type']; _h < _j.length; _h++) {
-    var radio = _j[_h];
+for (var _k = 0, _l = document.forms['uk_sankey'].elements['uk_node_width_type']; _k < _l.length; _k++) {
+    var radio = _l[_k];
     radio.addEventListener('change', function () {
         var event = document.createEvent('HTMLEvents');
         event.initEvent('change', true, true);
@@ -214,8 +240,8 @@ for (var _h = 0, _j = document.forms['uk_sankey'].elements['uk_node_width_type']
     });
 }
 // Change node padding when changing between percent or pixel based units.
-for (var _k = 0, _l = document.forms['uk_sankey'].elements['uk_node_padding_type']; _k < _l.length; _k++) {
-    var radio = _l[_k];
+for (var _m = 0, _o = document.forms['uk_sankey'].elements['uk_node_padding_type']; _m < _o.length; _m++) {
+    var radio = _o[_m];
     radio.addEventListener('change', function () {
         var event = document.createEvent('HTMLEvents');
         event.initEvent('change', true, true);
@@ -233,8 +259,14 @@ document.getElementById('uk_link_path').addEventListener('change', function () {
         uk_sankey.path_options.styles = { fill: 'green', stroke: 'none', opacity: 0.5 };
     uk_sankey.restyle();
 });
+// Enable extra data with backedges to demonstrate support for graphs with backedges / cycles
 document.getElementById('uk_backedge').addEventListener('change', function () {
     uk_sankey.links = this.checked ? d3.merge([uk_energy_data.links, uk_energy_data_backedges]) : uk_energy_data.links;
+    uk_sankey.redraw();
+});
+// Enable/disable node labels
+document.getElementById('uk_node_labels').addEventListener('change', function () {
+    uk_sankey.node_label_options = this.checked ? uk_node_label_options : null;
     uk_sankey.redraw();
 });
 // ### US Energy Data from Lawrence Livermore National Laboratory

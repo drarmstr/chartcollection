@@ -251,6 +251,26 @@ html.grabbing, html.grabbing * {
 // Sankey Flow
 ///////////////////////////////////////////////////////////////////////////////////////////////
 .c3.sankey {
+    .nodes {
+        &.horizontal_labels {
+            text {
+                transform: rotate(0);
+            }
+            svg.label {
+                overflow: visible;
+            }
+        }
+        &.vertical_labels {
+            text {
+                transform: rotate(-90deg);
+                text-anchor: start;
+            }
+            svg.label {
+                overflow: hidden;
+            }
+        }
+    }
+
     rect {
         shape-rendering: crispEdges;
     }
@@ -267,6 +287,10 @@ html.grabbing, html.grabbing * {
         &.straight {
             fill: black;
         }
+    }
+
+    text {
+        pointer-events: none;
     }
 
     rect.background {
