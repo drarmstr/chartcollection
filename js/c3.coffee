@@ -333,14 +333,21 @@ class c3.Selection
     # For example, if the parent selection had a set of svg:g nodes, then _inheriting_ from that
     # with a `circle` query would create an svg:circle node nested in each svg:g node.
     # @param query [String] Node type to create as nested nodes in the current selection
-    # @param create [Boolean] Create missing child nodes
+    # @param create [Boolean, String] Create missing child nodes for new nodes
+    #   or set to `restore` to ensure that child nodes are created for existing parent nodes that don't
+    #   already have them.
     # @param prepend [Boolean] If true, then prepend child nodes instead of appending them.
     #   Note that this will not prepend in front of any text content, only child nodes.
     inherit: (query, create=true, prepend=false)=>
         child = new c3.Selection null, query
-        if options? then child.options options
         if create
+            # First just try to create new child nodes for any new parent nodes
             child.new = @new.insert child.tag, (if prepend then ':first-child' else null)
+            if create=='restore' and child.new.empty() and not @all.empty()
+                @all.each -> # Only create child nodes if they don't already exist
+                    parent = d3.select(this)
+                    child_node = parent.selectAll(child.tag).data(parent.data()).enter().append(child.tag)
+                    if child._query_class? then child_node.classed child._query_class, true
             if child._query_class? then child.new.classed child._query_class, true
         child.all = @all.select query
         child.old = @old.select query

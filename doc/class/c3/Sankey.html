@@ -45,10 +45,6 @@
       <div class='docstring'>
   <div class='note todo'>
     <strong>TODO:</strong>
-    Labels 
-  </div>
-  <div class='note todo'>
-    <strong>TODO:</strong>
     Links to missing nodes 
   </div>
   <div class='note todo'>
@@ -65,7 +61,7 @@
   </div>
   <p>Directed graph <a href="https://en.wikipedia.org/wiki/Sankey_diagram"><strong>Sankey</strong></a> visualization.
 Provide a set of nodes and weighted links between them.  Various configuration options are available
-to adjust the layout algorithm.</p><p>The implementation is based on the <a href="https://bost.ocks.org/mike/sankey/">D3 Sankey plugin</a>.
+to adjust the layout algorithm.  Add a <code>node_label_options</code> with a <code>text</code> property to add labels to the nodes.</p><p>The implementation is based on the <a href="https://bost.ocks.org/mike/sankey/">D3 Sankey plugin</a>.
 However, it has been extended with the following:</p><ul>
 <li>User can define their own data structures for nodes and links.</li>
 <li>Does not modify the original dataset.</li>
@@ -463,7 +459,7 @@ the horizontal space to use for nodes.</p>
       <a href='#_layout-dynamic'>
         #
 (void)
-<b>_layout</b><span>(origin, current_data, current_links, nodes)</span>
+<b>_layout</b><span>(origin, current_data, current_links, current_nodes)</span>
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -556,7 +552,7 @@ the horizontal space to use for nodes.</p>
     <p class='signature' id='_layout-dynamic'>
       #
 (void)
-<b>_layout</b><span>(origin, current_data, current_links, nodes)</span>
+<b>_layout</b><span>(origin, current_data, current_links, current_nodes)</span>
       <span class='bound note'>Bound</span>
       <br>
     </p>
@@ -585,7 +581,7 @@ the horizontal space to use for nodes.</p>
 </div>
     </div>
     <div id='footer'>
-  May 03, 16 15:10:33 by
+  June 21, 16 17:38:21 by
   <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
     Codo
   </a>
