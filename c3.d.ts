@@ -845,6 +845,7 @@ declare module c3 {
     export interface ButterflyOptions<D, L> extends SankeyOptions<D, L> {
         navigatable?: boolean;
         depth_of_field?: number;
+        focal?: D;
     }
     interface Butterfly<D, L> extends ButterflyOptions<D, L> { }
     class Butterfly<D, L> extends Sankey<D, L> implements ButterflyOptions<D, L> {
@@ -852,5 +853,7 @@ declare module c3 {
 
         constructor(opt?: ButterflyOptions<D, L>);
         render(opt?: ButterflyOptions<D, L>): this;
+
+        focus(focal: D);
     }
 }
