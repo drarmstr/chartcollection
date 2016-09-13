@@ -1,4 +1,4 @@
-﻿// == C3 Swimlane Timelines ==
+﻿// ## C3 Swimlane Timelines
 // _Demonstrate how to create timelines with swimlanes._
 
 type SwimlaneDatum = {
@@ -8,7 +8,7 @@ type SwimlaneDatum = {
     color: string
 }
 
-// == Prepare the Segment Data ==
+// ## Prepare the Segment Data
 // A function to generate random swimlane data
 function generate_segment_data(data: SwimlaneDatum[]) {
     data.length = 0;
@@ -31,7 +31,7 @@ function generate_segment_data(data: SwimlaneDatum[]) {
 }
 
 
-// == Create the Segment Swimlane Chart ==
+// ## Create the Segment Swimlane Chart
 
 // Create a `c3.Plot` chart.
 var segment_layer: c3.Plot.Layer.Swimlane.Segment<SwimlaneDatum>;
@@ -100,7 +100,7 @@ var swimlane_timeline = new c3.Plot.Zoomable<SwimlaneDatum>({
 });
 
 
-// == Create the Sampled Swimlane Charts ==
+// ## Create the Sampled Swimlane Charts
 
 // Create a `c3.Plot` chart.
 var sampled_svg_timeline = new c3.Plot.Zoomable<SwimlaneDatum>({
@@ -202,7 +202,7 @@ var sampled_canvas_timeline = new c3.Plot.Zoomable<SwimlaneDatum>({
 });
 
 
-// == Render the Charts ==
+// ## Render the Charts
 
 // Generate initial data
 generate_segment_data(swimlane_timeline.data);

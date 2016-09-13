@@ -1,0 +1,32 @@
+{
+  "name": "q3",
+  "version": "0.1.3",
+  "description": "Configurable Chart Collection - Declarative Charts using D3",
+  "main": "js/index.js",
+  "directories": {
+    "doc": "doc",
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drarmstr/c3.git"
+  },
+  "keywords": [
+    "d3",
+    "chart",
+    "graph",
+    "visualization"
+  ],
+  "author": "Douglas Armstrong <site@xnet.com>",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/drarmstr/c3/issues"
+  },
+  "homepage": "http://drarmstr.github.io/c3/",
+  "dependencies": {
+    "d3": "^3.5.17"
+  }
+}
