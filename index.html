@@ -165,6 +165,29 @@
 </pre></blockquote>
             </p>
             <p>
+                Please see the <a href="examples/">Examples</a> and <a href="api.html">API Documentation</a> for more details.
+            </p>
+            <h3>NPM Package <code>q3</code></h3>
+            Alternatively, C3 is now available as an <a href="https://www.npmjs.com/">NPM</a> package.
+            Unfortunately, betweeen the time when this project started and when it was approved
+            for open source, the NPM package name <code>c3</code> was taken by another project.
+            Therefore, the package is currently published under
+            <a href="https://www.npmjs.com/package/q3"><code><b>q3</b></code></a>
+            while pending renaming consideration.  In your <code>package.json</code>
+            you can include it via:<blockquote><pre>
+    "dependencies": {
+        "q3": "^0.1.3"
+    }
+</pre></blockquote>
+            An initial main entry point has been included so you can require the package.
+            For example, if you are using a browser or transpiled language which supports ES6 modules,
+            you can use:<blockquote><pre>
+import d3 from 'd3';
+import c3 from 'q3';
+require('q3/css/c3.css');
+</pre></blockquote>
+            <h3>Dependencies</h3>
+            <p>
                 <a href="http://d3js.org">D3</a> is the only hard dependency for C3.
                 Many thanks to Mike Bostok for creating this wonderful toolbox.
                 Be sure to include the D3 script before including the C3 script.
@@ -173,12 +196,14 @@
                 For additional performance, the <a href="http://square.github.io/crossfilter/">Crossfilter</a>
                 library can also be included before C3 to improve some sorting operations.
             </p>
+            <h3>TypeScript</h3>
             <p>
                 C3 is also bundeled with a TypeScript definitions file <code>c3.d.ts</code> for those who
                 would like to use <a href="http://www.typescriptlang.org">TypeScript</a>.
             </p>
             <p>
-                Please see the <a href="examples/">Examples</a> and <a href="api.html">API Documentation</a> for more details.
+                Type definitions are not currently published for <a href="https://flowtype.org/">Flow</a>.
+                Please let me know if there is interest.
             </p>
         </section>
 
