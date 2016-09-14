@@ -21,7 +21,8 @@
   })();
 
   this.c3 = c3;
-  module.exports = c3;
+  // TODO: Temporary hack to export NPM module
+  if (module) module.exports = c3;
 
   if (typeof d3 === "undefined" || d3 === null) {
     throw Error("D3 library is required for C3");
