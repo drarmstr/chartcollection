@@ -352,7 +352,7 @@ can also be a function to style based on the data.  Assign this layer to a varia
             <div class="content"><div class='highlight'><pre>        zoom_line_layer = <span class="hljs-keyword">new</span> c3.Plot.Layer.Line&lt;<span class="hljs-built_in">number</span>&gt;({ <span class="hljs-comment">// Add a line-graph layer to this plot</span>
             y: (d) =&gt; <span class="hljs-number">40</span> * <span class="hljs-built_in">Math</span>.sin(d),
             interpolate: <span class="hljs-string">'basis'</span>,
-            options: {
+            path_options: {
                 styles: {
                     <span class="hljs-string">'stroke'</span>: <span class="hljs-string">'red'</span>,
                 },
@@ -439,11 +439,11 @@ updating all of the data and rendering and only update classes and styles.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>$(<span class="hljs-string">'#zoom_red_button'</span>).click(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-    zoom_line_layer.options.styles = { stroke: <span class="hljs-string">'red'</span> };
+    zoom_line_layer.path_options.styles = { stroke: <span class="hljs-string">'red'</span> };
     zoom_example.restyle();
 });
 $(<span class="hljs-string">'#zoom_green_button'</span>).click(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-    zoom_line_layer.options.styles = { stroke: <span class="hljs-string">'green'</span> };
+    zoom_line_layer.path_options.styles = { stroke: <span class="hljs-string">'green'</span> };
     zoom_example.restyle();
 });</pre></div></div>
             
@@ -467,7 +467,7 @@ $(<span class="hljs-string">'#zoom_bell_button'</span>).click(<span class="hljs-
             <span class="hljs-built_in">Math</span>.pow(<span class="hljs-built_in">Math</span>.E, -((d * d) / (<span class="hljs-number">2</span> * variance))),
         interpolate: <span class="hljs-string">'basis'</span>,
         baseline: <span class="hljs-number">0</span>,
-        options: {
+        path_options: {
             styles: {
                 <span class="hljs-string">'fill'</span>: <span class="hljs-string">'darkslategray'</span>,
                 <span class="hljs-string">'opacity'</span>: <span class="hljs-number">0.5</span>,

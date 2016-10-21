@@ -79,7 +79,7 @@ var zoom_example = new c3.Plot.Zoomable({
         zoom_line_layer = new c3.Plot.Layer.Line({
             y: function (d) { return 40 * Math.sin(d); },
             interpolate: 'basis',
-            options: {
+            path_options: {
                 styles: {
                     'stroke': 'red'
                 }
@@ -115,11 +115,11 @@ $('#zoom_parabolic_button').click(function () {
 // should be used here to update the styles used in the chart.  This will avoid the cost of
 // updating all of the data and rendering and only update classes and styles.
 $('#zoom_red_button').click(function () {
-    zoom_line_layer.options.styles = { stroke: 'red' };
+    zoom_line_layer.path_options.styles = { stroke: 'red' };
     zoom_example.restyle();
 });
 $('#zoom_green_button').click(function () {
-    zoom_line_layer.options.styles = { stroke: 'green' };
+    zoom_line_layer.path_options.styles = { stroke: 'green' };
     zoom_example.restyle();
 });
 // Just for fun, if the `#zoom_bell_button` is clicked then add a new layer with a bell curve.
@@ -130,7 +130,7 @@ $('#zoom_bell_button').click(function () {
             Math.pow(Math.E, -((d * d) / (2 * variance))); },
         interpolate: 'basis',
         baseline: 0,
-        options: {
+        path_options: {
             styles: {
                 'fill': 'darkslategray',
                 'opacity': 0.5

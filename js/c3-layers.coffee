@@ -44,7 +44,7 @@ class c3.Plot.Layer
     c3.Layer = this # Shortcut for accessing plot layers.
     type: 'layer'
     @_next_uid: 0
-    
+
     # [Array] Data for this layer  _This can be set for each individual layer or a default for the entire chart._
     data: undefined
     # [String] User name for this layer.  This is used in legends, for example.
@@ -80,7 +80,7 @@ class c3.Plot.Layer
         c3.util.extend this, new c3.Dispatch
         c3.util.extend this, opt
         @uid = c3.Plot.Layer._next_uid++
-    
+
     # Internal function for the Plot to prepare the layer.
     init: (@chart, @g)=>
         @trigger 'render_start'
@@ -92,16 +92,16 @@ class c3.Plot.Layer
         if @class? then @g.classed @class, true
         if @handlers? then @on event, handler for event, handler of @handlers
         @content = c3.select(@g)
-        
+
         # Apply classes to layer g nodes based on the `type` of the layer object hierarchy
         prototype = Object.getPrototypeOf(@)
         while prototype
             if prototype.type? then @g.classed prototype.type, true
             prototype = Object.getPrototypeOf prototype
-        
+
         @_init?()
         @trigger 'render'
-    
+
     # Resize the layer, but _doesn't_ update the rendering, `resize()` should be used for that.
     size: (@width, @height)=>
         @trigger 'resize_start'
@@ -130,7 +130,7 @@ class c3.Plot.Layer
         @trigger 'restyle', style_new
         @trigger 'rendered' if not @rendered
         return this
-    
+
     # Called when a layer needs to update from a zoom, decimated layers overload this
     zoom: =>
         @draw?('zoom')
@@ -142,10 +142,10 @@ class c3.Plot.Layer
         @draw(origin)
         @style(true)
         return this
-    
+
     # Method to restyle this layer
     restyle: Layer::style
-    
+
     # Adjust domains for layer scales for any automatic domains.
     # For layer-specific automatic domains the layer needs its own scale defined,
     # it cannot update the chart's shared scale.
@@ -169,7 +169,7 @@ class c3.Plot.Layer
                 @v.domain v_domain
                 refresh = true
         return refresh
-    
+
     min_x: => d3.min @data, @x
     max_x: => d3.max @data, @x
     min_y: => d3.min @data, @y
@@ -189,7 +189,7 @@ class c3.Plot.Layer
 # while `stacks` allows you to manually configure the exact set of stacks.
 #
 # This layer stacking is flexible to support several different ways of organizing the dataset into stacks:
-# * For normalized datasets you can define a `stack_options.key()` accessor to provide a key that uniquely 
+# * For normalized datasets you can define a `stack_options.key()` accessor to provide a key that uniquely
 #   identifies which stack an element belongs to.
 # * Otherwise, you can manually define the set of `stacks` and the layer's `data` is copied into each.
 # * * The layer `y` accessor will be called with the arguments (_datum_,_index_,_stack_)
@@ -212,7 +212,7 @@ class c3.Plot.Layer
 class c3.Plot.Layer.Stackable extends c3.Plot.Layer
     @version: 0.2
     type: 'stackable'
-    
+
     # [{c3.Selection.Options}] Enable stacking and specify stacking options for this layer.
     # This provides the normal {c3.Selection.Options} applied to each stack in the layer.  For callbacks,
     # the first argument is the stack object and the second argument is the index to the stack
@@ -236,10 +236,10 @@ class c3.Plot.Layer.Stackable extends c3.Plot.Layer
     # * **y** [Function] A y accessor to use for this stack overriding the one provided by the chart or layer.
     # * **data** [Array] Manually specified dataset for this stack instead of using the layer's `data`.
     # * **name** [String] Name for the stack
-    # * **options** [{c3.Selection.Options}] Options to manually set the **class**, **classes**, 
+    # * **options** [{c3.Selection.Options}] Options to manually set the **class**, **classes**,
     #   **styles**, **events**, and **title** of just this stack.
     stacks: undefined
-    
+
     # [Boolean] Safe Mode.
     # Preform additional checks and fix up the data for situations such as:
     # * Data not sorted along X axis
@@ -248,12 +248,12 @@ class c3.Plot.Layer.Stackable extends c3.Plot.Layer
     # Note that this mode may cause the indexes passed to the accessors to match the
     # corrected data instead of the original data array.
     safe: true
-    
+
     # Restack the data based on the **stack** and **stacks** options.
     _stack: => if @stack_options or @stacks?
         @stacks ?= []
         x_values_set = {}
-        
+
         # Helper function to setup the current stack data and populate a shadow structure
         # to hold the x, y, and y0 positioning so we avoid modifying the user's data.
         add_value = (stack, datum, i)=>
@@ -261,17 +261,17 @@ class c3.Plot.Layer.Stackable extends c3.Plot.Layer
             stack.y = stack.y ? @y ? throw Error "Y accessor must be defined in stack, layer, or chart"
             y = stack.y(datum,i,stack)
             stack.values.push { x:x, y:y, datum:datum }
-        
+
         for stack in @stacks
             stack.name ?= @stack_options?.name? stack.key
-            
+
             # Clear any previous stacking
             stack.values = [] # Shadow array to hold stack positioning
-            
+
             # Data was provided manually in the stack definition
             if stack.data? then for datum, i in stack.data
                 add_value stack, datum, i
-        
+
         # Data has been provided in @current_data that we need to assign it to a stack
         if @current_data.length
             # Use stack_options.key() to assign data to stacks
@@ -285,17 +285,17 @@ class c3.Plot.Layer.Stackable extends c3.Plot.Layer
                     if stack_map[key]?
                         stack = stack_map[key]
                     else
-                        @stacks.push stack = stack_map[key] = { 
+                        @stacks.push stack = stack_map[key] = {
                             key:key, name:@stack_options.name?(key), current_data:[], values:[] }
                     add_value stack, datum, i
-            
+
             # Otherwise, assign all data to all stacks using each stack's y() accessor
             else if @stacks? then for stack in @stacks
                 for datum, i in @current_data
                     add_value stack, datum, i
-            
+
             else throw Error "Either stacks or stack_options.key must be defined to create the set of stacks."
-        
+
         if @safe
             # Ensure everything is sorted
             # NOTE: We sort based on the @h scale in case of ordinal or other odd scales
@@ -303,7 +303,7 @@ class c3.Plot.Layer.Stackable extends c3.Plot.Layer
             x_values = c3.array.sort_up (v for k,v of x_values_set), @h
             for stack in @stacks
                 c3.array.sort_up stack.values, (v)=> @h v.x
-                        
+
             # Splice in missing data and remove undefined data (Important for D3's stack layout)
             i=0; while i<x_values.length
                 undef = 0
@@ -329,17 +329,17 @@ class c3.Plot.Layer.Stackable extends c3.Plot.Layer
                     x_values.splice(i,1)
                     i--
                 i++
-        
+
         # Prepare array of current data for each stack in case it is needed for binding (used by bar chart)
         for stack in @stacks
             stack.current_data = stack.values.map (v)->v.datum
-        
+
         # Configure and run the D3 stack layout to generate y0 and y layout data for the elements.
         stacker = d3.layout.stack().values (stack)->stack.values
         if @stack_options?.offset? then stacker.offset @stack_options.offset
         if @stack_options?.order? then stacker.order @stack_options.order
         stacker @stacks
-    
+
     _update: =>
         # Ensure data is sorted and skip elements that do not have a defined x or y value
         @current_data = if not @safe then @data else if @data?
@@ -360,7 +360,7 @@ class c3.Plot.Layer.Stackable extends c3.Plot.Layer
             .bind (@stacks ? [null]), if not @stacks?[0]?.key? then null else (stack)->stack.key
             .options @stack_options, (if @stacks?.some((stack)->stack.options?) then (stack)->stack.options)
             .update()
-    
+
     _style: (style_new)=> @groups?.style(style_new)
 
     min_x: => if not @stacks? then super else d3.min @stacks[0]?.values, (v)-> v.x
@@ -413,7 +413,7 @@ class c3.Plot.Layer.Stackable.Stack
 class c3.Plot.Layer.Path extends c3.Plot.Layer.Stackable
     @version: 0.2
     type: 'path'
-    
+
     # [Function] Factory to generate an SVG path string generator function.  _See {https://github.com/mbostock/d3/wiki/SVG-Shapes#path-data-generators} for details.
     path_generator_factory: undefined
     # [String] The type of D3 line interpolation to use.  _See {https://github.com/mbostock/d3/wiki/SVG-Shapes#area_interpolate d3.svg.area.interpolate} for options._  Some useful examples:
@@ -446,12 +446,12 @@ class c3.Plot.Layer.Path extends c3.Plot.Layer.Stackable
     _init: =>
         if not @path_generator_factory? then throw Error "path_generator_factory must be defined for a path layer"
         @path_generator = @path_generator_factory()
-    
+
     _update: (origin)=> if origin isnt 'zoom'
         super
-        
+
         @paths = @groups.inherit('path.scaled').options(@path_options)
-        
+
         # Bind the datapoint circles and labels
         if @r? or @a?
             @circles = @groups.select('circle').options(@circle_options).animate(origin is 'redraw')
@@ -467,7 +467,7 @@ class c3.Plot.Layer.Path extends c3.Plot.Layer.Stackable
             if @interpolate? then @path_generator.interpolate @interpolate
             if @tension? then @path_generator.tension @tension
             if @defined? then @path_generator.defined @defined
-        
+
             # Generate and render the paths.
             orig_h = @chart.orig_h ? @h # For rendering on the scaled layer
             @paths.animate(origin is 'redraw').position
@@ -484,7 +484,7 @@ class c3.Plot.Layer.Path extends c3.Plot.Layer.Stackable
                             .y (d,i)=> @v @y(d,i)
                             .y0? if @baseline? then (d,i)=> @v c3.functor(@baseline)(d,i) else @height
                         @path_generator(@current_data)
-        
+
         # Position the circles
         @circles?.animate(origin is 'redraw').position
             cx: (d,i,s)=> @h @x(d,i,s)
@@ -494,16 +494,17 @@ class c3.Plot.Layer.Path extends c3.Plot.Layer.Stackable
             r: if not @a? then @r else
                 if typeof @a is 'function' then (d,i,s)=> Math.sqrt( @a(d,i,s) / Math.PI )
                 else Math.sqrt( @a / Math.PI )
-        
+
         # Set the labels
         @labels?.animate(origin is 'redraw').position
             transform: (d,i,s)=> 'translate('+(@h @x(d,i,s))+','+(@v @y(d,i,s))+')'
 
     _style: (style_new)=>
         super
+        @paths.style(style_new)
         @circles?.style(style_new)
         @labels?.style(style_new)
-    
+
     min_x: => if not @stacks? then (if @data.length then @x @data[0]) else @stacks[0]?.values[0]?.x
     max_x: => if not @stacks? then (if @data.length then @x @data.slice(-1)[0]) else @stacks[0]?.values.slice(-1)[0]?.x
 
@@ -550,7 +551,7 @@ class c3.Plot.Layer.Area extends c3.Plot.Layer.Path
 class c3.Plot.Layer.Bar extends c3.Plot.Layer.Stackable
     @version: 0.2
     type: 'bar'
-    
+
     # [Function] A callback to describe a unique key for each data element.
     # This is useful for animations during a redraw when updating the dataset.
     key: undefined
@@ -570,10 +571,10 @@ class c3.Plot.Layer.Bar extends c3.Plot.Layer.Stackable
         super
         @rects = @groups.select('rect').options(@rect_options).animate('origin is redraw')
             .bind((if @stacks? then ((stack)->stack.current_data) else @current_data), @key).update()
-    
+
     _draw: (origin)=>
         baseline = @v(0)
-        
+
         # Set bar_width and bar_shift
         if typeof @bar_width is 'function'
             bar_width = @bar_width
@@ -606,8 +607,8 @@ class c3.Plot.Layer.Bar extends c3.Plot.Layer.Stackable
                                 width = Math.min((mid-left), (right-mid)) * bar_ratio
                                 if width >= 0 then width else 0
                         bar_shift = -> bar_width(arguments...) / 2
-                else throw "Invalid bar_width "+@bar_width        
-        
+                else throw "Invalid bar_width "+@bar_width
+
         if @stacks?
             x = (d,i,j)=> @h( @stacks[j].values[i].x )
             y = (d,i,j)=> @v( @stacks[j].values[i].y0 + @stacks[j].values[i].y )
@@ -616,7 +617,7 @@ class c3.Plot.Layer.Bar extends c3.Plot.Layer.Stackable
             x = (d,i)=> @h @x(d,i)
             y = (d,i)=> y=@y(d,i); if y>0 then @v(y) else baseline
             height = (d,i)=> Math.abs( baseline - (@v @y(d,i)) )
-            
+
         @rects.animate(origin is 'redraw').position
             x: if not bar_shift then x
             else if typeof bar_shift isnt 'function' then -> x(arguments...) - bar_shift
@@ -659,7 +660,7 @@ class c3.Plot.Layer.Bar extends c3.Plot.Layer.Stackable
 class c3.Plot.Layer.Line.Straight extends c3.Plot.Layer
     @version: 0.1
     type: 'straight'
-    
+
     # [Function] Optional accessor to identify data elements when changing the dataset
     key: undefined
     # [Function] Accessor to get the value for each data element.
@@ -686,7 +687,7 @@ class c3.Plot.Layer.Line.Straight extends c3.Plot.Layer
 
     _init: =>
         @value ?= (d)-> d
-        
+
         # Draggable lines
         if @draggable
             # NOTE: Because vertical lines are rotated, we are always dragging `y`
@@ -704,24 +705,24 @@ class c3.Plot.Layer.Line.Straight extends c3.Plot.Layer
                 self.trigger 'drag', drag_value, d, i
             @dragger.on 'dragend', (d,i)=>
                 @trigger 'dragend', drag_value, d, i
-    
+
     _size: =>
         @lines?.all?.attr 'x2', @line_length
         @grab_lines?.all?.attr 'x2', @line_length
         @labels?.all?.attr 'x', if @label_options.alignment is 'right' or @label_options.alignment is 'top' then @width else 0
-        
+
     _update: (origin)=>
         @current_data = if @filter? then (d for d,i in @data when @filter(d,i)) else @data
-    
+
         @vectors = @content.select('g.vector').options(@vector_options).animate(origin is 'redraw')
             .bind(@current_data, @key).update()
         @lines = @vectors.inherit('line').options(@line_options).update()
-        
+
         if @label_options?
             @label_options.dx ?= '0.25em'
             @label_options.dy ?= '-0.25em'
             @labels = @vectors.inherit('text').options(@label_options).update()
-            
+
         if @draggable
             @vectors.new.call @dragger
             @grab_lines = @vectors.inherit('line.grab') # Add extra width for grabbable line area
@@ -729,10 +730,10 @@ class c3.Plot.Layer.Line.Straight extends c3.Plot.Layer
     _draw: (origin)=>
         @vectors.animate(origin is 'redraw').position
             transform: (d,i)=> 'translate(0,' + (@scale @value(d,i)) + ')'
-        
+
         @lines.new.attr 'x2', @line_length
         @grab_lines?.new.attr 'x2', @line_length
-        
+
         if @labels?
             far_labels = @label_options.alignment is 'right' or @label_options.alignment is 'top'
             @g.style 'text-anchor', if far_labels then 'end' else 'start'
@@ -740,7 +741,7 @@ class c3.Plot.Layer.Line.Straight extends c3.Plot.Layer
                 dx: if far_labels then '-'+@label_options.dx else @label_options.dx
                 dy: @label_options.dy
                 x: if far_labels then @line_length else 0
-    
+
     _style: (style_new)=>
         @g.classed 'draggable', @draggable
         @vectors.style(style_new)
@@ -751,7 +752,7 @@ class c3.Plot.Layer.Line.Straight extends c3.Plot.Layer
 # @see c3.Plot.Layer.Line.Straight
 class c3.Plot.Layer.Line.Horizontal extends c3.Plot.Layer.Line.Straight
     type: 'horizontal'
-    
+
     _init: =>
         label_options?.alignment ?= 'left'
         super
@@ -765,12 +766,12 @@ class c3.Plot.Layer.Line.Horizontal extends c3.Plot.Layer.Line.Straight
 # @see c3.Plot.Layer.Line.Straight
 class c3.Plot.Layer.Line.Vertical extends c3.Plot.Layer.Line.Straight
     type: 'vertical'
-    
+
     _init: =>
         label_options?.alignment ?= 'top'
         super
         @scale = @h
-    
+
     _size: =>
         @g.attr
             transform: 'rotate(-90) translate('+-@height+',0)'
@@ -808,7 +809,7 @@ class c3.Plot.Layer.Region extends c3.Plot.Layer
 class c3.Plot.Layer.Scatter extends c3.Plot.Layer
     @version: 0.1
     type: 'scatter'
-    
+
     # [Function] Accessor function to define a unique key to each data point.  This has performance implications.
     # _This is required to enable **animations**._
     key: undefined
@@ -834,21 +835,21 @@ class c3.Plot.Layer.Scatter extends c3.Plot.Layer
     circle_options: undefined
     # [{c3.Selection.Options}] Options for the svg:text lables of each datapoint.
     label_options: undefined
-    
+
     _init: =>
         if not @x? then throw Error "x must be defined for a scatter plot layer"
         if not @y? then throw Error "y must be defined for a scatter plot layer"
         if not @h? then throw Error "h must be defined for a scatter plot layer"
         if not @v? then throw Error "v must be defined for a scatter plot layer"
-         
+
     _update: (origin)=>
         if not @data then throw Error "Data must be defined for scatter layer."
-        
+
         # Filter the data for safety
         @current_data = if @filter? and @key? then (d for d,i in @data when @filter(d,i)) else @data
         if @safe then @current_data = (d for d in @current_data when (
             @x(d)? and @y(d)? and (!@a? or typeof @a!='function' or @a(d)?) and (typeof @r!='function' or @r(d)?) ))
-        
+
         # Limit the number of elements?
         if @limit_elements?
             if @value?
@@ -856,31 +857,31 @@ class c3.Plot.Layer.Scatter extends c3.Plot.Layer
                 c3.array.sort_up @current_data, (d)=> -@value(d) # Sort by negative to avoid reversing array
                 @current_data = @current_data[..@limit_elements]
             else @current_data = @current_data[..@limit_elements]
-        
+
         # Bind and create the elements
         @points = @content.select('g.point').options(@point_options).animate(origin is 'redraw')
             .bind(@current_data, @key).update()
-        
+
         # If there is no key, then hide the elements that are filtered
         if @filter? and not @key?
             @points.all.attr 'display', (d,i)=> if not @filter(d,i) then 'none'
 
         # Add circles to the data points
         @circles = @points.inherit('circle').options(@circle_options).animate(origin is 'redraw').update()
-        
+
         # Add labels to the data points
         if @label_options?
             @labels = @points.inherit('text').options(@label_options).update()
-    
+
     _draw: (origin)=>
         @points.animate(origin is 'redraw').position
             transform: (d,i)=> 'translate('+(@h @x(d,i))+','+(@v @y(d,i))+')'
-        
+
         @circles.animate(origin is 'redraw').position
             r: if not @a? then @r else
                 if typeof @a is 'function' then (d,i)=> Math.sqrt( @a(d,i) / Math.PI )
                 else Math.sqrt( @a / Math.PI )
-    
+
     _style: (style_new)=>
         @points.style(style_new)
         @circles.style(style_new)
@@ -914,10 +915,10 @@ class c3.Plot.Layer.Swimlane extends c3.Plot.Layer
     hover: undefined
     # [{c3.Selection.Options}] Options for the lane svg:rect nodes for swimlanes
     lane_options: undefined
-    
+
     _init: =>
         if @lane_options? then @lanes = @content.select('rect.lane',':first-child').options(@lane_options)
-    
+
         # Support html hover tooltips
         if @hover?
             anchor = d3.select(@chart.anchor)
@@ -929,7 +930,7 @@ class c3.Plot.Layer.Swimlane extends c3.Plot.Layer
                 swimlane = Math.floor layer._v.invert layerY
                 swimlane = Math.min swimlane, Math.max layer.v.domain()[0], layer.v.domain()[1]-1
                 x = layer.h.invert layerX
-                
+
                 hover_html = (c3.functor layer.hover) layer._hover_datum(x, swimlane)..., swimlane
                 if not hover_html
                     layer.tip.all.style 'display', 'none'
@@ -952,7 +953,7 @@ class c3.Plot.Layer.Swimlane extends c3.Plot.Layer
         # If @dy is not defined, we determine it based on the chart height
         if not @y? then @dy = @height
         else @dy ?= Math.round @height / (Math.abs(@v.domain()[1]-@v.domain()[0]))
-        
+
     _update: =>
         # Support constant values and accessors
         @x = c3.functor @x
@@ -969,13 +970,13 @@ class c3.Plot.Layer.Swimlane extends c3.Plot.Layer
         # Don't mess with @v in case it is shared among layers
         @_v = @v.copy()
         c3.d3.set_range @_v, [0, @height]
-    
+
         if origin is 'resize' or origin is 'render'
-            @lanes?.position 
+            @lanes?.position
                 y: (lane)=> @_v lane+(if @invert_y then 1 else 0)
                 width: @chart.orig_h.range()[1]
                 height: @dy
-    
+
     _style: =>
         @lanes?.style()
 
@@ -996,7 +997,7 @@ class c3.Plot.Layer.Swimlane extends c3.Plot.Layer
 class c3.Plot.Layer.Swimlane.Segment extends c3.Plot.Layer.Swimlane
     @version: 0.1
     type: 'segment'
-    
+
     # **REQUIRED** [Function] Accessor to get the width of the segment
     dx: null
     # [Function] Key accessor to uniquely identify the segment.
@@ -1012,7 +1013,7 @@ class c3.Plot.Layer.Swimlane.Segment extends c3.Plot.Layer.Swimlane
     rect_options: undefined
     # [{c3.Selection.Options}] Options for the label svg:text nodes for each segment
     label_options: undefined
-    
+
     # IE10/11 doesn't support vector-effects: non-scaling-stroke, so avoid using scaled SVG.
     # This is a performance hit, because then we have to adjust the position of all rects for each redraw
     # TODO: Investigate if they added support for this in Edge.
@@ -1022,14 +1023,14 @@ class c3.Plot.Layer.Swimlane.Segment extends c3.Plot.Layer.Swimlane
     # relying on SVG transformations to do the scaling/translation.
     # This doesn't seem to be a problem if we do the scaling ourselves in JavaScript.
     scaled = false
-    
+
     _init: =>
         super
         @g.classed 'segment', true # Manually do this so inherited types also have this class
         if scaled then @scaled_g = @g.append('g').attr('class','scaled')
         @rects_group = c3.select((@scaled_g ? @g),'g.segments').singleton()
         if @label_options? then @labels_clip = c3.select(@g,'g.labels').singleton().select('svg')
-    
+
     _hover_datum: (x, swimlane)=>
         right = @h.invert @h(x)+1 # Get the pixel width
         for datum,idx in @current_data
@@ -1040,7 +1041,7 @@ class c3.Plot.Layer.Swimlane.Segment extends c3.Plot.Layer.Swimlane
         super
         # Pull filtered data elements
         @current_data = if not @filter? then @data else (d for d,i in @data when @filter(d,i))
-        
+
         # Pre-sort data by "value" for limiting to the most important elements
         if @limit_elements?
             if not @filter? then @current_data = @current_data[..]
@@ -1058,20 +1059,20 @@ class c3.Plot.Layer.Swimlane.Segment extends c3.Plot.Layer.Swimlane
                 if @limit_elements? then break else continue
             data.push datum
             if data.length == @limit_elements then break
-        
+
         # Bind here because the current data set is dynamic based on zooming
         @rects = @rects_group.select('rect.segment').options(@rect_options).bind(data, @key).update()
-        
+
         # Position the rects
         h = if @scaled_g? then (@chart.orig_h ? @h) else @h
         zero_pos = h(0)
         (if origin is 'resize' then @rects.all else @rects.new).attr 'height', @dy
-        (if !scaled or !@key? or origin=='resize' or (origin=='redraw' and this instanceof c3.Plot.Layer.Swimlane.Flamechart) 
+        (if !scaled or !@key? or origin=='resize' or (origin=='redraw' and this instanceof c3.Plot.Layer.Swimlane.Flamechart)
         then @rects.all else @rects.new).attr
             x: (d)=> h @x(d)
             width: (d)=> (h @dx(d)) - zero_pos
             y: if not @y? then 0 else (d)=> @_v @y(d)
-        
+
         # Bind and render lables here (not in _update() since the set is dynamic based on zooming and resizing)
         if @label_options?
             # Create labels in a nested SVG node so we can crop them based on the segment size.
@@ -1106,11 +1107,11 @@ class c3.Plot.Layer.Swimlane.Segment extends c3.Plot.Layer.Swimlane
 #                    else
 #                        return if x < left then self.h(left-x)-zero_pos+1 else 1
         else c3.select(@g,'g.labels').all.remove()
-        
+
         # Style any new elements we added by resizing larger that allowed new relevant elements to be drawn
         if origin is 'resize' and (not @rects.new.empty() or (@labels? and not @labels.new.empty()))
             @_style true
-    
+
     _style: (style_new)=>
         super
         @rects.style(style_new)
@@ -1130,7 +1131,7 @@ class c3.Plot.Layer.Swimlane.Segment extends c3.Plot.Layer.Swimlane
 class c3.Plot.Layer.Swimlane.Flamechart extends c3.Plot.Layer.Swimlane.Segment
     @version: 0.1
     type: 'flamechart'
-    
+
     _init: =>
         super
         if not @key? then throw Error "`key()` accessor function is required for Flamechart layers"
@@ -1138,10 +1139,10 @@ class c3.Plot.Layer.Swimlane.Flamechart extends c3.Plot.Layer.Swimlane.Segment
         if @y? then throw Error "`y` option cannot be defined for Flamechart layers"
         @y = (d)=> @depths[@key d]
         @depths = {}
-    
+
     _update: (origin)=>
         super
-        
+
         # Compute depths for each data element
         data = @current_data[..]
         c3.array.sort_up data, @x
@@ -1156,7 +1157,7 @@ class c3.Plot.Layer.Swimlane.Flamechart extends c3.Plot.Layer.Swimlane.Segment
             stack.push frame
             max_depth = Math.max max_depth, stack.length # stack.length is starting from 0, so don't reduce by one.
             @depths[@key datum] = stack.length - 1
-        
+
         # Set the vertical domain and resize chart based on maximum flamechart depth
         @v.domain [0, max_depth]
         c3.Plot.Layer.Swimlane::_update.call this, origin
@@ -1172,7 +1173,7 @@ class c3.Plot.Layer.Swimlane.Flamechart extends c3.Plot.Layer.Swimlane.Segment
 class c3.Plot.Layer.Swimlane.Sampled extends c3.Plot.Layer.Swimlane
     @version: 0.0
     type: 'sampled'
-    
+
     # **REQUIRED** [Function] Accessor to get the width of the segment
     dx: null
     # [Function] Callback to determine if the data element should be rendered or not
@@ -1198,11 +1199,11 @@ class c3.Plot.Layer.Swimlane.Sampled extends c3.Plot.Layer.Swimlane
         for datum, i in @data when (!@filter? or @filter(datum,i))
             swimlane = @y datum, i
             if top_edge <= swimlane < bottom_edge then @swimlane_data[swimlane].push datum
-        
+
         # Sort data in safe mode
         if @safe
             c3.array.sort_up(data,@x) for data in @swimlane_data
-    
+
     _sample: (sample)=>
         # Sample data points for each pixel in each swimlane
         bisector = d3.bisector(@x).right
@@ -1219,7 +1220,7 @@ class c3.Plot.Layer.Swimlane.Sampled extends c3.Plot.Layer.Swimlane
                 prev_idx--
                 pixel = if @h(@x(@data[prev_idx])+@dx(@data[prev_idx])) > 0 then 0 else
                     Math.round @h @x data[prev_idx]
-            
+
             # Iterate through each pixel in this swimlane
             while pixel < @width
                 x = @h.invert(pixel)
@@ -1235,7 +1236,7 @@ class c3.Plot.Layer.Swimlane.Sampled extends c3.Plot.Layer.Swimlane
                     if x <= datum_x+@dx(datum) then break
                     idx++
                 if idx==data.length then break
-                    
+
                 sample pixel, v, datum
                 pixel++
         return # avoid returning a comprehension
@@ -1252,7 +1253,7 @@ class c3.Plot.Layer.Swimlane.Sampled.SVG extends c3.Plot.Layer.Swimlane.Sampled
 
     # [{c3.Selection.Options}] Options for the svg:line's in each swimlane
     line_options: undefined
-    
+
     _draw: (origin)=>
         super
 
@@ -1270,7 +1271,7 @@ class c3.Plot.Layer.Swimlane.Sampled.SVG extends c3.Plot.Layer.Swimlane.Sampled
             x2: (d,i)-> pixels[i].x + 0.5
             y1: if not @y? then 0 else (d,i)-> pixels[i].y - 0.5
             y2: if not @y? then @height else (d,i)=> pixels[i].y + @dy - 0.5
-        
+
     _style: =>
         super
         @lines.style()
@@ -1281,7 +1282,7 @@ class c3.Plot.Layer.Swimlane.Sampled.SVG extends c3.Plot.Layer.Swimlane.Sampled
 class c3.Plot.Layer.Swimlane.Sampled.Canvas extends c3.Plot.Layer.Swimlane.Sampled
     @version: 0.0
     type: 'canvas'
-    
+
     # [{c3.Selection.Options}] Options for the svg:line's in each swimlane
     line_options: undefined
 
@@ -1301,10 +1302,10 @@ class c3.Plot.Layer.Swimlane.Sampled.Canvas extends c3.Plot.Layer.Swimlane.Sampl
     __draw: =>
         context = @canvas.node().getContext('2d')
         context.clearRect 0,0, @width,@height
-        
+
         # Translate by 0.5 so lines are centered on pixels to avoid anti-aliasing which causes transparency
         context.translate 0.5, 0.5
-        
+
         # Sample pixels to render onto canvas
         stroke = c3.functor @line_options?.styles?.stroke
         @_sample (x,y,datum)=>
@@ -1313,16 +1314,16 @@ class c3.Plot.Layer.Swimlane.Sampled.Canvas extends c3.Plot.Layer.Swimlane.Sampl
             context.lineTo x, y+@dy
             context.strokeStyle = stroke datum
             context.stroke()
-            
+
         context.translate -0.5, -0.5
-        
+
         #@image.all.attr('href',@canvas.toDataURL('image/png'))
         #@image.all.node().setAttributeNS('http://www.w3.org/1999/xlink','xlink:href',@canvas.toDataURL('image/png'))
-    
+
     _draw: (origin)=> super; @__draw(origin)
-    
+
     _style: (style_new)=> super; if not style_new then @__draw('restyle')
-    
+
     # For the sampled layer, draw and style are the same.  By default zoom does both, so just do one.
     zoom: => @__draw('zoom')
 
@@ -1332,7 +1333,7 @@ class c3.Plot.Layer.Swimlane.Sampled.Canvas extends c3.Plot.Layer.Swimlane.Sampl
 ####################################################################
 #
 ## A decimated layer may be created to assist certain layer types to manage large datasets.
-## When using a decimated layer pass into the constructor an array of the data at different 
+## When using a decimated layer pass into the constructor an array of the data at different
 ## detail granularities as well as a layer object instance that will be used as a "prototype" to
 ## construct a different layer for each detail level of data.  This layer will only show one
 ## of the levels at a time and will automatically transition between them as the user zooms in and out.
@@ -1358,12 +1359,12 @@ class c3.Plot.Layer.Swimlane.Sampled.Canvas extends c3.Plot.Layer.Swimlane.Sampl
 #class c3.Plot.Layer.Decimated extends c3.Plot.Layer
 #    @version: 0.1
 #    type: 'decimated'
-#    
+#
 #    # [Number] The maximum number of data elements to render at a given time when preparing sections for smooth panning.
 #    renderport_elements: 8000
 #    # [Number] If a decimated element spans more than this number of pixels after zooming then switch to the next level of detail.
 #    pixels_per_bucket_limit: 2
-#    
+#
 #    # @param levels [Array] An Array of detail levels.  Each entry in the array should be an array of data elements.
 #    # Each level should also add a **granulairty** property which specified how many X domain units are combined into a single element for this level of detail.
 #    # @param proto_layer [c3.Plot.Layer] A layer instance to use as a prototype to make layers for each level of detail.
@@ -1384,7 +1385,7 @@ class c3.Plot.Layer.Swimlane.Sampled.Canvas extends c3.Plot.Layer.Swimlane.Sampl
 #    _size: =>
 #        for level in @levels
 #            level.layer.size @width, @height
-#    
+#
 #    _update: =>
 #        # Invalidate the non-visible levels
 #        for level in @levels when level isnt @current_level
@@ -1412,9 +1413,9 @@ class c3.Plot.Layer.Swimlane.Sampled.Canvas extends c3.Plot.Layer.Swimlane.Sampl
 #            @g.select('g.level[class~=_'+@current_level.index+']').style('display',null)
 #
 #        # Determine if current viewport is outside current renderport and we need to redraw
-#        if @chart.h.domain()[0] < @current_level.renderport[0] or 
+#        if @chart.h.domain()[0] < @current_level.renderport[0] or
 #           @chart.h.domain()[1] > @current_level.renderport[1]
-#            
+#
 #            # Limit number of elements to render, centered on the current viewport
 #            center = (@chart.h.domain()[0]+@chart.h.domain()[1]) / 2
 #            bisector = d3.bisector (d)->d.key
@@ -1424,7 +1425,7 @@ class c3.Plot.Layer.Swimlane.Sampled.Canvas extends c3.Plot.Layer.Swimlane.Sampl
 #            element_domain[1] = center_element + @renderport_elements/2
 #            if element_domain[0]<0 then element_domain[0] = 0
 #            if element_domain[1]>@current_level.length-1 then element_domain[1] = @current_level.length-1
-#            
+#
 #            @current_level.renderport = (@current_level[i].key for i in element_domain)
 #
 #            # Swap data for the new renderport and redraw

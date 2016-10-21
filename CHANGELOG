@@ -1,4 +1,6 @@
-Enable command-line builds for CoffeeScript and TypeScript with cake
+0.1.5
+Enable Cake builds for TypeScript
+fix path_options styling for path layers
 
 0.1.4
 Publish to NPM as "q3"

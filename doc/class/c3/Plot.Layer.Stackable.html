@@ -69,7 +69,7 @@ such as <a href='../../class/c3/Plot.Layer.Path.html'>c3.Plot.Layer.Path</a> and
 on top of each other in the chart.  Stacking is enabled when you define <em>either</em> <code>stack_options.key</code>, <code>stacks</code>,
 or both options.  <code>stack_options</code> allows you to configure how stacking is performed from the layer&#39;s data,
 while <code>stacks</code> allows you to manually configure the exact set of stacks.</p><p>This layer stacking is flexible to support several different ways of organizing the dataset into stacks:</p><ul>
-<li>For normalized datasets you can define a <code>stack_options.key()</code> accessor to provide a key that uniquely  identifies which stack an element belongs to.</li>
+<li>For normalized datasets you can define a <code>stack_options.key()</code> accessor to provide a key that uniquely identifies which stack an element belongs to.</li>
 <li>Otherwise, you can manually define the set of <code>stacks</code> and the layer&#39;s <code>data</code> is copied into each.</li>
 <li><ul>
 <li>The layer <code>y</code> accessor will be called with the arguments (<em>datum</em>,<em>index</em>,<em>stack</em>) for you to provide the value for that element for that stack.</li>
@@ -166,7 +166,7 @@ Stack objects may contain:</p><ul>
 <li><strong>y</strong> [Function] A y accessor to use for this stack overriding the one provided by the chart or layer.</li>
 <li><strong>data</strong> [Array] Manually specified dataset for this stack instead of using the layer&#39;s <code>data</code>.</li>
 <li><strong>name</strong> [String] Name for the stack</li>
-<li><strong>options</strong> [<a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a>] Options to manually set the <strong>class</strong>, <strong>classes</strong>,  <strong>styles</strong>, <strong>events</strong>, and <strong>title</strong> of just this stack.</li>
+<li><strong>options</strong> [<a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a>] Options to manually set the <strong>class</strong>, <strong>classes</strong>, <strong>styles</strong>, <strong>events</strong>, and <strong>title</strong> of just this stack.</li>
 </ul>
 
 </div>

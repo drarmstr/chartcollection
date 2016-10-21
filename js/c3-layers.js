@@ -693,6 +693,7 @@
     Path.prototype._style = function(style_new) {
       var ref, ref1;
       Path.__super__._style.apply(this, arguments);
+      this.paths.style(style_new);
       if ((ref = this.circles) != null) {
         ref.style(style_new);
       }
