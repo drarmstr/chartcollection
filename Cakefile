@@ -22,6 +22,8 @@ call = (cmd, args...)->
 # @todo Setup a LESS compiler
 task 'build', "Build C4", ->
 	call 'coffee -c -m -o js js'
+	call 'lessc css/c3.less css/c3.css'
+	call 'lessc css/doc.less css/doc.css'
 
 task 'watch', "Watch for changes", ->
 	call 'coffee -w -c -m -o js js'

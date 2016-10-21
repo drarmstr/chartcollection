@@ -418,7 +418,6 @@ layer types please see the <a href="../#stack_example">stacked charts examples</
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">new</span> c3.Plot.Layer.Line.Horizontal({
             name: <span class="hljs-string">"Horizontal Line"</span>,
             data: [<span class="hljs-number">7</span>],
-            draggable: <span class="hljs-literal">true</span>,
             line_options: {
                 styles: {
                     <span class="hljs-string">'stroke'</span>: <span class="hljs-string">'violet'</span>,
@@ -429,6 +428,11 @@ layer types please see the <a href="../#stack_example">stacked charts examples</
             label_options: {
                 text: <span class="hljs-string">"Horizontal Line"</span>,
             },
+            grab_line_options: {
+                events: {
+                    <span class="hljs-string">'click'</span>: () =&gt; { alert(<span class="hljs-string">"Click on Horizontal Line"</span>); },
+                },
+            }
         }),</pre></div></div>
             
         </li>

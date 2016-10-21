@@ -1,3 +1,6 @@
+Enable Cake builds for Less
+Expose drag_line_options for straight line layers.
+
 0.1.5
 Enable Cake builds for TypeScript
 fix path_options styling for path layers

@@ -1,4 +1,4 @@
-﻿svg.c3.global {
+svg.c3.global {
   position: fixed;
   height: 0;
   width: 0;
@@ -84,17 +84,17 @@
 .c3.plot .layer.straight text {
   pointer-events: none;
 }
+.c3.plot .layer.straight line.grab {
+  visibility: hidden;
+  stroke-width: 9px;
+  stroke-dasharray: none;
+  pointer-events: all;
+}
 .c3.plot .layer.straight.draggable.horizontal {
   cursor: row-resize;
 }
 .c3.plot .layer.straight.draggable.vertical {
   cursor: col-resize;
-}
-.c3.plot .layer.straight.draggable line.grab {
-  visibility: hidden;
-  stroke-width: 9px;
-  stroke-dasharray: none;
-  pointer-events: all;
 }
 .c3.plot .layer.scatter text {
   text-anchor: middle;

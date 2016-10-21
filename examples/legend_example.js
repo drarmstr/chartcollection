@@ -120,7 +120,6 @@ plot.render({
         new c3.Plot.Layer.Line.Horizontal({
             name: "Horizontal Line",
             data: [7],
-            draggable: true,
             line_options: {
                 styles: {
                     'stroke': 'violet',
@@ -130,6 +129,11 @@ plot.render({
             },
             label_options: {
                 text: "Horizontal Line"
+            },
+            grab_line_options: {
+                events: {
+                    'click': function () { alert("Click on Horizontal Line"); }
+                }
             }
         }),
         // Create a layer of 3 vertical lines.

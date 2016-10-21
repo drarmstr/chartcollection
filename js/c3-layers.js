@@ -935,6 +935,8 @@
 
     Straight.prototype.line_options = void 0;
 
+    Straight.prototype.grab_line_options = void 0;
+
     Straight.prototype.label_options = void 0;
 
     Straight.prototype._init = function() {
@@ -1009,9 +1011,14 @@
         }
         this.labels = this.vectors.inherit('text').options(this.label_options).update();
       }
+      if (this.draggable || this.grab_line_options) {
+        this.grab_lines = this.vectors.inherit('line.grab');
+        if (this.grab_line_options) {
+          this.grab_lines.options(this.grab_line_options).update();
+        }
+      }
       if (this.draggable) {
-        this.vectors["new"].call(this.dragger);
-        return this.grab_lines = this.vectors.inherit('line.grab');
+        return this.vectors["new"].call(this.dragger);
       }
     };
 
@@ -1040,11 +1047,16 @@
     };
 
     Straight.prototype._style = function(style_new) {
-      var ref;
+      var ref, ref1;
       this.g.classed('draggable', this.draggable);
       this.vectors.style(style_new);
       this.lines.style(style_new);
-      return (ref = this.labels) != null ? typeof ref.style === "function" ? ref.style(style_new) : void 0 : void 0;
+      if ((ref = this.grab_lines) != null) {
+        if (typeof ref.style === "function") {
+          ref.style(style_new);
+        }
+      }
+      return (ref1 = this.labels) != null ? typeof ref1.style === "function" ? ref1.style(style_new) : void 0 : void 0;
     };
 
     return Straight;

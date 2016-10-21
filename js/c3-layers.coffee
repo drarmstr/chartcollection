@@ -676,6 +676,10 @@ class c3.Plot.Layer.Line.Straight extends c3.Plot.Layer
     vector_options: undefined
     # [{c3.Selection.Options}] Options for the svg:line lines.
     line_options: undefined
+    # [{c3.Selection.Options}] Options for the svg:line lines for hidden lines
+    # behind each line that is wider and easier for users to interact with
+    # e.g. for click or drag events.
+    grab_line_options: undefined
     # [{c3.Selection.Options}] Define this to render labels.  Options for the svg:text labels.
     # This option also takes the following additional properties:
     # * **alignment** - [String] Alignment of label.
@@ -723,9 +727,13 @@ class c3.Plot.Layer.Line.Straight extends c3.Plot.Layer
             @label_options.dy ?= '-0.25em'
             @labels = @vectors.inherit('text').options(@label_options).update()
 
+        # Add extra width for grabbable line area
+        if @draggable or @grab_line_options
+            @grab_lines = @vectors.inherit('line.grab')
+            if @grab_line_options then @grab_lines.options(@grab_line_options).update()
+
         if @draggable
             @vectors.new.call @dragger
-            @grab_lines = @vectors.inherit('line.grab') # Add extra width for grabbable line area
 
     _draw: (origin)=>
         @vectors.animate(origin is 'redraw').position
@@ -746,6 +754,7 @@ class c3.Plot.Layer.Line.Straight extends c3.Plot.Layer
         @g.classed 'draggable', @draggable
         @vectors.style(style_new)
         @lines.style(style_new)
+        @grab_lines?.style?(style_new)
         @labels?.style?(style_new)
 
 # Horizontal line layer.  Please refer to {c3.Plot.Layer.Line.Straight} for documentation.

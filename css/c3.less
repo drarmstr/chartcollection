@@ -125,18 +125,18 @@ svg.c3.global {
                 pointer-events: none;
             }
 
+            line.grab {
+              visibility: hidden;
+              stroke-width: 9px;
+              stroke-dasharray: none;
+              pointer-events: all;
+            }
             &.draggable {
                 &.horizontal {
                     cursor: row-resize;
                 }
                 &.vertical {
                     cursor: col-resize;
-                }
-                line.grab {
-                    visibility: hidden;
-                    stroke-width: 9px;
-                    stroke-dasharray: none;
-                    pointer-events: all;
                 }
             }
         }
@@ -397,7 +397,7 @@ table.c3.table {
 
         span.search {
             white-space: nowrap;
-            
+
             input {
                 vertical-align: text-bottom;
 
