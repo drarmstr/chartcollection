@@ -33,19 +33,19 @@ var flamechart_calltrace = new c3.Plot.Zoomable({
                 styles: {
                     'fill': function (d) { return function_color(d.name); },
                     'stroke': 'black',
-                    'stroke-opacity': 0.5,
-                },
+                    'stroke-opacity': 0.5
+                }
             },
             // Add a **text label** of the function name in segments that are large enough.
             label_options: {
                 text: function (d) { return d.name; },
                 styles: {
                     'font-size': 'small',
-                    'font-weight': 'bold',
-                },
-            },
+                    'font-weight': 'bold'
+                }
+            }
         }),
-    ],
+    ]
 }).render();
 // ## Call Tree Sunburst
 // Create a `Polar` chart for a hierarchical **sunburst** visualization of the _call tree_.
@@ -81,19 +81,19 @@ var sunburst_calltree = new c3.Polar({
                 styles: {
                     'fill': function (d) { return function_color(d.name); },
                     'stroke': 'black',
-                    'stroke-opacity': 0.5,
+                    'stroke-opacity': 0.5
                 },
                 // **Animate** the sunburst segments if their value changes or the user navigates to a new root node.
                 animate: true,
-                duration: 2000,
+                duration: 2000
             },
             // A **bullseye** is created in the center of the sunburst when the user navigates to
             // a nested node.
             bullseye_options: {
-                animate: true,
-            },
+                animate: true
+            }
         }),
-    ],
+    ]
 }).render();
 // ## Resize charts
 // Resize charts if the window is resized.
@@ -138,4 +138,3 @@ $('input[name=hierarchy]').on('change', function () {
         sunburst_layer.redraw();
     }
 });
-//# sourceMappingURL=flamechart_sunburst_example.js.map

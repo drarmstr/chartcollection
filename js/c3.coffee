@@ -1,7 +1,7 @@
 ﻿# C3 Visualization Library
 
 # @note **Please refer to {c3.Base} for an overview of the c3 visualization interface.**
-# ## Dependencies: 
+# ## Dependencies:
 # * **D3**
 # * **Crossfilter** - Optional to improve sorting performance
 class c3
@@ -19,6 +19,9 @@ class c3
 # Export c3 to the global namespace
 this.c3 = c3
 
+# Export NPM module
+if (module?) then module.exports = c3;
+
 # Check for dependencies
 if not d3? then throw Error "D3 library is required for C3"
 
@@ -32,13 +35,13 @@ class c3.util
     # @param src [Object] Source object
     # @return [Object] Returns the destination object
     @extend: (dest, src)-> if src? then (dest[k] = v for k,v of src); dest
-    
+
     # Fill in properties of an object based on another iff not already defined
     # @param dest [Object] Destination object that will get all properties of the src object if not defined
     # @param src [Object] Source object with default values
     # @return [Object] Returns the destination object
     @defaults: (dest, src)-> if src? then (dest[k] ?= v for k,v of src); dest
-    
+
     # Spin Wait
     # @param ms [Number] Number of milliseconds to spin
     @spin: (ms)-> start=new Date(); (null while new Date()-start < ms); return
@@ -49,7 +52,7 @@ class c3.util
 #        new_obj = new obj.constructor()
 #        new_obj[key] = clone obj[key] for key of obj
 #        return new_obj
-#    
+#
 #    # Shallow clone an object.  Copied references will point to their original objects.
 #    # @return [Object] Returns the new object
 #    @clone: (obj)->
@@ -80,7 +83,7 @@ class c3.array
     @sort_down: (arr, accessor)->
         if crossfilter? then c3.array.sort_up(arr,(d)-> -accessor(d)); arr
         else arr.sort (a,b)-> accessor(b)-accessor(a)
-    
+
 #    @last: (arr)-> arr[arr.length-1]
 #    @front: (arr, n)-> arr[..n-1]
 #    @back: (arr, n)-> arr[-n..]
@@ -203,21 +206,21 @@ class c3.Selection.Options
     # The function is called with the datum and index of the data elements as arguments.
     # The `this` context is setup to refer to the DOM node.
     class: undefined
-    
+
     # [Object] An object to set **CSS classes**.  Keys in the object represent class names
     # and values are either a boolean or a function that returns a boolean that determines
     # if that class should be added or removed from the node.  The functions are passed
     # the datum and index of the data element as arguments.  The `this` context is setup
     # to refer to the DOM node.
     classes: undefined
-    
+
     # [Object] An object to set **CSS styles**.  Keys in the object represent style names
     # and values are either a value or a function that returns the value to set the style.
     # A null value will remove the style from the node.
     # The functions are passed the datum and index of the data element as arguments.
     # The `this` context is setup to refer to the DOM node.
     styles: undefined
-    
+
     # [Object] An object to set **event handlers** for the DOM nodes.  Keys in the object
     # represent event names and values are the event handler functions that will be called.
     # The handlers are setup and called by D3 which pass the datum and index of the data
@@ -227,13 +230,13 @@ class c3.Selection.Options
     # _Note that the conventions used by D3 for managing multiple handlers and namespacing
     # are different from JQuery's event handling._
     events: undefined
-    
+
     # [String, Function] A string or function to set the **text** of the DOM nodes.
     # This is not applicable for all node types.
     # If this is a function, it will be called with the datum and index of the data element
     # as arguments and the `this` context setup to refer to the DOM node.
     text: undefined
-    
+
     # [String, Function] A string or function to set the child **HTML** content for the DOM nodes.
     # This is not applicable for all node types.
     # If this is a function, it will be called with the datum and index of the data element
@@ -246,21 +249,21 @@ class c3.Selection.Options
     # Please also consider user-provided strings and security, as unsafe scripts may be included.
     # Using `html` will take precedence over setting `text` for a selection.
     html: undefined
-    
+
     # [String, Function] A string or function to set **tooltips** for the DOM nodes.
     # Setting this will cause the selection's nodes to have child `<title>` nodes created.
     # If this is a function, it will be called with the datum and index of the data element
     # as arguments and the `this` context setup to refer to the DOM node.
     title: undefined
-    
+
     # [Boolean] Request animation of the nodes when positioning their attributes.
     # New nodes will not animate, they will be immediately set to their new position.
     # However, new nodes will fade in and old nodes will fade out unless the opacity style is defined.
     animate: undefined
-    
+
     # [Number] Duration for any requested animations in ms.  Defaults to 750ms
     duration: undefined
-    
+
     # [Boolean] Animate the positioning of old elements as they are removed in addition to fading out
     animate_old: undefined
 
@@ -306,7 +309,7 @@ class c3.Selection
     # @param before [String] An optional selector to insert nodes before.
     #   `:first-child` will insert nodes at the beginning.
     # @param children_only [boolean] Only select direct children, not all descendents
-    # @todo Support all possible selectors.  
+    # @todo Support all possible selectors.
     constructor: (d3_selection=d3.select(), @query, @before, children_only)->
         if @query
             # Parse the namespace, tag, classes, and nested selectors
@@ -319,7 +322,7 @@ class c3.Selection
                 if children_only then @all = @all.filter -> d3_selection.some (nodes)=> this.parentNode in nodes
         else
             @all = d3_selection
-    
+
     # Create a new c3 selection based on the current selection
     # @param query [String] Search string to query in the parent selection to make this new selection.
     #   If a class is specified, such as "tag.class", then the class will automatically be
@@ -328,7 +331,7 @@ class c3.Selection
     #   `:first-child` will insert nodes at the beginning.
     # @param children_only [boolean] Only select direct children, not all descendents
     select: (query, before, children_only)-> return new c3.Selection @all, query, before, children_only
-    
+
     # Create a child node for each node in the parent's selection with a 1:1 mapping to the same data.
     # For example, if the parent selection had a set of svg:g nodes, then _inheriting_ from that
     # with a `circle` query would create an svg:circle node nested in each svg:g node.
@@ -352,7 +355,7 @@ class c3.Selection
         child.all = @all.select query
         child.old = @old.select query
         return child
-    
+
     # Create a single DOM node based on the passed in data.  Ensure that only one node will be created
     # and will remove extra nodes that match the query if they previously existed.
     # @param datum [*] The datum to bind to the DOM node.  This may be left undefined.
@@ -390,7 +393,7 @@ class c3.Selection
         if @_animate then @all.duration(@opt.duration).style('opacity',0).remove()
         else @all.remove()
 
-    # Set persistent user-configurable options.  A reference to these options are stored in the 
+    # Set persistent user-configurable options.  A reference to these options are stored in the
     # selection and are used for future manipulation in {c3.Selection#update `update()`}
     # and {c3.Selection#style `style()`}.
     # @param opt [c3.Selection.Options] _User-configurable_ options to define how to setup and style the
@@ -407,34 +410,34 @@ class c3.Selection
         @_animate = animate && @opt.animate
         return this
 
-    # This will setup event handlers for new nodes and update classes, tooltips, 
+    # This will setup event handlers for new nodes and update classes, tooltips,
     # text, and html for all nodes based on the current data and {c3.Selection.Options options}.
     update: ()=>
         # Setup the static classes
         if @opt.class? then @new.attr 'class', @opt.class
         if @_query_class? then @new.classed @_query_class, true
-        
+
         # Add text or HTML content
         if @opt.html? then @all.html @opt.html
         else if @opt.text? then @all.text @opt.text
-        
+
         # Add tooltips
         if @opt.title?
             selection = (if typeof @opt.title is 'function' then @all else @new)
             if @all.node() instanceof SVGElement
                 #selection.html (d,i,j)=> '<title>'+c3.functor(@opt.title)(d,i,j)+'</title>' # This approach was slower in profiling on Chrome
                 @new.append 'title'
-                if selection.length <= 1 
+                if selection.length <= 1
                     selection.select('title').text @opt.title
                 # Preserve the i,j semantics for setting titles with grouped D3 selections
                 else
                     self = this
                     selection.each (d,i,j)-> d3.select(this).selectAll('title').text self.opt.title(d,i,j)
             else selection.attr 'title', @opt.title
-        
+
         # Add event handlers
         if @opt.events? then @new.on @opt.events
-        
+
         # Apply any options based on opt_accessor
         if @opt_accessor?
             opt_accessor = @opt_accessor
@@ -451,7 +454,7 @@ class c3.Selection
                 else if opt.text? then node.text opt.text
 
         return this
-    
+
     # Update the attribute values for the dom nodes of this selection based on the values
     # and callbacks set in attrs.
     # @param attrs [Object] A map where the keys represent DOM attribute names and the
@@ -495,7 +498,7 @@ class c3.Selection
             if @_query_class? then selection.classed @_query_class, true
         if @opt.classes? then selection.classed @opt.classes
         if @opt.styles? then selection.style @opt.styles
-        
+
         if @opt_accessor?
             opt_accessor = @opt_accessor
             selection.each (d,i,j)-> if opt = opt_accessor(d,i,j)
@@ -505,7 +508,7 @@ class c3.Selection
                 if opt.styles? then node.style opt.styles
 
         return this
-    
+
     # Return a single HTML Element for this selection.  Mostly useful if you know the selection only represents a single node.
     # @return [HTMLElement] node
     node: => @all.node()
@@ -530,7 +533,7 @@ class c3.Dispatch
         if handler then @dispatcher[event][namespace] = handler
         else delete @dispatcher[event][namespace]
     #on: (event, handler)-> @dispatcher[event] = handler
-    
+
     # Trigger an event for this visualization.
     # Do not specify a namespace here.
     # @param event [String] Name of event to trigger.
@@ -559,7 +562,7 @@ class c3.Dispatch
 #
 # @note _In the documentation, please look at the "Variables Summary" to see what properties can be set for each type of visualization._
 #
-# # External Interface 
+# # External Interface
 # This Base object defines a set of methods as the standard external interface for visualizations:
 # * {c3.Base#render **render()** - Initial rendering (_usually only called once_)}
 # * {c3.Base#resize **resize()** - Resize the visualization to match new div anchor size}
@@ -580,7 +583,7 @@ class c3.Dispatch
 # # Extensibility and Events
 # To support extensibility and user customization of visualizations, all c3 visualizations will fire events
 # to reflect the external API.  Clients may attach handlers to these events to perform additional actions,
-# further modify the DOM, attach more handlers to DOM elements, freely leverage D3, etc.  These events are named 
+# further modify the DOM, attach more handlers to DOM elements, freely leverage D3, etc.  These events are named
 # to match the cooresponding external API.  Events named with an "_start" appended will also be fired before the
 # coorespdoning external API action is taken to allow customizations to perform actions either before or
 # after the default built-in behaviour.
@@ -595,7 +598,7 @@ class c3.Dispatch
 # with different performance and flexitility tradeoffs.
 # * First, the c3 library itself sets various default styles for certain items.  These generally are
 # about functionality and it tries not to specify a default look.
-# * The client may set up CSS stylesheet rules to determine how various DOM elements look.  For example, the 
+# * The client may set up CSS stylesheet rules to determine how various DOM elements look.  For example, the
 # fill color for all area graphs may be set with "_.c3.plot layer.area path { fill: red; }_"
 # * A CSS class can be assigned to a specific instance for per-chart styles.
 # The {c3.Selection.Options.class `class`} and {c3.Selection.Options.classes `classes`} properties in
@@ -653,7 +656,7 @@ class c3.Base
     ####################
     # External Interface
     ####################
-    
+
     # Initial rendering
     # @param opt [Object] An options object that is used to extend the c3 visualization with its provided options.
     render: (opt)=>
@@ -674,7 +677,7 @@ class c3.Base
         @rendered = true
         @trigger 'rendered'
         return this
-    
+
     # Resize the visualization explicitly or to match the size of its associated anchor div DOM element.
     # Call this if the DOM element changes size in order to properly refresh the visualization.
     # @param width [Number] Optional width to set the anchor DOM node width
@@ -687,7 +690,7 @@ class c3.Base
         @draw 'resize'
         @trigger 'redraw', 'resize'
         return this
-    
+
     # Update the visualization to reflect new/removed or updated data
     redraw: (origin='redraw')=> if @rendered
         @trigger 'redraw_start', origin
@@ -698,7 +701,7 @@ class c3.Base
         @style(true)
         @trigger 'restyle', true
         return this
-    
+
     # Restyle the elements to reflect updated data
     restyle: => if @rendered
         @trigger 'restyle_start', false
@@ -710,7 +713,7 @@ class c3.Base
     #########################
     # Internal Implementation
     #########################
-    
+
     # Initialization
     init: ->
         @_prep()
@@ -724,7 +727,7 @@ class c3.Base
         if @anchor_styles? then d3_anchor.style @anchor_styles
         if @handlers? then @on event, handler for event, handler of @handlers
     _init: ->
-    
+
     # Update state and scales based on current size of the anchor div DOM element
     # @param width [Number] Optional value to override the anchor width
     # @param height [Number] Optional value to override the anchor height
@@ -735,11 +738,11 @@ class c3.Base
         @height = @anchor.offsetHeight
         @_size()
     _size: ->
-    
+
     # Update DOM data bindings based on new or modified data set
     update: (origin)-> @_update(origin)
     _update: ->
-    
+
     # Actually place DOM elements based on current scales.  This is separated from {c3.Base#update update()} so
     # resizing can update the DOM without needing to update data bindings.
     # @param origin [String] The origin specifies the reason for this call to draw(), such as being initiated by a
@@ -747,7 +750,7 @@ class c3.Base
     #   This can be used for performance optimizations.
     draw: (origin)-> @_draw(origin)
     _draw: ->
-    
+
     # Set the DOM elements styles, classes, etc.  This is separated from {c3.Base#draw draw()} so that
     # users can update the styles of the visualization when the change doesn't need to rebind data
     # and they know the change won't affect DOM element placement or size.
@@ -777,7 +780,7 @@ class c3.Base
 # @author Douglas Armstrong
 class c3.Chart extends c3.Base
     type: 'chart'
-    
+
     # This class is assigned to the chart svg node to allow CSS styles to be applied.
     class: undefined
     # [{c3.Selection.Options}] Options for the chart svg node.
@@ -787,7 +790,7 @@ class c3.Chart extends c3.Base
     # or to set styles that apply to all of the content of the chart.  If there are margins or
     # attached axes, they are not considered part of the content.
     content_options: undefined
-    
+
     init: ->
         @_prep()
         # Prepare the chart's root svg node
@@ -796,10 +799,10 @@ class c3.Chart extends c3.Base
             .attr('class','c3 '+(if @class? then @class else ''))
             .attr('height','100%').attr('width','100%')
             .on 'contextmenu', -> d3.event.preventDefault()
-        
+
         # Create an svg:g grouping node to host the "content" for this chart.
         @content = @svg.select('g.content',null,true).singleton().options(@content_options).update()
-        
+
         # Apply classes to the svg and g nodes based on the `type` of the chart object hierarchy
         prototype = Object.getPrototypeOf(this)
         while prototype
@@ -808,7 +811,7 @@ class c3.Chart extends c3.Base
                 @content.all.classed prototype.type, true
             prototype = Object.getPrototypeOf(prototype)
         @_init()
-    
+
     style: ->
         @svg.style()
         @content.style()
@@ -823,7 +826,7 @@ document.addEventListener 'DOMContentLoaded', ->
     if not c3.global_svg
         c3.global_svg = d3.select('body').append('svg').attr('class','c3 global')
         c3.global_defs = c3.global_svg.append('defs')
-            
+
 #        # Add filter for lighting effects to highligh elements
 #        shadow_filter = c3.global_defs.append('filter')
 #            .attr('id','shadow_filter')
@@ -839,7 +842,7 @@ document.addEventListener 'DOMContentLoaded', ->
 #        shadow_filter.append('feComposite')
 #            .attr('in2','SourceGraphic').attr('operator','arithmetic')
 #            .attr('k1',0).attr('k2',1).attr('k3',1).attr('k4',0)
-            
+
         # Masks to fade to transparent to the left or right.
         # Note that the object bounding box for a path is defined from the start and end points.
         # So, curves with a stroke width extended outside of this box.  That is why the mask size is

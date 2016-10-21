@@ -145,7 +145,7 @@
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
               <h2 id="create-the-c3-chart">Create the C3 chart</h2>
-<p>Create a <code>c3.Plot.horiz_zoom</code> to enable horizontal zooming and attach it to 
+<p>Create a <code>c3.Plot.horiz_zoom</code> to enable horizontal zooming and attach it to
 the <code>#zoom_example_plot</code> DOM element.</p>
 
             </div>
@@ -186,7 +186,7 @@ will have x values go from -10 to 10 and y values go from -50 to 80.  C3 will ta
             </div>
             
             <div class="content"><div class='highlight'><pre>    h: d3.scale.linear().domain([<span class="hljs-number">-10</span>, <span class="hljs-number">10</span>]), <span class="hljs-comment">// horizontal scale</span>
-    v: d3.scale.linear().domain([<span class="hljs-number">-50</span>, <span class="hljs-number">80</span>]), <span class="hljs-comment">// veritcal scale</span></pre></div></div>
+    v: d3.scale.linear().domain([<span class="hljs-number">-50</span>, <span class="hljs-number">80</span>]), <span class="hljs-comment">// vertical scale</span></pre></div></div>
             
         </li>
         
@@ -248,7 +248,7 @@ than the original defined domain.</p>
               </div>
               <p>Setup <code>c3.Axis</code> objects.  C3 plots may have up to 4 <strong>axes</strong> attached for the top, bottom,
 left, and right of plots.  Axes may also be created independent of plots for layout flexibility
-which is covered in another example.  These axes also enable grid lines in the plot.  They are 
+which is covered in another example.  These axes also enable grid lines in the plot.  They are
 dotted lines because of styles setup in the <code>examples.less</code> stylesheet.</p>
 
             </div>
@@ -344,7 +344,7 @@ This layer also introduces a new way to style the layer in addition to CSS style
 The object passed in to <code>paths.styles</code> has a set of key/value pairs.  The keys represent
 the style names to configure while the values determine how to set those styles.  This
 example just uses a constant value for the color.  In later examples you’ll see how this
-can also be a function to style based on the data.  Assign this layer to a variable 
+can also be a function to style based on the data.  Assign this layer to a variable
 <code>zoom_line_layer</code> for later manipulation.</p>
 
             </div>
@@ -402,7 +402,7 @@ rendering or styles.</p>
                 <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
               <p>When the function selection buttons are clicked, change the function used to determine the
-<strong>y value</strong> or line interpolation for the <code>zoom_line_layer</code>.  After the change is made 
+<strong>y value</strong> or line interpolation for the <code>zoom_line_layer</code>.  After the change is made
 <code>redraw()</code> needs to be called to update the chart based on the new data or accessor function.</p>
 
             </div>
@@ -432,7 +432,7 @@ $(<span class="hljs-string">'#zoom_parabolic_button'</span>).click(<span class="
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-17">&#182;</a>
               </div>
-              <p>When the color selection buttons are clicked change the path style.  The <code>restyle()</code> API 
+              <p>When the color selection buttons are clicked change the path style.  The <code>restyle()</code> API
 should be used here to update the styles used in the chart.  This will avoid the cost of
 updating all of the data and rendering and only update classes and styles.</p>
 

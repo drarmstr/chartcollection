@@ -1,6 +1,6 @@
-// == C3 Swimlane Timelines ==
+// ## C3 Swimlane Timelines
 // _Demonstrate how to create timelines with swimlanes._
-// == Prepare the Segment Data ==
+// ## Prepare the Segment Data
 // A function to generate random swimlane data
 function generate_segment_data(data) {
     data.length = 0;
@@ -15,13 +15,13 @@ function generate_segment_data(data) {
                 swimlane: swimlane,
                 time: time,
                 duration: time + duration > 100 ? 100 - time : duration,
-                color: color,
+                color: color
             });
             time += duration;
         }
     c3.array.sort_up(data, function (d) { return d.time; });
 }
-// == Create the Segment Swimlane Chart ==
+// ## Create the Segment Swimlane Chart
 // Create a `c3.Plot` chart.
 var segment_layer;
 var swimlane_timeline = new c3.Plot.Zoomable({
@@ -37,7 +37,7 @@ var swimlane_timeline = new c3.Plot.Zoomable({
     axes: [
         new c3.Axis.X({
             grid: true,
-            ticks: false,
+            ticks: false
         }),
     ],
     layers: [
@@ -56,16 +56,16 @@ var swimlane_timeline = new c3.Plot.Zoomable({
                     'rx': 5,
                     '-webkit-transform': 'scale(1,0.75)',
                     '-webkit-transform-origin': 'center',
-                    'shape-rendering': 'geometricPrecision',
-                },
+                    'shape-rendering': 'geometricPrecision'
+                }
             },
             // Create **lables** for each segment
             label_options: {
                 text: function (d) { return Math.round(d.duration); },
                 styles: {
                     'font-weight': 'bold',
-                    'text-shadow': function (d) { return '1px 1px 1px ' + d3.rgb(d.color).brighter().toString(); },
-                },
+                    'text-shadow': function (d) { return '1px 1px 1px ' + d3.rgb(d.color).brighter().toString(); }
+                }
             },
             // An HTML tooltip
             hover: function (d) { return d ? Math.round(d.duration) : null; },
@@ -73,13 +73,13 @@ var swimlane_timeline = new c3.Plot.Zoomable({
             lane_options: {
                 styles: {
                     'fill': 'none',
-                    'stroke': 'gray',
-                },
-            },
+                    'stroke': 'gray'
+                }
+            }
         }),
-    ],
+    ]
 });
-// == Create the Sampled Swimlane Charts ==
+// ## Create the Sampled Swimlane Charts
 // Create a `c3.Plot` chart.
 var sampled_svg_timeline = new c3.Plot.Zoomable({
     anchor: '#swimlanes_sampled_svg_plot',
@@ -94,7 +94,7 @@ var sampled_svg_timeline = new c3.Plot.Zoomable({
     axes: [
         new c3.Axis.X({
             grid: true,
-            ticks: false,
+            ticks: false
         }),
     ],
     margins: { bottom: 20 },
@@ -108,18 +108,18 @@ var sampled_svg_timeline = new c3.Plot.Zoomable({
             line_options: {
                 title: function (d) { return Math.round(d.duration); },
                 styles: {
-                    'stroke': function (d) { return d.color; },
-                },
+                    'stroke': function (d) { return d.color; }
+                }
             },
             // Add a border between swimlanes
             lane_options: {
                 styles: {
                     'fill': 'none',
-                    'stroke': 'gray',
-                },
-            },
+                    'stroke': 'gray'
+                }
+            }
         }),
-    ],
+    ]
 });
 var sampled_canvas_timeline = new c3.Plot.Zoomable({
     anchor: '#swimlanes_sampled_canvas_plot',
@@ -134,7 +134,7 @@ var sampled_canvas_timeline = new c3.Plot.Zoomable({
     axes: [
         new c3.Axis.X({
             grid: true,
-            ticks: false,
+            ticks: false
         }),
     ],
     layers: [
@@ -147,22 +147,22 @@ var sampled_canvas_timeline = new c3.Plot.Zoomable({
             safe: false,
             line_options: {
                 styles: {
-                    'stroke': function (d) { return d.color; },
-                },
+                    'stroke': function (d) { return d.color; }
+                }
             },
             // Add a border between swimlanes
             lane_options: {
                 styles: {
                     'fill': 'none',
-                    'stroke': 'gray',
-                },
+                    'stroke': 'gray'
+                }
             },
             // HTML tooltip
-            hover: function (d) { return d ? Math.round(d.duration) : null; },
+            hover: function (d) { return d ? Math.round(d.duration) : null; }
         }),
-    ],
+    ]
 });
-// == Render the Charts ==
+// ## Render the Charts
 // Generate initial data
 generate_segment_data(swimlane_timeline.data);
 sampled_svg_timeline.data = swimlane_timeline.data;
@@ -209,4 +209,3 @@ window.onresize = function () {
     sampled_svg_timeline.resize();
     sampled_canvas_timeline.resize();
 };
-//# sourceMappingURL=swimlanes_example.js.map

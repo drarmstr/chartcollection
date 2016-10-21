@@ -27,26 +27,25 @@ var table = new c3.Table({
                 styles: { color: 'darkblue' }
             },
             value: function (d) { return d; },
-            sortable: true,
+            sortable: true
         },
         // Create a second column that displays the data value squared for each row.
         {
             header: { html: "x<sup>2</sup>" },
             cells: { text: function (d) { return d * d; } },
             value: function (d) { return d * d; },
-            sortable: true,
+            sortable: true
         },
         // Create a third column that displays the negative data value for each row.
         {
             header: { text: "-x" },
             cells: { text: function (d) { return -d; } },
             value: function (d) { return -d; },
-            sortable: true,
+            sortable: true
         },
     ],
     // Configure the initial column to **sort** the data on based on the column varible `x_column` we created above.
-    sort_column: sort_column,
+    sort_column: sort_column
 });
 // Render the table!
 table.render();
-//# sourceMappingURL=table_sortable_example.js.map

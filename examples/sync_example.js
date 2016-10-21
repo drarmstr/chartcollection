@@ -7,7 +7,7 @@ function generate_sync_data() {
     for (var x = 0; x < 100; x += 5 * Math.random()) {
         random_sync_data.push({
             x_value: x,
-            y_value: 10 * Math.random(),
+            y_value: 10 * Math.random()
         });
     }
 }
@@ -54,8 +54,8 @@ var select_chart = new c3.Plot.Selectable({
             options: {
                 styles: {
                     'fill': 'darkgreen'
-                },
-            },
+                }
+            }
         }),
         // Add this layer just for fun.
         new c3.Plot.Layer.Line({
@@ -63,11 +63,11 @@ var select_chart = new c3.Plot.Selectable({
             interpolate: 'basis',
             options: {
                 styles: {
-                    'stroke': 'orange',
-                },
-            },
+                    'stroke': 'orange'
+                }
+            }
         }),
-    ],
+    ]
 });
 // ## Create the Zoom Chart
 // Create a `c3.Plot.Zoomable` chart mostly like the selection chart.
@@ -84,7 +84,7 @@ var zoom_chart = new c3.Plot.Zoomable({
     y: function (d) { return d.y_value; },
     axes: [
         new c3.Axis.X({
-            grid: true,
+            grid: true
         }),
     ],
     // Use _dark blue_ for this layer instead.
@@ -93,9 +93,9 @@ var zoom_chart = new c3.Plot.Zoomable({
             interpolate: 'step-before',
             options: {
                 styles: {
-                    'fill': 'darkblue',
-                },
-            },
+                    'fill': 'darkblue'
+                }
+            }
         }),
         // This layer is silly.
         new c3.Plot.Layer.Line({
@@ -103,11 +103,11 @@ var zoom_chart = new c3.Plot.Zoomable({
             interpolate: 'basis',
             options: {
                 styles: {
-                    'stroke': 'orange',
-                },
-            },
+                    'stroke': 'orange'
+                }
+            }
         }),
-    ],
+    ]
 });
 // ## Render the Charts
 // Call `render()` on the charts to initially render them.
@@ -141,4 +141,3 @@ $('#sync_end_select').on('change', function () {
 // cause the other chart to `select()` or `focus()`.
 select_chart.on('select', function (extent) { zoom_chart.focus(extent); });
 zoom_chart.on('zoom', function (extent) { select_chart.select(extent); });
-//# sourceMappingURL=sync_example.js.map

@@ -15,7 +15,7 @@ legend.render({
         "Really long item name",
         "Spam"
     ],
-    width: 150,
+    width: 150
 });
 // ## Legend
 // This example legend uses user-defined objects for the data elements and defines
@@ -27,16 +27,16 @@ var legend2 = new c3.Legend({
     data: [
         {
             name: "Fruit",
-            types: ["Apples", "Oranges"],
+            types: ["Apples", "Oranges"]
         }, {
             name: "Minerals",
-            types: ["Gold", "Sulfur"],
+            types: ["Gold", "Sulfur"]
         },
     ],
     nest: function (d) { return d.types; },
     item_options: { text: function (d) { return d.name; } },
     nested_item_options: { text: function (d) { return d; } },
-    bullet_options: false,
+    bullet_options: false
 });
 legend2.render();
 // ## Chart Plot Legend
@@ -77,7 +77,7 @@ plot.render({
     // Add a horizontal axis with grid lines.
     axes: [
         new c3.Axis.X({
-            grid: true,
+            grid: true
         }),
     ],
     layers: [
@@ -92,29 +92,29 @@ plot.render({
                 { name: "Blue Stack", options: { styles: { 'fill': 'slateblue' } } },
                 { name: "Orange Stack", options: { styles: { 'fill': 'goldenrod' } } },
                 { name: "Red Stack", options: { styles: { 'fill': 'firebrick' } } },
-            ],
+            ]
         }),
         // Create 3 line layers with random data.
         new c3.Plot.Layer.Line({
             name: "Series 1",
             data: generate_random_legend_data(),
             options: {
-                styles: { 'stroke': 'red' },
-            },
+                styles: { 'stroke': 'red' }
+            }
         }),
         new c3.Plot.Layer.Line({
             name: "Series 2",
             data: generate_random_legend_data(),
             options: {
-                styles: { 'stroke': 'blue' },
-            },
+                styles: { 'stroke': 'blue' }
+            }
         }),
         new c3.Plot.Layer.Line({
             name: "Series 3",
             data: generate_random_legend_data(),
             options: {
-                styles: { 'stroke': 'green' },
-            },
+                styles: { 'stroke': 'green' }
+            }
         }),
         // Create a single dotted horizontal line.
         new c3.Plot.Layer.Line.Horizontal({
@@ -125,12 +125,12 @@ plot.render({
                 styles: {
                     'stroke': 'violet',
                     'stroke-dasharray': '5 3',
-                    'opacity': 0.75,
-                },
+                    'opacity': 0.75
+                }
             },
             label_options: {
-                text: "Horizontal Line",
-            },
+                text: "Horizontal Line"
+            }
         }),
         // Create a layer of 3 vertical lines.
         // Note how this layer sets the `name` to false so it is not displayed in the legend.
@@ -141,13 +141,13 @@ plot.render({
             line_options: {
                 styles: {
                     'stroke': 'darkorange',
-                    'stroke-width': '1px',
-                },
+                    'stroke-width': '1px'
+                }
             },
             label_options: {
                 text: function (d, i) { return "Event " + i; },
-                alignment: 'top',
-            },
+                alignment: 'top'
+            }
         }),
         new c3.Plot.Layer.Scatter({
             name: "The Sun",
@@ -155,17 +155,17 @@ plot.render({
             x: function () { return 80; },
             r: 10,
             options: {
-                styles: { 'fill': 'gold' },
+                styles: { 'fill': 'gold' }
             },
             label_options: {
                 text: "sun",
                 styles: {
                     'fill': 'black',
-                    'font-size': 'xx-small',
-                },
-            },
+                    'font-size': 'xx-small'
+                }
+            }
         }),
-    ],
+    ]
 });
 // Now actually create the `plot_legend` and link it with the chart we just created.
 // Everything else is automatic, though we could override or extend the behaviour if we wanted to.
@@ -173,11 +173,10 @@ new c3.Legend.PlotLegend({
     anchor: $('<div></div>').appendTo($('#plot_legend_example'))[0],
     anchor_styles: {
         'display': 'inline-block',
-        'vertical-align': 'top',
+        'vertical-align': 'top'
     },
     width: '20%',
-    plot: plot,
+    plot: plot
 }).render();
 // Resize the chart to fit the window
 window.onresize = function () { plot.resize(); };
-//# sourceMappingURL=legend_example.js.map

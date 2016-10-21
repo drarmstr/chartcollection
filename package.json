@@ -26,6 +26,10 @@
     "url": "https://github.com/drarmstr/c3/issues"
   },
   "homepage": "http://drarmstr.github.io/c3/",
+  "devDependencies": {
+    "docco": "^0.7",
+    "codo": "^2.1.2"
+  },
   "dependencies": {
     "d3": "^3.5.17"
   }

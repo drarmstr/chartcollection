@@ -563,8 +563,9 @@ This could also be set to a string for a percentage, such as <code>20%</code>.</
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'us_year'</span>).addEventListener(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-    us_sankey.data = us_energy_data[+<span class="hljs-keyword">this</span>.value].nodes;
-    us_sankey.links = us_energy_data[+<span class="hljs-keyword">this</span>.value].links;
+    <span class="hljs-keyword">let</span> element = &lt;HTMLInputElement&gt;<span class="hljs-keyword">this</span>;
+    us_sankey.data = us_energy_data[+element.value].nodes;
+    us_sankey.links = us_energy_data[+element.value].links;
     us_sankey.redraw();
 });</pre></div></div>
             
@@ -582,10 +583,11 @@ This could also be set to a string for a percentage, such as <code>20%</code>.</
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'us_animate'</span>).addEventListener(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-    us_sankey.node_options.animate = <span class="hljs-keyword">this</span>.checked;
-    us_sankey.rect_options.animate = <span class="hljs-keyword">this</span>.checked;
-    us_sankey.path_options.animate = <span class="hljs-keyword">this</span>.checked;
-    us_sankey.node_label_options.animate = <span class="hljs-keyword">this</span>.checked;
+    <span class="hljs-keyword">let</span> element = &lt;HTMLInputElement&gt;<span class="hljs-keyword">this</span>;
+    us_sankey.node_options.animate = element.checked;
+    us_sankey.rect_options.animate = element.checked;
+    us_sankey.path_options.animate = element.checked;
+    us_sankey.node_label_options.animate = element.checked;
 });</pre></div></div>
             
         </li>
@@ -754,7 +756,8 @@ This could also be set to a string for a percentage, such as <code>20%</code>.</
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'us_link_path'</span>).addEventListener(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-    us_sankey.link_path = <span class="hljs-keyword">this</span>.value;
+    <span class="hljs-keyword">let</span> element = &lt;HTMLInputElement&gt;<span class="hljs-keyword">this</span>;
+    us_sankey.link_path = element.value;
     us_sankey.redraw();</pre></div></div>
             
         </li>
@@ -770,9 +773,9 @@ This could also be set to a string for a percentage, such as <code>20%</code>.</
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.value === <span class="hljs-string">'curve'</span>)
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (element.value === <span class="hljs-string">'curve'</span>)
         us_sankey.path_options.styles = { fill: <span class="hljs-string">'none'</span>, stroke: <span class="hljs-string">'blue'</span>, opacity: <span class="hljs-number">0.5</span> };
-    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.value === <span class="hljs-string">'straight'</span>)
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (element.value === <span class="hljs-string">'straight'</span>)
         us_sankey.path_options.styles = { fill: <span class="hljs-string">'green'</span>, stroke: <span class="hljs-string">'none'</span>, opacity: <span class="hljs-number">0.5</span> };
     us_sankey.restyle();
 });</pre></div></div>
@@ -824,7 +827,8 @@ This could also be set to a string for a percentage, such as <code>20%</code>.</
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'uk_align'</span>).addEventListener(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-    uk_sankey.align = <span class="hljs-keyword">this</span>.value;
+    <span class="hljs-keyword">let</span> element = &lt;HTMLInputElement&gt;<span class="hljs-keyword">this</span>;
+    uk_sankey.align = element.value;
     uk_sankey.redraw();
 });</pre></div></div>
             
@@ -994,7 +998,8 @@ This could also be set to a string for a percentage, such as <code>20%</code>.</
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'uk_link_path'</span>).addEventListener(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-    uk_sankey.link_path = <span class="hljs-keyword">this</span>.value;
+    <span class="hljs-keyword">let</span> element = &lt;HTMLInputElement&gt;<span class="hljs-keyword">this</span>;
+    uk_sankey.link_path = element.value;
     uk_sankey.redraw();</pre></div></div>
             
         </li>
@@ -1010,9 +1015,9 @@ This could also be set to a string for a percentage, such as <code>20%</code>.</
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.value === <span class="hljs-string">'curve'</span>)
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (element.value === <span class="hljs-string">'curve'</span>)
         uk_sankey.path_options.styles = { fill: <span class="hljs-string">'none'</span>, stroke: <span class="hljs-string">'blue'</span>, opacity: <span class="hljs-number">0.5</span> };
-    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.value === <span class="hljs-string">'straight'</span>)
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (element.value === <span class="hljs-string">'straight'</span>)
         uk_sankey.path_options.styles = { fill: <span class="hljs-string">'green'</span>, stroke: <span class="hljs-string">'none'</span>, opacity: <span class="hljs-number">0.5</span> };
     uk_sankey.restyle();
 });</pre></div></div>
@@ -1031,7 +1036,10 @@ This could also be set to a string for a percentage, such as <code>20%</code>.</
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'uk_backedge'</span>).addEventListener(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-    uk_sankey.links = <span class="hljs-keyword">this</span>.checked ? d3.merge([uk_energy_data.links, uk_energy_data_backedges]) : uk_energy_data.links;
+    <span class="hljs-keyword">let</span> element = &lt;HTMLInputElement&gt;<span class="hljs-keyword">this</span>;
+    uk_sankey.links = element.checked
+      ? d3.merge([uk_energy_data.links, uk_energy_data_backedges])
+      : uk_energy_data.links;
     uk_sankey.redraw();
 });</pre></div></div>
             
@@ -1049,7 +1057,8 @@ This could also be set to a string for a percentage, such as <code>20%</code>.</
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'uk_node_labels'</span>).addEventListener(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-    uk_sankey.node_label_options = <span class="hljs-keyword">this</span>.checked ? uk_node_label_options : <span class="hljs-literal">null</span>;
+    <span class="hljs-keyword">let</span> element = &lt;HTMLInputElement&gt;<span class="hljs-keyword">this</span>;
+    uk_sankey.node_label_options = element.checked ? uk_node_label_options : <span class="hljs-literal">null</span>;
     uk_sankey.redraw();
 });</pre></div></div>
             

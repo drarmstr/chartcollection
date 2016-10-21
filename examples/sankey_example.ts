@@ -131,17 +131,19 @@ window.onresize = function () {
 
 // Animate flow changes when changing to data for different years
 document.getElementById('us_year').addEventListener('change', function () {
-    us_sankey.data = us_energy_data[+this.value].nodes;
-    us_sankey.links = us_energy_data[+this.value].links;
+    let element = <HTMLInputElement>this;
+    us_sankey.data = us_energy_data[+element.value].nodes;
+    us_sankey.links = us_energy_data[+element.value].links;
     us_sankey.redraw();
 });
 
 // Enable animation
 document.getElementById('us_animate').addEventListener('change', function () {
-    us_sankey.node_options.animate = this.checked;
-    us_sankey.rect_options.animate = this.checked;
-    us_sankey.path_options.animate = this.checked;
-    us_sankey.node_label_options.animate = this.checked;
+    let element = <HTMLInputElement>this;
+    us_sankey.node_options.animate = element.checked;
+    us_sankey.rect_options.animate = element.checked;
+    us_sankey.path_options.animate = element.checked;
+    us_sankey.node_label_options.animate = element.checked;
 });
 
 // IE doesn't support `input` events
@@ -200,13 +202,14 @@ for (let radio of document.forms['us_sankey'].elements['us_node_padding_type']) 
 
 // Change between straight and curved paths for links.
 document.getElementById('us_link_path').addEventListener('change', function () {
-    us_sankey.link_path = this.value;
+    let element = <HTMLInputElement>this;
+    us_sankey.link_path = element.value;
     us_sankey.redraw();
 
     // NOTE: _curved paths should style the `stroke` while straight paths should style the `fill`._
-    if (this.value === 'curve')
+    if (element.value === 'curve')
         us_sankey.path_options.styles = { fill: 'none', stroke: 'blue', opacity: 0.5 };
-    else if (this.value === 'straight')
+    else if (element.value === 'straight')
         us_sankey.path_options.styles = { fill: 'green', stroke: 'none', opacity: 0.5 };
     us_sankey.restyle();
 });
@@ -224,7 +227,8 @@ for (let radio of document.forms['us_sankey'].elements['us_node_label_orientatio
 
 // Set node alignment justification
 document.getElementById('uk_align').addEventListener('change', function () {
-    uk_sankey.align = this.value;
+    let element = <HTMLInputElement>this;
+    uk_sankey.align = element.value;
     uk_sankey.redraw();
 });
 
@@ -284,26 +288,31 @@ for (let radio of document.forms['uk_sankey'].elements['uk_node_padding_type']) 
 
 // Change between straight and curved paths for links.
 document.getElementById('uk_link_path').addEventListener('change', function () {
-    uk_sankey.link_path = this.value;
+    let element = <HTMLInputElement>this;
+    uk_sankey.link_path = element.value;
     uk_sankey.redraw();
 
     // NOTE: _curved paths should style the `stroke` while straight paths should style the `fill`._
-    if (this.value === 'curve')
+    if (element.value === 'curve')
         uk_sankey.path_options.styles = { fill: 'none', stroke: 'blue', opacity: 0.5 };
-    else if (this.value === 'straight')
+    else if (element.value === 'straight')
         uk_sankey.path_options.styles = { fill: 'green', stroke: 'none', opacity: 0.5 };
     uk_sankey.restyle();
 });
 
 // Enable extra data with backedges to demonstrate support for graphs with backedges / cycles
 document.getElementById('uk_backedge').addEventListener('change', function () {
-    uk_sankey.links = this.checked ? d3.merge([uk_energy_data.links, uk_energy_data_backedges]) : uk_energy_data.links;
+    let element = <HTMLInputElement>this;
+    uk_sankey.links = element.checked
+      ? d3.merge([uk_energy_data.links, uk_energy_data_backedges])
+      : uk_energy_data.links;
     uk_sankey.redraw();
 });
 
 // Enable/disable node labels
 document.getElementById('uk_node_labels').addEventListener('change', function () {
-    uk_sankey.node_label_options = this.checked ? uk_node_label_options : null;
+    let element = <HTMLInputElement>this;
+    uk_sankey.node_label_options = element.checked ? uk_node_label_options : null;
     uk_sankey.redraw();
 });
 

@@ -1,0 +1,7 @@
+{
+    "include": [
+        "c3.d.ts",
+        "examples/*.ts",
+        "examples/typings/**/*.ts"
+    ]
+}

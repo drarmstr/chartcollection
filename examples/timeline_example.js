@@ -10,7 +10,7 @@ var timeline_data = [];
 for (var day = 1; day <= 30; day++)
     timeline_data.push({
         date: new Date(2014, 6, day, Math.random() * 24),
-        num: Math.round(Math.random() * 10),
+        num: Math.round(Math.random() * 10)
     });
 // ## Create c3 timeline charts
 // Append two example rows in the table and attach a new `c3.Plot.horiz_zoom` to each one.
@@ -43,15 +43,15 @@ for (var _i = 0, _a = ['darkred', 'darkblue']; _i < _a.length; _i++) {
             new c3.Axis.X({
                 grid: true,
                 ticks: false,
-                axis_size: 0,
+                axis_size: 0
             }),
         ],
         // **Color ** this chart based on the example color for this row
         content_options: {
             styles: {
                 'stroke': row_color,
-                'fill': row_color,
-            },
+                'fill': row_color
+            }
         },
         // Add `line` **layer**.
         // The `r` option will create a circle at each data point.
@@ -65,11 +65,11 @@ for (var _i = 0, _a = ['darkred', 'darkblue']; _i < _a.length; _i++) {
                     styles: {
                         'fill': 'white',
                         'stroke': 'none',
-                        'font-weight': 'bold',
-                    },
-                },
+                        'font-weight': 'bold'
+                    }
+                }
             }),
-        ],
+        ]
     }));
 }
 // ## Create c3 Axis
@@ -85,7 +85,7 @@ var timeline_axis_example = new c3.Axis.X({
     anchor: row.append('td').node(),
     scale: time_scale,
     height: 30,
-    tick_count: 4,
+    tick_count: 4
 });
 // ## Synchronize Zooming
 // Setup event handlers so zooming in one of the timeline charts will zoom the other timeline charts.
@@ -101,17 +101,16 @@ timelines.forEach(function (timeline) {
 // ## Resize the timelines
 // Resize the timelines to fit the window
 window.onresize = function () {
-    for (var _i = 0; _i < timelines.length; _i++) {
-        var timeline = timelines[_i];
+    for (var _i = 0, timelines_1 = timelines; _i < timelines_1.length; _i++) {
+        var timeline = timelines_1[_i];
         timeline.resize();
     }
     timeline_axis_example.resize();
 };
 // ## Render the timelines!
 // Perform the initial rendering of the charts and add them to the global examples array.
-for (var _b = 0; _b < timelines.length; _b++) {
-    var timeline = timelines[_b];
+for (var _b = 0, timelines_2 = timelines; _b < timelines_2.length; _b++) {
+    var timeline = timelines_2[_b];
     timeline.render();
 }
 timeline_axis_example.render();
-//# sourceMappingURL=timeline_example.js.map

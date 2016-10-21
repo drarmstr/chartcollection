@@ -26,15 +26,19 @@ task 'build', "Build C4", ->
 task 'watch', "Watch for changes", ->
 	call 'coffee -w -c -m -o js js'
 
+task 'examples', "Build Exampels", ->
+	call 'tsc'
+
 task 'doc', "Build Example Documentation", ->
 	# Generate C4 API documentation into the doc folder
-	call 'codo -t "C3 Documentation" -o doc js'
+	call 'node_modules/codo/bin/codo -t "C3 Documentation" -o doc js'
 
 	# Generate annotated source documentation for the examples
 	examples = fs.readdirSync 'examples'
 	examples = ("examples/"+filename for filename in examples when filename[-3..] is '.ts')
-	call 'docco -l parallel -o examples/doc', examples...
+	call 'node_modules/docco/bin/docco -l parallel -o examples/doc', examples...
 
 task 'all', "Build All", ->
-    invoke 'build'
+	invoke 'build'
+	invoke 'examples'
 	invoke 'doc'

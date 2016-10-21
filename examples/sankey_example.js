@@ -17,37 +17,37 @@ var us_sankey = new c3.Sankey({
     // Create **tooltips** for the energy name.
     node_options: {
         title: function (d) { return d.name + '\n' + d.btu; },
-        animate: true,
+        animate: true
     },
     // **Style** and **animate** the nodes based on name.
     rect_options: {
         styles: {
             fill: function (d) { return source_color(d.name); },
-            stroke: 'black',
+            stroke: 'black'
         },
-        animate: true,
+        animate: true
     },
     // Create **tooltips** for the links between nodes
     link_options: {
-        title: function (l) { return l.source + " → " + l.target + ": " + l.btu; },
+        title: function (l) { return l.source + " → " + l.target + ": " + l.btu; }
     },
     // **Style** and **animate** the links between nodes.
     path_options: {
         styles: {
             stroke: 'blue',
-            opacity: 0.5,
+            opacity: 0.5
         },
-        animate: true,
+        animate: true
     },
     // Add text **labels** for each node
     node_label_options: {
         text: function (d) { return d.name; },
         styles: {
             'font-weight': 'bold',
-            'text-shadow': '1px 1px 3px whitesmoke',
+            'text-shadow': '1px 1px 3px whitesmoke'
         },
-        animate: true,
-    },
+        animate: true
+    }
 });
 // # Creat Sankey visualization for the UK
 var uk_node_label_options;
@@ -72,34 +72,34 @@ var uk_sankey = new c3.Sankey({
     node_padding: 15,
     // Create **tooltips** for the energy name.
     node_options: {
-        title: function (d) { return d.name; },
+        title: function (d) { return d.name; }
     },
     // **Style** the nodes based on name.
     rect_options: {
         styles: {
             fill: function (d) { return source_color(d.name.split(' ')[0]); },
-            stroke: 'black',
-        },
+            stroke: 'black'
+        }
     },
     // Create **tooltips** for the links between nodes
     link_options: {
-        title: function (l) { return uk_energy_data.nodes[l.source].name + " → " + uk_energy_data.nodes[l.target].name + ": " + l.value; },
+        title: function (l) { return uk_energy_data.nodes[l.source].name + " → " + uk_energy_data.nodes[l.target].name + ": " + l.value; }
     },
     // **Style** the links between nodes.
     path_options: {
         styles: {
             stroke: 'blue',
-            opacity: 0.5,
-        },
+            opacity: 0.5
+        }
     },
     // Add text **labels** for each node
     node_label_options: uk_node_label_options = {
         text: function (d) { return d.name; },
         styles: {
             'font-weight': 'bold',
-            'text-shadow': '1px 1px 3px whitesmoke',
-        },
-    },
+            'text-shadow': '1px 1px 3px whitesmoke'
+        }
+    }
 });
 // ## Configure charts based on user behavior
 // Resize the charts if the window is resized
@@ -110,16 +110,18 @@ window.onresize = function () {
 // ### Adjust US flow graph from interactive form
 // Animate flow changes when changing to data for different years
 document.getElementById('us_year').addEventListener('change', function () {
-    us_sankey.data = us_energy_data[+this.value].nodes;
-    us_sankey.links = us_energy_data[+this.value].links;
+    var element = this;
+    us_sankey.data = us_energy_data[+element.value].nodes;
+    us_sankey.links = us_energy_data[+element.value].links;
     us_sankey.redraw();
 });
 // Enable animation
 document.getElementById('us_animate').addEventListener('change', function () {
-    us_sankey.node_options.animate = this.checked;
-    us_sankey.rect_options.animate = this.checked;
-    us_sankey.path_options.animate = this.checked;
-    us_sankey.node_label_options.animate = this.checked;
+    var element = this;
+    us_sankey.node_options.animate = element.checked;
+    us_sankey.rect_options.animate = element.checked;
+    us_sankey.path_options.animate = element.checked;
+    us_sankey.node_label_options.animate = element.checked;
 });
 // IE doesn't support `input` events
 for (var _i = 0, _a = ['input', 'change']; _i < _a.length; _i++) {
@@ -174,12 +176,13 @@ for (var _d = 0, _e = document.forms['us_sankey'].elements['us_node_padding_type
 }
 // Change between straight and curved paths for links.
 document.getElementById('us_link_path').addEventListener('change', function () {
-    us_sankey.link_path = this.value;
+    var element = this;
+    us_sankey.link_path = element.value;
     us_sankey.redraw();
     // NOTE: _curved paths should style the `stroke` while straight paths should style the `fill`._
-    if (this.value === 'curve')
+    if (element.value === 'curve')
         us_sankey.path_options.styles = { fill: 'none', stroke: 'blue', opacity: 0.5 };
-    else if (this.value === 'straight')
+    else if (element.value === 'straight')
         us_sankey.path_options.styles = { fill: 'green', stroke: 'none', opacity: 0.5 };
     us_sankey.restyle();
 });
@@ -194,7 +197,8 @@ for (var _f = 0, _g = document.forms['us_sankey'].elements['us_node_label_orient
 // ### Adjust UK flow graph from interactive form
 // Set node alignment justification
 document.getElementById('uk_align').addEventListener('change', function () {
-    uk_sankey.align = this.value;
+    var element = this;
+    uk_sankey.align = element.value;
     uk_sankey.redraw();
 });
 // IE doesn't support `input` events
@@ -250,23 +254,28 @@ for (var _m = 0, _o = document.forms['uk_sankey'].elements['uk_node_padding_type
 }
 // Change between straight and curved paths for links.
 document.getElementById('uk_link_path').addEventListener('change', function () {
-    uk_sankey.link_path = this.value;
+    var element = this;
+    uk_sankey.link_path = element.value;
     uk_sankey.redraw();
     // NOTE: _curved paths should style the `stroke` while straight paths should style the `fill`._
-    if (this.value === 'curve')
+    if (element.value === 'curve')
         uk_sankey.path_options.styles = { fill: 'none', stroke: 'blue', opacity: 0.5 };
-    else if (this.value === 'straight')
+    else if (element.value === 'straight')
         uk_sankey.path_options.styles = { fill: 'green', stroke: 'none', opacity: 0.5 };
     uk_sankey.restyle();
 });
 // Enable extra data with backedges to demonstrate support for graphs with backedges / cycles
 document.getElementById('uk_backedge').addEventListener('change', function () {
-    uk_sankey.links = this.checked ? d3.merge([uk_energy_data.links, uk_energy_data_backedges]) : uk_energy_data.links;
+    var element = this;
+    uk_sankey.links = element.checked
+        ? d3.merge([uk_energy_data.links, uk_energy_data_backedges])
+        : uk_energy_data.links;
     uk_sankey.redraw();
 });
 // Enable/disable node labels
 document.getElementById('uk_node_labels').addEventListener('change', function () {
-    uk_sankey.node_label_options = this.checked ? uk_node_label_options : null;
+    var element = this;
+    uk_sankey.node_label_options = element.checked ? uk_node_label_options : null;
     uk_sankey.redraw();
 });
 // ### US Energy Data from Lawrence Livermore National Laboratory
@@ -720,7 +729,7 @@ var us_energy_data = {
             { source: "Industrial", target: "Useful", btu: 19.15 },
             { source: "Transportation", target: "Useful", btu: 6.96 },
         ]
-    },
+    }
 };
 // Render the Sankey Flow Graph with US energy data
 us_sankey.render({ data: us_energy_data[2014].nodes, links: us_energy_data[2014].links });
@@ -854,6 +863,5 @@ var uk_energy_data_backedges = [
 // Render the Sankey Flow Graph with UK energy data
 uk_sankey.render({
     data: uk_energy_data.nodes,
-    links: d3.merge([uk_energy_data.links, uk_energy_data_backedges]),
+    links: d3.merge([uk_energy_data.links, uk_energy_data_backedges])
 });
-//# sourceMappingURL=sankey_example.js.map

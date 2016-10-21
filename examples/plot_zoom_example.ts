@@ -6,7 +6,7 @@ var zoom_example_data = []
 for (let x = -10; x <= 10; x++) zoom_example_data.push(x);
 
 // ## Create the C3 chart
-// Create a `c3.Plot.horiz_zoom` to enable horizontal zooming and attach it to 
+// Create a `c3.Plot.horiz_zoom` to enable horizontal zooming and attach it to
 // the `#zoom_example_plot` DOM element.
 var zoom_line_layer: c3.Plot.Layer.Line<number>;
 var zoom_example = new c3.Plot.Zoomable<number>({
@@ -20,7 +20,7 @@ var zoom_example = new c3.Plot.Zoomable<number>({
     // Setup the user **scales** for the plot.  The scale domains represent user units.  This chart
     // will have x values go from -10 to 10 and y values go from -50 to 80.  C3 will take care of the range.
     h: d3.scale.linear().domain([-10, 10]), // horizontal scale
-    v: d3.scale.linear().domain([-50, 80]), // veritcal scale
+    v: d3.scale.linear().domain([-50, 80]), // vertical scale
 
     // An **accessor function** to get the x value of the data points based on the data element.
     x: (d) => d,
@@ -37,7 +37,7 @@ var zoom_example = new c3.Plot.Zoomable<number>({
 
     // Setup `c3.Axis` objects.  C3 plots may have up to 4 **axes** attached for the top, bottom,
     // left, and right of plots.  Axes may also be created independent of plots for layout flexibility
-    // which is covered in another example.  These axes also enable grid lines in the plot.  They are 
+    // which is covered in another example.  These axes also enable grid lines in the plot.  They are
     // dotted lines because of styles setup in the `examples.less` stylesheet.
     axes: [
         new c3.Axis.X({
@@ -66,7 +66,7 @@ var zoom_example = new c3.Plot.Zoomable<number>({
                 },
             },
         }),
-        
+
         // Draw a vertical line at x=0.
         new c3.Plot.Layer.Line.Vertical({
             data: [0],
@@ -77,14 +77,14 @@ var zoom_example = new c3.Plot.Zoomable<number>({
                 },
             },
         }),
-        
+
         // Add another layer for drawing a **line graph**.  This layer defines its own **y** function
         // to be a _sine wave_ and to use `basis` interpolation to form a smooth curve.
         // This layer also introduces a new way to style the layer in addition to CSS stylesheets.
         // The object passed in to `paths.styles` has a set of key/value pairs.  The keys represent
         // the style names to configure while the values determine how to set those styles.  This
         // example just uses a constant value for the color.  In later examples you'll see how this
-        // can also be a function to style based on the data.  Assign this layer to a variable 
+        // can also be a function to style based on the data.  Assign this layer to a variable
         // `zoom_line_layer` for later manipulation.
         zoom_line_layer = new c3.Plot.Layer.Line<number>({ // Add a line-graph layer to this plot
             y: (d) => 40 * Math.sin(d),
@@ -107,7 +107,7 @@ zoom_example.render();
 // rendering or styles.
 
 // When the function selection buttons are clicked, change the function used to determine the
-// **y value** or line interpolation for the `zoom_line_layer`.  After the change is made 
+// **y value** or line interpolation for the `zoom_line_layer`.  After the change is made
 // `redraw()` needs to be called to update the chart based on the new data or accessor function.
 $('#zoom_sin_button').click(function () {
     zoom_line_layer.y = (d) => 40 * Math.sin(d);
@@ -125,7 +125,7 @@ $('#zoom_parabolic_button').click(function () {
     zoom_example.redraw();
 });
 
-// When the color selection buttons are clicked change the path style.  The `restyle()` API 
+// When the color selection buttons are clicked change the path style.  The `restyle()` API
 // should be used here to update the styles used in the chart.  This will avoid the cost of
 // updating all of the data and rendering and only update classes and styles.
 $('#zoom_red_button').click(function () {

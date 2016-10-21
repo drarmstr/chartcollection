@@ -196,18 +196,18 @@ It’s an array of records where each record has the following fields:</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>interface CDCDeathData {
-    age_group: string
-    cause: string
-    deaths: number
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">interface</span> CDCDeathData {
+    age_group: <span class="hljs-built_in">string</span>
+    cause: <span class="hljs-built_in">string</span>
+    deaths: <span class="hljs-built_in">number</span>
 }
 
-div_selection.append('p').text("\
+div_selection.append(<span class="hljs-string">'p'</span>).text(<span class="hljs-string">"\
     These stacked area charts use a single normalized data array.\
     Each element in the array is a data point for a particular age and stack.\
-    There is a key function to determine which stack each data item belongs to.");
-div_selection.append('p').text("\
-    These examples also demonstrate loading chart data dynamically via AJAX.");</pre></div></div>
+    There is a key function to determine which stack each data item belongs to."</span>);
+div_selection.append(<span class="hljs-string">'p'</span>).text(<span class="hljs-string">"\
+    These examples also demonstrate loading chart data dynamically via AJAX."</span>);</pre></div></div>
             
         </li>
         
@@ -460,10 +460,10 @@ from each stack.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>div_selection.append('hr')
-div_selection.append('p').text("\
+            <div class="content"><div class='highlight'><pre>div_selection.append(<span class="hljs-string">'hr'</span>)
+div_selection.append(<span class="hljs-string">'p'</span>).text(<span class="hljs-string">"\
     This stacked bar chart has a single data array where each data item contains data for all stacks.\
-    Each stack is defined with a custom accessor to obtain its value from the data array.");</pre></div></div>
+    Each stack is defined with a custom accessor to obtain its value from the data array."</span>);</pre></div></div>
             
         </li>
         
@@ -661,9 +661,9 @@ we could have just used this single <strong>y accessor</strong> for the layer:</
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>div_selection.append('hr')
-div_selection.append('p').text("\
-    This stacked bar chart contains seperate data arrays for each stack.");</pre></div></div>
+            <div class="content"><div class='highlight'><pre>div_selection.append(<span class="hljs-string">'hr'</span>)
+div_selection.append(<span class="hljs-string">'p'</span>).text(<span class="hljs-string">"\
+    This stacked bar chart contains seperate data arrays for each stack."</span>);</pre></div></div>
             
         </li>
         

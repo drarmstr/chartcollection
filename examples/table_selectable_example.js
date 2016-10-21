@@ -24,19 +24,19 @@ var table = new c3.Table({
             },
             value: function (d) { return d; },
             vis: 'bar',
-            total_value: 5,
+            total_value: 5
         },
         // Create a second column that displays the data value squared for each row.
         {
             header: { html: "x<sup>2</sup>" },
             cells: { text: function (d) { return d * d; } },
-            value: function (d) { return d * d; },
+            value: function (d) { return d * d; }
         },
         // Create a third column that displays the negative data value for each row.
         {
             header: { text: "-x" },
             cells: { text: function (d) { return -d; } },
-            value: function (d) { return -d; },
+            value: function (d) { return -d; }
         },
     ],
     // Setup **event handler** to do something with the selection.
@@ -45,7 +45,7 @@ var table = new c3.Table({
         'select': function (selections) {
             document.querySelector('#current_selection').innerText = selections;
         }
-    },
+    }
 });
 // Render the table!
 table.render();
@@ -64,4 +64,3 @@ $('input[name=selectable]').on('change', function () {
     }
     table.render();
 });
-//# sourceMappingURL=table_selectable_example.js.map

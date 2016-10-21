@@ -1617,20 +1617,20 @@ div in the right column to display information about this particular country.</p
             </div>
             
             <div class="content"><div class='highlight'><pre>                    events: {
-                        mouseenter: function(d) {
-                            d3.select(this).style('stroke-width', 5);
-                            d3.select('#hover_country_info').html("\
-                                &lt;b&gt;Country:&lt;/b&gt; "+ countries[d.key].name + "&lt;br/&gt;\
-                               &lt;b&gt;Population:&lt;/b&gt; "+ d.value.population + "&lt;br/&gt;\
-                               &lt;b&gt;GDP:&lt;/b&gt; $"+ Math.floor(Math.abs(d.value.gdp)) + " billion&lt;br/&gt;\
-                               &lt;b&gt;GDP per capita:&lt;/b&gt; $"+ Math.floor(Math.abs(d.value.gdp_per_capita)));
+                        mouseenter: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">d</span>) </span>{
+                            d3.select(<span class="hljs-keyword">this</span>).style(<span class="hljs-string">'stroke-width'</span>, <span class="hljs-number">5</span>);
+                            d3.select(<span class="hljs-string">'#hover_country_info'</span>).html(<span class="hljs-string">"\
+                                &lt;b&gt;Country:&lt;/b&gt; "</span>+ countries[d.key].name + <span class="hljs-string">"&lt;br/&gt;\
+                               &lt;b&gt;Population:&lt;/b&gt; "</span>+ d.value.population + <span class="hljs-string">"&lt;br/&gt;\
+                               &lt;b&gt;GDP:&lt;/b&gt; $"</span>+ <span class="hljs-built_in">Math</span>.floor(<span class="hljs-built_in">Math</span>.abs(d.value.gdp)) + <span class="hljs-string">" billion&lt;br/&gt;\
+                               &lt;b&gt;GDP per capita:&lt;/b&gt; $"</span>+ <span class="hljs-built_in">Math</span>.floor(<span class="hljs-built_in">Math</span>.abs(d.value.gdp_per_capita)));
                             hover_country = countries[d.key];
                             restyle();
                         },
-                        mouseleave: function() {
-                            d3.select(this).style('stroke-width', 1);
-                            d3.select('#hover_country_info').html("&lt;i&gt;Hover over dot to view country info.&lt;/i&gt;");
-                            hover_country = null;
+                        mouseleave: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+                            d3.select(<span class="hljs-keyword">this</span>).style(<span class="hljs-string">'stroke-width'</span>, <span class="hljs-number">1</span>);
+                            d3.select(<span class="hljs-string">'#hover_country_info'</span>).html(<span class="hljs-string">"&lt;i&gt;Hover over dot to view country info.&lt;/i&gt;"</span>);
+                            hover_country = <span class="hljs-literal">null</span>;
                             restyle();
                         },
                     },

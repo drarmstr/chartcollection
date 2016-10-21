@@ -11,8 +11,8 @@
     <div id='base' data-path='../../'></div>
 <div id='header'>
   <div id='menu'>
-    <a href='../../extra/README.md.html' title='C3'>
-      C3
+    <a href='../../extra/README.md.html' title='Q3'>
+      Q3
     </a>
     &raquo;
     <a href='../../alphabetical_index.html' title='Index'>
@@ -33,7 +33,7 @@
       <table class='box'>
         <tr>
           <td>Defined in:</td>
-          <td>js\c3.coffee</td>
+          <td>js&#47;c3.coffee</td>
         </tr>
       </table>
       <h2>Overview</h2>
@@ -72,14 +72,14 @@ only with a preceding underscore such as <code>_init()</code>, <code>_size()</co
 </ul>
 <h1 id="extensibility-and-events">Extensibility and Events</h1><p>To support extensibility and user customization of visualizations, all c3 visualizations will fire events
 to reflect the external API.  Clients may attach handlers to these events to perform additional actions,
-further modify the DOM, attach more handlers to DOM elements, freely leverage D3, etc.  These events are named 
+further modify the DOM, attach more handlers to DOM elements, freely leverage D3, etc.  These events are named
 to match the cooresponding external API.  Events named with an &quot;_start&quot; appended will also be fired before the
 coorespdoning external API action is taken to allow customizations to perform actions either before or
 after the default built-in behaviour.</p><h1 id="styling">Styling</h1><p>Visualizations generally have several approaches to determine the styles of various DOM elements
 with different performance and flexitility tradeoffs.</p><ul>
 <li>First, the c3 library itself sets various default styles for certain items.  These generally are
 about functionality and it tries not to specify a default look.</li>
-<li>The client may set up CSS stylesheet rules to determine how various DOM elements look.  For example, the 
+<li>The client may set up CSS stylesheet rules to determine how various DOM elements look.  For example, the
 fill color for all area graphs may be set with &quot;<em>.c3.plot layer.area path { fill: red; }</em>&quot;</li>
 <li>A CSS class can be assigned to a specific instance for per-chart styles.
 The <a href='../../class/c3/Selection.Options.html#class-variable'><code>class</code></a> and <a href='../../class/c3/Selection.Options.html#classes-variable'><code>classes</code></a> properties in
@@ -381,18 +381,6 @@ visualization object.</p>
     <span class='desc'>
     </span>
   </li>
-  <li>
-    <span class='signature'>
-      <a href='#on-dynamic'>
-        #
-(void)
-<b>on</b><span>(event, handler)</span>
-      </a>
-    </span>
-    <span class='desc'>
-      Register an event handler to catch events fired by the visualization. 
-    </span>
-  </li>
 </ul>
       <h2>Constructor Details</h2>
       <div class='methods'>
@@ -673,50 +661,14 @@ instead of all of them, as a performance optimization.  This is only a hint and 
     </p>
     
   </div>
-  <div class='method_details'>
-    <p class='signature' id='on-dynamic'>
-      #
-(void)
-<b>on</b><span>(event, handler)</span>
-      <br>
-    </p>
-    <div class='docstring'>
-  <p>Register an event handler to catch events fired by the visualization.</p>
-</div>
-<div class='tags'>
-  <h3>Parameters:</h3>
-  <ul class='param'>
-    <li>
-      <span class='name'>event</span>
-      <span class='type'>
-        (
-          <tt>String</tt>
-        )
-      </span>
-      &mdash;
-      <span class='desc'>The name of the event to handle.  <em>See the Exetensibility and Events section for <a href='../../class/c3/Base.html'>c3.Base</a>.</em> </span>
-    </li>
-    <li>
-      <span class='name'>handler</span>
-      <span class='type'>
-        (
-          <tt>Function</tt>
-        )
-      </span>
-      &mdash;
-      <span class='desc'>Callback function called with the event.  The arguments passed to the function are event-specific. </span>
-    </li>
-  </ul>
-</div>
-  </div>
 </div>
     </div>
     <div id='footer'>
-  June 21, 16 17:38:22 by
+  By
   <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
     Codo
   </a>
-  2.0.11
+  2.1.2
   &#10034;
   Press H to see the keyboard shortcuts
   &#10034;

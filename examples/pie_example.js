@@ -11,7 +11,7 @@ function generate_polar_data() {
             value: 10 * Math.random(),
             radius: 7 * Math.random(),
             height: 3 * Math.random(),
-            color: polar_data_color(i.toString()).toString(),
+            color: polar_data_color(i.toString()).toString()
         });
     }
 }
@@ -41,7 +41,7 @@ var pie_chart = new c3.Polar({
                 // Tooltip with just the value, and color based on the data
                 title: function (d) { return d.value; },
                 styles: {
-                    'fill': function (d) { return d.color; },
+                    'fill': function (d) { return d.color; }
                 },
                 // Enable the segments to **animate** when data is changed with a redraw
                 animate: true,
@@ -53,8 +53,8 @@ var pie_chart = new c3.Polar({
                     },
                     'mouseleave': function () {
                         d3.select(this).transition('grow').attr('transform', 'scale(1)');
-                    },
-                },
+                    }
+                }
             },
             // If the data is sorted _and_ the elements are limited, then this creates
             // an arc segment for the range of the _other_ values of the ellided data.
@@ -65,12 +65,12 @@ var pie_chart = new c3.Polar({
                     'opacity': 0.5,
                     'stroke': 'black',
                     'stroke-width': 2,
-                    'stroke-dasharray': '5,5',
+                    'stroke-dasharray': '5,5'
                 },
-                animate: true,
-            },
+                animate: true
+            }
         }),
-    ],
+    ]
 }).render();
 // ## Create a Polar Segment Chart
 var polar_segment_chart = new c3.Polar({
@@ -97,13 +97,13 @@ var polar_segment_chart = new c3.Polar({
             arc_options: {
                 title: function (d) { return d.value; },
                 styles: {
-                    'fill': function (d) { return d.color; },
+                    'fill': function (d) { return d.color; }
                 },
                 animate: true,
-                duration: 4000,
-            },
+                duration: 4000
+            }
         }),
-    ],
+    ]
 }).render();
 // ## Create a Half-moon Pie Chart
 var half_moon_chart = new c3.Polar({
@@ -127,7 +127,7 @@ var half_moon_chart = new c3.Polar({
                 // Style the arc segments
                 title: function (d) { return d.value; },
                 styles: {
-                    'fill': function (d) { return d.color; },
+                    'fill': function (d) { return d.color; }
                 },
                 // Animate arc segments when they move due to `redraw()`
                 animate: true,
@@ -139,8 +139,8 @@ var half_moon_chart = new c3.Polar({
                     },
                     'mouseleave': function () {
                         d3.select(this).transition().attr('transform', 'scale(1)');
-                    },
-                },
+                    }
+                }
             },
             // Create an arch segment for "other" data that was decimated due to sorting and limiting the 
             // segment count with `limit_elements` and `sort`.
@@ -151,10 +151,10 @@ var half_moon_chart = new c3.Polar({
                     'opacity': 0.5,
                     'stroke': 'black',
                     'stroke-width': 2,
-                    'stroke-dasharray': '5,5',
+                    'stroke-dasharray': '5,5'
                 },
-                animate: true,
-            },
+                animate: true
+            }
         }),
         // Create a second layer to demonstrate composability.
         // This layer is just a thin band of three segments
@@ -169,9 +169,9 @@ var half_moon_chart = new c3.Polar({
             arc_options: {
                 title: "Example extra data layer",
                 styles: {
-                    'fill': function (d, i) { return ['red', 'green', 'blue'][i]; },
-                },
-            },
+                    'fill': function (d, i) { return ['red', 'green', 'blue'][i]; }
+                }
+            }
         }),
         // Create a third layer of **radial** line vectors.
         new c3.Polar.Layer.Radial({
@@ -187,8 +187,8 @@ var half_moon_chart = new c3.Polar({
                 styles: {
                     'stroke': function (d, i) { return ['red', 'green'][i]; },
                     'stroke-dasharray': '10,5',
-                    'stroke-width': 3,
-                },
+                    'stroke-width': 3
+                }
             },
             handlers: {
                 // When the lines are dragged, update the original data array and sync with the
@@ -199,10 +199,10 @@ var half_moon_chart = new c3.Polar({
                 },
                 // Redraw layer so it binds the updated values.
                 // This wouldn't be necessary if we were just modifying an Object in-place in the data array.
-                dragend: function (value, d, i) { this.redraw(); },
-            },
+                dragend: function (value, d, i) { this.redraw(); }
+            }
         }),
-    ],
+    ]
 }).render();
 // ## Legend for radial vectors
 // Create a **legend** for the current values of the radial lines
@@ -211,7 +211,7 @@ var radial_line_values_legend = new c3.Legend({
     data: radial_line_values,
     // Display the value as a truncated integer percentage 
     item_options: {
-        text: function (d) { return ((d * 100) | 0) + '%'; },
+        text: function (d) { return ((d * 100) | 0) + '%'; }
     },
     // Use a matching colored swatch for the legend bullets
     bullet_options: {
@@ -220,9 +220,9 @@ var radial_line_values_legend = new c3.Legend({
             'background': function (d, i) { return ['red', 'green'][i]; },
             'height': '1em',
             'width': '1em',
-            'border-radius': '0.25em',
-        },
-    },
+            'border-radius': '0.25em'
+        }
+    }
 }).render();
 // ## Forms to modify chart options
 // Allow the user generate new data by clicking on a button.  We need to `redraw()` the charts
@@ -261,4 +261,3 @@ for (var _i = 0, _a = ['input', 'change']; _i < _a.length; _i++) {
         polar_segment_chart.redraw();
     });
 }
-//# sourceMappingURL=pie_example.js.map

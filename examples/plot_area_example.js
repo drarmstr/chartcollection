@@ -32,7 +32,7 @@ var area_example = new c3.Plot({
     // for _svg_ elements.
     margins: {
         top: 10,
-        right: 20,
+        right: 20
     },
     // Setup `c3.Axis` objects.  C3 plots may have up to 4 **axes ** attached for the top, bottom,
     // left, and right of plots.  Axes may also be created independent of plots for layout flexibility
@@ -41,10 +41,10 @@ var area_example = new c3.Plot({
     axes: [
         new c3.Axis.X({
             tick_size: 10,
-            grid: true,
+            grid: true
         }),
         new c3.Axis.Y({
-            grid: true,
+            grid: true
         }),
     ],
     // Plots do not render any data by themselves.  Instead, they host a set of **layers ** which are
@@ -54,9 +54,9 @@ var area_example = new c3.Plot({
     // a smooth curve based on the data points instead of straight linear sections.
     layers: [
         new c3.Plot.Layer.Area({
-            interpolate: 'basis',
+            interpolate: 'basis'
         }),
-    ],
+    ]
 });
 // Resize the chart to fit the window
 window.onresize = function () {
@@ -64,4 +64,3 @@ window.onresize = function () {
 };
 // Render the chart!
 area_example.render();
-//# sourceMappingURL=plot_area_example.js.map

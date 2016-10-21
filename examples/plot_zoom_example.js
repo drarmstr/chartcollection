@@ -5,7 +5,7 @@ var zoom_example_data = [];
 for (var x = -10; x <= 10; x++)
     zoom_example_data.push(x);
 // ## Create the C3 chart
-// Create a `c3.Plot.horiz_zoom` to enable horizontal zooming and attach it to 
+// Create a `c3.Plot.horiz_zoom` to enable horizontal zooming and attach it to
 // the `#zoom_example_plot` DOM element.
 var zoom_line_layer;
 var zoom_example = new c3.Plot.Zoomable({
@@ -26,21 +26,21 @@ var zoom_example = new c3.Plot.Zoomable({
     // Define **margins** for the chart to allow extra room for the labels on the edges to fit.
     margins: {
         top: 10,
-        right: 20,
+        right: 20
     },
     // Setup `c3.Axis` objects.  C3 plots may have up to 4 **axes** attached for the top, bottom,
     // left, and right of plots.  Axes may also be created independent of plots for layout flexibility
-    // which is covered in another example.  These axes also enable grid lines in the plot.  They are 
+    // which is covered in another example.  These axes also enable grid lines in the plot.  They are
     // dotted lines because of styles setup in the `examples.less` stylesheet.
     axes: [
         new c3.Axis.X({
             grid: true,
             tick_size: 10,
-            path_size: 3,
+            path_size: 3
         }),
         new c3.Axis.Y({
             grid: true,
-            path_size: 3,
+            path_size: 3
         }),
     ],
     // Plots do not render any data by themselves.  Instead, they host a set of **layers** which are
@@ -54,9 +54,9 @@ var zoom_example = new c3.Plot.Zoomable({
             options: {
                 styles: {
                     'stroke': 'black',
-                    'stroke-width': '3px',
-                },
-            },
+                    'stroke-width': '3px'
+                }
+            }
         }),
         // Draw a vertical line at x=0.
         new c3.Plot.Layer.Line.Vertical({
@@ -64,9 +64,9 @@ var zoom_example = new c3.Plot.Zoomable({
             options: {
                 styles: {
                     'stroke': 'black',
-                    'stroke-width': '3px',
-                },
-            },
+                    'stroke-width': '3px'
+                }
+            }
         }),
         // Add another layer for drawing a **line graph**.  This layer defines its own **y** function
         // to be a _sine wave_ and to use `basis` interpolation to form a smooth curve.
@@ -74,18 +74,18 @@ var zoom_example = new c3.Plot.Zoomable({
         // The object passed in to `paths.styles` has a set of key/value pairs.  The keys represent
         // the style names to configure while the values determine how to set those styles.  This
         // example just uses a constant value for the color.  In later examples you'll see how this
-        // can also be a function to style based on the data.  Assign this layer to a variable 
+        // can also be a function to style based on the data.  Assign this layer to a variable
         // `zoom_line_layer` for later manipulation.
         zoom_line_layer = new c3.Plot.Layer.Line({
             y: function (d) { return 40 * Math.sin(d); },
             interpolate: 'basis',
             options: {
                 styles: {
-                    'stroke': 'red',
-                },
-            },
+                    'stroke': 'red'
+                }
+            }
         }),
-    ],
+    ]
 });
 // ## Render the plot!
 // Perform the initial rendering of the chart.
@@ -94,7 +94,7 @@ zoom_example.render();
 // Use JQuery to assign handlers to buttons in the example html that will modify the chart
 // rendering or styles.
 // When the function selection buttons are clicked, change the function used to determine the
-// **y value** or line interpolation for the `zoom_line_layer`.  After the change is made 
+// **y value** or line interpolation for the `zoom_line_layer`.  After the change is made
 // `redraw()` needs to be called to update the chart based on the new data or accessor function.
 $('#zoom_sin_button').click(function () {
     zoom_line_layer.y = function (d) { return 40 * Math.sin(d); };
@@ -111,7 +111,7 @@ $('#zoom_parabolic_button').click(function () {
     zoom_line_layer.interpolate = 'basis';
     zoom_example.redraw();
 });
-// When the color selection buttons are clicked change the path style.  The `restyle()` API 
+// When the color selection buttons are clicked change the path style.  The `restyle()` API
 // should be used here to update the styles used in the chart.  This will avoid the cost of
 // updating all of the data and rendering and only update classes and styles.
 $('#zoom_red_button').click(function () {
@@ -133,9 +133,9 @@ $('#zoom_bell_button').click(function () {
         options: {
             styles: {
                 'fill': 'darkslategray',
-                'opacity': 0.5,
-            },
-        },
+                'opacity': 0.5
+            }
+        }
     }));
     zoom_example.render();
 });
@@ -146,4 +146,3 @@ $('#zoom_bell_variance_select').on('change', function () {
 });
 // Resize the chart to fit the window
 window.onresize = function () { zoom_example.resize(); };
-//# sourceMappingURL=plot_zoom_example.js.map

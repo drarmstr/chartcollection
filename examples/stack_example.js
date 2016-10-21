@@ -49,8 +49,8 @@ var stacked_area_chart = new c3.Plot({
             stack_options: {
                 key: function (d) { return d.cause; },
                 styles: { 'fill': function (stack) { return cause_color(stack.key); } },
-                title: function (stack) { return stack.key; },
-            },
+                title: function (stack) { return stack.key; }
+            }
         }),
     ],
     // Setup **margins** and **axes** to polish up the example.
@@ -61,19 +61,19 @@ var stacked_area_chart = new c3.Plot({
         new c3.Axis.X({
             label: "Causes of Death",
             orient: 'top',
-            scale: false,
+            scale: false
         }),
         new c3.Axis.X({
             label: "Age",
             scale: d3.scale.linear().domain([0, 100]),
-            tick_size: 0,
+            tick_size: 0
         }),
         new c3.Axis.Y({
             label: "Deaths",
             tick_label: function (d) { return (d / 1000000) + "m"; },
-            grid: true,
+            grid: true
         }),
-    ],
+    ]
 });
 // ## Expanded Area Chart
 div_selection.append('hr');
@@ -96,8 +96,8 @@ var expand_area_chart = new c3.Plot({
                 key: function (d) { return d.cause; },
                 offset: 'expand',
                 styles: { 'fill': function (stack) { return cause_color(stack.key); } },
-                title: function (stack) { return stack.key; },
-            },
+                title: function (stack) { return stack.key; }
+            }
         }),
     ],
     margins: { right: 20 },
@@ -105,20 +105,20 @@ var expand_area_chart = new c3.Plot({
         new c3.Axis.X({
             label: "Causes of Death",
             orient: 'top',
-            scale: false,
+            scale: false
         }),
         new c3.Axis.X({
             label: "Age",
             scale: d3.scale.linear().domain([0, 100]),
-            tick_size: 0,
+            tick_size: 0
         }),
         new c3.Axis.Y({
             label: "Percentage of Deaths",
             // Convert the factor to a percentage when displaying.
             tick_label: function (d) { return (d * 100) + '%'; },
-            grid: true,
+            grid: true
         }),
-    ],
+    ]
 });
 // ## Expanded Bar Chart
 div_selection.append('hr');
@@ -155,7 +155,7 @@ var expanded_bar_chart = new c3.Plot({
                 offset: 'expand',
                 styles: { 'fill': function (stack) { return region_color(stack.key); } },
                 title: function (stack) { return stack.key; },
-                name: function (key) { return key; },
+                name: function (key) { return key; }
             },
             stacks: [
                 new c3.Plot.Layer.Stackable.Stack({
@@ -164,17 +164,17 @@ var expanded_bar_chart = new c3.Plot({
                 }),
                 new c3.Plot.Layer.Stackable.Stack({
                     key: 'midwest',
-                    y: function (d) { return d.midwest; },
+                    y: function (d) { return d.midwest; }
                 }),
                 new c3.Plot.Layer.Stackable.Stack({
                     key: 'south',
-                    y: function (d) { return d.south; },
+                    y: function (d) { return d.south; }
                 }),
                 new c3.Plot.Layer.Stackable.Stack({
                     key: 'west',
-                    y: function (d) { return d.west; },
+                    y: function (d) { return d.west; }
                 }),
-            ],
+            ]
         }),
     ],
     // _Alternatively_, instead of specifying a y accessor for each stack above,
@@ -186,25 +186,25 @@ var expanded_bar_chart = new c3.Plot({
         new c3.Axis.X({
             label: "Where People Die",
             orient: 'top',
-            scale: false,
+            scale: false
         }),
         new c3.Axis.Y({
             label: "Percentage of Deaths",
-            tick_label: function (d) { return (d * 100) + '%'; },
+            tick_label: function (d) { return (d * 100) + '%'; }
         }),
         new c3.Axis.X({
-            label: "Race",
+            label: "Race"
         }),
-    ],
+    ]
 }).render();
 // Create an associated **legend** for this chart
 new c3.Legend.PlotLegend({
     anchor: div_selection.append('div').node(),
     anchor_styles: {
         'display': 'inline-block',
-        'vertical-align': '5em',
+        'vertical-align': '5em'
     },
-    plot: expanded_bar_chart,
+    plot: expanded_bar_chart
 }).render();
 // ## Stacked Bar Chart
 div_selection.append('hr');
@@ -232,7 +232,7 @@ var stacked_bar_chart = new c3.Plot({
                     key: 'Male',
                     options: {
                         title: 'Male',
-                        styles: { 'fill': 'blue' },
+                        styles: { 'fill': 'blue' }
                     },
                     data: [
                         { age_group: '1', deaths: 146034 },
@@ -246,7 +246,7 @@ var stacked_bar_chart = new c3.Plot({
                         { age_group: '65-74', deaths: 2172914 },
                         { age_group: '75-84', deaths: 4139948 },
                         { age_group: '85+', deaths: 5520554 },
-                    ],
+                    ]
                 }),
                 // I am manually entering the data here just as another perspective.
                 // `data` arrays can always be defined inline, passed as a variable,
@@ -255,7 +255,7 @@ var stacked_bar_chart = new c3.Plot({
                     key: 'Female',
                     options: {
                         title: 'Female',
-                        styles: { 'fill': 'pink' },
+                        styles: { 'fill': 'pink' }
                     },
                     data: [
                         { age_group: '1', deaths: 186663 },
@@ -269,9 +269,9 @@ var stacked_bar_chart = new c3.Plot({
                         { age_group: '65-74', deaths: 2775456 },
                         { age_group: '75-84', deaths: 3969547 },
                         { age_group: '85+', deaths: 2852141 },
-                    ],
+                    ]
                 }),
-            ],
+            ]
         }),
     ],
     // Setup **margins ** and **axes ** to polish up the example.
@@ -280,17 +280,17 @@ var stacked_bar_chart = new c3.Plot({
         new c3.Axis.X({
             label: "Deaths by Gender",
             orient: 'top',
-            scale: false,
+            scale: false
         }),
         new c3.Axis.Y({
             label: "Deaths",
             grid: true,
-            tick_label: function (d) { return (d / 1000000) + "m"; },
+            tick_label: function (d) { return (d / 1000000) + "m"; }
         }),
         new c3.Axis.X({
-            label: "Age Group",
+            label: "Age Group"
         }),
-    ],
+    ]
 }).render();
 // Attach chart to the DOM
 document.querySelector('#stack_example_plots').appendChild(stacked_bar_chart.anchor);
@@ -314,7 +314,7 @@ d3.tsv("data/injury_cause.tsv")
     .row(function (row) { return ({
     age_group: row["Five-Year Age Groups Code"],
     cause: row["Injury Mechanism & All Other Leading Causes"],
-    deaths: +row["Deaths"],
+    deaths: +row["Deaths"]
 }); })
     .get(function (error, data) {
     if (error)
@@ -327,4 +327,3 @@ d3.tsv("data/injury_cause.tsv")
     expand_area_chart.data = data;
     expand_area_chart.render();
 });
-//# sourceMappingURL=stack_example.js.map

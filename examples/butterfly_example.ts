@@ -47,7 +47,7 @@ var cfg = new c3.Butterfly({
     // Link to control flow graph `functions` and `links` **data**
     data: cfg_datasets['libpthread'].functions,
     links: cfg_datasets['libpthread'].links,
-    
+
     // Define unique **key** accessor for functions
     key: (func) => func.id,
 
@@ -105,13 +105,15 @@ window.onresize = function () { cfg.resize(); };
 
 // Select example **data set**
 document.getElementById('dataset').addEventListener('change', function () {
-    cfg.data = cfg_datasets[this.value].functions;
-    cfg.links = cfg_datasets[this.value].links;
+    let element = <HTMLInputElement>this;
+    cfg.data = cfg_datasets[element.value].functions;
+    cfg.links = cfg_datasets[element.value].links;
     cfg.redraw();
 });
 
 // Set **Depth of Field**
 document.getElementById('depth_of_field').addEventListener('change', function () {
-    cfg.depth_of_field = +this.value;
+    let element = <HTMLInputElement>this;
+    cfg.depth_of_field = +element.value;
     cfg.redraw();
 });

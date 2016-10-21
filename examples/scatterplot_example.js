@@ -28,7 +28,7 @@ var my_chart = new c3.Plot({
     axes: [
         new c3.Axis.X({
             grid: true,
-            label: "Age",
+            label: "Age"
         }),
         // The y axis will display letter grades
         new c3.Axis.Y({
@@ -38,7 +38,7 @@ var my_chart = new c3.Plot({
             // Create a **quantize scale** to translate from numeric to letter grades.
             tick_label: d3.scale.quantize()
                 .domain([0, 4])
-                .range(['F', 'D', 'C', 'B', 'A']),
+                .range(['F', 'D', 'C', 'B', 'A'])
         }),
     ],
     // ### Layers
@@ -63,15 +63,15 @@ var my_chart = new c3.Plot({
             // Enable **animation** in the chart when updating data
             point_options: {
                 animate: true,
-                duration: 1000,
+                duration: 1000
             },
             // Enable **labels**
             label_options: {
                 text: function (student) { return student.grade.toFixed(1); },
                 styles: {
                     'fill': function (student) { return student.gender === 'male' ? "white" : "black"; },
-                    'font-size': "x-small",
-                },
+                    'font-size': "x-small"
+                }
             },
             circle_options: {
                 // ## Styles
@@ -79,11 +79,11 @@ var my_chart = new c3.Plot({
                 // the `<style>` section of the example's HTML to give failing students a red stroke.
                 classes: {
                     'passing': function (student) { return student.grade >= 2; },
-                    'failing': function (student) { return student.grade < 2; },
+                    'failing': function (student) { return student.grade < 2; }
                 },
                 // **Style** the circles by **coloring** the dots based on the student's gender
                 styles: {
-                    'fill': function (student) { return student.gender === 'male' ? "blue" : "pink"; },
+                    'fill': function (student) { return student.gender === 'male' ? "blue" : "pink"; }
                 },
                 // ## Event Handlers
                 // Add **event** handlers to expand the size of the circle when the user hovers over
@@ -111,9 +111,9 @@ var my_chart = new c3.Plot({
                             my_chart.redraw();
                         }
                         d3.event.stopPropagation();
-                    },
-                },
-            },
+                    }
+                }
+            }
         }),
         // Create a horizontal line **layer** for the class grade average.
         new c3.Plot.Layer.Line.Horizontal({
@@ -123,7 +123,7 @@ var my_chart = new c3.Plot({
             class: 'average-grade',
             // Give the line a **label**.
             label_options: {
-                text: function (grade) { return "Avg Grade: " + grade.toFixed(2); },
+                text: function (grade) { return "Avg Grade: " + grade.toFixed(2); }
             },
             // ### Extend Custom Functionality
             // Extend custom functionality with a **handler** to update the layer's data based on the
@@ -135,7 +135,7 @@ var my_chart = new c3.Plot({
                     var students = student_data.filter(function (student) { return student.age >= 16; });
                     var average_grade = d3.sum(students, function (student) { return student.grade; }) / students.length;
                     this.data = isNaN(average_grade) ? [] : [average_grade];
-                },
+                }
             }
         }),
     ],
@@ -157,7 +157,7 @@ var my_chart = new c3.Plot({
         resize: function () {
             this.content.all.selectAll('line.guideline.x').attr('y2', this.content.height);
             this.content.all.selectAll('line.guideline.y').attr('x2', this.content.width);
-        },
+        }
     },
     content_options: {
         // Add **event** callbacks for custom behavior.
@@ -190,7 +190,7 @@ var my_chart = new c3.Plot({
                     id: ++student_id,
                     gender: Math.random() > 0.5 ? 'male' : 'female',
                     age: my_chart.h.invert(x),
-                    grade: my_chart.v.invert(y),
+                    grade: my_chart.v.invert(y)
                 };
                 if (student.age < 16)
                     alert("Student is too young to track");
@@ -198,9 +198,9 @@ var my_chart = new c3.Plot({
                     student_data.push(student);
                     my_chart.redraw();
                 }
-            },
-        },
-    },
+            }
+        }
+    }
 });
 // ## Render
 // Render your chart
@@ -215,8 +215,8 @@ window.onresize = function () {
 // enabled **animation** in this chart, the student dots will smoothly transition to
 // their new locations.
 d3.select('#event_regrade_button').on('click', function () {
-    for (var _i = 0; _i < student_data.length; _i++) {
-        var student = student_data[_i];
+    for (var _i = 0, student_data_1 = student_data; _i < student_data_1.length; _i++) {
+        var student = student_data_1[_i];
         student.grade += 2 * Math.random() - 1;
         if (student.grade > 4)
             student.grade -= (student.grade - 4) * 2;
@@ -225,4 +225,3 @@ d3.select('#event_regrade_button').on('click', function () {
     }
     my_chart.redraw();
 });
-//# sourceMappingURL=scatterplot_example.js.map

@@ -24,7 +24,7 @@ function download_data() {
         'AG.LND.TOTL.K2': 'land_area',
         'NV.AGR.TOTL.CD': 'agriculture',
         'NV.IND.MANF.CD': 'manufacturing',
-        'NV.SRV.TETC.CD': 'services',
+        'NV.SRV.TETC.CD': 'services'
     };
     // This function returns a [_promise_](http://promises-aplus.github.io/promises-spec/)
     // to easily manage multiple CSV dependencies asynchronously.
@@ -40,12 +40,12 @@ function download_data() {
                 country_code: row['Country Code'],
                 indicator: row['Indicator Code'],
                 value: +row['Value'],
-                year: +row['Year'],
+                year: +row['Year']
             }); })
                 .get(function (error, rows) {
                 var tmp_map = {};
-                for (var _i = 0; _i < rows.length; _i++) {
-                    var row_1 = rows[_i];
+                for (var _i = 0, rows_1 = rows; _i < rows_1.length; _i++) {
+                    var row_1 = rows_1[_i];
                     if (!row_1.country_code)
                         continue;
                     var data_row = void 0;
@@ -53,7 +53,7 @@ function download_data() {
                         data_row = tmp_map[row_1.country_code + row_1.year] = {
                             country_name: row_1.country_name,
                             country_code: row_1.country_code,
-                            year: row_1.year,
+                            year: row_1.year
                         };
                     data_row[indicator_mapping[row_1.indicator]] = row_1.value;
                 }
@@ -62,8 +62,8 @@ function download_data() {
                     gdp_data.push(tmp_map[k]);
                 // Convert the GDP metrics to billions of dollars for convenience and ensure
                 // GDP isn't 0 if the data is missing to avoid divide by zero problems.
-                for (var _a = 0; _a < gdp_data.length; _a++) {
-                    var record = gdp_data[_a];
+                for (var _a = 0, gdp_data_1 = gdp_data; _a < gdp_data_1.length; _a++) {
+                    var record = gdp_data_1[_a];
                     for (var _b = 0, _c = ['gdp', 'agriculture', 'manufacturing', 'services']; _b < _c.length; _b++) {
                         var metric = _c[_b];
                         record[metric] /= 1000000000;
@@ -82,7 +82,7 @@ function download_data() {
                 name: row['name'],
                 code: row['world_bank_code'],
                 // Countries include a link to their region.
-                region_id: +row['region-code'],
+                region_id: +row['region-code']
             }); })
                 .get(function (error, rows) {
                 rows.filter(function (row) { return !!row.code; }).forEach(function (row) {
@@ -98,11 +98,11 @@ function download_data() {
                 .row(function (row) { return ({
                 name: row['name'],
                 id: +row['id'],
-                parent_id: +row['parent_id'],
+                parent_id: +row['parent_id']
             }); })
                 .get(function (error, rows) {
-                for (var _i = 0; _i < rows.length; _i++) {
-                    var row_2 = rows[_i];
+                for (var _i = 0, rows_2 = rows; _i < rows_2.length; _i++) {
+                    var row_2 = rows_2[_i];
                     regions[row_2.id] = row_2;
                 }
                 resolve();
@@ -151,14 +151,14 @@ function render() {
     // lets the user indicate when that needs to be done.
     var charts = [];
     function redraw() {
-        for (var _i = 0; _i < charts.length; _i++) {
-            var chart = charts[_i];
+        for (var _i = 0, charts_1 = charts; _i < charts_1.length; _i++) {
+            var chart = charts_1[_i];
             chart.redraw();
         }
     }
     function restyle() {
-        for (var _i = 0; _i < charts.length; _i++) {
-            var chart = charts[_i];
+        for (var _i = 0, charts_2 = charts; _i < charts_2.length; _i++) {
+            var chart = charts_2[_i];
             chart.restyle();
         }
     }
@@ -208,13 +208,13 @@ function render() {
                 label: "Year",
                 grid: true,
                 // Use a D3 formatter here to avoid commas showing up in the year
-                tick_label: d3.format('f'),
+                tick_label: d3.format('f')
             }),
             new c3.Axis.Y({
                 label: "% of GDP",
                 grid: true,
                 // Use our own formatter to add a "%" symbol after the number
-                tick_label: function (n) { return n + "%"; },
+                tick_label: function (n) { return n + "%"; }
             }),
             // Create a third axis for this plot on the right side.This axis will indicate the 
             // scale for the GDP layer which is expressed in dollars instead of percentage.
@@ -225,7 +225,7 @@ function render() {
                 orient: 'right',
                 scale: d3.scale.linear().domain([0, d3.max(gdp_by_year_data, function (d) { return d.value / 1000; })]),
                 tick_label: function (n) { return "$" + n.toLocaleString() + "t"; },
-                axis_size: 75,
+                axis_size: 75
             }),
         ],
         // Create the **layers** for this timeline.
@@ -236,12 +236,12 @@ function render() {
             new c3.Plot.Layer.Area({
                 options: {
                     title: "GDP",
-                    class: 'gdp',
+                    class: 'gdp'
                 },
                 data: gdp_by_year_data,
                 v: d3.scale.linear().domain([0, d3.max(gdp_by_year_data, function (d) { return d.value; })]),
                 y: function (d) { return d.value; },
-                interpolate: 'cardinal',
+                interpolate: 'cardinal'
             }),
             // Notice how the `class` for each layer is set here. This allows the example
             // to determine how these individual layers appear with an efficient stylesheet and avoid
@@ -250,23 +250,23 @@ function render() {
             new c3.Plot.Layer.Line({
                 options: {
                     title: "% Services",
-                    class: 'services',
+                    class: 'services'
                 },
-                data: services_by_year_data,
+                data: services_by_year_data
             }),
             new c3.Plot.Layer.Line({
                 options: {
                     title: "% Manufacturing",
-                    class: 'manufacturing',
+                    class: 'manufacturing'
                 },
-                data: manufacturing_by_year_data,
+                data: manufacturing_by_year_data
             }),
             new c3.Plot.Layer.Line({
                 options: {
                     title: "% Agriculture",
-                    class: 'agriculture',
+                    class: 'agriculture'
                 },
-                data: agriculture_by_year_data,
+                data: agriculture_by_year_data
             }),
             // This layer represents a **vertical line** for the _currently selected year_.
             new c3.Plot.Layer.Line.Vertical({
@@ -274,7 +274,7 @@ function render() {
                 draggable: true,
                 options: {
                     title: "Selected Year",
-                    class: 'selected_year',
+                    class: 'selected_year'
                 },
                 // Setup an **event handler** when the user drags the line
                 // to update the filtering to only show data for the selected year.
@@ -292,10 +292,10 @@ function render() {
                     // Filter the data based on the initial year selection
                     'render': function () {
                         this.handlers['drag'](this.data[0]);
-                    },
-                },
+                    }
+                }
             }),
-        ],
+        ]
     }));
     // ###########################################################################
     // ### Timeline Legend
@@ -313,8 +313,8 @@ function render() {
             },
             'layer_mouseleave': function (layer) {
                 d3.selectAll('.' + layer.options.class).classed('legend_hover', false);
-            },
-        },
+            }
+        }
     }));
     // ###########################################################################
     // ### Region Table
@@ -336,7 +336,7 @@ function render() {
         columns: [
             {
                 header: { text: "Region" },
-                cells: { text: function (d) { return regions[d.key].name; } },
+                cells: { text: function (d) { return regions[d.key].name; } }
             },
             gdp_column = {
                 header: { text: "GDP in $b" },
@@ -350,9 +350,9 @@ function render() {
                 vis: 'bar',
                 vis_options: {
                     styles: {
-                        'background-color': function (d) { return region_color(d.key); },
-                    },
-                },
+                        'background-color': function (d) { return region_color(d.key); }
+                    }
+                }
             },
         ],
         // The initial **sort**.
@@ -367,7 +367,7 @@ function render() {
         // the class `hover` to have a wheat-colored background.
         row_options: {
             classes: {
-                'hover': function (d) { return regions[d.key] === hover_region || (hover_country && d.key === hover_country.region_id); },
+                'hover': function (d) { return regions[d.key] === hover_region || (hover_country && d.key === hover_country.region_id); }
             },
             // `row_options.events` will set **event handlers** for **rows** in the table.  Here we set handlers for 
             // when the mouse hovers over the row.  When it does, we record the region the user is hovering
@@ -381,9 +381,9 @@ function render() {
                 mouseleave: function (d) {
                     hover_region = null;
                     restyle();
-                },
-            },
-        },
+                }
+            }
+        }
     }));
     // As an alternative to declaratively setting `handlers` for the chart, you can imperatively call
     // `.on()` to manage event handlers.
@@ -432,7 +432,7 @@ function render() {
         v: d3.scale.log().domain([1, d3.max(gdp_data, function (d) { return d.gdp; })]),
         // Setup **margins** and allow the country dots to overflow into the margins.
         margins: {
-            top: 20,
+            top: 20
         },
         crop_margins: false,
         // Add **axes**.  In this case just draw the grid lines and axis label, but disable the 
@@ -442,13 +442,13 @@ function render() {
                 label: "GDP per capita",
                 grid: true,
                 tick_label: false,
-                tick_size: 0,
+                tick_size: 0
             }),
             new c3.Axis.Y({
                 label: "GDP",
                 grid: true,
                 tick_label: false,
-                tick_size: 0,
+                tick_size: 0
             }),
         ],
         // This plot only contains a single `scatter` layer for the **scatter plot**.
@@ -475,7 +475,7 @@ function render() {
                         'stroke': function (d) { return region_color(countries[d.key].region_id); },
                         'fill-opacity': function (d) {
                             return hover_country === countries[d.key] || hover_region === regions[countries[d.key].region_id] ? 1 : 0.5;
-                        },
+                        }
                     },
                     // `circle_options.events` establishes **event handlers** for the **circles**.  Here we setup
                     // handlers when the user hovers over the dot with the mouse.  It sets the `hover_country`
@@ -497,38 +497,38 @@ function render() {
                             d3.select('#hover_country_info').html("<i>Hover over dot to view country info.</i>");
                             hover_country = null;
                             restyle();
-                        },
-                    },
+                        }
+                    }
                 },
                 // Enable **animations** in this plot so the countries will move smoothly as the year 
                 // filter is updated.
                 point_options: {
                     animate: true,
-                    duration: 200,
-                },
+                    duration: 200
+                }
             }),
             // Add a **horizontal line** layer for the average GDP.
             // Note how the data is actually set in the `redraw_start` event below.
             average_gdp_layer = new c3.Plot.Layer.Line.Horizontal({
                 label_options: {
                     text: function (avg) { return "Avg GDP: $" + d3.format(',')(Math.floor(avg)) + "b"; },
-                    dx: '1em',
+                    dx: '1em'
                 },
                 vector_options: {
                     styles: { stroke: 'purple' },
                     animate: true,
-                    duration: 500,
-                },
+                    duration: 500
+                }
             }),
             // Add a **vertical line** layer for the average GDP per capita.
             average_gdp_per_capita_layer = new c3.Plot.Layer.Line.Vertical({
                 vector_options: {
                     styles: {
-                        stroke: function (d, i) { return i ? 'orange' : 'purple'; },
+                        stroke: function (d, i) { return i ? 'orange' : 'purple'; }
                     },
                     animate: true,
-                    duration: 500,
-                },
+                    duration: 500
+                }
             }),
         ],
         // Setup an **event handler** on the chart which fires whenever the chart is redrawn to reflect
@@ -548,8 +548,8 @@ function render() {
                     average_gdp_layer.data = [];
                     average_gdp_per_capita_layer.data = [];
                 }
-            },
-        },
+            }
+        }
     }));
     // ###########################################################################
     // ### Urbanization Histogram
@@ -589,18 +589,18 @@ function render() {
         // Setup **margins** to allow room for the chart labels
         margins: {
             top: 10,
-            right: 20,
+            right: 20
         },
         crop_margins: false,
         // Add **axes** to provide labels and percentage ticks
         axes: [
             new c3.Axis.X({
-                label: "Urbanization %",
+                label: "Urbanization %"
             }),
             new c3.Axis.Y({
                 label: "GDP",
                 tick_size: 0,
-                tick_label: false,
+                tick_label: false
             }),
         ],
         // Layers to render.  This example looks silly, but is just to demonstrate that you can
@@ -611,11 +611,11 @@ function render() {
         // which is not the case with `basis` curve interpolation.
         layers: [
             new c3.Plot.Layer.Area({
-                interpolate: 'cardinal',
+                interpolate: 'cardinal'
             }),
             new c3.Plot.Layer.Line({
                 interpolate: 'cardinal',
-                r: 5,
+                r: 5
             }),
         ],
         // Add chart **event handlers**
@@ -637,8 +637,8 @@ function render() {
                     urban_dim.filterAll();
                 }
                 redraw();
-            },
-        },
+            }
+        }
     }));
     // ###########################################################################
     // ### Histograms
@@ -679,7 +679,7 @@ function render() {
             layers: [
                 new c3.Plot.Layer.Area({
                     class: name,
-                    interpolate: 'cardinal',
+                    interpolate: 'cardinal'
                 }),
             ],
             // Add chart **event handlers**
@@ -701,8 +701,8 @@ function render() {
                         dimension.filterAll();
                     }
                     redraw();
-                },
-            },
+                }
+            }
         });
     }
     // For these histograms we will display a histogram of the count of countries based on the
@@ -726,7 +726,7 @@ function render() {
     charts.push(new c3.Axis.X({
         anchor: axis_row.append('td').append('div').node(),
         height: 30,
-        scale: d3.scale.linear().domain([0, 100]),
+        scale: d3.scale.linear().domain([0, 100])
     }));
     // #########################################################################################
     // ## Country Table
@@ -765,7 +765,7 @@ function render() {
         columns: [
             {
                 header: { text: "Country" },
-                cells: { html: function (d) { return '<b>' + countries[d.key].name + '</b>'; } },
+                cells: { html: function (d) { return '<b>' + countries[d.key].name + '</b>'; } }
             }, {
                 // The "Region" column is styled to have a background that matches the color for the
                 // region this country is in.
@@ -773,9 +773,9 @@ function render() {
                 cells: {
                     text: function (d) { return regions[countries[d.key].region_id].name; },
                     styles: {
-                        'background-color': function (d) { return region_color(countries[d.key].region_id); },
-                    },
-                },
+                        'background-color': function (d) { return region_color(countries[d.key].region_id); }
+                    }
+                }
             }, {
                 // These columns use custom formatters to set the html content of the cell 
                 // adding commas, units, rounding, etc.  You can add raw HTML if you like.
@@ -784,19 +784,19 @@ function render() {
                 header: { text: "Population" },
                 cells: { html: function (d) { return d3.format(',')(d.value.population); } },
                 sort: function (d) { return d.value.population; },
-                vis: 'bar',
+                vis: 'bar'
             }, {
                 header: { text: "Land Area" },
                 cells: { html: function (d) { return (d3.format(',')(Math.round(d.value.land_area))) + "km<sup>2</sup>"; } },
                 sort: function (d) { return Math.round(d.value.land_area); },
-                vis: 'bar',
+                vis: 'bar'
             },
             // Assign this column to a variable `gdp_column` so we can refer to it below for setting the default sort.
             country_gdp_column = {
                 header: { text: "GDP" },
                 cells: { html: function (d) { return "$" + (d3.format(',')(Math.round(d.value.gdp))) + "b"; } },
                 sort: function (d) { return Math.round(d.value.gdp); },
-                vis: 'bar',
+                vis: 'bar'
             }, {
                 // By default, the `bar` visualization will base the bar width as a percentage of the
                 // total value of all cells.  This isn't always appropriate, though, such as in the case
@@ -806,7 +806,7 @@ function render() {
                 cells: { html: function (d) { return "$" + (d3.format(',')(Math.round(d.value.gdp_per_capita))); } },
                 sort: function (d) { return Math.round(d.value.gdp_per_capita); },
                 vis: 'bar',
-                total_value: function () { return d3.max(country_data2, function (d) { return d.value.gdp_per_capita; }); },
+                total_value: function () { return d3.max(country_data2, function (d) { return d.value.gdp_per_capita; }); }
             },
         ],
         // Initial column to **sort** on.
@@ -814,8 +814,8 @@ function render() {
         // Add some padding to each cell using `cell_options.styles` to assign **styles** to **cells**
         cell_options: {
             styles: {
-                padding: "0 0.25em",
-            },
+                padding: "0 0.25em"
+            }
         },
         // Use `row_options.classes` to enable **CSS classes** on table **rows**.  The classes can be
         // whatever class you want for your styling.  Here we turn on the `hover` class if this
@@ -824,7 +824,7 @@ function render() {
         // in this case giving them a wheat-colored background.
         row_options: {
             classes: {
-                hover: function (d) { return hover_country === countries[d.key] || hover_region === regions[countries[d.key].region_id]; },
+                hover: function (d) { return hover_country === countries[d.key] || hover_region === regions[countries[d.key].region_id]; }
             },
             // `row_options.events` adds **event handlers** to table **rows**.  These handlers set the global
             // hover country when the user hovers the mouse over a row.  `restyle()` is then called
@@ -837,8 +837,8 @@ function render() {
                 mouseleave: function (d) {
                     hover_country = null;
                     restyle();
-                },
-            },
+                }
+            }
         },
         // `handlers` adds **event handlers** to the chart object itself.  Here we tie into the
         // `select` event when the user selects one or more row to **filter** the data on only that country.
@@ -862,20 +862,20 @@ function render() {
             'match': function (search, d) {
                 hover_country = d != null ? countries[d.key] : null;
                 restyle();
-            },
-        },
+            }
+        }
     }));
     // #########################################################################################
     // ### Initial Rendering
     // Perform the initial `render()`
-    for (var _i = 0; _i < charts.length; _i++) {
-        var chart = charts[_i];
+    for (var _i = 0, charts_3 = charts; _i < charts_3.length; _i++) {
+        var chart = charts_3[_i];
         chart.render();
     }
     // **Resize** charts if the window is resized.
     window.onresize = function () {
-        for (var _i = 0; _i < charts.length; _i++) {
-            var chart = charts[_i];
+        for (var _i = 0, charts_4 = charts; _i < charts_4.length; _i++) {
+            var chart = charts_4[_i];
             chart.resize();
         }
     };
@@ -897,4 +897,3 @@ download_data().then(function () { setTimeout(render, 0); });
 // passed to the promise error handler and instead can be caught and handeled as normal in a 
 // debugger.  In production code you could use this instead:
 //     download_data().then(render)
-//# sourceMappingURL=worldbank_example.js.map

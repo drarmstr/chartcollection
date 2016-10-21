@@ -20,7 +20,7 @@ var country_table = new c3.Table({
     columns: [
         {
             header: { text: "Country" },
-            cells: { html: function (country) { return '<b>' + country.name + '</b>'; } },
+            cells: { html: function (country) { return '<b>' + country.name + '</b>'; } }
         }, {
             // These columns use custom formatters to set the html content of the cell 
             // adding commas, units, rounding, etc.  You can add raw HTML if you like.
@@ -29,25 +29,25 @@ var country_table = new c3.Table({
             header: { text: "Population" },
             cells: { text: function (country) { return d3.format(',')(country.population); } },
             sort: function (country) { return country.population; },
-            vis: 'bar',
+            vis: 'bar'
         }, {
             header: { text: "Urbanization" },
             cells: { text: function (country) { return country.urban_population.toFixed(1) + '%'; } },
             sort: function (country) { return country.urban_population; },
             vis: 'bar',
-            total_value: 100,
+            total_value: 100
         }, {
             header: { text: "Land Area" },
             cells: { html: function (country) { return (d3.format(',')(Math.round(country.land_area))) + "km<sup>2</sup>"; } },
             sort: function (country) { return Math.round(country.land_area); },
-            vis: 'bar',
+            vis: 'bar'
         },
         // Assign this column to a variable `gdp_column` so we can refer to it below for setting the default sort.
         gdp_column = {
             header: { text: "GDP" },
             cells: { text: function (country) { return "$" + (d3.format(',')(Math.round(country.gdp))) + "m"; } },
             sort: function (country) { return Math.round(country.gdp); },
-            vis: 'bar',
+            vis: 'bar'
         }, {
             // By default, the `bar` visualization will base the bar width as a percentage of the
             // total value of all cells.  This isn't always appropriate, though, such as in the case
@@ -57,7 +57,7 @@ var country_table = new c3.Table({
             cells: { html: function (country) { return "$" + (d3.format(',')(Math.round(country.gdp_per_capita))); } },
             sort: function (country) { return Math.round(country.gdp_per_capita); },
             vis: 'bar',
-            total_value: function () { return d3.max(country_table.data, function (country) { return country.gdp_per_capita; }); },
+            total_value: function () { return d3.max(country_table.data, function (country) { return country.gdp_per_capita; }); }
         },
     ],
     // Configure the initial column to **sort ** the data on based on the column varible `x_column` we created above.
@@ -66,16 +66,16 @@ var country_table = new c3.Table({
     // `match_country` is set in the match handler below.
     row_options: {
         classes: {
-            'match': function (country) { return country === match_country; },
-        },
+            'match': function (country) { return country === match_country; }
+        }
     },
     // Add an **event handler** to highlight which row was found in a **search**
     handlers: {
         match: function (search, found_country, i) {
             match_country = found_country;
             this.redraw();
-        },
-    },
+        }
+    }
 });
 // ## Modify Table Options
 // **Limit** the number of rows
@@ -110,7 +110,7 @@ document.querySelector('#searchable_if_not_paginated').addEventListener('change'
 d3.csv('data/countries.csv')
     .row(function (row) { return ({
     name: row['name'],
-    code: row['world_bank_code'],
+    code: row['world_bank_code']
 }); }).get(function (error, countries) {
     var country_lookup = {};
     countries.filter(function (row) { return !!row.code; }).forEach(function (row) {
@@ -124,17 +124,17 @@ d3.csv('data/countries.csv')
         country_code: row['Country Code'],
         indicator: row['Indicator Code'],
         value: +row['Value'],
-        year: +row['Year'],
+        year: +row['Year']
     }); }).get(function (error, rows) {
         var indicator_mapping = {
             'SP.POP.TOTL': 'population',
             'EN.URB.MCTY.TL.ZS': 'urban_population',
             'AG.LND.TOTL.K2': 'land_area',
             'NY.GDP.MKTP.CD': 'gdp',
-            'NY.GDP.PCAP.CD': 'gdp_per_capita',
+            'NY.GDP.PCAP.CD': 'gdp_per_capita'
         };
-        for (var _i = 0; _i < rows.length; _i++) {
-            var row_1 = rows[_i];
+        for (var _i = 0, rows_1 = rows; _i < rows_1.length; _i++) {
+            var row_1 = rows_1[_i];
             if (!row_1.country_code)
                 continue;
             if (row_1.year !== 2000)
@@ -152,4 +152,3 @@ d3.csv('data/countries.csv')
         country_table.render();
     });
 });
-//# sourceMappingURL=table_searchable_example.js.map
