@@ -457,6 +457,7 @@ declare module c3 {
                     draggable?: boolean;
                     vector_options?: c3.Selection.Options<D>;
                     line_options?: c3.Selection.Options<D>;
+                    grab_line_options?: c3.Selection.Options<D>;
                     label_options?: Straight.label_options<D>;
                 }
                 interface Straight<D> extends StraightOptions<D> { }
