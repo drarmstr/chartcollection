@@ -276,22 +276,23 @@
       return this._layout(origin, current_data, current_links, this.nodes);
     };
 
-    Sankey.prototype._layout = function(origin, current_data1, current_links, current_nodes1) {
+    Sankey.prototype._layout = function(origin, current_data1, current_links, current_nodes) {
       var alpha, base, collision_detection, column, columns, delta, i, i1, iteration, j, j1, k, key, layout_links, len, len1, len10, len11, len12, len2, len3, len4, len5, len6, len7, len8, len9, link, m, n, node, node_link, node_links, o, p, q, r, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, s, source_link_value, source_node, t, target_link_value, target_node, tmp, total_source_link_value, total_weighted_y, u, v, v_domain, w, weighted_y, y, z;
       this.current_data = current_data1;
-      this.current_nodes = current_nodes1;
+      this.current_nodes = current_nodes;
       node_links = this.node_links;
       this.columns = columns = d3.nest().key(function(node) {
         return node.x;
       }).sortKeys(d3.ascending).entries((function() {
-        var results;
+        var ref, results;
+        ref = this.current_nodes;
         results = [];
-        for (key in current_nodes) {
-          node = current_nodes[key];
+        for (key in ref) {
+          node = ref[key];
           results.push(node);
         }
         return results;
-      })()).map(function(g) {
+      }).call(this)).map(function(g) {
         return g.values;
       });
       c3.array.sort_up(this.columns, function(column) {
@@ -404,7 +405,7 @@
                   node_link.ty = y;
                   y += node_link.value;
                   node_link.tx = node.x;
-                  if (!(link_source(link) in current_nodes)) {
+                  if (!(link_source(link) in this.current_nodes)) {
                     node_link.sx = node.x - 0.5;
                     node_link.sy = trailing_y;
                     if (this.v(node_link.value) > this.h(0.25)) {
@@ -434,7 +435,7 @@
                     node_link.sy = y;
                     y += node_link.value;
                     node_link.sx = node.x;
-                    if (!(link_target(link) in current_nodes)) {
+                    if (!(link_target(link) in this.current_nodes)) {
                       node_link.tx = node.x + 0.5;
                       node_link.ty = trailing_y;
                       if (this.v(node_link.value) > this.h(0.25)) {
@@ -502,7 +503,7 @@
             for (t = 0, len7 = ref2.length; t < len7; t++) {
               link = ref2[t];
               node_link = this.node_links[this.link_key(link)];
-              source_node = current_nodes[this.link_source(link)];
+              source_node = this.current_nodes[this.link_source(link)];
               if (source_node == null) {
                 continue;
               }
@@ -524,7 +525,7 @@
               for (u = 0, len8 = ref3.length; u < len8; u++) {
                 link = ref3[u];
                 node_link = this.node_links[this.link_key(link)];
-                target_node = current_nodes[this.link_target(link)];
+                target_node = this.current_nodes[this.link_target(link)];
                 if (target_node == null) {
                   continue;
                 }
@@ -581,7 +582,7 @@
         };
       })(this));
       this.nodes_layer = this.content.select('g.nodes').singleton().options(this.nodes_options).update();
-      this.node_g = this.nodes_layer.select('g.node').options(this.node_options).animate(origin !== 'render').bind(current_data, this.key).update();
+      this.node_g = this.nodes_layer.select('g.node').options(this.node_options).animate(origin !== 'render').bind(this.current_data, this.key).update();
       this.rects = this.node_g.inherit('rect').options(this.rect_options).update();
       if (this.node_label_options != null) {
         this.node_labels_clip = this.node_g.inherit('svg.label', 'restore');
@@ -811,7 +812,7 @@
     };
 
     Butterfly.prototype._butterfly_layout = function() {
-      var current_data, current_links, datum, focus_key, focus_node, nodes, walk;
+      var current_links, datum, focus_key, focus_node, nodes, walk;
       focus_key = this.key(this.focal);
       focus_node = this.nodes[focus_key];
       nodes = {};
@@ -850,7 +851,7 @@
       walk(focus_key, 1, 0);
       delete nodes[focus_key];
       walk(focus_key, -1, 0);
-      current_data = (function() {
+      this.current_data = (function() {
         var k, len, ref, results;
         ref = this.data;
         results = [];
@@ -863,7 +864,7 @@
         return results;
       }).call(this);
       this.h.domain([-0.5, this.depth_of_field * 2 + 0.5]);
-      return this._layout('focus', current_data, current_links, nodes);
+      return this._layout('focus', this.current_data, current_links, nodes);
     };
 
     Butterfly.prototype._style = function(style_new) {
@@ -871,12 +872,12 @@
       return this.content.all.classed('navigatable', this.navigatable);
     };
 
-    Butterfly.prototype.focus = function(focal1) {
-      this.focal = focal1;
-      this.trigger('focus', focal);
+    Butterfly.prototype.focus = function(focal) {
+      this.focal = focal;
+      this.trigger('focus', this.focal);
       this._update('focus');
       this._draw('focus');
-      return this.trigger('focusend', focal);
+      return this.trigger('focusend', this.focal);
     };
 
     return Butterfly;
