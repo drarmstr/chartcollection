@@ -42,11 +42,11 @@ var swimlane_timeline = new c3.Plot.Zoomable<SwimlaneDatum>({
     zoomable: 'h',
 
     data: [],
-    
+
     // Setup the **scales** to go from 0-100 horizontally and 4 swimlanes vertically.
     h: d3.scale.linear().domain([0, 100]),
     v: d3.scale.linear().domain([0, 4]),
-    
+
     // Add an **x axis** with grid lines.
     axes: [
         new c3.Axis.X({
@@ -54,7 +54,7 @@ var swimlane_timeline = new c3.Plot.Zoomable<SwimlaneDatum>({
             ticks: false,
         }),
     ],
-    
+
     layers: [
         // Add a _segment swimlane_ *layer*
         segment_layer = new c3.Plot.Layer.Swimlane.Segment<SwimlaneDatum>({
@@ -70,8 +70,6 @@ var swimlane_timeline = new c3.Plot.Zoomable<SwimlaneDatum>({
                     'stroke': (d) => d3.rgb(d.color).darker().toString(),
                     'stroke-width': 2,
                     'rx': 5, // rounded corners (Doesn't work in IE11)
-                    '-webkit-transform': 'scale(1,0.75)', // (Doesn't work in IE11)
-                    '-webkit-transform-origin': 'center', // (Doesn't work in Firefox)
                     'shape-rendering': 'geometricPrecision',
                 },
             },
@@ -110,11 +108,11 @@ var sampled_svg_timeline = new c3.Plot.Zoomable<SwimlaneDatum>({
     zoomable: 'h',
 
     data: [],
-    
+
     // Setup the **scales** to go from 0-100 horizontally and 4 swimlanes vertically.
     h: d3.scale.linear().domain([0, 100]),
     v: d3.scale.linear().domain([0, 4]),
-    
+
     // Add an **x axis** with grid lines.
     axes: [
         new c3.Axis.X({
@@ -159,11 +157,11 @@ var sampled_canvas_timeline = new c3.Plot.Zoomable<SwimlaneDatum>({
     zoomable: 'h',
 
     data: [],
-    
+
     // Setup the **scales** to go from 0-100 horizontally and 4 swimlanes vertically.
     h: d3.scale.linear().domain([0, 100]),
     v: d3.scale.linear().domain([0, 4]),
-    
+
     // Add an **x axis** with grid lines.
     axes: [
         new c3.Axis.X({

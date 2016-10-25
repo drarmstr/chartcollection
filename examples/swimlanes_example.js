@@ -54,8 +54,6 @@ var swimlane_timeline = new c3.Plot.Zoomable({
                     'stroke': function (d) { return d3.rgb(d.color).darker().toString(); },
                     'stroke-width': 2,
                     'rx': 5,
-                    '-webkit-transform': 'scale(1,0.75)',
-                    '-webkit-transform-origin': 'center',
                     'shape-rendering': 'geometricPrecision'
                 }
             },
