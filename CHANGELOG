@@ -1,15 +1,18 @@
-Enable Cake builds for Less
-Expose drag_line_options for straight line layers.
+0.1.6
+* Enable Cake builds for Less
+* Expose drag_line_options for straight line layers.
+* Fix Sankey regression from CoffeeScript compiler behavior change
+* Update swimlanes example to not use CSS style broken on OSX Chrome
 
 0.1.5
-Enable Cake builds for TypeScript
-fix path_options styling for path layers
+* Enable Cake builds for TypeScript
+* fix path_options styling for path layers
 
 0.1.4
-Publish to NPM as "q3"
+* Publish to NPM as "q3"
 
 0.1
-Initial Release
+* Initial Release
 
 ################################################################################
 # Historic C4
