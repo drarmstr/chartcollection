@@ -1,5 +1,8 @@
 ﻿# C3 Visualization Library
 
+# This work is license under a Creative Commons Attribution 4.0 License.
+# All rights reserved.
+
 # @note **Please refer to {c3.Base} for an overview of the c3 visualization interface.**
 # ## Dependencies:
 # * **D3**

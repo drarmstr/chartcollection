@@ -1,3 +1,7 @@
+0.1.7
+* Rename NPM module to "chartcollection"
+* Release under CC-BY 4.0 license
+
 0.1.6
 * Enable Cake builds for Less
 * Expose drag_line_options for straight line layers.
