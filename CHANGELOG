@@ -1,6 +1,7 @@
 0.1.7
 * Rename NPM module to "chartcollection"
 * Release under CC-BY 4.0 license
+* Initialize global SVG defs when importing C3 module via require()
 
 0.1.6
 * Enable Cake builds for Less

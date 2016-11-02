@@ -652,6 +652,7 @@ class c3.Base
     handlers: undefined
 
     constructor: (opt)->
+        initialize()
         c3.util.extend this, new c3.Dispatch
         c3.util.extend this, opt
 
@@ -824,7 +825,8 @@ class c3.Chart extends c3.Base
 ###################################################################
 # Initialization
 ###################################################################
-document.addEventListener 'DOMContentLoaded', ->
+initialized = false
+initialize = -> if not initialized
     # Create Global SVG defs for filters, gradients, and masks
     if not c3.global_svg
         c3.global_svg = d3.select('body').append('svg').attr('class','c3 global')
@@ -874,3 +876,5 @@ document.addEventListener 'DOMContentLoaded', ->
             .append('rect')
                 .attr('y',-500000).attr('height',1000000).attr('width',2)
                 .attr('fill',"url(##{fade_left.attr('id')})")
+
+    initialized = true
