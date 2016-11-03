@@ -53,6 +53,8 @@
 
     Sankey.prototype.link_value = void 0;
 
+    Sankey.prototype.safe = true;
+
     Sankey.prototype.iterations = 32;
 
     Sankey.prototype.alpha = 0.99;
@@ -178,7 +180,7 @@
         }
         return results;
       }).call(this);
-      if (this.value != null) {
+      if ((this.value != null) && !this.safe) {
         for (m = 0, len1 = current_data.length; m < len1; m++) {
           datum = current_data[m];
           nodes[this.key(datum)].value = this.value(datum);
@@ -194,6 +196,9 @@
           }), d3.sum(node.target_links, function(l) {
             return node_links[link_key(l)].value;
           }));
+          if (this.value != null) {
+            node.value = Math.max(node.value, this.value(datum));
+          }
         }
       }
       for (key in nodes) {

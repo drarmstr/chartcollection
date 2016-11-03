@@ -1,6 +1,6 @@
 ﻿# C3 Visualization Library
 # Graphs
-# NOTE: This is still a work in progress and needs to go through a clean-up
+# All Rights Reserved.
 
 ###################################################################
 # Graph
@@ -62,6 +62,9 @@ class c3.Sankey extends c3.Graph
     # [Function] Accessor function to get the value of a link.
     # This defaults to using the `value` member of the link object.
     link_value: undefined
+    # [Boolean] Safe mode will ensure that the sum of the link values are not
+    # greater than node values for each particular node
+    safe: true
 
     # [Number] Number of iterations to run the iterative layout algorithm.
     iterations: 32
@@ -157,7 +160,7 @@ class c3.Sankey extends c3.Graph
         current_data = (datum for datum in @data when @key(datum) of @nodes)
 
         # Compute the value for each node
-        if @value?
+        if @value? and not @safe
             nodes[@key datum].value = @value(datum) for datum in current_data
         else
             key = @key
@@ -167,6 +170,8 @@ class c3.Sankey extends c3.Graph
                 node.value = Math.max(
                     d3.sum(node.source_links, (l)-> node_links[link_key l].value),
                     d3.sum(node.target_links, (l)-> node_links[link_key l].value) )
+                # If in safe mode, then use @value() as long as it is less than sum of links
+                if @value? then node.value = Math.max(node.value, @value(datum))
         for key,node of nodes when not node.value?
             throw Error "Missing nodes are not currently supported"
 

@@ -2,6 +2,7 @@
 * Rename NPM module to "chartcollection"
 * Release under CC-BY 4.0 license
 * Initialize global SVG defs when importing C3 module via require()
+* Safe mode for Sankey to ensure nodes are at least as large as their links.
 
 0.1.6
 * Enable Cake builds for Less
