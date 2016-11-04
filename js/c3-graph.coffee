@@ -30,9 +30,11 @@ class c3.Graph extends c3.Chart
 # * Animation of dynamic datasets.
 # * Nodes may have a value larger than incoming and outgoing links
 # * Configurable padding and node widths based on either pixels or percentages.
+# * Configuragle curvature, minimium widths, etc.
 # * Tweaked layout algorithm.
 #
 # @author Douglas Armstrong
+# @todo Link lables
 # @todo Links to missing nodes
 # @todo Draggable nodes
 # @todo Zoom/Pan navigation
@@ -91,6 +93,10 @@ class c3.Sankey extends c3.Graph
     link_path: 'curve'
     # [Number] A number representing the curvature to use for curved link paths.  Ranges from 0-1.
     link_path_curvature: 0.5
+    # [Number] The ratio of node width that, if exceeded, will cause the layout to
+    # overflow to the right size to avoid crowding the node columns too close together.
+    # This is only valid if node_width is set as a width and not as a percentage.
+    overflow_width_ratio: 0.5
 
     # [{c3.Selection.Options}] Options for the svg:g layer of all nodes
     nodes_options: undefined
@@ -131,8 +137,10 @@ class c3.Sankey extends c3.Graph
             width: @width
             height: @height
 
-        # If we are resizing, need to call _update() if @node_padding is based on a pixel size
-        if !isNaN @node_padding then @_update()
+        # If we are resizing, need to call _update() if:
+        # @node_padding is based on a pixel size or @overflow_width_ratio is sets
+        if (!isNaN @node_padding) or (!isNaN @node_width and @overflow_width_ratio)
+            @_update()
 
     _update: (origin)=>
         # The first render() calls _size() which might call us.  If so, then don't repeat the work.
@@ -427,9 +435,16 @@ class c3.Sankey extends c3.Graph
         # Calculate node_width in pixels
         if !isNaN @node_width
             node_width = @node_width
+
+            # If nodes would overlap, then overflow the domain
+            if @overflow_width_ratio
+              if (node_width * (@h.domain()[1]+1) / @width) > @overflow_width_ratio
+                @h.domain [0, (@overflow_width_ratio*@width/node_width)-1]
+
         else if @node_width.charAt?(@node_width.length-1) is '%'
             node_percent = (@node_width[..-2]/100)
             node_width = (node_percent*@width) / (@columns.length+node_percent-1)
+
         else throw new Error "Unsupported node_width parameter: "+@node_width
 
         # Set the horizontal range here in case @node_width is a percentage
@@ -522,11 +537,19 @@ class c3.Sankey extends c3.Graph
 ###################################################################
 
 # Butterfly flow visualization.
-# **This is a work in progress.**
+#
+# This represents a {c3.Sankey Sankey Flow Graph} that can have a _focal_ node.
+# The focal node is rendered in the middle and the nodes following
+# into it are rendered on the left and the nodes flowing out of it are rendered
+# on the right.  The user can select a new node to be the _focal_ by clicking
+# on it.  Only the `depth_of_field` levels of input and output nodes are
+# rendered to keep the graph comprehensible for large graphs.
+#
 # @author Douglas Armstrong
-# @todo Visually indicate focal node
 # @todo Position nodes that are on both the right and left wings in the middle?
-class c3.Butterfly extends c3.Sankey
+# @todo If nodes are called by the focal node as well as other nodes, ensure
+#   that they are positioned in a column based on their depth from the focal.
+class c3.Sankey.Butterfly extends c3.Sankey
     @version: 0.1
     type: 'butterfly'
 
@@ -601,6 +624,7 @@ class c3.Butterfly extends c3.Sankey
     _style: (style_new)=>
         super
         @content.all.classed 'navigatable', @navigatable
+        @node_g.all.classed 'focal', (datum)=> datum is @focal
 
     # Focus visualization on a specified **focus** node.
     # The graph will then fan out to the left and right of the focal node by `depth_of_field` levels.
@@ -609,3 +633,6 @@ class c3.Butterfly extends c3.Sankey
         @_update 'focus'
         @_draw 'focus'
         @trigger 'focusend', @focal
+        return this
+
+c3.Butterfly = c3.Sankey.Butterfly

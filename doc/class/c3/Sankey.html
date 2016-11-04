@@ -45,6 +45,10 @@
       <div class='docstring'>
   <div class='note todo'>
     <strong>TODO:</strong>
+    Link lables 
+  </div>
+  <div class='note todo'>
+    <strong>TODO:</strong>
     Links to missing nodes 
   </div>
   <div class='note todo'>
@@ -69,6 +73,7 @@ However, it has been extended with the following:</p><ul>
 <li>Animation of dynamic datasets.</li>
 <li>Nodes may have a value larger than incoming and outgoing links</li>
 <li>Configurable padding and node widths based on either pixels or percentages.</li>
+<li>Configuragle curvature, minimium widths, etc.</li>
 <li>Tweaked layout algorithm.</li>
 </ul>
 
@@ -83,7 +88,7 @@ However, it has been extended with the following:</p><ul>
 </div>
       <h2>Direct Known Subclasses</h2>
       <p class='children'>
-        <a href='../../class/c3/Butterfly.html'>c3.Butterfly</a>
+        <a href='../../class/c3/Sankey.Butterfly.html'>c3.Sankey.Butterfly</a>
       </p>
       <h2>Variables Summary</h2>
       <dl class='constants'>
@@ -312,6 +317,20 @@ the horizontal space to use for nodes.</p>
     <pre><code class='coffeescript'>0.5</code></pre>
     <div class='docstring'>
   <p>[Number] A number representing the curvature to use for curved link paths.  Ranges from 0-1.</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='overflow_width_ratio-variable'>
+    overflow_width_ratio
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>0.5</code></pre>
+    <div class='docstring'>
+  <p>[Number] The ratio of node width that, if exceeded, will cause the layout to
+overflow to the right size to avoid crowding the node columns too close together.
+This is only valid if node_width is set as a width and not as a percentage.</p>
 </div>
 <div class='tags'>
 </div>

@@ -21,13 +21,15 @@
     &raquo;
     <span class='title'>c3</span>
     &raquo;
+    <span class='title'>Sankey</span>
+    &raquo;
     <span class='title'>Butterfly</span>
   </div>
 </div>
     <div id='content'>
       <h1>
         Class:
-        c3.Butterfly
+        c3.Sankey.Butterfly
       </h1>
       <table class='box'>
         <tr>
@@ -45,14 +47,18 @@
       <div class='docstring'>
   <div class='note todo'>
     <strong>TODO:</strong>
-    Visually indicate focal node 
+    Position nodes that are on both the right and left wings in the middle? 
   </div>
   <div class='note todo'>
     <strong>TODO:</strong>
-    Position nodes that are on both the right and left wings in the middle? 
+    If nodes are called by the focal node as well as other nodes, ensure that they are positioned in a column based on their depth from the focal. 
   </div>
-  <p>Butterfly flow visualization.
-<strong>This is a work in progress.</strong></p>
+  <p>Butterfly flow visualization.</p><p>This represents a <a href='../../class/c3/Sankey.html'>Sankey Flow Graph</a> that can have a <em>focal</em> node.
+The focal node is rendered in the middle and the nodes following
+into it are rendered on the left and the nodes flowing out of it are rendered
+on the right.  The user can select a new node to be the <em>focal</em> by clicking
+on it.  Only the <code>depth_of_field</code> levels of input and output nodes are
+rendered to keep the graph comprehensible for large graphs.</p>
 </div>
 <div class='tags'>
   <h3>Author:</h3>
@@ -128,6 +134,7 @@
         <a href='../../class/c3/Sankey.html#align-variable'>align</a>
         <a href='../../class/c3/Sankey.html#link_path-variable'>link_path</a>
         <a href='../../class/c3/Sankey.html#link_path_curvature-variable'>link_path_curvature</a>
+        <a href='../../class/c3/Sankey.html#overflow_width_ratio-variable'>overflow_width_ratio</a>
         <a href='../../class/c3/Sankey.html#nodes_options-variable'>nodes_options</a>
         <a href='../../class/c3/Sankey.html#node_options-variable'>node_options</a>
         <a href='../../class/c3/Sankey.html#rect_options-variable'>rect_options</a>

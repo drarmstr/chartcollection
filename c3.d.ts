@@ -814,6 +814,7 @@ declare module c3 {
         align?: string;
         link_path?: string;
         link_path_curvature?: number;
+        overflow_width_ratio?: number;
 
         nodes_options?: c3.Selection.Options<void>;
         node_options?: c3.Selection.Options<D>;
@@ -839,22 +840,23 @@ declare module c3 {
         render(opt?: SankeyOptions<D,L>): this;
     }
 
-
-    //////////////////////////////////////////////////////////////////////////////////////
-    // Butterfly Flow Chart
-    //////////////////////////////////////////////////////////////////////////////////////
-    export interface ButterflyOptions<D, L> extends SankeyOptions<D, L> {
+    module Sankey {
+      //////////////////////////////////////////////////////////////////////////////////////
+      // Butterfly Flow Chart
+      //////////////////////////////////////////////////////////////////////////////////////
+      export interface ButterflyOptions<D, L> extends SankeyOptions<D, L> {
         navigatable?: boolean;
         depth_of_field?: number;
         focal?: D;
-    }
-    interface Butterfly<D, L> extends ButterflyOptions<D, L> { }
-    class Butterfly<D, L> extends Sankey<D, L> implements ButterflyOptions<D, L> {
+      }
+      interface Butterfly<D, L> extends ButterflyOptions<D, L> { }
+      class Butterfly<D, L> extends Sankey<D, L> implements ButterflyOptions<D, L> {
         focal: D;
 
         constructor(opt?: ButterflyOptions<D, L>);
         render(opt?: ButterflyOptions<D, L>): this;
 
         focus(focal: D);
+      }
     }
 }

@@ -19,7 +19,7 @@ var cfg_datasets = {
 var function_color = d3.scale.category20();
 // # Create Butterly visualization
 // Create `Butterfly` visualization object
-var cfg = new c3.Butterfly({
+var cfg = new c3.Sankey.Butterfly({
     // Bind to the DOM and set height.
     anchor: '#cfg_butterfly',
     height: 600,
@@ -30,6 +30,8 @@ var cfg = new c3.Butterfly({
     key: function (func) { return func.id; },
     // **Align** CFG to start on the `left`
     align: 'left',
+    // **Overflow** to the right if the nodes would become too crowded.
+    overflow_width_ratio: 0.5,
     // **Style** nodes based on the function name and create tooltips.
     // **Animate** transitions for all of the nodes and links.
     node_options: {
@@ -39,8 +41,7 @@ var cfg = new c3.Butterfly({
     },
     rect_options: {
         styles: {
-            fill: function (func) { return function_color(func.name); },
-            stroke: 'black'
+            fill: function (func) { return function_color(func.name); }
         },
         animate: true,
         duration: 2000

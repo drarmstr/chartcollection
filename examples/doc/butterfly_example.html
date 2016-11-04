@@ -241,7 +241,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> cfg = <span class="hljs-keyword">new</span> c3.Butterfly({</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> cfg = <span class="hljs-keyword">new</span> c3.Sankey.Butterfly({</pre></div></div>
             
         </li>
         
@@ -314,6 +314,21 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
+              <p><strong>Overflow</strong> to the right if the nodes would become too crowded.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    overflow_width_ratio: <span class="hljs-number">0.5</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
               <p><strong>Style</strong> nodes based on the function name and create tooltips.
 <strong>Animate</strong> transitions for all of the nodes and links.</p>
 
@@ -327,7 +342,6 @@
     rect_options: {
         styles: {
             fill: (func) =&gt; <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-title">_color</span>(<span class="hljs-params">func.name</span>),
-            <span class="hljs-title">stroke</span>: '<span class="hljs-title">black</span>',
         },
         <span class="hljs-title">animate</span>: <span class="hljs-title">true</span>,
         <span class="hljs-title">duration</span>: 2000,
@@ -337,11 +351,11 @@
         </li>
         
         
-        <li id="section-14">
+        <li id="section-15">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-14">&#182;</a>
+                <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
               <p>A poor-performing method of constructing a tooltip with function names.
 A look-up hash could be used.  The sankey object could be extended with this
@@ -361,11 +375,11 @@ functionality if requested for relatively little additional space cost.</p>
         </li>
         
         
-        <li id="section-15">
+        <li id="section-16">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-15">&#182;</a>
+                <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
               <p>Add text <strong>labels</strong> for each node</p>
 
@@ -387,11 +401,11 @@ cfg.render();</pre></div></div>
         </li>
         
         
-        <li id="section-16">
+        <li id="section-17">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-16">&#182;</a>
+                <a class="pilcrow" href="#section-17">&#182;</a>
               </div>
               <h2 id="extend-dynamic-chart-behavior">Extend dynamic chart behavior</h2>
 
@@ -400,11 +414,11 @@ cfg.render();</pre></div></div>
         </li>
         
         
-        <li id="section-17">
+        <li id="section-18">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-17">&#182;</a>
+                <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
               <p>Resize the control flow graph when the window is resized.</p>
 
@@ -415,11 +429,11 @@ cfg.render();</pre></div></div>
         </li>
         
         
-        <li id="section-18">
+        <li id="section-19">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-18">&#182;</a>
+                <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
               <p>Select example <strong>data set</strong></p>
 
@@ -435,11 +449,11 @@ cfg.render();</pre></div></div>
         </li>
         
         
-        <li id="section-19">
+        <li id="section-20">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-19">&#182;</a>
+                <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
               <p>Set <strong>Depth of Field</strong></p>
 

@@ -69,6 +69,8 @@
 
     Sankey.prototype.link_path_curvature = 0.5;
 
+    Sankey.prototype.overflow_width_ratio = 0.5;
+
     Sankey.prototype.nodes_options = void 0;
 
     Sankey.prototype.node_options = void 0;
@@ -129,7 +131,7 @@
         width: this.width,
         height: this.height
       });
-      if (!isNaN(this.node_padding)) {
+      if ((!isNaN(this.node_padding)) || (!isNaN(this.node_width && this.overflow_width_ratio))) {
         return this._update();
       }
     };
@@ -605,6 +607,11 @@
       var base, node_percent, node_width;
       if (!isNaN(this.node_width)) {
         node_width = this.node_width;
+        if (this.overflow_width_ratio) {
+          if ((node_width * (this.h.domain()[1] + 1) / this.width) > this.overflow_width_ratio) {
+            this.h.domain([0, (this.overflow_width_ratio * this.width / node_width) - 1]);
+          }
+        }
       } else if ((typeof (base = this.node_width).charAt === "function" ? base.charAt(this.node_width.length - 1) : void 0) === '%') {
         node_percent = this.node_width.slice(0, -1) / 100;
         node_width = (node_percent * this.width) / (this.columns.length + node_percent - 1);
@@ -747,7 +754,7 @@
 
   })(c3.Graph);
 
-  c3.Butterfly = (function(superClass) {
+  c3.Sankey.Butterfly = (function(superClass) {
     extend(Butterfly, superClass);
 
     function Butterfly() {
@@ -874,7 +881,12 @@
 
     Butterfly.prototype._style = function(style_new) {
       Butterfly.__super__._style.apply(this, arguments);
-      return this.content.all.classed('navigatable', this.navigatable);
+      this.content.all.classed('navigatable', this.navigatable);
+      return this.node_g.all.classed('focal', (function(_this) {
+        return function(datum) {
+          return datum === _this.focal;
+        };
+      })(this));
     };
 
     Butterfly.prototype.focus = function(focal) {
@@ -882,12 +894,15 @@
       this.trigger('focus', this.focal);
       this._update('focus');
       this._draw('focus');
-      return this.trigger('focusend', this.focal);
+      this.trigger('focusend', this.focal);
+      return this;
     };
 
     return Butterfly;
 
   })(c3.Sankey);
+
+  c3.Butterfly = c3.Sankey.Butterfly;
 
 }).call(this);
 
