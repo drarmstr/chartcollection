@@ -211,12 +211,6 @@ html.grabbing * {
 .c3.butterfly .navigatable .node rect {
   cursor: pointer;
 }
-.c3.butterfly .link path.fade_right {
-  mask: url(#mask_fade_right);
-}
-.c3.butterfly .link path.fade_left {
-  mask: url(#mask_fade_left);
-}
 table.c3.table {
   border-collapse: collapse;
 }

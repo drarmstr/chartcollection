@@ -582,9 +582,15 @@ class c3.Sankey.Butterfly extends c3.Sankey
                 d3.event.stopPropagation
                 @focus datum
 
+        # Style links that fade out to unrendered nodes
         @paths.all.classed
             fade_left: (link)=> @link_source(link) not of @current_nodes
             fade_right: (link)=> @link_target(link) not of @current_nodes
+        # Workaround packing/build issues for systems that don't like url() syntax in CSS files...
+        @paths.all.attr 'mask', (link)=>
+            if @link_source(link) not of @current_nodes then 'url(#mask_fade_left)'
+            else if @link_target(link) not of @current_nodes then 'url(#mask_fade_right)'
+            else null
 
     _butterfly_layout: =>
         focus_key = @key @focal
