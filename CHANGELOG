@@ -4,6 +4,7 @@
 * Initialize global SVG defs when importing C3 module via require()
 * Safe mode for Sankey to ensure nodes are at least as large as their links.
 * Allow styling of the focal node for the Butterfly Sankey
+* Workaround Chrome bug with SVG gradient masks for Butterfly Sankey
 * Sankeys can extend past right edge to avoid overcrowding node columns
 
 0.1.6

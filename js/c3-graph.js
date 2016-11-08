@@ -810,7 +810,7 @@
           };
         })(this));
       }
-      return this.paths.all.attr('mask', (function(_this) {
+      this.paths.all.attr('mask', (function(_this) {
         return function(link) {
           if (!(_this.link_source(link) in _this.current_nodes)) {
             return 'url(#mask_fade_left)';
@@ -821,6 +821,18 @@
           }
         };
       })(this));
+      return this.paths.all.classed({
+        fade_left: (function(_this) {
+          return function(link) {
+            return !(_this.link_source(link) in _this.current_nodes);
+          };
+        })(this),
+        fade_right: (function(_this) {
+          return function(link) {
+            return !(_this.link_target(link) in _this.current_nodes);
+          };
+        })(this)
+      });
     };
 
     Butterfly.prototype._butterfly_layout = function() {

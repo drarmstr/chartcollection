@@ -768,8 +768,8 @@
         fade_left = c3.global_defs.append('linearGradient').attr('id', 'gradient_for_mask_fade_left');
         fade_left.append('stop').attr('offset', 0.1).attr('stop-color', 'white').attr('stop-opacity', 0);
         fade_left.append('stop').attr('offset', 0.5).attr('stop-color', 'white').attr('stop-opacity', 1);
-        mask_fade_right = c3.global_defs.append('mask').attr('id', 'mask_fade_right').attr('maskContentUnits', 'objectBoundingBox').attr('x', -1).attr('y', -500000).attr('height', 1000000).attr('width', 2).append('rect').attr('x', -1).attr('y', -500000).attr('height', 1000000).attr('width', 2).attr('fill', "url(#" + (fade_right.attr('id')) + ")");
-        mask_fade_left = c3.global_defs.append('mask').attr('id', 'mask_fade_left').attr('maskContentUnits', 'objectBoundingBox').attr('y', -500000).attr('height', 1000000).attr('width', 2).append('rect').attr('y', -500000).attr('height', 1000000).attr('width', 2).attr('fill', "url(#" + (fade_left.attr('id')) + ")");
+        mask_fade_right = c3.global_defs.append('mask').attr('id', 'mask_fade_right').attr('maskContentUnits', 'objectBoundingBox').attr('x', -1).attr('y', '-500000%').attr('height', '1000000%').attr('width', 2).append('rect').attr('x', -1).attr('y', -500000).attr('height', 1000000).attr('width', 2).attr('fill', "url(#" + (fade_right.attr('id')) + ")");
+        mask_fade_left = c3.global_defs.append('mask').attr('id', 'mask_fade_left').attr('maskContentUnits', 'objectBoundingBox').attr('y', '-500000%').attr('height', '1000000%').attr('width', 2).append('rect').attr('y', -500000).attr('height', 1000000).attr('width', 2).attr('fill', "url(#" + (fade_left.attr('id')) + ")");
       }
       return initialized = true;
     }

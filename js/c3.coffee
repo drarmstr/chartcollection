@@ -850,7 +850,7 @@ initialize = -> if not initialized
 
         # Masks to fade to transparent to the left or right.
         # Note that the object bounding box for a path is defined from the start and end points.
-        # So, curves with a stroke width extended outside of this box.  That is why the mask size is
+        # So, curves with a stroke width extend outside of this box.  That is why the mask size is
         # larger and the gradient stop positions are adjusted to align with the path endpoints.
         fade_right = c3.global_defs.append('linearGradient')
             .attr('id','gradient_for_mask_fade_right')
@@ -866,13 +866,13 @@ initialize = -> if not initialized
             .attr('offset',0.5).attr('stop-color','white').attr('stop-opacity',1)
         mask_fade_right = c3.global_defs.append('mask').attr('id','mask_fade_right')
             .attr('maskContentUnits','objectBoundingBox')
-            .attr('x',-1).attr('y',-500000).attr('height',1000000).attr('width',2)
+            .attr('x',-1).attr('y','-500000%').attr('height','1000000%').attr('width',2)
             .append('rect')
                 .attr('x',-1).attr('y',-500000).attr('height',1000000).attr('width',2)
                 .attr('fill',"url(##{fade_right.attr('id')})")
         mask_fade_left = c3.global_defs.append('mask').attr('id','mask_fade_left')
             .attr('maskContentUnits','objectBoundingBox')
-            .attr('y',-500000).attr('height',1000000).attr('width',2)
+            .attr('y','-500000%').attr('height','1000000%').attr('width',2)
             .append('rect')
                 .attr('y',-500000).attr('height',1000000).attr('width',2)
                 .attr('fill',"url(##{fade_left.attr('id')})")

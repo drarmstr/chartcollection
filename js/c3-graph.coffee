@@ -577,7 +577,7 @@ class c3.Sankey.Butterfly extends c3.Sankey
             @_style true
 
     _butterfly_update: =>
-        if (@navigatable)
+        if @navigatable
             @rects.new.on 'click', (datum)=>
                 d3.event.stopPropagation
                 @focus datum
@@ -586,6 +586,9 @@ class c3.Sankey.Butterfly extends c3.Sankey
             if @link_source(link) not of @current_nodes then 'url(#mask_fade_left)'
             else if @link_target(link) not of @current_nodes then 'url(#mask_fade_right)'
             else null
+        @paths.all.classed
+            fade_left: (link)=> @link_source(link) not of @current_nodes
+            fade_right: (link)=> @link_target(link) not of @current_nodes
 
     _butterfly_layout: =>
         focus_key = @key @focal
