@@ -810,17 +810,6 @@
           };
         })(this));
       }
-      this.paths.all.attr('mask', (function(_this) {
-        return function(link) {
-          if (!(_this.link_source(link) in _this.current_nodes)) {
-            return 'url(#mask_fade_left)';
-          } else if (!(_this.link_target(link) in _this.current_nodes)) {
-            return 'url(#mask_fade_right)';
-          } else {
-            return null;
-          }
-        };
-      })(this));
       return this.paths.all.classed({
         fade_left: (function(_this) {
           return function(link) {

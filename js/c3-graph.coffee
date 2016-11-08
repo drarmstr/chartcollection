@@ -582,10 +582,6 @@ class c3.Sankey.Butterfly extends c3.Sankey
                 d3.event.stopPropagation
                 @focus datum
 
-        @paths.all.attr 'mask', (link)=>
-            if @link_source(link) not of @current_nodes then 'url(#mask_fade_left)'
-            else if @link_target(link) not of @current_nodes then 'url(#mask_fade_right)'
-            else null
         @paths.all.classed
             fade_left: (link)=> @link_source(link) not of @current_nodes
             fade_right: (link)=> @link_target(link) not of @current_nodes
