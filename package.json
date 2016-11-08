@@ -27,6 +27,7 @@
   },
   "homepage": "http://drarmstr.github.io/chartcollection/",
   "devDependencies": {
+    "less": "^2.7.1",
     "docco": "^0.7",
     "codo": "^2.1.2"
   },
