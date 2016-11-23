@@ -109,6 +109,8 @@ class c3.Table extends c3.Base
     #   otherwise they will be `null`.
     #   The user may use regular expressions in their search string.
     searchable: false
+    # [Boolean] Allow table to be searchable even if it isn't paginated
+    searchable_if_not_paginated: true
     # [{c3.Selection.Options}] Options for the `table` node.
     table_options: undefined
     # [{c3.Selection.Options}] Options for the table `thead` header.
@@ -249,8 +251,10 @@ class c3.Table extends c3.Base
 
         # Footer
         @footer = @table.select('caption')
-        paginate = @pagination and !!@limit_rows and @current_data.length > @limit_rows
-        if @searchable or paginate
+        rows_limited = !!@limit_rows and @current_data.length > @limit_rows
+        paginate = @pagination and rows_limited
+        searchable = @searchable and (@searchable_if_not_paginated or rows_limited)
+        if searchable or paginate
             @footer.singleton().options(@footer_options).update()
 
             # Pagination
@@ -301,7 +305,7 @@ class c3.Table extends c3.Base
 
             # Searchable
             search_control = @footer.select('span.search')
-            if @searchable
+            if searchable
                 search_control.singleton()
                 search_control.inherit('span.button').new
                     .text '🔎'
@@ -382,11 +386,11 @@ class c3.Table extends c3.Base
         if value isnt last_search # if already found, find the next one
             last_found = -1
             last_search = value
-        content = if @searchable is true # Search all columns if searchable is `true`
+        # If @searchable doesn't specify an accessor, then search all column contents
+        content = if typeof @searchable is 'function' then @searchable else
             column_contents = (c3.functor(column.cells.html ? column.cells.text ? @cell_options.html ? @cell_options.text) \
-                        for column in @columns)
+                               for column in @columns)
             (d,i)-> (column_content(d,i,j) for column_content,j in column_contents).join(' ')
-        else @searchable
         for d,i in @current_data when i>last_found
             if re.test content(d,i)
                 last_found = i

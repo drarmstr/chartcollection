@@ -142,6 +142,7 @@ declare module c3 {
         page?: number;
         max_pages_in_paginator?: number;
         searchable?: boolean | { (d: D, i: number): string };
+        searchable_if_not_paginated?: boolean;
         table_options?: c3.Selection.Options<void>;
         table_header_options?: c3.Selection.Options<void>;
         header_options?: c3.Selection.Options<Table.Column<D>>;

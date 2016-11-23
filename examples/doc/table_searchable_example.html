@@ -513,7 +513,7 @@ You could also simply set <code>sort_column</code> to the string “GDP” match
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
-              <p>Allow table to be searchable if table isn’t paginated</p>
+              <p>Enable the <strong>search</strong> control in the page</p>
 
             </div>
             
@@ -530,6 +530,24 @@ You could also simply set <code>sort_column</code> to the string “GDP” match
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <p>Allow table to be searchable if table isn’t paginated</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'#searchable_if_not_paginated'</span>).addEventListener(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    country_table.searchable_if_not_paginated = <span class="hljs-keyword">this</span>.checked;
+    country_table.redraw();
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-25">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-25">&#182;</a>
               </div>
               <p>API for searching the table</p>
 

@@ -103,9 +103,14 @@ document.querySelector('#number_of_pages').addEventListener('change', function (
     country_table.max_pages_in_paginator = +this.value;
     country_table.redraw();
 });
-// Allow table to be searchable if table isn't paginated
+// Enable the **search** control in the page
 document.querySelector('#searchable').addEventListener('change', function () {
     country_table.searchable = this.checked;
+    country_table.redraw();
+});
+// Allow table to be searchable if table isn't paginated
+document.querySelector('#searchable_if_not_paginated').addEventListener('change', function () {
+    country_table.searchable_if_not_paginated = this.checked;
     country_table.redraw();
 });
 // API for searching the table

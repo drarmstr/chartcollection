@@ -39,6 +39,8 @@
 
     Table.prototype.searchable = false;
 
+    Table.prototype.searchable_if_not_paginated = true;
+
     Table.prototype.table_options = void 0;
 
     Table.prototype.table_header_options = void 0;
@@ -161,7 +163,7 @@
     };
 
     Table.prototype._update = function(origin) {
-      var cell_contents, column, d, data, datum, i, k, l, left_pages, len, len1, m, next_button, num_pages, page_buttons, pages, paginate, paginator, prev_button, ref, ref1, ref2, ref3, ref4, ref5, results, right_pages, search_control, search_input, self;
+      var cell_contents, column, d, data, datum, i, k, l, left_pages, len, len1, m, next_button, num_pages, page_buttons, pages, paginate, paginator, prev_button, ref, ref1, ref2, ref3, ref4, ref5, results, right_pages, rows_limited, search_control, search_input, searchable, self;
       self = this;
       ref = this.columns;
       for (k = 0, len = ref.length; k < len; k++) {
@@ -275,8 +277,10 @@
         this.rows.all.on('click.select', null);
       }
       this.footer = this.table.select('caption');
-      paginate = this.pagination && !!this.limit_rows && this.current_data.length > this.limit_rows;
-      if (this.searchable || paginate) {
+      rows_limited = !!this.limit_rows && this.current_data.length > this.limit_rows;
+      paginate = this.pagination && rows_limited;
+      searchable = this.searchable && (this.searchable_if_not_paginated || rows_limited);
+      if (searchable || paginate) {
         this.footer.singleton().options(this.footer_options).update();
         paginator = this.footer.select('span.pagination', ':first-child');
         if (paginate) {
@@ -334,7 +338,7 @@
           paginator.remove();
         }
         search_control = this.footer.select('span.search');
-        if (this.searchable) {
+        if (searchable) {
           search_control.singleton();
           search_control.inherit('span.button')["new"].text('🔎').on('click', (function(_this) {
             return function() {
@@ -448,7 +452,7 @@
         last_found = -1;
         last_search = value;
       }
-      content = this.searchable === true ? (column_contents = (function() {
+      content = typeof this.searchable === 'function' ? this.searchable : (column_contents = (function() {
         var k, len, ref, ref1, ref2, ref3, results;
         ref = this.columns;
         results = [];
@@ -468,7 +472,7 @@
           }
           return results;
         })()).join(' ');
-      }) : this.searchable;
+      });
       ref = this.current_data;
       for (i = k = 0, len = ref.length; k < len; i = ++k) {
         d = ref[i];
