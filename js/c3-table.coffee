@@ -104,9 +104,11 @@ class c3.Table extends c3.Base
     #   Otherwise, it can be set to an accessor function that will be called with the row data and index.
     #   This function should return the string content of the row to be used for searching.
     #   If a match is found the current page is changed so the found row is visible.
-    #   The `match` event will be triggered with the search string used.
+    #   The `found` event will be triggered with the search string used.
     #   If a match was found the second and third arguments will be the row data and index of the match,
     #   otherwise they will be `null`.
+    #   If a table is both searchable and selectable the event `found` event handler
+    #   will default to selecting the row; this may be overriden.
     #   The user may use regular expressions in their search string.
     searchable: false
     # [Boolean] Allow table to be searchable even if it isn't paginated
@@ -174,8 +176,12 @@ class c3.Table extends c3.Base
 
         # Find the initial column for sorting if specified as a string
         if @sort_column? and typeof @sort_column == 'string'
-          @sort_column = @columns.find (column)=>
-            @sort_column == column?.header?.text or @sort_column == column?.header?.html
+            @sort_column = @columns.find (column)=>
+                @sort_column == column?.header?.text or @sort_column == column?.header?.html
+
+        # Searchable and Selectable tables default to selecting matches
+        if @searchable and not @handlers?.found and not @handlers?.match # `match` is Deprecated
+            @on 'found', (str, data, i) => @select [data]
 
         @_update_headers()
 

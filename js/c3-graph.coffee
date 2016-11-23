@@ -633,11 +633,12 @@ class c3.Sankey.Butterfly extends c3.Sankey
 
     # Focus visualization on a specified **focus** node.
     # The graph will then fan out to the left and right of the focal node by `depth_of_field` levels.
-    focus: (@focal)=>
-        @trigger 'focus', @focal
-        @_update 'focus'
-        @_draw 'focus'
-        @trigger 'focusend', @focal
+    focus: (focal)=>
+        if focal isnt @focal
+            @trigger 'focus', @focal
+            @_update 'focus'
+            @_draw 'focus'
+            @trigger 'focusend', @focal
         return this
 
 c3.Butterfly = c3.Sankey.Butterfly

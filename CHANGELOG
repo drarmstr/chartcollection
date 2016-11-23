@@ -1,3 +1,5 @@
+* Selectable and searchable tables default to selecting matches.
+* Sankey Butterflies avoid focusing redundantly on the same focal node.
 * Clean up Table options for searching and pagination.
 * Add Table API for searching.
 * Add ability to specify an initial column to sort by header text.
