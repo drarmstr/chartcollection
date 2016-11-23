@@ -72,7 +72,7 @@
     }
 
     Table.prototype._init = function() {
-      var base, base1, base2, base3, column, k, len, ref;
+      var base, base1, base2, base3, column, k, len, ref, ref1, ref2;
       this.table = c3.select(d3.select(this.anchor), 'table').singleton();
       if (this.table_options == null) {
         this.table_options = {};
@@ -130,6 +130,13 @@
           return function(column) {
             var ref1, ref2;
             return _this.sort_column === (column != null ? (ref1 = column.header) != null ? ref1.text : void 0 : void 0) || _this.sort_column === (column != null ? (ref2 = column.header) != null ? ref2.html : void 0 : void 0);
+          };
+        })(this));
+      }
+      if (this.searchable && !((ref1 = this.handlers) != null ? ref1.found : void 0) && !((ref2 = this.handlers) != null ? ref2.match : void 0)) {
+        this.on('found', (function(_this) {
+          return function(str, data, i) {
+            return _this.select([data]);
           };
         })(this));
       }

@@ -264,7 +264,7 @@ The pagination footer will only render if there is more than one page.</p>
   <dd>
     <pre><code class='coffeescript'>false</code></pre>
     <div class='docstring'>
-  <p>[Boolean, Function] Set to enable searching in the footer. If set to <code>true</code>, then the content of all columns will be searched. Otherwise, it can be set to an accessor function that will be called with the row data and index. This function should return the string content of the row to be used for searching. If a match is found the current page is changed so the found row is visible. The <code>match</code> event will be triggered with the search string used. If a match was found the second and third arguments will be the row data and index of the match, otherwise they will be <code>null</code>. The user may use regular expressions in their search string.</p>
+  <p>[Boolean, Function] Set to enable searching in the footer. If set to <code>true</code>, then the content of all columns will be searched. Otherwise, it can be set to an accessor function that will be called with the row data and index. This function should return the string content of the row to be used for searching. If a match is found the current page is changed so the found row is visible. The <code>found</code> event will be triggered with the search string used. If a match was found the second and third arguments will be the row data and index of the match, otherwise they will be <code>null</code>. If a table is both searchable and selectable the event <code>found</code> event handler will default to selecting the row; this may be overriden. The user may use regular expressions in their search string.</p>
 </div>
 <div class='tags'>
 </div>

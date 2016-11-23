@@ -902,11 +902,13 @@
     };
 
     Butterfly.prototype.focus = function(focal) {
-      this.focal = focal;
-      this.trigger('focus', this.focal);
-      this._update('focus');
-      this._draw('focus');
-      this.trigger('focusend', this.focal);
+      if (focal !== this.focal) {
+        this.focal = focal;
+        this.trigger('focus', this.focal);
+        this._update('focus');
+        this._draw('focus');
+        this.trigger('focusend', this.focal);
+      }
       return this;
     };
 

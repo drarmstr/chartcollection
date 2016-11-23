@@ -635,6 +635,7 @@ class c3.Sankey.Butterfly extends c3.Sankey
     # The graph will then fan out to the left and right of the focal node by `depth_of_field` levels.
     focus: (focal)=>
         if focal isnt @focal
+            @focal = focal
             @trigger 'focus', @focal
             @_update 'focus'
             @_draw 'focus'
