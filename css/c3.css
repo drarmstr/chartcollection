@@ -208,7 +208,7 @@ html.grabbing * {
   fill: none;
   pointer-events: all;
 }
-.c3.butterfly .navigatable .node rect {
+.c3.butterfly .navigatable .node:not(.focal) rect {
   cursor: pointer;
 }
 table.c3.table {
