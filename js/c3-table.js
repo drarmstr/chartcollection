@@ -420,6 +420,7 @@
           column.sort_ascending = !column.sort_ascending;
         }
         this.sort_column = column;
+        this.page = 1;
         this._update_headers();
         return this.redraw('sort');
       }

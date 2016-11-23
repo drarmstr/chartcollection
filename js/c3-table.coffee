@@ -364,6 +364,7 @@ class c3.Table extends c3.Base
         if ascending? then column.sort_ascending = ascending
         else if @sort_column==column then column.sort_ascending = not column.sort_ascending
         @sort_column = column
+        @page = 1
         @_update_headers()
         @redraw 'sort'
 

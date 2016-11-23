@@ -1,3 +1,4 @@
+* Paginated tables revert to the first page when sorted.
 * Selectable and searchable tables default to selecting matches.
 * Sankey Butterflies avoid focusing redundantly on the same focal node.
 * Clean up Table options for searching and pagination.
