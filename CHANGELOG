@@ -1,3 +1,8 @@
+* Clean up Table options for searching and pagination.
+* Add Table API for searching.
+* Add ability to specify an initial column to sort by header text.
+* Clean up Table documentation for sorting and searching.
+
 0.1.7
 * Rename NPM module to "chartcollection"
 * Release under CC-BY 4.0 license

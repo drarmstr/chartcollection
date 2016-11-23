@@ -17,10 +17,10 @@
 # * **select** - Triggered when a row is selected/unselected.  The event is called with an argument:
 #   _single_ select tables are passed with their selection while _multi_ select tables are passed with an array of the selections.
 #   Selections are references to items in the data array.
-# * **match** - Triggered when a search is performed.  The event is called with the search string,
+# * **found** - Triggered when a search is performed.  The event is called with the search string,
 #   the datum for the row, and the row index.
-#   If there was no match, the datum and index will be `null`.
-# 
+#   If there was no match, the datum and index will be `null`.  The `match` event is deprecated.
+#
 # ## Extensibility
 # The following members are created which represent {c3.Selection}'s:
 # * **table** - The HTML `table`
@@ -37,7 +37,7 @@
 class c3.Table extends c3.Base
     @version: 0.1
     type: 'table'
-    
+
     # [Array] Array of data for the table to visualize.
     #   Each element that is defined would be a seperate row in the table.
     data: []
@@ -67,21 +67,35 @@ class c3.Table extends c3.Base
     # * **vis_options** [{c3.Selection.Options}] Options that may be used by value visualizations.
     #   Using the Table-level vis_options should perform better than column-specific options.
     columns: []
-    # [Boolean] Are the table rows selectable
+    # [Boolean, String] Enable the table rows to be selectable based on the value:
+    # * `true` - Click to select a single row or ctrl-click to select multiple rows.
+    # * "**single**" - A single row can be selected.
+    # * "**multi**" - Multiple rows can be selected.
     selectable: false
-    # [Boolean, String] True for the table rows to be selectable or a string with possible values:
-    # * **single** - A single row can be selected
-    # * **multi** - Multiple rows can be selected
+    # [Boolean] Enable the table rows to be user-sortable.
+    # Define the `sortable` property of the column object to enable sorting by that column.
+    # The `value` column property should then define a callback to specify the value
+    # to be used for sorting.  If you would like a different value for sorting purposes
+    # then the `sort` property of the column object can be used.
+    # The table can still be sorted with `sort_column` even if the user is not allowed
+    # to change how it is sorted with `sortable`.
     sortable: false
-    # [{c3.Table.Column}] The column currently used for sorting
+    # [{c3.Table.Column}, String] Specify the initial column to sort the table by.
+    # The column object should have the `sort` property set to define a value to sort on.
+    # The `sort_column` may be specified either as the column object directly or
+    # as a string to lookup the header text or html at render-time.
+    # This property will be updated to refer to the current column object being sorted on.
+    # `sort_column` can be set to sort the table even if the table and/or column is not
+    # `sortable` to allow user-configurable sorting.
     sort_column: undefined
     # [Number] Limit the number of table rows to the top N
     limit_rows: undefined
-    # [Boolean, Number] Page between multiple pages, each the size of `limit_rows`.
-    #   Set to `true` to enable or to the page number you would like to display.
-    #   This will be set to the currently active page number.
-    #   The pagination footer will only render if there is more than one page.
+    # [Boolean] Enable control for user paging between multiple pages
+    # when the table size is limited with `limit_rows`.
+    # The pagination footer will only render if there is more than one page.
     pagination: false
+    # [Number] The curernt page of a paginated table
+    page: undefined
     # [Number] Maximum number of pages to show at a time in the footer pagination selection.
     #   Minimum value is `3`.
     max_pages_in_paginator: 9
@@ -95,8 +109,6 @@ class c3.Table extends c3.Base
     #   otherwise they will be `null`.
     #   The user may use regular expressions in their search string.
     searchable: false
-    # [Boolean] Allow table to be searchable even if it isn't paginated
-    searchable_if_not_paginated: true
     # [{c3.Selection.Options}] Options for the `table` node.
     table_options: undefined
     # [{c3.Selection.Options}] Options for the table `thead` header.
@@ -122,8 +134,8 @@ class c3.Table extends c3.Base
     # Callbacks are called with the first argument as the data element, the second as
     # the column index, and the third as the row index.
     vis_options: undefined
-    
-    constructor: -> 
+
+    constructor: ->
         super
         @selections = [] # Define this here so selections are per-instance
 
@@ -134,15 +146,15 @@ class c3.Table extends c3.Base
         @table_options.styles ?= {}
         @table_options.styles.width ?= '100%'
         @table.options(@table_options).update()
-        
+
         # Create the Header
         @header = @table.inherit('thead').inherit('tr')
         @header.options(@table_header_options).update()
-        
+
         # Create the Body
         @body = @table.inherit('tbody')
         @body.options(@table_body_options).update()
-        
+
         # Prepare the Columns
         @next_column_key ?= 0
         for column in @columns
@@ -157,7 +169,12 @@ class c3.Table extends c3.Base
                 throw "column.sort() or column.value() not defined for a sortable column"
             if column.vis and not column.value?
                 throw "column.value() not defined for a column with a column.vis visualization"
-        
+
+        # Find the initial column for sorting if specified as a string
+        if @sort_column? and typeof @sort_column == 'string'
+          @sort_column = @columns.find (column)=>
+            @sort_column == column?.header?.text or @sort_column == column?.header?.html
+
         @_update_headers()
 
 
@@ -180,29 +197,27 @@ class c3.Table extends c3.Base
             if not column.value_total? # Default total_value is the sum of all values
                 column.value_total = 0
                 column.value_total += column.value(datum) for datum in @data
-    
+
         # Filter data
         @current_data = if @filter? then (d for d,i in @data when @filter(d,i)) else @data
-    
+
         # Re-sort the data
         if @sort_column?
             # Copy array so our sorting doesn't corrupt the user's copy
             if !@filter? then @current_data = @current_data[..]
             c3.array.sort_up @current_data, @sort_column.sort
             if not @sort_column.sort_ascending then @current_data.reverse()
-        
+
         # Update the rows
         data = if not @limit_rows then @current_data else
             @limit_rows = Math.floor @limit_rows
             if isNaN @limit_rows then throw Error "limit_rows set to non-numeric value: "+@limit_rows
-            current_page = if isNaN(@pagination) then 1 else @pagination
-            current_page = Math.max(1, Math.min(Math.ceil(@current_data.length/@limit_rows), current_page))
-            if @pagination then @pagination = current_page
-            @current_data[@limit_rows*(current_page-1)..(@limit_rows*current_page)-1]
+            @page = Math.max(1, Math.min(Math.ceil(@current_data.length/@limit_rows), @page ? 1))
+            @current_data[@limit_rows*(@page-1)..(@limit_rows*@page)-1]
         @rows = @body.select('tr').bind data, @key
         @rows.options(@row_options).update()
         if @key? then @rows.all.order()
-        
+
         # Update the cells
         @cells = @rows.select('td').bind ((d)=> (d for column in @columns)), (d,i)=> @columns[i].key
         if not @columns.some((column)-> column.vis?)
@@ -212,7 +227,7 @@ class c3.Table extends c3.Base
             @vis = @cells.inherit('div.vis')
             @vis.options(@vis_options, ((d,i)=> @columns[i].vis_options)).update()
             cell_contents = @vis.inherit('span')
-            
+
             @vis.all.each (d,i)->
                 column = self.columns[i % self.columns.length]
                 switch column.vis
@@ -220,10 +235,10 @@ class c3.Table extends c3.Base
                         d3.select(this)
                             .classed 'bar', true
                             .style 'width', column.value(d)/column.value_total*100+'%'
-        
+
         cell_contents.options(@cell_options, ((d,i)=>@columns[i].cells)).update()
         @cells.options(@cell_options, ((d,i)=>@columns[i].cells)) # For use in _style()
-        
+
         # Selectable
         if @selectable
             (if origin is 'render' then @rows.all else @rows.new).on 'click.select', (item)=>
@@ -234,11 +249,10 @@ class c3.Table extends c3.Base
 
         # Footer
         @footer = @table.select('caption')
-        paginate = !!@limit_rows and @pagination and @current_data.length > @limit_rows
-        searchable = @searchable and (@searchable_if_not_paginated or paginate)
-        if searchable or paginate
+        paginate = @pagination and !!@limit_rows and @current_data.length > @limit_rows
+        if @searchable or paginate
             @footer.singleton().options(@footer_options).update()
-            
+
             # Pagination
             paginator = @footer.select('span.pagination', ':first-child')
             if paginate
@@ -247,76 +261,54 @@ class c3.Table extends c3.Base
                 @max_pages_in_paginator = Math.floor Math.max @max_pages_in_paginator, 3
                 left_pages = Math.ceil (@max_pages_in_paginator-3) / 2
                 right_pages = Math.floor (@max_pages_in_paginator-3) / 2
-            
+
                 # Previous page button
                 prev_button = paginator.select('span.prev.button').singleton()
                 prev_button.new
                     .text '◀'
-                    .on 'click', => @pagination--; @redraw()
-                prev_button.all.classed 'disabled', current_page <= 1
-            
+                    .on 'click', => @page--; @redraw()
+                prev_button.all.classed 'disabled', @page <= 1
+
                 # Prepare the set of pages to show in the paginator
                 pages = [
                     1
                     (if num_pages > 2 then \
-                     [Math.max(2, Math.min(@pagination-left_pages, num_pages-1-left_pages-right_pages)) .. \
-                        Math.min(num_pages-1, Math.max(current_page+right_pages, 2+left_pages+right_pages))] \
+                     [Math.max(2, Math.min(@page-left_pages, num_pages-1-left_pages-right_pages)) .. \
+                        Math.min(num_pages-1, Math.max(@page+right_pages, 2+left_pages+right_pages))] \
                      else [])...
                     num_pages
                 ]
                 # Add ellipses if there are too many page options to show
                 if pages[1]-pages[0] > 1 then pages.splice(1,0,'…')
                 if pages[pages.length-1]-pages[pages.length-2] > 1 then pages.splice(pages.length-1,0,'…')
-            
-                # Render the page 
+
+                # Render the pages
                 page_buttons = paginator.select('ul').singleton().select('li').bind pages
                 page_buttons.new
-                    .on 'click', (p)=> @pagination=p; @redraw()
+                    .on 'click', (p)=> @page=p; @redraw()
                 page_buttons.all
-                    .classed 'active', (p)=> p == current_page
+                    .classed 'active', (p)=> p == @page
                     .classed 'disabled', (p)=> p == '…'
                     .text (p,i)-> p
-                
+
                 # Next page button
                 next_button = paginator.select('span.next.button').singleton()
                 next_button.new
                     .text '▶'
-                    .on 'click', => @pagination++; @redraw()
-                next_button.all.classed 'disabled', current_page >= @current_data.length / @limit_rows
+                    .on 'click', => @page++; @redraw()
+                next_button.all.classed 'disabled', @page >= @current_data.length / @limit_rows
             else paginator.remove()
-            
+
             # Searchable
             search_control = @footer.select('span.search')
-            # Not searchable if rows are limited but pagination is disabled
-            if searchable and not (not paginate and @current_data.length > @limit_rows)
-                last_search = ""
-                last_found = -1
+            if @searchable
                 search_control.singleton()
                 search_control.inherit('span.button').new
                     .text '🔎'
                     .on 'click', =>
                         search_input.node().classList.remove 'notfound'
-                        value = search_input.node().value
-                        if not value then return
-                        re = RegExp value, 'i' # Case insensitive regular expression
-                        if value isnt last_search # if already found, find the next one
-                            last_found = -1
-                            last_search = value
-                        content = if @searchable is true # Search all columns if searchable is `true`
-                            column_contents = (c3.functor(column.cells.html ? column.cells.text ? @cell_options.html ? @cell_options.text) \
-                                        for column in @columns)
-                            (d,i)-> (column_content(d,i,j) for column_content,j in column_contents).join(' ')
-                        else @searchable
-                        for d,i in @current_data when i>last_found
-                            if re.test content(d,i)
-                                last_found = i
-                                @pagination = Math.ceil (i+1)/@limit_rows
-                                @redraw()
-                                @trigger 'match', value, d, i
-                                return
-                        last_found = -1
-                        search_input.node().classList.add 'notfound'
-                        @trigger 'match', value, null, null
+                        if not @find search_input.node().value
+                            search_input.node().classList.add 'notfound'
                 search_input = search_control.inherit('input').new
                     .attr 'type', 'text'
                     .on 'keydown', ->
@@ -334,13 +326,14 @@ class c3.Table extends c3.Base
             'table': true
             'sortable': @sortable
             'selectable': @selectable
+            'sorted': @sort_column?
             'single_select': @selectable is 'single'
             'multi_select': @selectable is 'multi'
             'paginated': @pagination and @limit_rows and @current_data.length > @limit_rows
             'searchable': !!@searchable
         if @class?
             @table.all.classed klass, true for klass in @class.split(' ')
-        
+
         @header.style()
         @headers.style(style_new).all.classed
             'sortable': if not @sortable then false else (column)-> column.sort?
@@ -352,7 +345,7 @@ class c3.Table extends c3.Base
         @cells.style(style_new and @key?).all.classed
             'sorted': (d,i)-> i is sort_column_i
         @vis?.style(style_new and @key?)
-    
+
     # Sort the table
     # @param column [column] A reference to the column object to sort on
     # @param ascending [Boolean] True to sort top to bottom based on ascending values,
@@ -375,6 +368,43 @@ class c3.Table extends c3.Base
     select: (@selections=@selections)=>
         @highlight()
         @trigger 'select', @selections
+
+    # API for searching the table
+    last_search = ""
+    last_found = -1
+    # Find will find the specified string value in the table and set the current page for it to be visible
+    # This method will not trigger any events, unlike {c3.Table#find find()}.
+    # @param value [String] string to search for
+    # @return An array of the data element found and its index in the data array or null if not found
+    search: (value)=>
+        if not value then return
+        re = RegExp value, 'i' # Case insensitive regular expression
+        if value isnt last_search # if already found, find the next one
+            last_found = -1
+            last_search = value
+        content = if @searchable is true # Search all columns if searchable is `true`
+            column_contents = (c3.functor(column.cells.html ? column.cells.text ? @cell_options.html ? @cell_options.text) \
+                        for column in @columns)
+            (d,i)-> (column_content(d,i,j) for column_content,j in column_contents).join(' ')
+        else @searchable
+        for d,i in @current_data when i>last_found
+            if re.test content(d,i)
+                last_found = i
+                new_page = Math.ceil (i+1)/@limit_rows
+                if new_page != @page then @page=new_page; @redraw()
+                return [d, i]
+        last_found = -1
+        return null
+
+    # Search will find a string in the table, same as {c3.Table#search search()} except
+    # that it will also trigger the `found` event
+    # @param value [String] string to search for
+    # @return An array of the data element found and its index in the data array
+    find: (value)=>
+      ret = @search value
+      @trigger 'found', value, (if ret? then ret else [null, null])...
+      @trigger 'match', value, (if ret? then ret else [null, null])... # Deprecated
+      return ret
 
     # Helper logic for selecting an item in a multiple-select list with a click or ctrl-click
     # @param set [Array] An array of items that represents the current selection

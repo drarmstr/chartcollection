@@ -80,7 +80,7 @@
         </label>
         <label>
             <input id="pagination" type="checkbox" checked />
-            Enable pagination selection
+            Enable pagination
         </label>
         <label>
             Rows per page
@@ -91,14 +91,19 @@
             <input id="number_of_pages" type="number" value="9" min="3" max="20" />
         </label>
         <label>
-            <input id="searchable_if_not_paginated" type="checkbox" checked />
-            Searchable if not paginated
+            <input id="searchable" type="checkbox" checked />
+            Searchable
         </label>
     </form>
 
-    <span id="loading"><b>Loading World Bank Data...</b></span>
     <div id="country_table_example" style="overflow:auto"></div>
     <br />
+
+    <form>
+      <label>
+        External search:
+        <input id="search"
+    </form>
 
     <p>
         Data Source: <a href="http://data.worldbank.org" target="_blank">

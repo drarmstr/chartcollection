@@ -44,8 +44,8 @@ var regions: { [id: number]: Region } = {};
 
 // The following function will download the sample datasets about countries, GDP metrics, etc from **CSV files**.
 // For purposes of understanding the C3 visualization you can skip this section.  Most of it is about
-// transforming the data from the format that the **World Bank** provides to a format best suited to 
-// working with the **Crossfilter** library.  We could have done this transformation ahead of time and 
+// transforming the data from the format that the **World Bank** provides to a format best suited to
+// working with the **Crossfilter** library.  We could have done this transformation ahead of time and
 // just used that modified CSV, but I wanted to work with the CSV in the original format to be able to
 // update the data or get new metrics from the World Bank.
 function download_data() {
@@ -169,7 +169,7 @@ function render() {
 
     // Setup the core metrics dataset with [**Crossfilter**](http://square.github.io/crossfilter/)
     var xf = crossfilter(gdp_data);
-    
+
     // `groupAll()` allows us to get a single value for the entire dataset.
     // In this case we do a reduction based on the total population.
     var total_population = xf.groupAll<number>().reduceSum((d) => d.population);
@@ -193,7 +193,7 @@ function render() {
     // functions to update all of the charts in this example when the dataset is updated via _Crossfilter_.
     // C3 doesn't try to automatically update or resize charts because that can be expensive and so it
     // lets the user indicate when that needs to be done.
-    var charts = [];
+    var charts: c3.Base[] = [];
     function redraw() {
         for (let chart of charts)
             chart.redraw();
@@ -212,10 +212,10 @@ function render() {
     // ### GDP Timeline Chart
 
     // **Crossfiter** dimensions are great for filtering the dataset.  But, we'd also like to visualize
-    // the data based on those dimensions.  This first chart will be a timeline, so we'll use the 
-    // `year_dim` **dimension**.  The dimension has a function called `group()` which will generate 
+    // the data based on those dimensions.  This first chart will be a timeline, so we'll use the
+    // `year_dim` **dimension**.  The dimension has a function called `group()` which will generate
     // a **grouping** based on the data. We use `reduceSum()` to **reduce** each entry in the grouping by
-    // summing a value specified via a callback.  In this way we can get an arrangement of the data 
+    // summing a value specified via a callback.  In this way we can get an arrangement of the data
     // that is grouped by year, but provides values such as GDP, agriculture GDP, etc.
     // The `all()` method returns us an array of this grouping that is easy to use.  Each entry in
     // the array contains a `key` based on the dimension (the year in this case) and a `value`
@@ -267,9 +267,9 @@ function render() {
                 // Use our own formatter to add a "%" symbol after the number
                 tick_label: (n) => n + "%",
             }),
-            // Create a third axis for this plot on the right side.This axis will indicate the 
+            // Create a third axis for this plot on the right side.This axis will indicate the
             // scale for the GDP layer which is expressed in dollars instead of percentage.
-            // It also shows that we can use a different scale here to show one way we can represent 
+            // It also shows that we can use a different scale here to show one way we can represent
             // different units, trillions of dollars instead of billions.
             new c3.Axis.Y({
                 label: "GDP in USD",
@@ -279,10 +279,10 @@ function render() {
                 axis_size: 75,
             }),
         ],
-    
+
         // Create the **layers** for this timeline.
         layers: [
-            // The first layer is an area graph for the world GDP value.  This doesn't use the 
+            // The first layer is an area graph for the world GDP value.  This doesn't use the
             // chart's default vertical scale and instead uses its own scale based on the
             // GDP dollars.  The top of the chart is set to the maximum GDP value in our dataset.
             new c3.Plot.Layer.Area<CrossFilter.Grouping<number, number>>({
@@ -355,13 +355,13 @@ function render() {
 
     // ###########################################################################
     // ### Timeline Legend
-    
+
     // Create a C3 legend and link it with the timeline C3 plot we just created.
     charts.push(new c3.Legend.PlotLegend({
         anchor: '#worldbank_legend',
         plot: timeline,
 
-        // Setup event handlers when hovering over legend items to pulse the opacity 
+        // Setup event handlers when hovering over legend items to pulse the opacity
         // across all charts on the page with the same class as this layer.
         // This demonstrates a way that classes can be used to synchronize related
         // data across the entire page and different visualizations.
@@ -377,15 +377,15 @@ function render() {
 
     // ###########################################################################
     // ### Region Table
-    
+
     // Use Crossfilter to get an array of data just like above.  Only, in this case,
     // we are using the `region_dim` dimension instead of the year dimension.  For each region,
     // this grouping will reduce the value based on GDP.
     var gdp_by_region_data = region_dim.group().reduceSum((d) => d.gdp).all();
-    
+
     // Use this D3 utility function to colorize our regions.
     var region_color = d3.scale.category10<number>();
-    
+
     // Create a `c3.Table` for the regions table.
     var regions_table: c3.Table<CrossFilter.Grouping<number, number>>;
     var gdp_column: c3.Table.Column<CrossFilter.Grouping<number, number>>;
@@ -395,7 +395,7 @@ function render() {
         // Bind it to the **data** prepared above.
         // The `key`'s represent region_id`s and the `value`'s represent gdp.
         data: gdp_by_region_data,
-        
+
         // Create two **columns** for this table.  One with the region name and another for the GDP value
         columns: [
             {
@@ -433,7 +433,7 @@ function render() {
             classes: {
                 'hover': (d) => regions[d.key] === hover_region || (hover_country && d.key === hover_country.region_id),
             },
-            // `row_options.events` will set **event handlers** for **rows** in the table.  Here we set handlers for 
+            // `row_options.events` will set **event handlers** for **rows** in the table.  Here we set handlers for
             // when the mouse hovers over the row.  When it does, we record the region the user is hovering
             // over and call `restyle()` to restyle the charts.  This way all of the charts in the example
             // can highlight or somehow indicate this region of interest.
@@ -453,7 +453,7 @@ function render() {
     // As an alternative to declaratively setting `handlers` for the chart, you can imperatively call
     // `.on()` to manage event handlers.
     //
-    // If the user **selects** one or more rows in the table, then we will 
+    // If the user **selects** one or more rows in the table, then we will
     // **filter** the data based on those regions using _Crossfilter_.
     // `redraw()` is then used to update the charts based on the updated data.
     regions_table.on('select', (selections) => {
@@ -464,11 +464,11 @@ function render() {
         redraw();
     });
 
-    
+
     // ###########################################################################
     // ### Country Scatter Plot
-    
-    // Now we'll create a fun scatter plot of all of the countries.  For this we want to use the 
+
+    // Now we'll create a fun scatter plot of all of the countries.  For this we want to use the
     // **country dimension**.  But, we want more than one piece of information about each country.
     // There are multiple ways to do this, and for larger datasets I would use a different approach.
     // However, I wanted to demonstrate here how to use **custom reduction** functions.  Another possible
@@ -500,35 +500,35 @@ function render() {
         function () { return { gdp: 0, gdp_per_capita: 0, population: 0, land_area: 0 }; }
     ).all();
     console.log("country_data", country_data);
-    
+
     // I initially sized the country dots with their area proportional to their population.
     // However, either the smaller countries were too small to see or the larger countries were
-    // overwhelming.  So, this is an exponential scale to make it easier to reasonably see all of 
+    // overwhelming.  So, this is an exponential scale to make it easier to reasonably see all of
     // the countries at once.  It's a lie, but hey, isn't that what data visualization is...  ;)
     var population_scale = d3.scale.pow()
         .domain([1, d3.max(gdp_data, (d) => d.population)])
         .range([3, 3000])
         .exponent(0.7);
-    
+
     // Create a `c3.Plot` for the **country scatter plot**.
     var average_gdp_layer: c3.Plot.Layer.Line.Horizontal<number>;
     var average_gdp_per_capita_layer: c3.Plot.Layer.Line.Vertical<number>;
     charts.push(new c3.Plot({
         anchor: '#worldbank_country_scatterplot',
         height: 330,
-        
+
         // Setup the **scales** as **logarithmic** for this example.
         // Vertical is based on the country's GDP while horizontal is based on GDP per capita.
         h: d3.scale.log().domain([1, d3.max(gdp_data, (d) => d.gdp_per_capita)]),
         v: d3.scale.log().domain([1, d3.max(gdp_data, (d) => d.gdp)]),
-        
+
         // Setup **margins** and allow the country dots to overflow into the margins.
         margins: {
             top: 20,
         },
         crop_margins: false,
-        
-        // Add **axes**.  In this case just draw the grid lines and axis label, but disable the 
+
+        // Add **axes**.  In this case just draw the grid lines and axis label, but disable the
         // tick marks and unit labels.
         axes: [
             new c3.Axis.X({
@@ -544,26 +544,26 @@ function render() {
                 tick_size: 0,
             }),
         ],
-        
+
         // This plot only contains a single `scatter` layer for the **scatter plot**.
         layers: [
             new c3.Plot.Layer.Scatter<CrossFilter.Grouping<string, CountryData>>({
-                // Bind the layer **data** to the `country_data` prepared above and 
+                // Bind the layer **data** to the `country_data` prepared above and
                 // only draw the country if it has data using **filter**.
                 // The **key** is used to uniquely identify elements which helps optimize
                 // some operations and provides consistency for animations and decimation.
                 data: country_data,
                 key: (d) => d.key,
                 filter: (d) => d.value.gdp_per_capita > 1,
-                
+
                 // Set the **x** and **y** values based on GDP and GDP per capita.
                 x: (d) => Math.max(1, d.value.gdp_per_capita),
                 y: (d) => Math.max(1, d.value.gdp),
-                
+
                 // Set the area of the circle based on the country's population.
                 a: (d) => population_scale(Math.max(1, d.value.population)),
-                
-                // `circle_options.styles` will set CSS **styles** for the **circles**.  Here we set the fill and 
+
+                // `circle_options.styles` will set CSS **styles** for the **circles**.  Here we set the fill and
                 // stroke color based on the country's region.  We also set the fill as translucent
                 // unless this country matches the country or region the user is hovering over with their mouse.
                 circle_options: {
@@ -597,14 +597,14 @@ function render() {
                     },
                 },
 
-                // Enable **animations** in this plot so the countries will move smoothly as the year 
+                // Enable **animations** in this plot so the countries will move smoothly as the year
                 // filter is updated.
                 point_options: {
                     animate: true,
                     duration: 200,
                 },
             }),
-            
+
             // Add a **horizontal line** layer for the average GDP.
             // Note how the data is actually set in the `redraw_start` event below.
             average_gdp_layer = new c3.Plot.Layer.Line.Horizontal<number>({
@@ -618,7 +618,7 @@ function render() {
                     duration: 500,
                 },
             }),
-            
+
             // Add a **vertical line** layer for the average GDP per capita.
             average_gdp_per_capita_layer = new c3.Plot.Layer.Line.Vertical<number>({
                 vector_options: {
@@ -660,7 +660,7 @@ function render() {
     // We'll use the `urban_dim` _Crossfilter_ **dimension** for this.  Notice that in this case
     // we provide a callback function to `group()`.  Previous examples did not do this and just
     // grouped the data based on the dimension's data directly.  Here we are saying that we want
-    // to actually **group** the data along that dimension.  This callback effectively groups 
+    // to actually **group** the data along that dimension.  This callback effectively groups
     // countries into groups of 5% increments based on their urbanization.  So, all data for countries
     // with [0-5) percent urbanization are put into one group, countries with [5-10) are put into
     // a second group and so on.
@@ -679,27 +679,27 @@ function render() {
         data: gdp_by_urban_data,
         // Assign the **class** `urban` to this chart for styling using a stylesheet.
         class: 'urban',
-        
-        // Setup the **scales** for the chart.  The horizontal scale has a domain from 0-100 to 
+
+        // Setup the **scales** for the chart.  The horizontal scale has a domain from 0-100 to
         // cover the different urbanization percentages.  With our dataset the data points will
         // only actually fall at intervals of 5.  Note that the domain isn't set here for the
         // vertical scale.  It needs to be set before the chart is rendered, but we do that below
         // in the `redraw_start` event handler.
         h: d3.scale.linear().domain([0, 100]),
         v: d3.scale.linear(),
-        
+
         // **x** and **y** accessors.  With our data `key` is the urbanization percentage and
         // `value` is the GDP.
         x: (d) => d.key,
         y: (d) => d.value > 1 ? d.value : 0,
-        
+
         // Setup **margins** to allow room for the chart labels
         margins: {
             top: 10,
             right: 20,
         },
         crop_margins: false,
-        
+
         // Add **axes** to provide labels and percentage ticks
         axes: [
             new c3.Axis.X({
@@ -711,7 +711,7 @@ function render() {
                 tick_label: false,
             }),
         ],
-        
+
         // Layers to render.  This example looks silly, but is just to demonstrate that you can
         // add multiple layers with the same data that are drawn differently.  Here you can see
         // an area layer drawn, a line layer on top of that to accentuate the top of the graph,
@@ -727,7 +727,7 @@ function render() {
                 r: 5,
             }),
         ],
-        
+
         // Add chart **event handlers**
         handlers: {
             // `redraw_start` is called before C3 starts to actually draw the chart.  We use it here
@@ -736,7 +736,7 @@ function render() {
             redraw_start: function () {
                 this.v.domain([0, d3.max(gdp_by_urban_data, (d) => d.value)]);
             },
-            
+
             // `select` is triggered whenever the user makes or modifies a selection in the chart.
             // We use that here to **filter** out the data based on the urbanization dimension.
             select: function (extent) {
@@ -750,8 +750,8 @@ function render() {
             },
         },
     }));
-    
-    
+
+
     // ###########################################################################
     // ### Histograms
 
@@ -780,20 +780,20 @@ function render() {
             selectable: 'h',
 
             data: hist_data,
-            
+
             // **Scales** for the histogram.  The horizontal scale goes from 0-100% for the histogram.
             // The vertical scale reflects the count of countries that fall in that percentage, though
             // it is set below in the `redraw_start` handler.
             h: d3.scale.linear().domain([0, 100]),
             v: d3.scale.linear(),
-            
+
             // **x** and **y** accessors.  `key` represents the percentage of GDP based on this
             // dimension and `value` represents the count of countries with that percentage.
             x: (d) => d.key,
             y: (d) => d.value,
-            
+
             // Notice there are no axes added here, that is covered below.
-            
+
             // Add a **layer** to draw an area graph for the histogram.  By assigning it a **class**
             // based on the dimension name the stylesheet will specify how it is styled.  It also
             // allows these layers to be highlighted when the legend at the top of the example is hovered.
@@ -804,7 +804,7 @@ function render() {
                     interpolate: 'cardinal',
                 }),
             ],
-            
+
             // Add chart **event handlers**
             handlers: {
                 // `redraw_start` is called before C3 starts to actually draw the chart.  We use it here
@@ -813,7 +813,7 @@ function render() {
                 redraw_start: function () {
                     this.v.domain([0, d3.max(hist_data, (d) => d.value)]);
                 },
-                
+
                 // `select` is triggered whenever the user makes or modifies a selection in the chart.
                 // We use that here to **filter** out the data based on this dimension.
                 select: function (extent) {
@@ -828,11 +828,11 @@ function render() {
             },
         });
     }
-    
+
     // For these histograms we will display a histogram of the count of countries based on the
     // percentage of their GDP based on services, agriculture, etc.  Notice that these **groupings**
     // are missing calls to `reduceSum()`.  Therefore they use the default reduction which just counts
-    // the number of data elements in each group.  This effectively gives us a histogram.  The 
+    // the number of data elements in each group.  This effectively gives us a histogram.  The
     // grouping function here will also group countries into groups of 5% just like the urbanization example.
     var services_hist = services_dim.group((key) => Math.floor(key / 5) * 5).all();
     var agriculture_hist = agriculture_dim.group((key) => Math.floor(key / 5) * 5).all();
@@ -842,7 +842,7 @@ function render() {
     charts.push(histogram_plot('services', services_dim, services_hist));
     charts.push(histogram_plot('manufacturing', manufacturing_dim, manufacturing_hist));
     charts.push(histogram_plot('agriculture', agriculture_dim, agriculture_hist));
-    
+
     // Previous examples usually attached axes directly to their associated plot.  This example
     // demonstrates a different way of laying out the charts.  To provide flexibility, axes can be
     // created independently of plots.  This example creates a single X-Axis that is added to the
@@ -858,7 +858,7 @@ function render() {
 
     // #########################################################################################
     // ## Country Table
-    
+
     // Create a second dimension to filter on so the scatter plot will reflect this filter.
     var country_dim2 = xf.dimension((d) => d.country_code);
     var country_data2 = country_dim2.group().reduce<CountryData>(
@@ -885,16 +885,16 @@ function render() {
         anchor: '#worldbank_country_table',
         width: '100%',
         data: country_data2,
-        
+
         // Enable users to **select** and **sort** countries in this table.
         selectable: true,
         sortable: true,
-        
+
         // **Limit** this table to only show the top 10 countries and not to display any countries
         // that have a 0 value.
         limit_rows: 10,
         filter: (d) => d.value.gdp > 0.000000001,
-        
+
         // Divide the table up into pages and allow user to **search** the table
         pagination: true,
         searchable: true,
@@ -915,7 +915,7 @@ function render() {
                     },
                 },
             }, {
-                // These columns use custom formatters to set the html content of the cell 
+                // These columns use custom formatters to set the html content of the cell
                 // adding commas, units, rounding, etc.  You can add raw HTML if you like.
                 // These column also use the `vis` visualization support to render a bar
                 // graph based on the cell value.
@@ -956,17 +956,17 @@ function render() {
                 padding: "0 0.25em",
             },
         },
-        
+
         // Use `row_options.classes` to enable **CSS classes** on table **rows**.  The classes can be
         // whatever class you want for your styling.  Here we turn on the `hover` class if this
-        // country matches the country the user is hovering over or is in the region the use is 
+        // country matches the country the user is hovering over or is in the region the use is
         // hovering over with their mouse.  The stylesheet will then dictate how these rows appear;
         // in this case giving them a wheat-colored background.
         row_options: {
             classes: {
                 hover: (d) => hover_country === countries[d.key] || hover_region === regions[countries[d.key].region_id],
             },
-        
+
             // `row_options.events` adds **event handlers** to table **rows**.  These handlers set the global
             // hover country when the user hovers the mouse over a row.  `restyle()` is then called
             // for all charts to update based on this new focus country.
@@ -981,7 +981,7 @@ function render() {
                 },
             },
         },
-        
+
         // `handlers` adds **event handlers** to the chart object itself.  Here we tie into the
         // `select` event when the user selects one or more row to **filter** the data on only that country.
         // _Note_: While all the other charts will filter to only display the filtered country the
@@ -1002,16 +1002,16 @@ function render() {
             },
 
             // The `match` event is triggered for a row that is found with a user search
-            'match': (search, d) => {
+            'found': (search, d) => {
                 hover_country = d != null ? countries[d.key] : null;
                 restyle();
             },
         },
     }));
-    
+
     // #########################################################################################
     // ### Initial Rendering
-    
+
     // Perform the initial `render()`
     for (let chart of charts)
         chart.render();
@@ -1027,19 +1027,19 @@ function render() {
 // #########################################################################################
 // # Start Here
 
-// The loading and rendering are initiated here..  It calls the `download_data()` function to 
-// download the data which returns a Promise.  We setup a _then_ callback function to be 
-// called when all of the data is loaded and promised.  This callback function calls which ends up 
+// The loading and rendering are initiated here..  It calls the `download_data()` function to
+// download the data which returns a Promise.  We setup a _then_ callback function to be
+// called when all of the data is loaded and promised.  This callback function calls which ends up
 // calling the `render()` function.
 download_data().then(function () { setTimeout(render, 0); });
 // The reason to have setTimeout call the render function instead of calling it directly is
 // just a trick to help with debugging in the browser when using promises.  The callback function
 // for a promise is called, which catches all exceptions to be used to call an error callback.
 // This is great except unhandled errors are then reported to the debugger later after we are already
-// out of the context of the error.  So, you can't navigate the stack, view the contents of variables, 
+// out of the context of the error.  So, you can't navigate the stack, view the contents of variables,
 // etc.  By using setTimeout it will cause the callback to return immediatly and then the browser
 // will call render itself.  Since this is done outside of the promise's scope, exceptions are not caught and
-// passed to the promise error handler and instead can be caught and handeled as normal in a 
+// passed to the promise error handler and instead can be caught and handeled as normal in a
 // debugger.  In production code you could use this instead:
 
 //     download_data().then(render)

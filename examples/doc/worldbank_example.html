@@ -237,8 +237,8 @@ a proper <em>MVC</em> architecture, so we’ll just use some simple global objec
               </div>
               <p>The following function will download the sample datasets about countries, GDP metrics, etc from <strong>CSV files</strong>.
 For purposes of understanding the C3 visualization you can skip this section.  Most of it is about
-transforming the data from the format that the <strong>World Bank</strong> provides to a format best suited to 
-working with the <strong>Crossfilter</strong> library.  We could have done this transformation ahead of time and 
+transforming the data from the format that the <strong>World Bank</strong> provides to a format best suited to
+working with the <strong>Crossfilter</strong> library.  We could have done this transformation ahead of time and
 just used that modified CSV, but I wanted to work with the CSV in the original format to be able to
 update the data or get new metrics from the World Bank.</p>
 
@@ -623,7 +623,7 @@ lets the user indicate when that needs to be done.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> charts = [];
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> charts: c3.Base[] = [];
     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">redraw</span>(<span class="hljs-params"></span>) </span>{
         <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> chart of charts)
             chart.redraw();
@@ -673,10 +673,10 @@ lets the user indicate when that needs to be done.</p>
                 <a class="pilcrow" href="#section-29">&#182;</a>
               </div>
               <p><strong>Crossfiter</strong> dimensions are great for filtering the dataset.  But, we’d also like to visualize
-the data based on those dimensions.  This first chart will be a timeline, so we’ll use the 
-<code>year_dim</code> <strong>dimension</strong>.  The dimension has a function called <code>group()</code> which will generate 
+the data based on those dimensions.  This first chart will be a timeline, so we’ll use the
+<code>year_dim</code> <strong>dimension</strong>.  The dimension has a function called <code>group()</code> which will generate
 a <strong>grouping</strong> based on the data. We use <code>reduceSum()</code> to <strong>reduce</strong> each entry in the grouping by
-summing a value specified via a callback.  In this way we can get an arrangement of the data 
+summing a value specified via a callback.  In this way we can get an arrangement of the data
 that is grouped by year, but provides values such as GDP, agriculture GDP, etc.
 The <code>all()</code> method returns us an array of this grouping that is easy to use.  Each entry in
 the array contains a <code>key</code> based on the dimension (the year in this case) and a <code>value</code>
@@ -864,9 +864,9 @@ provide for visualizing based on the data.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-40">&#182;</a>
               </div>
-              <p>Create a third axis for this plot on the right side.This axis will indicate the 
+              <p>Create a third axis for this plot on the right side.This axis will indicate the
 scale for the GDP layer which is expressed in dollars instead of percentage.
-It also shows that we can use a different scale here to show one way we can represent 
+It also shows that we can use a different scale here to show one way we can represent
 different units, trillions of dollars instead of billions.</p>
 
             </div>
@@ -904,7 +904,7 @@ different units, trillions of dollars instead of billions.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-42">&#182;</a>
               </div>
-              <p>The first layer is an area graph for the world GDP value.  This doesn’t use the 
+              <p>The first layer is an area graph for the world GDP value.  This doesn’t use the
 chart’s default vertical scale and instead uses its own scale based on the
 GDP dollars.  The top of the chart is set to the maximum GDP value in our dataset.</p>
 
@@ -1068,7 +1068,7 @@ all charts to reflect the updated dataset filtering.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-49">&#182;</a>
               </div>
-              <p>Setup event handlers when hovering over legend items to pulse the opacity 
+              <p>Setup event handlers when hovering over legend items to pulse the opacity
 across all charts on the page with the same class as this layer.
 This demonstrates a way that classes can be used to synchronize related
 data across the entire page and different visualizations.</p>
@@ -1302,7 +1302,7 @@ the class <code>hover</code> to have a wheat-colored background.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-62">&#182;</a>
               </div>
-              <p><code>row_options.events</code> will set <strong>event handlers</strong> for <strong>rows</strong> in the table.  Here we set handlers for 
+              <p><code>row_options.events</code> will set <strong>event handlers</strong> for <strong>rows</strong> in the table.  Here we set handlers for
 when the mouse hovers over the row.  When it does, we record the region the user is hovering
 over and call <code>restyle()</code> to restyle the charts.  This way all of the charts in the example
 can highlight or somehow indicate this region of interest.</p>
@@ -1333,7 +1333,7 @@ can highlight or somehow indicate this region of interest.</p>
               </div>
               <p>As an alternative to declaratively setting <code>handlers</code> for the chart, you can imperatively call
 <code>.on()</code> to manage event handlers.</p>
-<p>If the user <strong>selects</strong> one or more rows in the table, then we will 
+<p>If the user <strong>selects</strong> one or more rows in the table, then we will
 <strong>filter</strong> the data based on those regions using <em>Crossfilter</em>.
 <code>redraw()</code> is then used to update the charts based on the updated data.</p>
 
@@ -1370,7 +1370,7 @@ can highlight or somehow indicate this region of interest.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-65">&#182;</a>
               </div>
-              <p>Now we’ll create a fun scatter plot of all of the countries.  For this we want to use the 
+              <p>Now we’ll create a fun scatter plot of all of the countries.  For this we want to use the
 <strong>country dimension</strong>.  But, we want more than one piece of information about each country.
 There are multiple ways to do this, and for larger datasets I would use a different approach.
 However, I wanted to demonstrate here how to use <strong>custom reduction</strong> functions.  Another possible
@@ -1417,7 +1417,7 @@ on if that data item is filtered in or out.  <em>Crossfilter</em> is surprisingl
               </div>
               <p>I initially sized the country dots with their area proportional to their population.
 However, either the smaller countries were too small to see or the larger countries were
-overwhelming.  So, this is an exponential scale to make it easier to reasonably see all of 
+overwhelming.  So, this is an exponential scale to make it easier to reasonably see all of
 the countries at once.  It’s a lie, but hey, isn’t that what data visualization is…  ;)</p>
 
             </div>
@@ -1490,7 +1490,7 @@ Vertical is based on the country’s GDP while horizontal is based on GDP per ca
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-70">&#182;</a>
               </div>
-              <p>Add <strong>axes</strong>.  In this case just draw the grid lines and axis label, but disable the 
+              <p>Add <strong>axes</strong>.  In this case just draw the grid lines and axis label, but disable the
 tick marks and unit labels.</p>
 
             </div>
@@ -1535,7 +1535,7 @@ tick marks and unit labels.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-72">&#182;</a>
               </div>
-              <p>Bind the layer <strong>data</strong> to the <code>country_data</code> prepared above and 
+              <p>Bind the layer <strong>data</strong> to the <code>country_data</code> prepared above and
 only draw the country if it has data using <strong>filter</strong>.
 The <strong>key</strong> is used to uniquely identify elements which helps optimize
 some operations and provides consistency for animations and decimation.</p>
@@ -1586,7 +1586,7 @@ some operations and provides consistency for animations and decimation.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-75">&#182;</a>
               </div>
-              <p><code>circle_options.styles</code> will set CSS <strong>styles</strong> for the <strong>circles</strong>.  Here we set the fill and 
+              <p><code>circle_options.styles</code> will set CSS <strong>styles</strong> for the <strong>circles</strong>.  Here we set the fill and
 stroke color based on the country’s region.  We also set the fill as translucent
 unless this country matches the country or region the user is hovering over with their mouse.</p>
 
@@ -1645,7 +1645,7 @@ div in the right column to display information about this particular country.</p
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-77">&#182;</a>
               </div>
-              <p>Enable <strong>animations</strong> in this plot so the countries will move smoothly as the year 
+              <p>Enable <strong>animations</strong> in this plot so the countries will move smoothly as the year
 filter is updated.</p>
 
             </div>
@@ -1766,7 +1766,7 @@ on the percentage of the country that is urbanized (living in a city of 1 millio
 We’ll use the <code>urban_dim</code> <em>Crossfilter</em> <strong>dimension</strong> for this.  Notice that in this case
 we provide a callback function to <code>group()</code>.  Previous examples did not do this and just
 grouped the data based on the dimension’s data directly.  Here we are saying that we want
-to actually <strong>group</strong> the data along that dimension.  This callback effectively groups 
+to actually <strong>group</strong> the data along that dimension.  This callback effectively groups
 countries into groups of 5% increments based on their urbanization.  So, all data for countries
 with [0-5) percent urbanization are put into one group, countries with [5-10) are put into
 a second group and so on.</p>
@@ -1823,7 +1823,7 @@ user to make horizontal selections in the chart.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-85">&#182;</a>
               </div>
-              <p>Setup the <strong>scales</strong> for the chart.  The horizontal scale has a domain from 0-100 to 
+              <p>Setup the <strong>scales</strong> for the chart.  The horizontal scale has a domain from 0-100 to
 cover the different urbanization percentages.  With our dataset the data points will
 only actually fall at intervals of 5.  Note that the domain isn’t set here for the
 vertical scale.  It needs to be set before the chart is rendered, but we do that below
@@ -2201,7 +2201,7 @@ We use that here to <strong>filter</strong> out the data based on this dimension
               <p>For these histograms we will display a histogram of the count of countries based on the
 percentage of their GDP based on services, agriculture, etc.  Notice that these <strong>groupings</strong>
 are missing calls to <code>reduceSum()</code>.  Therefore they use the default reduction which just counts
-the number of data elements in each group.  This effectively gives us a histogram.  The 
+the number of data elements in each group.  This effectively gives us a histogram.  The
 grouping function here will also group countries into groups of 5% just like the urbanization example.</p>
 
             </div>
@@ -2416,7 +2416,7 @@ region this country is in.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-115">&#182;</a>
               </div>
-              <p>These columns use custom formatters to set the html content of the cell 
+              <p>These columns use custom formatters to set the html content of the cell
 adding commas, units, rounding, etc.  You can add raw HTML if you like.
 These column also use the <code>vis</code> visualization support to render a bar
 graph based on the cell value.</p>
@@ -2523,7 +2523,7 @@ per capita value.  Look out for Monaco!</p>
               </div>
               <p>Use <code>row_options.classes</code> to enable <strong>CSS classes</strong> on table <strong>rows</strong>.  The classes can be
 whatever class you want for your styling.  Here we turn on the <code>hover</code> class if this
-country matches the country the user is hovering over or is in the region the use is 
+country matches the country the user is hovering over or is in the region the use is
 hovering over with their mouse.  The stylesheet will then dictate how these rows appear;
 in this case giving them a wheat-colored background.</p>
 
@@ -2605,7 +2605,7 @@ the scatter plot and this table.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="hljs-string">'match'</span>: (search, d) =&gt; {
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-string">'found'</span>: (search, d) =&gt; {
                 hover_country = d != <span class="hljs-literal">null</span> ? countries[d.key] : <span class="hljs-literal">null</span>;
                 restyle();
             },
@@ -2684,9 +2684,9 @@ the scatter plot and this table.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-128">&#182;</a>
               </div>
-              <p>The loading and rendering are initiated here..  It calls the <code>download_data()</code> function to 
-download the data which returns a Promise.  We setup a <em>then</em> callback function to be 
-called when all of the data is loaded and promised.  This callback function calls which ends up 
+              <p>The loading and rendering are initiated here..  It calls the <code>download_data()</code> function to
+download the data which returns a Promise.  We setup a <em>then</em> callback function to be
+called when all of the data is loaded and promised.  This callback function calls which ends up
 calling the <code>render()</code> function.</p>
 
             </div>
@@ -2706,10 +2706,10 @@ calling the <code>render()</code> function.</p>
 just a trick to help with debugging in the browser when using promises.  The callback function
 for a promise is called, which catches all exceptions to be used to call an error callback.
 This is great except unhandled errors are then reported to the debugger later after we are already
-out of the context of the error.  So, you can’t navigate the stack, view the contents of variables, 
+out of the context of the error.  So, you can’t navigate the stack, view the contents of variables,
 etc.  By using setTimeout it will cause the callback to return immediatly and then the browser
 will call render itself.  Since this is done outside of the promise’s scope, exceptions are not caught and
-passed to the promise error handler and instead can be caught and handeled as normal in a 
+passed to the promise error handler and instead can be caught and handeled as normal in a
 debugger.  In production code you could use this instead:</p>
 
             </div>

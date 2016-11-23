@@ -128,21 +128,6 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>Remember the column to specify sorting by it.</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> sort_column: c3.Table.Column&lt;<span class="hljs-built_in">number</span>&gt;;</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-3">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-3">&#182;</a>
-              </div>
               <h2 id="create-the-data-table">Create the Data Table</h2>
 <p>Create a <code>c3.Table</code> object and set its options.  Bind to an <strong>anchor</strong> DOM element using a <em>string selector</em>.</p>
 
@@ -154,11 +139,11 @@
         </li>
         
         
-        <li id="section-4">
+        <li id="section-3">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
+                <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
               <p>Specify the <strong>width</strong> to set the anchor node.  Setting the height and width is optional.</p>
 
@@ -169,11 +154,11 @@
         </li>
         
         
-        <li id="section-5">
+        <li id="section-4">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-5">&#182;</a>
+                <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
               <p>The raw <strong>data</strong> to visualize.  The data must be provided as an array.</p>
 
@@ -184,11 +169,11 @@
         </li>
         
         
-        <li id="section-6">
+        <li id="section-5">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
+                <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
               <p>Only include data elements that are greater than 0</p>
 
@@ -199,11 +184,11 @@
         </li>
         
         
-        <li id="section-7">
+        <li id="section-6">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
+                <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
               <p>Enable the user to <strong>sort</strong> this table.</p>
 
@@ -214,11 +199,11 @@
         </li>
         
         
-        <li id="section-8">
+        <li id="section-7">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
+                <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
               <p>Create an array of <strong>column</strong> objects to describe the table columns.</p>
 
@@ -229,20 +214,19 @@
         </li>
         
         
-        <li id="section-9">
+        <li id="section-8">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-9">&#182;</a>
+                <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
               <p>The first column <code>header</code> is labeled “x”.The <code>cells.text</code> callback describes
 how to generate the text content for the cells based on the data.
-<code>sortable</code> enables <strong>sorting</strong> for this column based on the <strong>value</strong> of the <code>value</code> callback.
-Assign this column to a variable <code>sort_column</code> so we can reference it later.</p>
+<code>sortable</code> enables <strong>sorting</strong> for this column based on the <strong>value</strong> of the <code>value</code> callback.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        sort_column = {
+            <div class="content"><div class='highlight'><pre>        {
             header: { text: <span class="hljs-string">"x"</span> },
             cells: {
                 text: (d) =&gt; d,
@@ -255,11 +239,11 @@ Assign this column to a variable <code>sort_column</code> so we can reference it
         </li>
         
         
-        <li id="section-10">
+        <li id="section-9">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-10">&#182;</a>
+                <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
               <p>Create a second column that displays the data value squared for each row.</p>
 
@@ -275,11 +259,11 @@ Assign this column to a variable <code>sort_column</code> so we can reference it
         </li>
         
         
-        <li id="section-11">
+        <li id="section-10">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-11">&#182;</a>
+                <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
               <p>Create a third column that displays the negative data value for each row.</p>
 
@@ -296,27 +280,28 @@ Assign this column to a variable <code>sort_column</code> so we can reference it
         </li>
         
         
-        <li id="section-12">
+        <li id="section-11">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-12">&#182;</a>
+                <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
-              <p>Configure the initial column to <strong>sort</strong> the data on based on the column varible <code>x_column</code> we created above.</p>
+              <p>Configure the initial column to <strong>sort</strong> the data on based on the column
+with the header text “x”.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    sort_column: sort_column,
+            <div class="content"><div class='highlight'><pre>    sort_column: <span class="hljs-string">'x'</span>,
 });</pre></div></div>
             
         </li>
         
         
-        <li id="section-13">
+        <li id="section-12">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-13">&#182;</a>
+                <a class="pilcrow" href="#section-12">&#182;</a>
               </div>
               <p>Render the table!</p>
 

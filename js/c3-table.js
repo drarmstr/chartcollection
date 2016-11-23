@@ -7,6 +7,8 @@
     indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   c3.Table = (function(superClass) {
+    var last_found, last_search;
+
     extend(Table, superClass);
 
     Table.version = 0.1;
@@ -31,11 +33,11 @@
 
     Table.prototype.pagination = false;
 
+    Table.prototype.page = void 0;
+
     Table.prototype.max_pages_in_paginator = 9;
 
     Table.prototype.searchable = false;
-
-    Table.prototype.searchable_if_not_paginated = true;
 
     Table.prototype.table_options = void 0;
 
@@ -54,6 +56,8 @@
     Table.prototype.vis_options = void 0;
 
     function Table() {
+      this.find = bind(this.find, this);
+      this.search = bind(this.search, this);
       this.select = bind(this.select, this);
       this.highlight = bind(this.highlight, this);
       this.sort = bind(this.sort, this);
@@ -119,6 +123,14 @@
           throw "column.value() not defined for a column with a column.vis visualization";
         }
       }
+      if ((this.sort_column != null) && typeof this.sort_column === 'string') {
+        this.sort_column = this.columns.find((function(_this) {
+          return function(column) {
+            var ref1, ref2;
+            return _this.sort_column === (column != null ? (ref1 = column.header) != null ? ref1.text : void 0 : void 0) || _this.sort_column === (column != null ? (ref2 = column.header) != null ? ref2.html : void 0 : void 0);
+          };
+        })(this));
+      }
       return this._update_headers();
     };
 
@@ -149,7 +161,7 @@
     };
 
     Table.prototype._update = function(origin) {
-      var cell_contents, column, current_page, d, data, datum, i, k, l, last_found, last_search, left_pages, len, len1, m, next_button, num_pages, page_buttons, pages, paginate, paginator, prev_button, ref, ref1, ref2, ref3, ref4, ref5, results, right_pages, search_control, search_input, searchable, self;
+      var cell_contents, column, d, data, datum, i, k, l, left_pages, len, len1, m, next_button, num_pages, page_buttons, pages, paginate, paginator, prev_button, ref, ref1, ref2, ref3, ref4, ref5, results, right_pages, search_control, search_input, self;
       self = this;
       ref = this.columns;
       for (k = 0, len = ref.length; k < len; k++) {
@@ -189,6 +201,7 @@
         }
       }
       data = (function() {
+        var ref4;
         if (!this.limit_rows) {
           return this.current_data;
         } else {
@@ -196,12 +209,8 @@
           if (isNaN(this.limit_rows)) {
             throw Error("limit_rows set to non-numeric value: " + this.limit_rows);
           }
-          current_page = isNaN(this.pagination) ? 1 : this.pagination;
-          current_page = Math.max(1, Math.min(Math.ceil(this.current_data.length / this.limit_rows), current_page));
-          if (this.pagination) {
-            this.pagination = current_page;
-          }
-          return this.current_data.slice(this.limit_rows * (current_page - 1), +((this.limit_rows * current_page) - 1) + 1 || 9e9);
+          this.page = Math.max(1, Math.min(Math.ceil(this.current_data.length / this.limit_rows), (ref4 = this.page) != null ? ref4 : 1));
+          return this.current_data.slice(this.limit_rows * (this.page - 1), +((this.limit_rows * this.page) - 1) + 1 || 9e9);
         }
       }).call(this);
       this.rows = this.body.select('tr').bind(data, this.key);
@@ -266,9 +275,8 @@
         this.rows.all.on('click.select', null);
       }
       this.footer = this.table.select('caption');
-      paginate = !!this.limit_rows && this.pagination && this.current_data.length > this.limit_rows;
-      searchable = this.searchable && (this.searchable_if_not_paginated || paginate);
-      if (searchable || paginate) {
+      paginate = this.pagination && !!this.limit_rows && this.current_data.length > this.limit_rows;
+      if (this.searchable || paginate) {
         this.footer.singleton().options(this.footer_options).update();
         paginator = this.footer.select('span.pagination', ':first-child');
         if (paginate) {
@@ -280,14 +288,14 @@
           prev_button = paginator.select('span.prev.button').singleton();
           prev_button["new"].text('◀').on('click', (function(_this) {
             return function() {
-              _this.pagination--;
+              _this.page--;
               return _this.redraw();
             };
           })(this));
-          prev_button.all.classed('disabled', current_page <= 1);
+          prev_button.all.classed('disabled', this.page <= 1);
           pages = [1].concat(slice.call((num_pages > 2 ? (function() {
               results = [];
-              for (var m = ref4 = Math.max(2, Math.min(this.pagination - left_pages, num_pages - 1 - left_pages - right_pages)), ref5 = Math.min(num_pages - 1, Math.max(current_page + right_pages, 2 + left_pages + right_pages)); ref4 <= ref5 ? m <= ref5 : m >= ref5; ref4 <= ref5 ? m++ : m--){ results.push(m); }
+              for (var m = ref4 = Math.max(2, Math.min(this.page - left_pages, num_pages - 1 - left_pages - right_pages)), ref5 = Math.min(num_pages - 1, Math.max(this.page + right_pages, 2 + left_pages + right_pages)); ref4 <= ref5 ? m <= ref5 : m >= ref5; ref4 <= ref5 ? m++ : m--){ results.push(m); }
               return results;
             }).apply(this) : [])), [num_pages]);
           if (pages[1] - pages[0] > 1) {
@@ -299,13 +307,13 @@
           page_buttons = paginator.select('ul').singleton().select('li').bind(pages);
           page_buttons["new"].on('click', (function(_this) {
             return function(p) {
-              _this.pagination = p;
+              _this.page = p;
               return _this.redraw();
             };
           })(this));
           page_buttons.all.classed('active', (function(_this) {
             return function(p) {
-              return p === current_page;
+              return p === _this.page;
             };
           })(this)).classed('disabled', (function(_this) {
             return function(p) {
@@ -317,69 +325,23 @@
           next_button = paginator.select('span.next.button').singleton();
           next_button["new"].text('▶').on('click', (function(_this) {
             return function() {
-              _this.pagination++;
+              _this.page++;
               return _this.redraw();
             };
           })(this));
-          next_button.all.classed('disabled', current_page >= this.current_data.length / this.limit_rows);
+          next_button.all.classed('disabled', this.page >= this.current_data.length / this.limit_rows);
         } else {
           paginator.remove();
         }
         search_control = this.footer.select('span.search');
-        if (searchable && !(!paginate && this.current_data.length > this.limit_rows)) {
-          last_search = "";
-          last_found = -1;
+        if (this.searchable) {
           search_control.singleton();
           search_control.inherit('span.button')["new"].text('🔎').on('click', (function(_this) {
             return function() {
-              var column_contents, content, len2, n, re, ref6, value;
               search_input.node().classList.remove('notfound');
-              value = search_input.node().value;
-              if (!value) {
-                return;
+              if (!_this.find(search_input.node().value)) {
+                return search_input.node().classList.add('notfound');
               }
-              re = RegExp(value, 'i');
-              if (value !== last_search) {
-                last_found = -1;
-                last_search = value;
-              }
-              content = _this.searchable === true ? (column_contents = (function() {
-                var len2, n, ref6, ref7, ref8, ref9, results1;
-                ref6 = this.columns;
-                results1 = [];
-                for (n = 0, len2 = ref6.length; n < len2; n++) {
-                  column = ref6[n];
-                  results1.push(c3.functor((ref7 = (ref8 = (ref9 = column.cells.html) != null ? ref9 : column.cells.text) != null ? ref8 : this.cell_options.html) != null ? ref7 : this.cell_options.text));
-                }
-                return results1;
-              }).call(_this), function(d, i) {
-                var column_content, j;
-                return ((function() {
-                  var len2, n, results1;
-                  results1 = [];
-                  for (j = n = 0, len2 = column_contents.length; n < len2; j = ++n) {
-                    column_content = column_contents[j];
-                    results1.push(column_content(d, i, j));
-                  }
-                  return results1;
-                })()).join(' ');
-              }) : _this.searchable;
-              ref6 = _this.current_data;
-              for (i = n = 0, len2 = ref6.length; n < len2; i = ++n) {
-                d = ref6[i];
-                if (i > last_found) {
-                  if (re.test(content(d, i))) {
-                    last_found = i;
-                    _this.pagination = Math.ceil((i + 1) / _this.limit_rows);
-                    _this.redraw();
-                    _this.trigger('match', value, d, i);
-                    return;
-                  }
-                }
-              }
-              last_found = -1;
-              search_input.node().classList.add('notfound');
-              return _this.trigger('match', value, null, null);
             };
           })(this));
           return search_input = search_control.inherit('input')["new"].attr('type', 'text').on('keydown', function() {
@@ -404,6 +366,7 @@
         'table': true,
         'sortable': this.sortable,
         'selectable': this.selectable,
+        'sorted': this.sort_column != null,
         'single_select': this.selectable === 'single',
         'multi_select': this.selectable === 'multi',
         'paginated': this.pagination && this.limit_rows && this.current_data.length > this.limit_rows,
@@ -469,6 +432,68 @@
       this.selections = selections != null ? selections : this.selections;
       this.highlight();
       return this.trigger('select', this.selections);
+    };
+
+    last_search = "";
+
+    last_found = -1;
+
+    Table.prototype.search = function(value) {
+      var column, column_contents, content, d, i, k, len, new_page, re, ref;
+      if (!value) {
+        return;
+      }
+      re = RegExp(value, 'i');
+      if (value !== last_search) {
+        last_found = -1;
+        last_search = value;
+      }
+      content = this.searchable === true ? (column_contents = (function() {
+        var k, len, ref, ref1, ref2, ref3, results;
+        ref = this.columns;
+        results = [];
+        for (k = 0, len = ref.length; k < len; k++) {
+          column = ref[k];
+          results.push(c3.functor((ref1 = (ref2 = (ref3 = column.cells.html) != null ? ref3 : column.cells.text) != null ? ref2 : this.cell_options.html) != null ? ref1 : this.cell_options.text));
+        }
+        return results;
+      }).call(this), function(d, i) {
+        var column_content, j;
+        return ((function() {
+          var k, len, results;
+          results = [];
+          for (j = k = 0, len = column_contents.length; k < len; j = ++k) {
+            column_content = column_contents[j];
+            results.push(column_content(d, i, j));
+          }
+          return results;
+        })()).join(' ');
+      }) : this.searchable;
+      ref = this.current_data;
+      for (i = k = 0, len = ref.length; k < len; i = ++k) {
+        d = ref[i];
+        if (i > last_found) {
+          if (re.test(content(d, i))) {
+            last_found = i;
+            new_page = Math.ceil((i + 1) / this.limit_rows);
+            if (new_page !== this.page) {
+              this.page = new_page;
+              this.redraw();
+            }
+            return [d, i];
+          }
+        }
+      }
+      last_found = -1;
+      return null;
+    };
+
+    Table.prototype.find = function(value) {
+      var ret;
+      ret = this.search(value);
+      this.trigger.apply(this, ['found', value].concat(slice.call((ret != null ? ret : [null, null]))));
+      this.trigger.apply(this, ['match', value].concat(slice.call((ret != null ? ret : [null, null]))));
+      return ret;
     };
 
     Table.set_select = function(set, item, multi_select) {
