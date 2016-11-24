@@ -133,7 +133,7 @@
           };
         })(this));
       }
-      if (this.searchable && !((ref1 = this.handlers) != null ? ref1.found : void 0) && !((ref2 = this.handlers) != null ? ref2.match : void 0)) {
+      if (this.searchable && this.selectable && !((ref1 = this.handlers) != null ? ref1.found : void 0) && !((ref2 = this.handlers) != null ? ref2.match : void 0)) {
         this.on('found', (function(_this) {
           return function(str, data, i) {
             return _this.select([data]);

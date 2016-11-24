@@ -180,7 +180,7 @@ class c3.Table extends c3.Base
                 @sort_column == column?.header?.text or @sort_column == column?.header?.html
 
         # Searchable and Selectable tables default to selecting matches
-        if @searchable and not @handlers?.found and not @handlers?.match # `match` is Deprecated
+        if @searchable and @selectable and not @handlers?.found and not @handlers?.match # `match` is Deprecated
             @on 'found', (str, data, i) => @select [data]
 
         @_update_headers()
