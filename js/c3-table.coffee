@@ -178,6 +178,8 @@ class c3.Table extends c3.Base
         if @sort_column? and typeof @sort_column == 'string'
             @sort_column = @columns.find (column)=>
                 @sort_column == column?.header?.text or @sort_column == column?.header?.html
+            if not @sort_column?
+                throw "sort_column string name specified, but no column with that header text/html was found."
 
         # Searchable and Selectable tables default to selecting matches
         if @searchable and @selectable and not @handlers?.found and not @handlers?.match # `match` is Deprecated

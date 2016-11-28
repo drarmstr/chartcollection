@@ -132,6 +132,9 @@
             return _this.sort_column === (column != null ? (ref1 = column.header) != null ? ref1.text : void 0 : void 0) || _this.sort_column === (column != null ? (ref2 = column.header) != null ? ref2.html : void 0 : void 0);
           };
         })(this));
+        if (this.sort_column == null) {
+          throw "sort_column string name specified, but no column with that header text/html was found.";
+        }
       }
       if (this.searchable && this.selectable && !((ref1 = this.handlers) != null ? ref1.found : void 0) && !((ref2 = this.handlers) != null ? ref2.match : void 0)) {
         this.on('found', (function(_this) {
