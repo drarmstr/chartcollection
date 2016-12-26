@@ -69,7 +69,7 @@ class c3.Table extends c3.Base
     #   Using the Table-level vis_options should perform better than column-specific options.
     columns: []
     # [Boolean, String] Enable the table rows to be selectable based on the value:
-    # * `true` - Click to select a single row or ctrl-click to select multiple rows.
+    # * `true` - Click to select a single row or ctrl-click on Windows and command-click on OSX to select multiple rows.
     # * "**single**" - A single row can be selected.
     # * "**multi**" - Multiple rows can be selected.
     selectable: false
@@ -254,7 +254,7 @@ class c3.Table extends c3.Base
         if @selectable
             (if origin is 'render' then @rows.all else @rows.new).on 'click.select', (item)=>
                 @select c3.Table.set_select @selections, item,
-                    @selectable is 'multi' or (@selectable is true and d3.event.ctrlKey)
+                    @selectable is 'multi' or (@selectable is true and (d3.event.ctrlKey or d3.event.metaKey))
             @highlight()
         else if origin is 'render' then @rows.all.on 'click.select', null
 

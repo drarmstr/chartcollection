@@ -139,7 +139,7 @@
       if (this.searchable && this.selectable && !((ref1 = this.handlers) != null ? ref1.found : void 0) && !((ref2 = this.handlers) != null ? ref2.match : void 0)) {
         this.on('found', (function(_this) {
           return function(str, data, i) {
-            return _this.select([data]);
+            return _this.select(data != null ? [data] : []);
           };
         })(this));
       }
@@ -279,7 +279,7 @@
       if (this.selectable) {
         (origin === 'render' ? this.rows.all : this.rows["new"]).on('click.select', (function(_this) {
           return function(item) {
-            return _this.select(c3.Table.set_select(_this.selections, item, _this.selectable === 'multi' || (_this.selectable === true && d3.event.ctrlKey)));
+            return _this.select(c3.Table.set_select(_this.selections, item, _this.selectable === 'multi' || (_this.selectable === true && (d3.event.ctrlKey || d3.event.metaKey))));
           };
         })(this));
         this.highlight();

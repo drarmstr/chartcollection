@@ -49,7 +49,7 @@ in the various <a href='../../class/c3/Selection.Options.html'>options</a> are c
 is changed, then please call <code>render()</code> to update the table; this flow has not been
 tested yet, but I can fix any issues that come up if this is needed.</p><h2 id="events">Events</h2>
 <ul>
-<li><strong>select</strong> - Triggered when a row is selected/unselected.  The event is called with an argument: <em>single</em> select tables are passed with their selection while <em>multi</em> select tables are passed with an array of the selections. Selections are references to items in the data array.</li>
+<li><strong>select</strong> - Triggered when a row is selected/unselected.  The event is called with an argument that is an array of the selections.  Items are references to selected data elements. <em>single</em> select tables are passed with their selection while <em>multi</em> select tables are passed with an array of the selections. Selections are references to items in the data array.</li>
 <li><strong>found</strong> - Triggered when a search is performed.  The event is called with the search string, the datum for the row, and the row index. If there was no match, the datum and index will be <code>null</code>.  The <code>match</code> event is deprecated.</li>
 </ul>
 <h2 id="extensibility">Extensibility</h2><p>The following members are created which represent <a href='../../class/c3/Selection.html'>c3.Selection</a>&#39;s:</p><ul>
@@ -162,7 +162,7 @@ The bars may be styled using _vis<em>options.styles</em>.</li>
     <pre><code class='coffeescript'>false</code></pre>
     <div class='docstring'>
   <p>[Boolean, String] Enable the table rows to be selectable based on the value:</p><ul>
-<li><code>true</code> - Click to select a single row or ctrl-click to select multiple rows.</li>
+<li><code>true</code> - Click to select a single row or ctrl-click on Windows and command-click on OSX to select multiple rows.</li>
 <li>&quot;<strong>single</strong>&quot; - A single row can be selected.</li>
 <li>&quot;<strong>multi</strong>&quot; - Multiple rows can be selected.</li>
 </ul>
