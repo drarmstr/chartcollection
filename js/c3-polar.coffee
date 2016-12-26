@@ -27,7 +27,7 @@ class c3.Polar extends c3.Chart
     # _This can be set for each individual layer or a default for the entire chart._
     t: undefined
     # [Number] Angular range for the polar chart in radians.  0 is up and the direction is clockwise.
-    # Defaults to the entire circle, which is [0, 2Pi]. 
+    # Defaults to the entire circle, which is [0, 2Pi].
     # Adjust this range to rotate the chart or use a semi-circle (e.g. [-Math.PI/2, Math.PI/2])
     angular_range: [0, 2*Math.PI]
     # [Boolean] Enable this polar chart to be zoomable with the mouse wheel or touch pinching gesture
@@ -42,7 +42,7 @@ class c3.Polar extends c3.Chart
         # Set the default scales here instead of class-level so the defaults are still per-instance
         @r ?= d3.scale.linear()
         @t ?= d3.scale.linear()
-        
+
         # Setup the Layers
         @layers_svg = @content.select('svg.layers',null,true).singleton()
         @layers_selection = @layers_svg.select('g.layer')
@@ -54,9 +54,9 @@ class c3.Polar extends c3.Chart
             layer.trigger 'render_start'
             layer.init(self, d3.select(this))
             layer.trigger 'render'
-    
+
         @background = @content.select('rect.background',':first-child').singleton()
-    
+
         if @zoomable
             @radial_domain = @r.domain()[1] - @r.domain()[0]
             prev_scale = 1
@@ -80,7 +80,7 @@ class c3.Polar extends c3.Chart
                 last_touch_event = d3.event
             @layers_svg.all.on 'touchstart.zoom', touchstart
             @background.all.on 'touchstart.zoom', touchstart
-    
+
     _size: =>
         @content.all.attr 'transform', 'translate('+@width/2+','+@height/2+')'
         @radius = Math.min(@width,@height) / 2
@@ -93,16 +93,16 @@ class c3.Polar extends c3.Chart
             y: -@height/2
             width: @width
             height: @height
-    
+
     _update: (origin)=>
         @layers_selection.update()
         layer.update(origin) for layer in @layers
         return this
-    
+
     _draw: (origin)=>
         layer.draw(origin) for layer in @layers
         return this
-    
+
     _style: (style_new)=>
         @layers_selection.style()
         for layer in @layers
@@ -110,7 +110,7 @@ class c3.Polar extends c3.Chart
             if not layer.rendered then layer.trigger 'rendered'
             layer.rendered = true
         return this
-    
+
     # Convert cartesean x,y coordinates to polar coordinates.
     # @param x [Number] x pixel value with 0 in the middle
     # @param y [Number] y pixel value with 0 in the middle
@@ -141,7 +141,7 @@ class c3.Polar.Layer
     @version: 0.1
     type: 'layer'
     @_next_uid: 0
-    
+
     # [Array] Data for this layer  _This can be set for each individual layer or a default for the entire chart._
     data: undefined
     # [String] User name for this layer.  This is used in legends, for example.
@@ -176,13 +176,13 @@ class c3.Polar.Layer
         if @class? then @g.classed @class, true
         if @handlers? then @on event, handler for event, handler of @handlers
         @content = c3.select(@g)
-        
+
         # Apply classes to layer g nodes based on the `type` of the layer object hierarchy
         prototype = Object.getPrototypeOf(@)
         while prototype
             if prototype.type? then @g.classed prototype.type, true
             prototype = Object.getPrototypeOf prototype
-        
+
         @_init()
     _init: ->
 
@@ -194,20 +194,20 @@ class c3.Polar.Layer
         @_size()
         @trigger 'resize'
     _size: ->
-    
+
     # Update the DOM bindings based on the new or modified data set
     update: (origin)=>
         if not @chart? then throw Error "Attempt to redraw uninitialized polar layer, please use render() when adding new layers"
         @_update(origin)
     _update: ->
-    
+
     # Position the DOM elements based on the current scales
     draw: (origin)=>
         @trigger 'redraw_start', origin
         @_draw(origin)
         @trigger 'redraw', origin
     _draw: ->
-    
+
     # Restyle existing items in the layer
     style: (style_new)=>
         @trigger 'restyle', style_new
@@ -215,13 +215,13 @@ class c3.Polar.Layer
         @trigger 'restyle', style_new
         return this
     _style: ->
-    
+
     redraw: (origin='redraw')=>
         @update(origin)
         @draw(origin)
         @style(true)
         return this
-    
+
     restyle: Layer::style
 
     # Convert cartesean x,y coordinates to polar coordinates based on this layer's scales.
@@ -266,7 +266,7 @@ class c3.Polar.Layer.Radial extends c3.Polar.Layer
 
     _init: ->
         @value ?= (d)-> d
-        
+
         if @draggable
             self = this
             drag_value = undefined
@@ -280,14 +280,14 @@ class c3.Polar.Layer.Radial extends c3.Polar.Layer
                 self.trigger 'drag', drag_value, d, i
             @dragger.on 'dragend', (d,i)=>
                 @trigger 'dragend', drag_value, d, i
-    
+
     _update: (origin)->
         @current_data = if @filter? then (d for d,i in @data when @filter(d,i)) else @data
-        
+
         @vectors = @content.select('g.vector').options(@vector_options).animate(origin is 'redraw')
             .bind(@current_data, @key).update()
         @lines = @vectors.inherit('line').options(@line_options).update()
-    
+
     _draw: (origin)=>
         inner_radius = c3.functor @inner_radius
         outer_radius = c3.functor @outer_radius
@@ -303,7 +303,7 @@ class c3.Polar.Layer.Radial extends c3.Polar.Layer
         @lines.animate(origin is 'redraw' or origin is 'rebase').position line_position =
             y1: (d,i)=> @r inner_radius(d,i)
             y2: (d,i)=> @r if (r=outer_radius(d,i)) isnt Infinity then r else window.innerHeight+window.innerWidth
-        
+
         if @draggable
             @vectors.new.call @dragger
             # Add extra width for grabbable line area
@@ -333,7 +333,7 @@ class c3.Polar.Layer.Radial extends c3.Polar.Layer
 class c3.Polar.Layer.Segment extends c3.Polar.Layer
     @version: 0.1
     type: 'segment'
-    
+
     # **REQUIRED** [Function] Accessor function to define a unique key for each data element.
     # _This has performance implications and is required for some layers and **animations**._
     key: undefined
@@ -348,10 +348,10 @@ class c3.Polar.Layer.Segment extends c3.Polar.Layer
     # [{c3.Selection.Options}] Options to apply to each arc segment.
     # For callbacks, the first argument is the data element the second argument is the index
     arc_options: undefined
-    
+
     _init: =>
         if @arc_options.animate then @arc_options.animate_old ?= true
-    
+
         # Prepare drawing function
         @arc = d3.svg.arc()
             .innerRadius (d)=> Math.max 0, @r d.y1
@@ -359,10 +359,10 @@ class c3.Polar.Layer.Segment extends c3.Polar.Layer
             .startAngle (d)=> @t d.x1
             .endAngle (d)=> @t d.x2
             .padAngle @pad
-            
+
         @segments = @content.select('g.segments').singleton()
         @nodes = []
-    
+
     _update: (origin)=>
         # Layout the nodes for all data.
         # Even if we filter with limit_elements, we need to position everything for
@@ -374,21 +374,21 @@ class c3.Polar.Layer.Segment extends c3.Polar.Layer
             if @current_data == @data then @current_data = @data[..] # Don't sort user's array
             c3.array.sort_up @current_data, @value # sort_up is more efficient than sort_down
             @current_data = @current_data[-@limit_elements..]
-        
+
         # Bind data elements to arc segments in the DOM
         @arcs = @segments.select('path').options(@arc_options).animate(origin is 'redraw' or origin is 'revalue' or origin is 'rebase')
             .bind(@current_data, @key).update()
-    
+
     _draw: (origin)=>
         # Prepare to transition to the updated domain for a new root
         if @root_nodes?
-            root_node = @root_node ? { x1:0, x2:1, y1:0 }
+            root_node = @root_node ? { x1:0, x2:1, y1:-1 }
             # Remember the previous domain in case the last redraw/revalue animation was interrupted.
             # But, don't do this with a rebase in case the user interrupts an ongoing rebase.
             prev_t_domain = (if origin isnt 'rebase' then @prev_t_domain) ? @t.domain()
             @prev_t_domain = [root_node.x1, root_node.x2]
             new_t_domain = [root_node.x1, root_node.x2]
-            new_r_domain = [root_node.y1-1, root_node.y1-1+@r.domain()[1]-@r.domain()[0]]
+            new_r_domain = [root_node.y1, root_node.y1+@r.domain()[1]-@r.domain()[0]]
             t_interpolation = d3.interpolate prev_t_domain, new_t_domain
             r_interpolation = d3.interpolate @r.domain(), new_r_domain
             # Set domains now for drawing things like center circle or redrawing other layers immediatly,
@@ -409,12 +409,12 @@ class c3.Polar.Layer.Segment extends c3.Polar.Layer
                         @t.domain t_interpolation(t)
                         @r.domain r_interpolation(t)
                     @arc arc_interpolation(t)
-        
+
         if origin is 'zoom' then @arcs.old.remove()
-    
+
     _style: (style_new)=>
         @arcs.style(style_new)
-    
+
     # Return the calculated position for a data element
     # @param key [Number] The key for a data element to get the position for
     # @return Returns an object with the calculated position:
@@ -434,7 +434,7 @@ class c3.Polar.Layer.Segment extends c3.Polar.Layer
 class c3.Polar.Layer.Arc extends c3.Polar.Layer.Segment
     @version: 0.1
     type: 'arc'
-    
+
     # [Number, Function] Inner radius of the arc segment
     inner_radius: 0
     # [Number, Function] Outer radius of the arc segment
@@ -532,7 +532,7 @@ class c3.Polar.Layer.Pie extends c3.Polar.Layer.Segment
             @other_arc = @content.select('path.other').options(@other_options).animate(origin is 'redraw')
             if @data.length > @limit_elements and @sort is true
                 @other_arc.singleton().update().position_tweens 'd': (d,i)=>
-                    other_node = 
+                    other_node =
                         x1: @nodes[@key @current_data[0]].x2
                         x2: 1
                         y1: c3.functor(@inner_radius)() # Call with undefined data
@@ -541,7 +541,7 @@ class c3.Polar.Layer.Pie extends c3.Polar.Layer.Segment
                     @prev_other_node = other_node
                     return (t)=> @arc interpolate(t)
             else @other_arc.bind([]) # Remove other arc with possible binding fade animation
-    
+
     _style: (style_new)=>
         super
         @other_arc?.style style_new
@@ -552,11 +552,12 @@ class c3.Polar.Layer.Pie extends c3.Polar.Layer.Segment
 ###################################################################
 
 # A polar layer that is similar to a {c3.Polar.Layer.Pie pie chart} except that you
-# can visualize hierarchical data.  Specify a callback for either `children` or
-# `parent_key` to describe the hierarchy, but not both.  If using `children`, then you do not need
-# to include the children in the layer's `data` array.
+# can visualize hierarchical data.  Specify a callback for either `parent_key`,
+# `children`, or `children_keys` to describe the hierarchy.
+# If using `parent_key` or `children_keys` the `data` array shoud include all nodes,
+# if using `children` it only should include the root nodes.
 #
-# If you care about performance, you can pass the parameter `revalue` to `redraw('revalue')` 
+# If you care about performance, you can pass the parameter `revalue` to `redraw('revalue')`
 # if you are keeping the same dataset and only changing the element's values.
 # The sunburst layer can use a more optimized alrogithm in this situation.
 #
@@ -582,6 +583,10 @@ class c3.Polar.Layer.Sunburst extends c3.Polar.Layer.Segment
     # [Function] A callback that should return the key of the parent of an element.
     # It is called with a data element as the first parameter.
     parent_key: undefined
+    # [Function] A callback that should return an array of child keys of an element.
+    # The returned array may be empty or null.
+    # It is called with a data element as the first parameter.
+    children_keys: undefined
     # [Function] A callback that should return an array of children elements of an element.
     # The returned array may be empty or null.
     # It is called with a data element as the first parameter.
@@ -594,7 +599,8 @@ class c3.Polar.Layer.Sunburst extends c3.Polar.Layer.Segment
         if not @key? then throw Error "key() accessor required for Sunburst layers"
         @arc_options ?= {}
         @arc_options.events ?= {}
-        @arc_options.events.click ?= (d)=> @rebase d
+        @arc_options.events.click ?= (d)=>
+          @rebase_key((if d is @root_node?.datum then @parent_key else @key)(d) ? null)
         @bullseye = @content.select('circle.bullseye')
         @bullseye_options ?= {}
         @bullseye_options.events ?= {}
@@ -603,7 +609,7 @@ class c3.Polar.Layer.Sunburst extends c3.Polar.Layer.Segment
         @center = @content.select('circle.center').singleton()
 
     _layout: (data, origin)=>
-        # Construct the hierarchy of nodes.  Skip this if only "revaluing" 
+        # Construct the hierarchy of nodes.  Skip this if only "revaluing"
         if origin isnt 'revalue' and origin isnt 'rebase'
             old_nodes = @nodes
             nodes = []
@@ -619,6 +625,24 @@ class c3.Polar.Layer.Sunburst extends c3.Polar.Layer.Segment
                         if parent_node then parent_node.children.push node
                         else nodes[parent_key] = { children: [node] }
                     else @root_nodes.push node
+                set_depth = (node, depth)=>
+                    node.y1 = depth
+                    node.y2 = depth+1
+                    set_depth(child,depth+1) for child in node.children
+                set_depth(node,0) for node in @root_nodes
+            else if @children_keys?
+                roots = {}
+                for datum in data
+                    key = @key datum
+                    nodes[key] = { datum, children: @children_keys(datum) }
+                    roots[key] = true
+                for node in nodes
+                    if node?.children?
+                      for child_key in node.children
+                          roots[child_key] = false
+                          if !nodes[child_key]? then throw "Missing child node"
+                      node.children = (nodes[child_key] for child_key in node.children)
+                @root_nodes = (nodes[key] for key,root of roots when root)
                 set_depth = (node, depth)=>
                     node.y1 = depth
                     node.y2 = depth+1
@@ -644,7 +668,7 @@ class c3.Polar.Layer.Sunburst extends c3.Polar.Layer.Segment
                         node.py1 = old_node.y1
                         node.py2 = old_node.y2
             @nodes = nodes
-        
+
         # Compute the "total value" of each node
         if origin isnt 'rebase'
             if @self_value?
@@ -659,7 +683,7 @@ class c3.Polar.Layer.Sunburst extends c3.Polar.Layer.Segment
                 value = @value
                 for key,node of @nodes
                     node.value = value node.datum
-        
+
         # Partition the arc segments based on the node values
         # We need to do this even for 'rebase' in case we shot-circuited previous paritioning
         if @sort and origin isnt 'revalue' and origin isnt 'rebase'
@@ -693,7 +717,7 @@ class c3.Polar.Layer.Sunburst extends c3.Polar.Layer.Segment
                         partition node.children, [start, angle], node.value
                 return true
         partition @root_nodes, [0,1], d3.sum(@root_nodes,(n)->n.value), 0
-        
+
         # Collect current set of nodes
         # Parition first so we know the new root_domain in case the user revalues while a nested root is set
         current_data = []
@@ -708,7 +732,7 @@ class c3.Polar.Layer.Sunburst extends c3.Polar.Layer.Segment
 
     # Navigate to a new root node in the hierarchy representing the `datum` element
     rebase: (datum)=> if datum then @rebase_key @key datum else @rebase_key null
-    
+
     # Navigate to a new root node in the hierarchy represented by `key`
     rebase_key: (key)=>
         @root_node = if key? then @nodes[key] else null
@@ -721,7 +745,7 @@ class c3.Polar.Layer.Sunburst extends c3.Polar.Layer.Segment
         @center.options(@center_options).update()
         @bullseye.options(@bullseye_options).animate(origin is 'redraw' or origin is 'rebase')
             .bind(if @root_node? then [@root_node.datum] else []).update()
-    
+
     _draw: (origin)=>
         super
         # Draw the center circle and bullseye
@@ -731,7 +755,7 @@ class c3.Polar.Layer.Sunburst extends c3.Polar.Layer.Segment
         if origin isnt 'rebase'
             @center.animate(origin is 'redraw').position
                 r: Math.max 0, @r @root_node?.y1 ? 0
-    
+
     _style: (style_new)=>
         super
         @center.style(style_new)

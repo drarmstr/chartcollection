@@ -48,9 +48,10 @@
       <h2>Overview</h2>
       <div class='docstring'>
   <p>A polar layer that is similar to a <a href='../../class/c3/Polar.Layer.Pie.html'>pie chart</a> except that you
-can visualize hierarchical data.  Specify a callback for either <code>children</code> or
-<code>parent_key</code> to describe the hierarchy, but not both.  If using <code>children</code>, then you do not need
-to include the children in the layer&#39;s <code>data</code> array.</p><p>If you care about performance, you can pass the parameter <code>revalue</code> to <code>redraw(&#39;revalue&#39;)</code> 
+can visualize hierarchical data.  Specify a callback for either <code>parent_key</code>,
+<code>children</code>, or <code>children_keys</code> to describe the hierarchy.
+If using <code>parent_key</code> or <code>children_keys</code> the <code>data</code> array shoud include all nodes,
+if using <code>children</code> it only should include the root nodes.</p><p>If you care about performance, you can pass the parameter <code>revalue</code> to <code>redraw(&#39;revalue&#39;)</code>
 if you are keeping the same dataset and only changing the element&#39;s values.
 The sunburst layer can use a more optimized alrogithm in this situation.</p><h2 id="events">Events</h2>
 <ul>
@@ -122,6 +123,20 @@ to be used for sorting.</p>
     <pre><code class='coffeescript'>undefined</code></pre>
     <div class='docstring'>
   <p>[Function] A callback that should return the key of the parent of an element.
+It is called with a data element as the first parameter.</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='children_keys-variable'>
+    children_keys
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>undefined</code></pre>
+    <div class='docstring'>
+  <p>[Function] A callback that should return an array of child keys of an element.
+The returned array may be empty or null.
 It is called with a data element as the first parameter.</p>
 </div>
 <div class='tags'>
