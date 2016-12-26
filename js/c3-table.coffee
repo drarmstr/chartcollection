@@ -14,7 +14,8 @@
 # tested yet, but I can fix any issues that come up if this is needed.
 #
 # ## Events
-# * **select** - Triggered when a row is selected/unselected.  The event is called with an argument:
+# * **select** - Triggered when a row is selected/unselected.  The event is called with an argument
+#   that is an array of the selections.  Items are references to selected data elements.
 #   _single_ select tables are passed with their selection while _multi_ select tables are passed with an array of the selections.
 #   Selections are references to items in the data array.
 # * **found** - Triggered when a search is performed.  The event is called with the search string,
@@ -183,7 +184,7 @@ class c3.Table extends c3.Base
 
         # Searchable and Selectable tables default to selecting matches
         if @searchable and @selectable and not @handlers?.found and not @handlers?.match # `match` is Deprecated
-            @on 'found', (str, data, i) => @select [data]
+            @on 'found', (str, data, i) => @select if data? then [data] else []
 
         @_update_headers()
 
