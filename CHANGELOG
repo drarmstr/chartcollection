@@ -5,6 +5,7 @@
 * Add Table API for searching.
 * Add ability to specify an initial column to sort by header text.
 * Clean up Table documentation for sorting and searching.
+* Sunburst node now places root node inside center circle.
 
 0.1.7
 * Rename NPM module to "chartcollection"

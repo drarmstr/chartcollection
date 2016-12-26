@@ -351,7 +351,7 @@ class c3.Polar.Layer.Segment extends c3.Polar.Layer
 
     _init: =>
         if @arc_options?.animate then @arc_options.animate_old ?= true
-    
+
         # Prepare drawing function
         @arc = d3.svg.arc()
             .innerRadius (d)=> Math.max 0, @r d.y1
@@ -382,13 +382,13 @@ class c3.Polar.Layer.Segment extends c3.Polar.Layer
     _draw: (origin)=>
         # Prepare to transition to the updated domain for a new root
         if @root_nodes?
-            root_node = @root_node ? { x1:0, x2:1, y1:0 }
+            root_node = @root_node ? { x1:0, x2:1, y1:-1 }
             # Remember the previous domain in case the last redraw/revalue animation was interrupted.
             # But, don't do this with a rebase in case the user interrupts an ongoing rebase.
             prev_t_domain = (if origin isnt 'rebase' then @prev_t_domain) ? @t.domain()
             @prev_t_domain = [root_node.x1, root_node.x2]
             new_t_domain = [root_node.x1, root_node.x2]
-            new_r_domain = [root_node.y1-1, root_node.y1-1+@r.domain()[1]-@r.domain()[0]]
+            new_r_domain = [root_node.y1, root_node.y1+@r.domain()[1]-@r.domain()[0]]
             t_interpolation = d3.interpolate prev_t_domain, new_t_domain
             r_interpolation = d3.interpolate @r.domain(), new_r_domain
             # Set domains now for drawing things like center circle or redrawing other layers immediatly,
@@ -552,9 +552,10 @@ class c3.Polar.Layer.Pie extends c3.Polar.Layer.Segment
 ###################################################################
 
 # A polar layer that is similar to a {c3.Polar.Layer.Pie pie chart} except that you
-# can visualize hierarchical data.  Specify a callback for either `children` or
-# `parent_key` to describe the hierarchy, but not both.  If using `children`, then you do not need
-# to include the children in the layer's `data` array.
+# can visualize hierarchical data.  Specify a callback for either `parent_key`,
+# `children`, or `children_keys` to describe the hierarchy.
+# If using `parent_key` or `children_keys` the `data` array shoud include all nodes,
+# if using `children` it only should include the root nodes.
 #
 # If you care about performance, you can pass the parameter `revalue` to `redraw('revalue')`
 # if you are keeping the same dataset and only changing the element's values.
@@ -582,6 +583,10 @@ class c3.Polar.Layer.Sunburst extends c3.Polar.Layer.Segment
     # [Function] A callback that should return the key of the parent of an element.
     # It is called with a data element as the first parameter.
     parent_key: undefined
+    # [Function] A callback that should return an array of child keys of an element.
+    # The returned array may be empty or null.
+    # It is called with a data element as the first parameter.
+    children_keys: undefined
     # [Function] A callback that should return an array of children elements of an element.
     # The returned array may be empty or null.
     # It is called with a data element as the first parameter.
@@ -594,7 +599,8 @@ class c3.Polar.Layer.Sunburst extends c3.Polar.Layer.Segment
         if not @key? then throw Error "key() accessor required for Sunburst layers"
         @arc_options ?= {}
         @arc_options.events ?= {}
-        @arc_options.events.click ?= (d)=> @rebase d
+        @arc_options.events.click ?= (d)=>
+          @rebase_key((if d is @root_node?.datum then @parent_key else @key)(d) ? null)
         @bullseye = @content.select('circle.bullseye')
         @bullseye_options ?= {}
         @bullseye_options.events ?= {}
@@ -619,6 +625,24 @@ class c3.Polar.Layer.Sunburst extends c3.Polar.Layer.Segment
                         if parent_node then parent_node.children.push node
                         else nodes[parent_key] = { children: [node] }
                     else @root_nodes.push node
+                set_depth = (node, depth)=>
+                    node.y1 = depth
+                    node.y2 = depth+1
+                    set_depth(child,depth+1) for child in node.children
+                set_depth(node,0) for node in @root_nodes
+            else if @children_keys?
+                roots = {}
+                for datum in data
+                    key = @key datum
+                    nodes[key] = { datum, children: @children_keys(datum) }
+                    roots[key] = true
+                for node in nodes
+                    if node?.children?
+                      for child_key in node.children
+                          roots[child_key] = false
+                          if !nodes[child_key]? then throw "Missing child node"
+                      node.children = (nodes[child_key] for child_key in node.children)
+                @root_nodes = (nodes[key] for key,root of roots when root)
                 set_depth = (node, depth)=>
                     node.y1 = depth
                     node.y2 = depth+1
