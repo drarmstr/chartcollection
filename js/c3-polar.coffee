@@ -350,7 +350,7 @@ class c3.Polar.Layer.Segment extends c3.Polar.Layer
     arc_options: undefined
 
     _init: =>
-        if @arc_options.animate then @arc_options.animate_old ?= true
+        if @arc_options?.animate then @arc_options.animate_old ?= true
 
         # Prepare drawing function
         @arc = d3.svg.arc()

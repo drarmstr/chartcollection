@@ -454,8 +454,8 @@
     Segment.prototype.arc_options = void 0;
 
     Segment.prototype._init = function() {
-      var base;
-      if (this.arc_options.animate) {
+      var base, ref;
+      if ((ref = this.arc_options) != null ? ref.animate : void 0) {
         if ((base = this.arc_options).animate_old == null) {
           base.animate_old = true;
         }
