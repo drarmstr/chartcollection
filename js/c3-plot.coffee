@@ -69,12 +69,12 @@ class c3.Plot extends c3.Chart
     # [{c3.Selection.Options}] Options to apply to each axis.  For callbacks, the first argument
     # is the axis object and the second argument is the index of the axis
     axis_options: undefined
-    
+
     _init: =>
         # Set default scales here instead of class-level so the defaults are still per-instance
         @h ?= d3.scale.linear()
         @v ?= d3.scale.linear()
-        
+
         # Setup any Axes
         if @axes
             axes_group = @svg.select('g.axes',':first-child').singleton()
@@ -84,7 +84,7 @@ class c3.Plot extends c3.Chart
                 axis.anchor = this
                 axis.scale ?= if axis instanceof c3.Axis.X then self.h else self.v
                 axis.init()
-        
+
         # Setup the Layers
         @layers_svg = @content.select('svg.layers',null,true).singleton()
         @layers_selection = @layers_svg.select('g.layer')
@@ -102,14 +102,14 @@ class c3.Plot extends c3.Chart
             else c3.util.defaults @margins, { top:0, bottom:0, left:0, right:0 }
             if @axes? then for axis in @axes
                 @margins[axis.orient] += axis.axis_size
-        
+
             # A background rect for styling the background or setting up events for just the content area.
-            @background_rect = @content.all.insert 'rect', ':first-child'
-                .attr 'class', 'background'
-                .style 'visibility', 'hidden'
-                .style 'pointer-events', 'all'
+            @background = @content.select('rect.background',':first-child').singleton()
+              .options({
+                styles: {visibility: 'hidden', 'pointer-events': 'all'}
+              }).style()
         return
-    
+
     _size: =>
         @content.height = @height - @margins.top - @margins.bottom
         @content.width = @width - @margins.left - @margins.right
@@ -136,30 +136,30 @@ class c3.Plot extends c3.Chart
                     when 'right' then "translate(#{@width-@margins.right},#{@margins.top})"
                     when 'top' then "translate(#{@margins.left},#{@margins.top})"
                     when 'bottom' then "translate(#{@margins.left},#{@height-@margins.bottom})"
-        @background_rect.attr('width',@content.width).attr('height',@content.height)
+        @background.all.attr('width',@content.width).attr('height',@content.height)
         return
-    
+
     _update: (origin)=>
         @axes_selection.update()
         @layers_selection.update()
         layer.update(origin) for layer in @layers
         if not @rendered then @scale('render')  # EXPERIMENTAL
         return
-    
+
     _draw: (origin)=>
         layer.draw(origin) for layer in @layers
         if @axes then axis.draw() for axis in @axes
         return
-    
+
     _style: (style_new)=>
         @axes_selection.style()
         @layers_selection.style()
-        
+
         for layer in @layers
             layer.style(style_new)
             layer.rendered = true
         return
-    
+
     # EXPERIMENTAL RESCALE
     # Update any automatic scales
     # @note Needs to happen after update() so that stacked layers are computed
@@ -184,7 +184,7 @@ class c3.Plot extends c3.Chart
         for layer in @layers
             refresh = layer.scale() or refresh
         return refresh
-    
+
     # EXPERIMENTAL RESCALE
     # An addition `re*` API which will adjust the scales for any domains with callbacks
     # See `h_domain` and `v_domain`.
@@ -219,7 +219,7 @@ class c3.Plot.Selectable extends c3.Plot
     selectable: 'hv'
     # [Boolean] When true, existing selections move/resize when dragged, otherwise a new selection will be made.
     drag_selections: true
-    
+
     _init: =>
         super
         if @selectable is true then @selectable = 'hv'
@@ -227,7 +227,7 @@ class c3.Plot.Selectable extends c3.Plot
         @svg.all
             .classed 'h', 'h' in @selectable
             .classed 'v', 'v' in @selectable
-    
+
     _size: =>
         super
         # Install brush for selections
@@ -235,7 +235,7 @@ class c3.Plot.Selectable extends c3.Plot
             @brush = d3.svg.brush()
             if 'h' in @selectable then @brush.x(@h)
             if 'v' in @selectable then @brush.y(@v)
-            
+
             # Setup handlers
             @brush.on 'brush', =>
                 extent = if not @brush.empty() then @brush.extent() else null
@@ -248,28 +248,36 @@ class c3.Plot.Selectable extends c3.Plot
                 extent = if not @brush.empty() then @brush.extent() else null
                 @select extent
                 @trigger 'selectend', extent
-            
+
             # Draw brush
-            @brush.g = @content.all.append('g').attr('class','brush').call @brush
-            
+            @brush_selection = @content.select('g.brush').singleton()
+            @brush @brush_selection.all
+
             # Create unbrush
             if 'v' in @selectable
-                @brush.g.insert('rect',':first-child').attr('class','unbrush').classed('n',true).attr('y',0)
-                @brush.g.insert('rect',':first-child').attr('class','unbrush').classed('s',true)
-                @brush.g.selectAll('g.brush > rect').attr('width',@content.width)
-                if 'h' not in @selectable then @brush.g.selectAll('g.resize > rect').attr('width',@content.width)
-                
+                @brush_selection.select('rect.n',':first-child').singleton()
+                    .all.classed('unbrush',true).attr('y',0)
+                @brush_selection.select('rect.s',':first-child').singleton()
+                    .all.classed('unbrush',true)
+                @brush_selection.all.selectAll('g.brush > rect').attr('width',@content.width)
+                if 'h' not in @selectable
+                    @brush_selection.all.selectAll('g.resize > rect').attr('width',@content.width)
+
             if 'h' in @selectable
-                @brush.g.insert('rect',':first-child').attr('class','unbrush').classed('w',true).attr('x',0)
-                @brush.g.insert('rect',':first-child').attr('class','unbrush').classed('e',true)
-                @brush.g.selectAll('g.brush > rect').attr('height',@content.height)
-                if 'v' not in @selectable then @brush.g.selectAll('g.brush g.resize rect').attr('height',@content.height)
-        
+                @brush_selection.select('rect.w',':first-child').singleton()
+                    .all.classed('unbrush',true).attr('x',0)
+                @brush_selection.select('rect.e',':first-child').singleton()
+                    .all.classed('unbrush',true)
+                @brush_selection.all.selectAll('g.brush > rect').attr('height',@content.height)
+                if 'v' not in @selectable
+                    @brush_selection.all.selectAll('g.resize > rect').attr('height',@content.height)
+
         # Move existing selection or start a new one
-        @brush.g.selectAll('rect.extent, g.resize').style('pointer-events',if not @drag_selections then 'none' else '')
-        
+        @brush_selection.all.selectAll('rect.extent, g.resize')
+            .style 'pointer-events', if not @drag_selections then 'none' else ''
+
         @select @selection
-    
+
     # Select a region in the chart.
     # @param selection [Array<Number>, Array<Array<Number>>] The extent of the region to select or null to clear selection.
     # Depending on which axes are selectable the selection is either [x0,x1], [y0,y1], or [[x0,y0],[x1,y1]]
@@ -283,20 +291,22 @@ class c3.Plot.Selectable extends c3.Plot
             h_selection = @h.domain()
             v_selection = @v.domain()
             @brush.extent if 'h' in @selectable and 'v' in @selectable then [[0,0],[0,0]] else [0,0]
-        @brush @brush.g
+        @brush @brush_selection.all
 
         # Redraw unbrush
+        # Use Math.abs to avoid small negative values through rounding errors
         if 'h' in @selectable
-            @brush.g.select('.unbrush[class~=w]').attr('width',@h h_selection[0])
-            @brush.g.select('.unbrush[class~=e]') # Use Math.abs to avoid small negative values through rounding errors
+            @brush_selection.all.select('.unbrush[class~=w]').attr('width',@h h_selection[0])
+            @brush_selection.all.select('.unbrush[class~=e]')
                 .attr('width',Math.abs @h(@h.domain()[1]-h_selection[1])).attr('x',@h h_selection[1])
         if 'v' in @selectable
-            @brush.g.select('.unbrush[class~=n]').attr('height',@v v_selection[1])
-            @brush.g.select('.unbrush[class~=s]')
+            @brush_selection.all.select('.unbrush[class~=n]').attr('height',@v v_selection[1])
+            @brush_selection.all.select('.unbrush[class~=s]')
                 .attr('height',Math.abs @v(@v.domain()[0]-v_selection[0])).attr('y',@v v_selection[0])
             if 'h' in @selectable
-                @brush.g.selectAll('.unbrush[class~=n], .unbrush[class~=s]').attr('x',@h h_selection[0]).attr('width',@h h_selection[1]-h_selection[0])
-        
+                @brush_selection.all.selectAll('.unbrush[class~=n], .unbrush[class~=s]')
+                    .attr('x',@h h_selection[0]).attr('width',@h h_selection[1]-h_selection[0])
+
         delete @prev_extent # If user adjusts selection then clear @prev_extent so we don't skip the next brush event
 
 
@@ -328,12 +338,12 @@ class c3.Plot.Zoomable extends c3.Plot
     # [Number, String] The maximum zoom factor the user is allowed to zoom in
     # If set to _integer_ then allow zooming only until pixels are integer values.
     zoom_extent: undefined
-    
+
     _init: => if @rendered then super else
         super
         if @zoomable != 'h' then throw "Only horizontal zooming is currently supported"
         @orig_h = @h.copy()
-        
+
         # Make it zoomable!
         @zoomer = d3.behavior.zoom().on 'zoom', =>
             @trigger 'zoom', @focus @h.domain()
@@ -352,20 +362,20 @@ class c3.Plot.Zoomable extends c3.Plot
         touchstart = ->
             if last_touch_event and d3.event.touches.length == 1 and
              d3.event.timeStamp - last_touch_event.timeStamp < 500 and
-             Math.abs(d3.event.touches[0].screenX-last_touch_event.touches[0].screenX)<10 and 
+             Math.abs(d3.event.touches[0].screenX-last_touch_event.touches[0].screenX)<10 and
              Math.abs(d3.event.touches[0].screenY-last_touch_event.touches[0].screenY)<10
                 d3.event.stopPropagation()
                 last_touch_event = undefined
             last_touch_event = d3.event
         @layers_svg.all.on 'touchstart.zoom', touchstart
-        @background_rect.on 'touchstart.zoom', touchstart
-        
+        @background.all.on 'touchstart.zoom', touchstart
+
         # Set grabbing cursor while panning
         @content.all
             .on 'mousedown.zoomable', -> d3.select('html').classed 'grabbing', true
             .on 'mouseup.zoomable', -> d3.select('html').classed 'grabbing', false
         window.addEventListener 'mouseup', -> d3.select('html').classed 'grabbing', false
-    
+
     _size: =>
         super
         c3.d3.set_range @orig_h, [0, @content.width]
@@ -387,32 +397,32 @@ class c3.Plot.Zoomable extends c3.Plot
         extent = extent[..] # Clone array so it doesn't modify caller's values
         domain = @orig_h.domain()
         domain_width = domain[1]-domain[0]
-        
+
         # If the user is operating with a time scale, then convert to ms for manipulations
         extent[0] = extent[0].getTime?() ? extent[0]
         extent[1] = extent[1].getTime?() ? extent[1]
-        
+
         # Don't allow the focus to go beyond the chart's domain
         if extent[0]<domain[0] then extent[1]+=domain[0]-extent[0]; extent[0]=domain[0]
         if extent[1]>domain[1] then extent[0]-=extent[1]-domain[1]; extent[1]=domain[1]
         if extent[0]<domain[0] then extent[0]=domain[0]; extent[1]=domain[1] # focus extents were too large
-        
+
         # If we are close to the edges, then snap to zoom all (this helps deal with rounding errors)
         if extent[0]-domain[0]<domain_width*@snap_to_all and domain[1]-extent[1]<domain_width*@snap_to_all
             extent[0] = domain[0]
             extent[1] = domain[1]
-        
+
         # Calculate the scale and translate factors based on our tweaked extent.
         scale = (domain_width) / (extent[1]-extent[0])
         translate = (domain[0]-extent[0]) * scale * (@content.width/domain_width)
-        
+
         # Update the state of the zoomer to match any adjustments we made or to reflect a new resize()
         # This also updates the h scale which non-scaled layers can use for positioning
         @zoomer.translate([translate,0]).scale(scale)
-        
+
         # Transform scaled layers
         @layers_svg.all.selectAll('.scaled').attr('transform','translate('+translate+' 0)scale('+scale+' 1)')
-        
+
         # Perform redraws and updates for the new focus, but only if the domain actually changed
         new_domain = @h.domain()[..]
         @prev_domain ?= domain
@@ -420,16 +430,16 @@ class c3.Plot.Zoomable extends c3.Plot
         left_diff = Math.abs(new_domain[0]-@prev_domain[0]) / threshold > 1
         right_diff = Math.abs(new_domain[1]-@prev_domain[1]) / threshold > 1
         if left_diff or right_diff
-            
+
             # Zoom all of the layers
             for layer in @layers
                 if layer.rendered then layer.zoom?()
-            
+
             # Scale any attached axes and redraw
             if @axes then for axis in @axes when axis.scale and axis instanceof c3.Axis.X
                 axis.scale.domain new_domain
                 axis._draw()
-            
+
             @prev_domain = new_domain
             @trigger 'redraw', 'focus'
             @trigger 'restyle', true
@@ -452,7 +462,7 @@ class c3.Plot.Zoomable extends c3.Plot
 # An Axis visualizes a set of tick marks and units based on the supplied **D3 scale**.
 # This is an **abstract** class, please create a {c3.Axis.x} or {c3.Axis.y}.
 #
-# Axes may be attached to {c3.Plot XY Plots} or managed as a 
+# Axes may be attached to {c3.Plot XY Plots} or managed as a
 # seperate DOM element for layout flexibility.
 # @abstract
 # @author Douglas Armstrong
@@ -463,7 +473,7 @@ class c3.Axis extends c3.Chart
     @version: 0.1
     type: 'axis'
     @_next_uid: 0
-    
+
     # [{https://github.com/mbostock/d3/wiki/Scales d3.scale}, Boolean] Scale where the _domain()_ specifies the units to display in the axis.
     # _c3 will automatically set the range()_.
     # _If this axis is part of a {c3.Plot plot}, then the scale will default to the plot's horizontal or veritcal scale_.
@@ -490,17 +500,17 @@ class c3.Axis extends c3.Chart
     path_size: 2
     # [Number] The overall width of a horizontal axis or height of a vertical axis
     axis_size: undefined
-    
+
     constructor: (opt)->
         super
         @uid = c3.Axis._next_uid++
-    
+
     _init: =>
         @scale ?= d3.scale.linear()
         @content.all.classed 'axis', true
         @content.all.classed @orient, true
         @axis = d3.svg.axis().orient(@orient)
-    
+
     _draw: =>
         # Set these axis properties here so they can be modified between calls to redraw()
         if @scale
@@ -515,14 +525,14 @@ class c3.Axis extends c3.Chart
                     else @tick_label # Custom formatter
             if @tick_count? then @axis.ticks @tick_count
             @content.all.call @axis
-        
+
         # Draw axis label if requested
         if @label
             @text_label = @content.all.selectAll('text.label').data([@label])
             @text_label.enter().append('text').attr('class','label')
             @text_label.text @label
                 .text @label
-        
+
         # Draw gridlines if requested
         if @grid
             @content.all.selectAll('g.tick line.grid').remove()
@@ -542,16 +552,16 @@ class c3.Axis extends c3.Chart
 class c3.Axis.X extends c3.Axis
     type: 'x'
     orient: 'bottom'
-    
+
     _init: =>
         super
         @axis_size ?= (if not @ticks then 0 else Math.max(@tick_size, @path_size) + (if @tick_label then 20 else 0) ) +
             (if @label then 24 else 0)
-    
+
     _size: =>
         if @orient is 'top' then @content.all.attr 'transform', "translate(0,#{@height})"
         if @scale then c3.d3.set_range @scale, [0, @width]
-    
+
     _draw: =>
         super
         if @label?
@@ -565,17 +575,17 @@ class c3.Axis.X extends c3.Axis
 class c3.Axis.Y extends c3.Axis
     type: 'y'
     orient: 'left'
-    
+
     _init: =>
         super
         @axis_size ?= (if not @ticks then 0 else Math.max @tick_size, @path_size) +
             (if @tick_label then 42 else 0) +
             (if @label then 20 else 0)
-    
+
     _size: =>
         if @orient is 'left' then @content.all.attr 'transform', "translate(#{@width},0)"
         if @scale then c3.d3.set_range @scale, [@height, 0]
-    
+
     _draw: =>
         super
         if @label?

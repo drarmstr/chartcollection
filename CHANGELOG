@@ -1,3 +1,4 @@
+0.1.8
 * Support cmd-click for multi-select in tables on OSX
 * Paginated tables revert to the first page when sorted.
 * Selectable and searchable tables default to selecting matches.
@@ -7,6 +8,7 @@
 * Add ability to specify an initial column to sort by header text.
 * Clean up Table documentation for sorting and searching.
 * Sunburst node now places root node inside center circle.
+* Plots don't create redundant backgrounds/brushes when rerendered
 
 0.1.7
 * Rename NPM module to "chartcollection"

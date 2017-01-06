@@ -112,7 +112,12 @@
             this.margins[axis.orient] += axis.axis_size;
           }
         }
-        this.background_rect = this.content.all.insert('rect', ':first-child').attr('class', 'background').style('visibility', 'hidden').style('pointer-events', 'all');
+        this.background = this.content.select('rect.background', ':first-child').singleton().options({
+          styles: {
+            visibility: 'hidden',
+            'pointer-events': 'all'
+          }
+        }).style();
       }
     };
 
@@ -179,7 +184,7 @@
           }).call(this));
         }
       }
-      this.background_rect.attr('width', this.content.width).attr('height', this.content.height);
+      this.background.all.attr('width', this.content.width).attr('height', this.content.height);
     };
 
     Plot.prototype._update = function(origin) {
@@ -356,25 +361,26 @@
             return _this.trigger('selectend', extent);
           };
         })(this));
-        this.brush.g = this.content.all.append('g').attr('class', 'brush').call(this.brush);
+        this.brush_selection = this.content.select('g.brush').singleton();
+        this.brush(this.brush_selection.all);
         if (indexOf.call(this.selectable, 'v') >= 0) {
-          this.brush.g.insert('rect', ':first-child').attr('class', 'unbrush').classed('n', true).attr('y', 0);
-          this.brush.g.insert('rect', ':first-child').attr('class', 'unbrush').classed('s', true);
-          this.brush.g.selectAll('g.brush > rect').attr('width', this.content.width);
+          this.brush_selection.select('rect.n', ':first-child').singleton().all.classed('unbrush', true).attr('y', 0);
+          this.brush_selection.select('rect.s', ':first-child').singleton().all.classed('unbrush', true);
+          this.brush_selection.all.selectAll('g.brush > rect').attr('width', this.content.width);
           if (indexOf.call(this.selectable, 'h') < 0) {
-            this.brush.g.selectAll('g.resize > rect').attr('width', this.content.width);
+            this.brush_selection.all.selectAll('g.resize > rect').attr('width', this.content.width);
           }
         }
         if (indexOf.call(this.selectable, 'h') >= 0) {
-          this.brush.g.insert('rect', ':first-child').attr('class', 'unbrush').classed('w', true).attr('x', 0);
-          this.brush.g.insert('rect', ':first-child').attr('class', 'unbrush').classed('e', true);
-          this.brush.g.selectAll('g.brush > rect').attr('height', this.content.height);
+          this.brush_selection.select('rect.w', ':first-child').singleton().all.classed('unbrush', true).attr('x', 0);
+          this.brush_selection.select('rect.e', ':first-child').singleton().all.classed('unbrush', true);
+          this.brush_selection.all.selectAll('g.brush > rect').attr('height', this.content.height);
           if (indexOf.call(this.selectable, 'v') < 0) {
-            this.brush.g.selectAll('g.brush g.resize rect').attr('height', this.content.height);
+            this.brush_selection.all.selectAll('g.resize > rect').attr('height', this.content.height);
           }
         }
       }
-      this.brush.g.selectAll('rect.extent, g.resize').style('pointer-events', !this.drag_selections ? 'none' : '');
+      this.brush_selection.all.selectAll('rect.extent, g.resize').style('pointer-events', !this.drag_selections ? 'none' : '');
       return this.select(this.selection);
     };
 
@@ -390,16 +396,16 @@
         v_selection = this.v.domain();
         this.brush.extent(indexOf.call(this.selectable, 'h') >= 0 && indexOf.call(this.selectable, 'v') >= 0 ? [[0, 0], [0, 0]] : [0, 0]);
       }
-      this.brush(this.brush.g);
+      this.brush(this.brush_selection.all);
       if (indexOf.call(this.selectable, 'h') >= 0) {
-        this.brush.g.select('.unbrush[class~=w]').attr('width', this.h(h_selection[0]));
-        this.brush.g.select('.unbrush[class~=e]').attr('width', Math.abs(this.h(this.h.domain()[1] - h_selection[1]))).attr('x', this.h(h_selection[1]));
+        this.brush_selection.all.select('.unbrush[class~=w]').attr('width', this.h(h_selection[0]));
+        this.brush_selection.all.select('.unbrush[class~=e]').attr('width', Math.abs(this.h(this.h.domain()[1] - h_selection[1]))).attr('x', this.h(h_selection[1]));
       }
       if (indexOf.call(this.selectable, 'v') >= 0) {
-        this.brush.g.select('.unbrush[class~=n]').attr('height', this.v(v_selection[1]));
-        this.brush.g.select('.unbrush[class~=s]').attr('height', Math.abs(this.v(this.v.domain()[0] - v_selection[0]))).attr('y', this.v(v_selection[0]));
+        this.brush_selection.all.select('.unbrush[class~=n]').attr('height', this.v(v_selection[1]));
+        this.brush_selection.all.select('.unbrush[class~=s]').attr('height', Math.abs(this.v(this.v.domain()[0] - v_selection[0]))).attr('y', this.v(v_selection[0]));
         if (indexOf.call(this.selectable, 'h') >= 0) {
-          this.brush.g.selectAll('.unbrush[class~=n], .unbrush[class~=s]').attr('x', this.h(h_selection[0])).attr('width', this.h(h_selection[1] - h_selection[0]));
+          this.brush_selection.all.selectAll('.unbrush[class~=n], .unbrush[class~=s]').attr('x', this.h(h_selection[0])).attr('width', this.h(h_selection[1] - h_selection[0]));
         }
       }
       return delete this.prev_extent;
@@ -464,7 +470,7 @@
           return last_touch_event = d3.event;
         };
         this.layers_svg.all.on('touchstart.zoom', touchstart);
-        this.background_rect.on('touchstart.zoom', touchstart);
+        this.background.all.on('touchstart.zoom', touchstart);
         this.content.all.on('mousedown.zoomable', function() {
           return d3.select('html').classed('grabbing', true);
         }).on('mouseup.zoomable', function() {
