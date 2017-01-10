@@ -168,6 +168,21 @@ It is called with a data element as the first parameter.</p>
 <div class='tags'>
 </div>
   </dd>
+  <dt id='root_datum-variable'>
+    root_datum
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>null</code></pre>
+    <div class='docstring'>
+  <p>Data element that represents the root of the hierarchy to render.
+If this is specified then only this root and its subtree will be rendered
+When <a href='../../class/c3/Polar.Layer.Sunburst.html#rebase-dynamic'>rebase()</a> is called or a node is clicked on
+it will animate the transition to a new root node.</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
 </dl>
       <h3 class='inherited'>
         Variable inherited from
@@ -222,7 +237,7 @@ It is called with a data element as the first parameter.</p>
       <a href='#rebase-dynamic'>
         #
 (void)
-<b>rebase</b><span>(datum)</span>
+<b>rebase</b><span>(root_datum)</span>
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -235,7 +250,7 @@ It is called with a data element as the first parameter.</p>
       <a href='#rebase_key-dynamic'>
         #
 (void)
-<b>rebase_key</b><span>(key)</span>
+<b>rebase_key</b><span>(root_key)</span>
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -340,7 +355,7 @@ It is called with a data element as the first parameter.</p>
     <p class='signature' id='rebase-dynamic'>
       #
 (void)
-<b>rebase</b><span>(datum)</span>
+<b>rebase</b><span>(root_datum)</span>
       <span class='bound note'>Bound</span>
       <br>
     </p>
@@ -354,7 +369,7 @@ It is called with a data element as the first parameter.</p>
     <p class='signature' id='rebase_key-dynamic'>
       #
 (void)
-<b>rebase_key</b><span>(key)</span>
+<b>rebase_key</b><span>(root_key)</span>
       <span class='bound note'>Bound</span>
       <br>
     </p>

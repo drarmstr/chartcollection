@@ -219,6 +219,9 @@ class c3.Plot.Selectable extends c3.Plot
     selectable: 'hv'
     # [Boolean] When true, existing selections move/resize when dragged, otherwise a new selection will be made.
     drag_selections: true
+    # [Array<Number>] Specify an initialy selected range for rendering.
+    # This is updated if the user selects a range or calls {c3.Plot.Selectable#select select()}.
+    selection: undefined
 
     _init: =>
         super

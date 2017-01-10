@@ -73,6 +73,8 @@ class c3.Table extends c3.Base
     # * "**single**" - A single row can be selected.
     # * "**multi**" - Multiple rows can be selected.
     selectable: false
+    # [Array] Specify any initial row selections as an array of rows.
+    selections: undefined
     # [Boolean] Enable the table rows to be user-sortable.
     # Define the `sortable` property of the column object to enable sorting by that column.
     # The `value` column property should then define a callback to specify the value
@@ -142,7 +144,6 @@ class c3.Table extends c3.Base
 
     constructor: ->
         super
-        @selections = [] # Define this here so selections are per-instance
 
     _init: =>
         # Create the table node
@@ -187,6 +188,10 @@ class c3.Table extends c3.Base
             @on 'found', (str, data, i) => @select if data? then [data] else []
 
         @_update_headers()
+
+        # Create the default set of selections here instead of the default
+        # prototype so that we can mutate it on a per-instance basis.
+        @selections ?= []
 
 
     _update_headers: =>

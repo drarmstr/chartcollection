@@ -9,6 +9,8 @@
 * Clean up Table documentation for sorting and searching.
 * Sunburst node now places root node inside center circle.
 * Plots don't create redundant backgrounds/brushes when rerendered
+* Tables and selectable Plots can specify an initial selection when rendering
+* Sunburst can select an initial node to render as the root 
 
 0.1.7
 * Rename NPM module to "chartcollection"

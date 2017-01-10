@@ -382,7 +382,7 @@ class c3.Polar.Layer.Segment extends c3.Polar.Layer
     _draw: (origin)=>
         # Prepare to transition to the updated domain for a new root
         if @root_nodes?
-            root_node = @root_node ? { x1:0, x2:1, y1:-1 }
+            root_node = if @root_datum? then @nodes[@key @root_datum] else { x1:0, x2:1, y1:-1 }
             # Remember the previous domain in case the last redraw/revalue animation was interrupted.
             # But, don't do this with a rebase in case the user interrupts an ongoing rebase.
             prev_t_domain = (if origin isnt 'rebase' then @prev_t_domain) ? @t.domain()
@@ -593,6 +593,11 @@ class c3.Polar.Layer.Sunburst extends c3.Polar.Layer.Segment
     children: undefined
     # [Number] Don't bother rendering arc segments whose value is smaller than this percentage of the total. (1==100%)
     limit_angle_percentage: 0.001
+    # Data element that represents the root of the hierarchy to render.
+    # If this is specified then only this root and its subtree will be rendered
+    # When {c3.Polar.Layer.Sunburst#rebase rebase()} is called or a node is clicked on
+    # it will animate the transition to a new root node.
+    root_datum: null
 
     _init: =>
         super
@@ -600,7 +605,7 @@ class c3.Polar.Layer.Sunburst extends c3.Polar.Layer.Segment
         @arc_options ?= {}
         @arc_options.events ?= {}
         @arc_options.events.click ?= (d)=>
-          @rebase_key((if d is @root_node?.datum then @parent_key else @key)(d) ? null)
+          @rebase_key((if d is @root_datum then @parent_key else @key)(d) ? null)
         @bullseye = @content.select('circle.bullseye')
         @bullseye_options ?= {}
         @bullseye_options.events ?= {}
@@ -689,12 +694,15 @@ class c3.Polar.Layer.Sunburst extends c3.Polar.Layer.Segment
         if @sort and origin isnt 'revalue' and origin isnt 'rebase'
             sort = if @sort is true then (n)-> -n.value else (n)=> -@sort n.datum
         limit_angle_percentage = @limit_angle_percentage
-        if @root_node? then limit_angle_percentage *= @root_node.x2 - @root_node.x1
+        root_node = if @root_datum? then @nodes[@key @root_datum] else null
+        if root_node? then limit_angle_percentage *= (root_node.x2 ? 1) - (root_node.x1 ? 0)
         partition = (nodes, domain, total)=>
             delta = domain[1]-domain[0]
             angle = domain[0]
             # If the entire range is inconsequential then simplify the positioning
-            if not total or delta < limit_angle_percentage
+            # We can only skip branches based on limit_angle_percentage if we know for certain
+            # the root domain is constant which is only guaranteed when no data changes during 'rebase'
+            if not total or (origin is 'rebase' and delta < limit_angle_percentage)
                 for node in nodes
                     # If the node is inconsequential and hasn't moved, then skip processing this entire branch.
                     if node.px1==angle and node.px2==angle and node.x1==angle and node.x2==angle then continue
@@ -716,35 +724,37 @@ class c3.Polar.Layer.Sunburst extends c3.Polar.Layer.Segment
                     if node.children.length
                         partition node.children, [start, angle], node.value
                 return true
-        partition @root_nodes, [0,1], d3.sum(@root_nodes,(n)->n.value), 0
+        partition @root_nodes, [0,1], d3.sum(@root_nodes,(n)->n.value)
+        # Recalculate the limit angle based on potentially revalued data
+        if root_node? then limit_angle_percentage = @limit_angle_percentage * (root_node.x2 - root_node.x1)
 
         # Collect current set of nodes
         # Parition first so we know the new root_domain in case the user revalues while a nested root is set
         current_data = []
-        root_domain = [@root_node?.x1 ? 0, @root_node?.x2 ? 1]
+        root_domain = [root_node?.x1 ? 0, root_node?.x2 ? 1]
         collect_nodes = (nodes)->
             for node in nodes
                 if node.x2-node.x1 > limit_angle_percentage and node.x2 > root_domain[0] and node.x1 < root_domain[1]
                     current_data.push node.datum
                     if node.children.length then collect_nodes node.children
+            return null # avoid coffee comprehension
         collect_nodes @root_nodes
         return current_data
 
     # Navigate to a new root node in the hierarchy representing the `datum` element
-    rebase: (datum)=> if datum then @rebase_key @key datum else @rebase_key null
+    rebase: (@root_datum)=>
+      @trigger 'rebase_start', @root_datum
+      @chart.redraw 'rebase' # redraw all layers since the scales will change
+      @trigger 'rebase', @root_datum
 
     # Navigate to a new root node in the hierarchy represented by `key`
-    rebase_key: (key)=>
-        @root_node = if key? then @nodes[key] else null
-        @trigger 'rebase_start', @root_node?.datum
-        @chart.redraw 'rebase' # redraw all layers
-        @trigger 'rebase', @root_node?.datum
+    rebase_key: (root_key)=> @rebase @nodes[root_key]?.datum
 
     _update: (origin)=>
         super
         @center.options(@center_options).update()
         @bullseye.options(@bullseye_options).animate(origin is 'redraw' or origin is 'rebase')
-            .bind(if @root_node? then [@root_node.datum] else []).update()
+            .bind(if @root_datum? then [@root_datum] else []).update()
 
     _draw: (origin)=>
         super
@@ -754,7 +764,7 @@ class c3.Polar.Layer.Sunburst extends c3.Polar.Layer.Segment
         # Only adjust center circle if resizing, changing the @r scale, or zooming
         if origin isnt 'rebase'
             @center.animate(origin is 'redraw').position
-                r: Math.max 0, @r @root_node?.y1 ? 0
+                r: Math.max 0, @r if @root_datum? then @nodes[@key @root_datum].y2 else 0
 
     _style: (style_new)=>
         super

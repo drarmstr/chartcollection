@@ -322,6 +322,8 @@
 
     Selectable.prototype.drag_selections = true;
 
+    Selectable.prototype.selection = void 0;
+
     Selectable.prototype._init = function() {
       Selectable.__super__._init.apply(this, arguments);
       if (this.selectable === true) {

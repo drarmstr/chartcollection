@@ -25,6 +25,8 @@
 
     Table.prototype.selectable = false;
 
+    Table.prototype.selections = void 0;
+
     Table.prototype.sortable = false;
 
     Table.prototype.sort_column = void 0;
@@ -68,7 +70,6 @@
       this._update_headers = bind(this._update_headers, this);
       this._init = bind(this._init, this);
       Table.__super__.constructor.apply(this, arguments);
-      this.selections = [];
     }
 
     Table.prototype._init = function() {
@@ -143,7 +144,8 @@
           };
         })(this));
       }
-      return this._update_headers();
+      this._update_headers();
+      return this.selections != null ? this.selections : this.selections = [];
     };
 
     Table.prototype._update_headers = function() {
