@@ -401,13 +401,13 @@
       this.brush(this.brush_selection.all);
       if (indexOf.call(this.selectable, 'h') >= 0) {
         this.brush_selection.all.select('.unbrush[class~=w]').attr('width', this.h(h_selection[0]));
-        this.brush_selection.all.select('.unbrush[class~=e]').attr('width', Math.abs(this.h(this.h.domain()[1] - h_selection[1]))).attr('x', this.h(h_selection[1]));
+        this.brush_selection.all.select('.unbrush[class~=e]').attr('width', Math.abs(this.h(this.h.domain()[1]) - this.h(h_selection[1]))).attr('x', this.h(h_selection[1]));
       }
       if (indexOf.call(this.selectable, 'v') >= 0) {
         this.brush_selection.all.select('.unbrush[class~=n]').attr('height', this.v(v_selection[1]));
-        this.brush_selection.all.select('.unbrush[class~=s]').attr('height', Math.abs(this.v(this.v.domain()[0] - v_selection[0]))).attr('y', this.v(v_selection[0]));
+        this.brush_selection.all.select('.unbrush[class~=s]').attr('height', Math.abs(this.v(this.v.domain()[0]) - this.v(v_selection[0]))).attr('y', this.v(v_selection[0]));
         if (indexOf.call(this.selectable, 'h') >= 0) {
-          this.brush_selection.all.selectAll('.unbrush[class~=n], .unbrush[class~=s]').attr('x', this.h(h_selection[0])).attr('width', this.h(h_selection[1] - h_selection[0]));
+          this.brush_selection.all.selectAll('.unbrush[class~=n], .unbrush[class~=s]').attr('x', this.h(h_selection[0])).attr('width', this.h(h_selection[1]) - this.h(h_selection[0]));
         }
       }
       return delete this.prev_extent;

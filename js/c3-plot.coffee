@@ -301,14 +301,14 @@ class c3.Plot.Selectable extends c3.Plot
         if 'h' in @selectable
             @brush_selection.all.select('.unbrush[class~=w]').attr('width',@h h_selection[0])
             @brush_selection.all.select('.unbrush[class~=e]')
-                .attr('width',Math.abs @h(@h.domain()[1]-h_selection[1])).attr('x',@h h_selection[1])
+                .attr('width',Math.abs @h(@h.domain()[1])-@h(h_selection[1])).attr('x',@h h_selection[1])
         if 'v' in @selectable
             @brush_selection.all.select('.unbrush[class~=n]').attr('height',@v v_selection[1])
             @brush_selection.all.select('.unbrush[class~=s]')
-                .attr('height',Math.abs @v(@v.domain()[0]-v_selection[0])).attr('y',@v v_selection[0])
+                .attr('height',Math.abs @v(@v.domain()[0])-@v(v_selection[0])).attr('y',@v v_selection[0])
             if 'h' in @selectable
                 @brush_selection.all.selectAll('.unbrush[class~=n], .unbrush[class~=s]')
-                    .attr('x',@h h_selection[0]).attr('width',@h h_selection[1]-h_selection[0])
+                    .attr('x',@h h_selection[0]).attr('width',@h(h_selection[1])-@h(h_selection[0]))
 
         delete @prev_extent # If user adjusts selection then clear @prev_extent so we don't skip the next brush event
 
