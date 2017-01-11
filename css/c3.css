@@ -70,6 +70,10 @@ svg.c3.global {
 .c3.plot.selectable .brush {
   fill: none;
 }
+.c3.plot.selectable .unbrush {
+  fill: black;
+  opacity: 0.6;
+}
 .c3.plot .layer.path text {
   text-anchor: middle;
   alignment-baseline: middle;
