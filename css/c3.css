@@ -333,6 +333,7 @@ ul.c3.legend li {
   line-height: 95%;
   padding: 0.25em 0.5em 0.25em 0.5em;
   overflow: hidden;
+  white-space: nowrap;
 }
 ul.c3.legend li > .bullet {
   display: inline-block;
@@ -340,6 +341,9 @@ ul.c3.legend li > .bullet {
 }
 ul.c3.legend li > .bullet > svg {
   shape-rendering: crispEdges;
+}
+ul.c3.legend li > .content {
+  white-space: normal;
 }
 ul.c3.legend.hoverable li:hover {
   background: rgba(255, 255, 255, 0.2);

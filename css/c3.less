@@ -447,6 +447,7 @@ ul.c3.legend {
         line-height: 95%;
         padding: 0.25em 0.5em 0.25em 0.5em;
         overflow: hidden;
+        white-space: nowrap;
 
         > .bullet {
             display: inline-block;
@@ -455,6 +456,10 @@ ul.c3.legend {
             > svg {
                 shape-rendering: crispEdges;
             }
+        }
+
+        > .content {
+          white-space: normal;
         }
     }
 
