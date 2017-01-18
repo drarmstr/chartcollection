@@ -1,3 +1,5 @@
+* Performance optimization for animating stacked area charts using a legend.
+
 0.1.8
 * Support cmd-click for multi-select in tables on OSX
 * Paginated tables revert to the first page when sorted.

@@ -294,7 +294,7 @@
         if ((base10 = this.nested_item_options.events).mouseenter == null) {
           base10.mouseenter = (function(_this) {
             return function(hover_stack, hover_stack_idx, hover_layer_idx) {
-              var duration, fade, layer, ref, ref1;
+              var cache, duration, fade, layer, ref, ref1, ref2;
               layer = _this.plot.layers[hover_layer_idx];
               fade = _this.hover_fade;
               layer.groups.all.style('opacity', function(stack, i) {
@@ -317,13 +317,19 @@
                 });
               }
               if (layer.path_generator != null) {
+                _this.layer_paths_cached = cache = [];
                 if ((ref1 = layer.paths) != null) {
-                  ref1.all.filter(function(stack, stack_idx) {
+                  ref1.all.each(function(path, path_idx) {
+                    return cache[path_idx] = d3.select(this).attr('d');
+                  });
+                }
+                if ((ref2 = layer.paths) != null) {
+                  ref2.all.filter(function(stack, stack_idx) {
                     return stack_idx === hover_stack_idx;
                   }).transition().duration(duration).attr('d', function(stack, stack_idx) {
                     layer.path_generator.x(function(d, i) {
-                      var ref2;
-                      return ((ref2 = layer.chart.orig_h) != null ? ref2 : layer.h)(stack.values[i].x);
+                      var ref3;
+                      return ((ref3 = layer.chart.orig_h) != null ? ref3 : layer.h)(stack.values[i].x);
                     }).y(function(d, i) {
                       return layer.v(stack.values[i].y);
                     }).y0(layer.v.range()[0]);
@@ -338,7 +344,7 @@
         if ((base11 = this.nested_item_options.events).mouseleave == null) {
           base11.mouseleave = (function(_this) {
             return function(hover_stack, hover_stack_idx, hover_layer_idx) {
-              var layer, ref, ref1;
+              var layer, ref, ref1, ref2;
               layer = _this.plot.layers[hover_layer_idx];
               layer.groups.all.style('opacity', function(stack, i) {
                 var ref, ref1, ref2, ref3, ref4, ref5;
@@ -350,7 +356,17 @@
               if ((ref1 = layer.paths) != null) {
                 ref1.all.interrupt();
               }
-              layer.draw();
+              if (layer.paths != null) {
+                if (_this.layer_paths_cached != null) {
+                  if ((ref2 = layer.paths) != null) {
+                    ref2.all.filter(function(stack, stack_idx) {
+                      return stack_idx === hover_stack_idx;
+                    }).attr('d', _this.layer_paths_cached[hover_stack_idx]);
+                  }
+                } else {
+                  layer.draw();
+                }
+              }
               return _this.trigger('stack_mouseleave', hover_stack, hover_stack_idx, hover_layer_idx);
             };
           })(this);
@@ -363,6 +379,7 @@
 
     PlotLegend.prototype._update = function() {
       var generate_glyph, plot, size;
+      delete this.layer_paths_caches;
       delete this.bullet_options.text;
       delete this.bullet_options.html;
       PlotLegend.__super__._update.apply(this, arguments);
