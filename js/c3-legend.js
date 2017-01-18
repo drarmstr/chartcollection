@@ -226,13 +226,16 @@
         var ref, ref1;
         return (ref = (ref1 = layer.name) != null ? ref1 : layer_title(layer, i)) != null ? ref : layer.type;
       };
-      stack_title = function(stack, i, layer) {
-        var ref, ref1, ref2, ref3, ref4, ref5;
-        return (ref = (ref1 = (ref2 = (ref3 = stack.options) != null ? ref3.title : void 0) != null ? ref2 : layer != null ? (ref4 = layer.stack_options) != null ? typeof ref4.title === "function" ? ref4.title(stack) : void 0 : void 0 : void 0) != null ? ref1 : layer != null ? (ref5 = layer.stack_options) != null ? ref5.title : void 0 : void 0) != null ? ref : stack.name;
-      };
-      stack_name = function(stack, i, layer) {
+      stack_title = (function(_this) {
+        return function(stack, stack_idx, layer_idx) {
+          var layer, ref, ref1, ref2, ref3, ref4, ref5;
+          layer = _this.plot.layers[layer_idx];
+          return (ref = (ref1 = (ref2 = (ref3 = stack.options) != null ? ref3.title : void 0) != null ? ref2 : layer != null ? (ref4 = layer.stack_options) != null ? typeof ref4.title === "function" ? ref4.title(stack) : void 0 : void 0 : void 0) != null ? ref1 : layer != null ? (ref5 = layer.stack_options) != null ? ref5.title : void 0 : void 0) != null ? ref : stack.name;
+        };
+      })(this);
+      stack_name = function(stack, stack_idx, layer_idx) {
         var ref, ref1;
-        return (ref = (ref1 = stack.name) != null ? ref1 : stack_title(stack, i, layer)) != null ? ref : "stack";
+        return (ref = (ref1 = stack.name) != null ? ref1 : stack_title(stack, stack_idx, layer_idx)) != null ? ref : "stack";
       };
       if (this.html_names) {
         if ((base = this.item_options).html == null) {

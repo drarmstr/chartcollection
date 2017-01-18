@@ -180,8 +180,11 @@ class c3.Legend.PlotLegend extends c3.Legend
         # Callbacks to get the layer and stack names and titles
         layer_title = (layer,i)=> layer.options?.title ? @plot.layer_options?.title?(layer,i) ? @plot.layer_options?.title ? layer.name
         layer_name = (layer,i)-> layer.name ? layer_title(layer,i) ? layer.type
-        stack_title = (stack,i,layer)-> stack.options?.title ? layer?.stack_options?.title?(stack) ? layer?.stack_options?.title ? stack.name
-        stack_name = (stack,i,layer)-> stack.name ? stack_title(stack,i,layer) ? "stack"
+        stack_title = (stack,stack_idx,layer_idx)=>
+            layer = @plot.layers[layer_idx]
+            stack.options?.title ? layer?.stack_options?.title?(stack) ? layer?.stack_options?.title ? stack.name
+        stack_name = (stack,stack_idx,layer_idx)->
+            stack.name ? stack_title(stack,stack_idx,layer_idx) ? "stack"
 
         # Setup the legend names and titles
         if @html_names
