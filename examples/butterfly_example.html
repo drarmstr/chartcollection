@@ -58,12 +58,6 @@
         This is similar to a <b>caller/callee</b> type visualization, except it can represent an
         arbitrary depth from the focus node, not just the immediate callers and callees.
     </p>
-    <p>
-        <b>Note: </b><i>
-            Butterfly graphs are still under initial development.
-            e.g. Gradients don't work well yet with IE.
-        </i>
-    </p>
 
     <form>
         <label>
@@ -78,6 +72,16 @@
         <label>
             Depth of Field
             <input id="depth_of_field" type="range" min=1 max=5 value=2 />
+        </label>
+        <br />
+        <label>
+            Limit nodes
+            <input id="limit_nodes" type="range" min=0 max=100 value=0 />
+        </label>
+        <br />
+        <label>
+            Limit links
+            <input id="limit_links" type="range" min=0 max=100 value=0 />
         </label>
     </form>
 

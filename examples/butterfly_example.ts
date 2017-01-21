@@ -119,3 +119,17 @@ document.getElementById('depth_of_field').addEventListener('change', function ()
     cfg.depth_of_field = +element.value;
     cfg.redraw();
 });
+
+// **Limit the Nodes**
+document.getElementById('limit_nodes').addEventListener('change', function () {
+    let element = <HTMLInputElement>this;
+    cfg.limit_nodes = +element.value || undefined;
+    cfg.redraw();
+});
+
+// **Limit the Links**
+document.getElementById('limit_links').addEventListener('change', function () {
+    let element = <HTMLInputElement>this;
+    cfg.limit_links = +element.value || undefined;
+    cfg.redraw();
+});

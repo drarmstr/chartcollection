@@ -335,6 +335,34 @@ This is only valid if node_width is set as a width and not as a percentage.</p>
 <div class='tags'>
 </div>
   </dd>
+  <dt id='limit_nodes-variable'>
+    limit_nodes
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>undefined</code></pre>
+    <div class='docstring'>
+  <p>[Number] Limit the number of nodes to visualize in the graph.
+The nodes with the top total computed values will be rendered.</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='limit_links-variable'>
+    limit_links
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>undefined</code></pre>
+    <div class='docstring'>
+  <p>[Number] Limit the number of links to visualize in the graph.
+This top number of links will be selected based on their link values.
+However, the trailing links for all of the nodes connected by those top
+links will also be rendered.</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
   <dt id='nodes_options-variable'>
     nodes_options
     =
@@ -476,6 +504,18 @@ This is only valid if node_width is set as a width and not as a percentage.</p>
   </li>
   <li>
     <span class='signature'>
+      <a href='#_update_data-dynamic'>
+        #
+(void)
+<b>_update_data</b><span>(origin)</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
       <a href='#_update-dynamic'>
         #
 (void)
@@ -491,7 +531,7 @@ This is only valid if node_width is set as a width and not as a percentage.</p>
       <a href='#_layout-dynamic'>
         #
 (void)
-<b>_layout</b><span>(origin, current_data, current_links, current_nodes)</span>
+<b>_layout</b><span>(origin)</span>
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -570,6 +610,16 @@ This is only valid if node_width is set as a width and not as a percentage.</p>
     
   </div>
   <div class='method_details'>
+    <p class='signature' id='_update_data-dynamic'>
+      #
+(void)
+<b>_update_data</b><span>(origin)</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
     <p class='signature' id='_update-dynamic'>
       #
 (void)
@@ -583,7 +633,7 @@ This is only valid if node_width is set as a width and not as a percentage.</p>
     <p class='signature' id='_layout-dynamic'>
       #
 (void)
-<b>_layout</b><span>(origin, current_data, current_links, current_nodes)</span>
+<b>_layout</b><span>(origin)</span>
       <span class='bound note'>Bound</span>
       <br>
     </p>

@@ -28,6 +28,7 @@
       this._draw = bind(this._draw, this);
       this._layout = bind(this._layout, this);
       this._update = bind(this._update, this);
+      this._update_data = bind(this._update_data, this);
       this._size = bind(this._size, this);
       this._init = bind(this._init, this);
       return Sankey.__super__.constructor.apply(this, arguments);
@@ -70,6 +71,10 @@
     Sankey.prototype.link_path_curvature = 0.5;
 
     Sankey.prototype.overflow_width_ratio = 0.5;
+
+    Sankey.prototype.limit_nodes = void 0;
+
+    Sankey.prototype.limit_links = void 0;
 
     Sankey.prototype.nodes_options = void 0;
 
@@ -136,14 +141,13 @@
       }
     };
 
-    Sankey.prototype._update = function(origin) {
-      var current_data, current_links, datum, detect_backedge, k, key, len, len1, len2, len3, link, link_key, link_value, m, n, name, name1, next_nodes, node, node_links, nodes, o, ref, ref1, ref2, ref3, ref4, remaining_nodes, stack, target_key, visited, x;
+    Sankey.prototype._update_data = function(origin) {
+      var base, base1, data, datum, detect_backedge, k, key, len, len1, len2, link, link_key, link_value, m, n, name, name1, node, node_links, ref, ref1, ref2, ref3, stack, visited;
       if (origin === 'render' && !isNaN(this.node_padding)) {
         return;
       }
-      this.nodes = nodes = {};
+      this.nodes = this.current_nodes = {};
       this.node_links = node_links = {};
-      current_links = [];
       ref = this.links;
       for (k = 0, len = ref.length; k < len; k++) {
         link = ref[k];
@@ -155,22 +159,21 @@
         if (node_links[link_key] != null) {
           throw Error("Link with duplicate source and target specified");
         }
-        current_links.push(link);
         node_links[link_key] = {
           value: this.link_value(link)
         };
-        node = nodes[name = this.link_source(link)] != null ? nodes[name] : nodes[name] = {
+        node = (base = this.nodes)[name = this.link_source(link)] != null ? base[name] : base[name] = {
           source_links: [],
           target_links: []
         };
         node.target_links.push(link);
-        node = nodes[name1 = this.link_target(link)] != null ? nodes[name1] : nodes[name1] = {
+        node = (base1 = this.nodes)[name1 = this.link_target(link)] != null ? base1[name1] : base1[name1] = {
           source_links: [],
           target_links: []
         };
         node.source_links.push(link);
       }
-      current_data = (function() {
+      data = (function() {
         var len1, m, ref1, results;
         ref1 = this.data;
         results = [];
@@ -183,63 +186,67 @@
         return results;
       }).call(this);
       if ((this.value != null) && !this.safe) {
-        for (m = 0, len1 = current_data.length; m < len1; m++) {
-          datum = current_data[m];
-          nodes[this.key(datum)].value = this.value(datum);
+        for (m = 0, len1 = data.length; m < len1; m++) {
+          datum = data[m];
+          this.nodes[this.key(datum)].value = this.value(datum);
         }
       } else {
         key = this.key;
-        link_key = this.link_key;
-        for (n = 0, len2 = current_data.length; n < len2; n++) {
-          datum = current_data[n];
-          node = nodes[key(datum)];
-          node.value = Math.max(d3.sum(node.source_links, function(l) {
-            return node_links[link_key(l)].value;
-          }), d3.sum(node.target_links, function(l) {
-            return node_links[link_key(l)].value;
-          }));
+        for (n = 0, len2 = data.length; n < len2; n++) {
+          datum = data[n];
+          node = this.nodes[key(datum)];
+          node.value = Math.max(d3.sum(node.source_links, (function(_this) {
+            return function(l) {
+              return node_links[_this.link_key(l)].value;
+            };
+          })(this)), d3.sum(node.target_links, (function(_this) {
+            return function(l) {
+              return node_links[_this.link_key(l)].value;
+            };
+          })(this)));
           if (this.value != null) {
             node.value = Math.max(node.value, this.value(datum));
           }
         }
       }
-      for (key in nodes) {
-        node = nodes[key];
+      ref1 = this.nodes;
+      for (key in ref1) {
+        node = ref1[key];
         if (node.value == null) {
           throw Error("Missing nodes are not currently supported");
         }
       }
-      ref1 = this.nodes;
-      for (key in ref1) {
-        node = ref1[key];
+      ref2 = this.nodes;
+      for (key in ref2) {
+        node = ref2[key];
         node.links_sum = d3.sum(node.source_links, (function(_this) {
           return function(l) {
-            return _this.node_links[_this.link_key(l)].value;
+            return node_links[_this.link_key(l)].value;
           };
         })(this)) + d3.sum(node.target_links, (function(_this) {
           return function(l) {
-            return _this.node_links[_this.link_key(l)].value;
+            return node_links[_this.link_key(l)].value;
           };
         })(this));
       }
       visited = {};
-      ref2 = this.nodes;
-      for (key in ref2) {
-        node = ref2[key];
+      ref3 = this.nodes;
+      for (key in ref3) {
+        node = ref3[key];
         if (!(!visited[key])) {
           continue;
         }
         stack = [];
         (detect_backedge = (function(_this) {
           return function(key, node) {
-            var len3, o, ref3, target, target_key;
+            var len3, o, ref4, target, target_key;
             visited[key] = true;
             stack.push(node);
-            ref3 = node.target_links;
-            for (o = 0, len3 = ref3.length; o < len3; o++) {
-              link = ref3[o];
+            ref4 = node.target_links;
+            for (o = 0, len3 = ref4.length; o < len3; o++) {
+              link = ref4[o];
               target_key = _this.link_target(link);
-              target = nodes[target_key];
+              target = _this.nodes[target_key];
               node_links[_this.link_key(link)].backedge = indexOf.call(stack, target) >= 0;
               if (!visited[target_key]) {
                 detect_backedge(target_key, target);
@@ -249,21 +256,65 @@
           };
         })(this))(key, node);
       }
-      remaining_nodes = this.nodes;
+      return null;
+    };
+
+    Sankey.prototype._update = function(origin) {
+      var current_links, k, key, len, len1, len2, len3, link, m, n, next_nodes, node, o, ref, ref1, ref2, remaining_nodes, target_key, target_node, top_keys, x;
+      this._update_data(origin);
+      if (this.limit_links != null) {
+        current_links = this.links.slice(0);
+        c3.array.sort_up(current_links, this.link_value);
+        current_links = current_links.slice(-this.limit_links, +(current_links.length - 1) + 1 || 9e9);
+        this.current_nodes = {};
+        for (k = 0, len = current_links.length; k < len; k++) {
+          link = current_links[k];
+          ref = [this.link_source(link), this.link_target(link)];
+          for (m = 0, len1 = ref.length; m < len1; m++) {
+            key = ref[m];
+            this.current_nodes[key] = this.nodes[key];
+          }
+        }
+      }
+      if (this.limit_nodes != null) {
+        top_keys = (function() {
+          var results;
+          results = [];
+          for (key in this.nodes) {
+            results.push(key);
+          }
+          return results;
+        }).call(this);
+        c3.array.sort_up(top_keys, (function(_this) {
+          return function(key) {
+            return _this.nodes[key].value;
+          };
+        })(this));
+        top_keys = top_keys.slice(-this.limit_nodes, +(top_keys.length - 1) + 1 || 9e9);
+        this.current_nodes = {};
+        for (n = 0, len2 = top_keys.length; n < len2; n++) {
+          key = top_keys[n];
+          this.current_nodes[key] = this.nodes[key];
+        }
+      }
+      remaining_nodes = this.current_nodes;
       x = 0;
       while (!c3.util.isEmpty(remaining_nodes)) {
         next_nodes = {};
         for (key in remaining_nodes) {
           node = remaining_nodes[key];
           node.x = x;
-          ref3 = node.target_links;
-          for (o = 0, len3 = ref3.length; o < len3; o++) {
-            link = ref3[o];
-            if (!(!node_links[this.link_key(link)].backedge)) {
+          ref1 = node.target_links;
+          for (o = 0, len3 = ref1.length; o < len3; o++) {
+            link = ref1[o];
+            if (!(!this.node_links[this.link_key(link)].backedge)) {
               continue;
             }
             target_key = this.link_target(link);
-            next_nodes[target_key] = nodes[target_key];
+            target_node = this.current_nodes[target_key];
+            if (target_node != null) {
+              next_nodes[target_key] = target_node;
+            }
           }
         }
         remaining_nodes = next_nodes;
@@ -271,22 +322,20 @@
       }
       x--;
       if (this.align === 'both') {
-        ref4 = this.nodes;
-        for (key in ref4) {
-          node = ref4[key];
+        ref2 = this.nodes;
+        for (key in ref2) {
+          node = ref2[key];
           if (!node.target_links.length) {
             node.x = x;
           }
         }
       }
       this.h.domain([0, x]);
-      return this._layout(origin, current_data, current_links, this.nodes);
+      return this._layout(origin);
     };
 
-    Sankey.prototype._layout = function(origin, current_data1, current_links, current_nodes) {
-      var alpha, base, collision_detection, column, columns, delta, i, i1, iteration, j, j1, k, key, layout_links, len, len1, len10, len11, len12, len2, len3, len4, len5, len6, len7, len8, len9, link, m, n, node, node_link, node_links, o, p, q, r, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, s, source_link_value, source_node, t, target_link_value, target_node, tmp, total_source_link_value, total_weighted_y, u, v, v_domain, w, weighted_y, y, z;
-      this.current_data = current_data1;
-      this.current_nodes = current_nodes;
+    Sankey.prototype._layout = function(origin) {
+      var alpha, base, collision_detection, column, columns, current_data, current_link_keys, current_links, datum, delta, i, i1, iteration, j, j1, k, k1, key, l1, layout_links, len, len1, len10, len11, len12, len13, len14, len2, len3, len4, len5, len6, len7, len8, len9, link, links, m, n, node, node_link, node_links, o, p, q, r, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, s, source_link_value, source_node, t, target_link_value, target_node, tmp, total_source_link_value, total_weighted_y, u, v, v_domain, w, weighted_y, y, z;
       node_links = this.node_links;
       this.columns = columns = d3.nest().key(function(node) {
         return node.x;
@@ -413,11 +462,8 @@
                   y += node_link.value;
                   node_link.tx = node.x;
                   if (!(link_source(link) in this.current_nodes)) {
-                    node_link.sx = node.x - 0.5;
+                    node_link.sx = node.x - 1;
                     node_link.sy = trailing_y;
-                    if (this.v(node_link.value) > this.h(0.25)) {
-                      node_link.sx -= this.h.invert(this.v(node_link.value));
-                    }
                     if (this.v(node_link.sy).toFixed(3) === this.v(node_link.ty).toFixed(3)) {
                       node_link.sy += this.v.invert(1);
                     }
@@ -443,11 +489,8 @@
                     y += node_link.value;
                     node_link.sx = node.x;
                     if (!(link_target(link) in this.current_nodes)) {
-                      node_link.tx = node.x + 0.5;
+                      node_link.tx = node.x + 1;
                       node_link.ty = trailing_y;
-                      if (this.v(node_link.value) > this.h(0.25)) {
-                        node_link.tx += this.h.invert(this.v(node_link.value));
-                      }
                       if (this.v(node_link.sy).toFixed(3) === this.v(node_link.ty).toFixed(3)) {
                         node_link.ty += this.v.invert(1);
                       }
@@ -511,7 +554,7 @@
               link = ref2[t];
               node_link = this.node_links[this.link_key(link)];
               source_node = this.current_nodes[this.link_source(link)];
-              if (source_node == null) {
+              if ((source_node == null) || (source_node.y == null)) {
                 continue;
               }
               total_weighted_y += source_node.y * node_link.value;
@@ -533,16 +576,13 @@
                 link = ref3[u];
                 node_link = this.node_links[this.link_key(link)];
                 target_node = this.current_nodes[this.link_target(link)];
-                if (target_node == null) {
+                if ((target_node == null) || (target_node.y == null)) {
                   continue;
                 }
                 weighted_y += target_node.y * node_link.value;
                 target_link_value += node_link.value;
               }
-              if (!target_link_value) {
-                throw "assertion error: Orphan node";
-              }
-              node.y = weighted_y / target_link_value;
+              node.y = weighted_y / (target_link_value || 1);
             }
           }
         }
@@ -580,6 +620,28 @@
         collision_detection();
         layout_links();
       }
+      current_link_keys = {};
+      ref7 = this.current_nodes;
+      for (key in ref7) {
+        node = ref7[key];
+        ref8 = [node.source_links, node.target_links];
+        for (k1 = 0, len13 = ref8.length; k1 < len13; k1++) {
+          links = ref8[k1];
+          for (l1 = 0, len14 = links.length; l1 < len14; l1++) {
+            link = links[l1];
+            current_link_keys[this.link_key(link)] = link;
+          }
+        }
+      }
+      current_links = (function() {
+        var results;
+        results = [];
+        for (key in current_link_keys) {
+          link = current_link_keys[key];
+          results.push(link);
+        }
+        return results;
+      })();
       this.links_layer = this.content.select('g.links').singleton().options(this.links_options).update();
       this.link_g = this.links_layer.select('g.link').options(this.link_options).animate(origin !== 'render').bind(current_links, this.link_key).update();
       this.paths = this.link_g.inherit('path').options(this.path_options).update();
@@ -588,19 +650,54 @@
           return _this.node_links[_this.link_key(link)].backedge;
         };
       })(this));
+      current_data = (function() {
+        var len15, m1, ref9, results;
+        ref9 = this.data;
+        results = [];
+        for (m1 = 0, len15 = ref9.length; m1 < len15; m1++) {
+          datum = ref9[m1];
+          if (this.key(datum) in this.current_nodes) {
+            results.push(datum);
+          }
+        }
+        return results;
+      }).call(this);
       this.nodes_layer = this.content.select('g.nodes').singleton().options(this.nodes_options).update();
-      this.node_g = this.nodes_layer.select('g.node').options(this.node_options).animate(origin !== 'render').bind(this.current_data, this.key).update();
+      this.node_g = this.nodes_layer.select('g.node').options(this.node_options).animate(origin !== 'render').bind(current_data, this.key).update();
       this.rects = this.node_g.inherit('rect').options(this.rect_options).update();
       if (this.node_label_options != null) {
         this.node_labels_clip = this.node_g.inherit('svg.label', 'restore');
-        return this.node_labels = this.node_labels_clip.inherit('text', 'restore').options(this.node_label_options).update();
+        this.node_labels = this.node_labels_clip.inherit('text', 'restore').options(this.node_label_options).update();
       } else {
-        if ((ref7 = this.node_labels_clip) != null) {
-          ref7.all.remove();
+        if ((ref9 = this.node_labels_clip) != null) {
+          ref9.all.remove();
         }
         delete this.node_labels;
-        return delete this.node_labels_clip;
+        delete this.node_labels_clip;
       }
+      this.paths.all.classed({
+        fade_left: (function(_this) {
+          return function(link) {
+            return !(_this.link_source(link) in _this.current_nodes);
+          };
+        })(this),
+        fade_right: (function(_this) {
+          return function(link) {
+            return !(_this.link_target(link) in _this.current_nodes);
+          };
+        })(this)
+      });
+      return this.paths.all.attr('mask', (function(_this) {
+        return function(link) {
+          if (!(_this.link_source(link) in _this.current_nodes)) {
+            return 'url(#mask_fade_left)';
+          } else if (!(_this.link_target(link) in _this.current_nodes)) {
+            return 'url(#mask_fade_right)';
+          } else {
+            return null;
+          }
+        };
+      })(this));
     };
 
     Sankey.prototype._draw = function(origin) {
@@ -761,7 +858,6 @@
       this.focus = bind(this.focus, this);
       this._style = bind(this._style, this);
       this._butterfly_layout = bind(this._butterfly_layout, this);
-      this._butterfly_update = bind(this._butterfly_update, this);
       this._update = bind(this._update, this);
       this._init = bind(this._init, this);
       return Butterfly.__super__.constructor.apply(this, arguments);
@@ -789,19 +885,14 @@
       if (ref = this.focal, indexOf.call(this.data, ref) < 0) {
         this.focal = null;
       }
-      if (origin !== 'focus' || (this.focal == null)) {
-        Butterfly.__super__._update.apply(this, arguments);
-        this._butterfly_update();
-        this._style(true);
-      }
       if (this.focal != null) {
+        if (origin !== 'focus') {
+          this._update_data(origin);
+        }
         this._butterfly_layout();
-        this._butterfly_update();
-        return this._style(true);
+      } else {
+        Butterfly.__super__._update.apply(this, arguments);
       }
-    };
-
-    Butterfly.prototype._butterfly_update = function() {
       if (this.navigatable) {
         this.rects["new"].on('click', (function(_this) {
           return function(datum) {
@@ -810,62 +901,31 @@
           };
         })(this));
       }
-      this.paths.all.classed({
-        fade_left: (function(_this) {
-          return function(link) {
-            return !(_this.link_source(link) in _this.current_nodes);
-          };
-        })(this),
-        fade_right: (function(_this) {
-          return function(link) {
-            return !(_this.link_target(link) in _this.current_nodes);
-          };
-        })(this)
-      });
-      return this.paths.all.attr('mask', (function(_this) {
-        return function(link) {
-          if (!(_this.link_source(link) in _this.current_nodes)) {
-            return 'url(#mask_fade_left)';
-          } else if (!(_this.link_target(link) in _this.current_nodes)) {
-            return 'url(#mask_fade_right)';
-          } else {
-            return null;
-          }
-        };
-      })(this));
+      return this._style(true);
     };
 
     Butterfly.prototype._butterfly_layout = function() {
-      var current_links, datum, focus_key, focus_node, nodes, walk;
+      var focus_key, focus_node, walk;
       focus_key = this.key(this.focal);
       focus_node = this.nodes[focus_key];
-      nodes = {};
-      current_links = [];
+      this.current_nodes = {};
       walk = (function(_this) {
         return function(key, direction, depth) {
-          var k, len, len1, len2, link, links, m, n, node, ref, ref1, results;
-          if (nodes[key]) {
+          var k, len, link, node, ref, results;
+          if (_this.current_nodes[key]) {
             return;
           }
           node = _this.nodes[key];
           if (node == null) {
             return;
           }
-          nodes[key] = node;
+          _this.current_nodes[key] = node;
           node.x = _this.depth_of_field + (depth * direction);
-          ref = [node.source_links, node.target_links];
-          for (k = 0, len = ref.length; k < len; k++) {
-            links = ref[k];
-            for (m = 0, len1 = links.length; m < len1; m++) {
-              link = links[m];
-              current_links.push(link);
-            }
-          }
           if (depth < _this.depth_of_field) {
-            ref1 = (direction === 1 ? node.target_links : node.source_links);
+            ref = (direction === 1 ? node.target_links : node.source_links);
             results = [];
-            for (n = 0, len2 = ref1.length; n < len2; n++) {
-              link = ref1[n];
+            for (k = 0, len = ref.length; k < len; k++) {
+              link = ref[k];
               results.push(walk((direction === 1 ? _this.link_target : _this.link_source)(link), direction, depth + 1));
             }
             return results;
@@ -873,22 +933,10 @@
         };
       })(this);
       walk(focus_key, 1, 0);
-      delete nodes[focus_key];
+      delete this.current_nodes[focus_key];
       walk(focus_key, -1, 0);
-      this.current_data = (function() {
-        var k, len, ref, results;
-        ref = this.data;
-        results = [];
-        for (k = 0, len = ref.length; k < len; k++) {
-          datum = ref[k];
-          if (this.key(datum) in nodes) {
-            results.push(datum);
-          }
-        }
-        return results;
-      }).call(this);
       this.h.domain([-0.5, this.depth_of_field * 2 + 0.5]);
-      return this._layout('focus', this.current_data, current_links, nodes);
+      return this._layout('focus');
     };
 
     Butterfly.prototype._style = function(style_new) {

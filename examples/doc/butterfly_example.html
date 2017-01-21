@@ -467,6 +467,44 @@ cfg.render();</pre></div></div>
             
         </li>
         
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p><strong>Limit the Nodes</strong></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'limit_nodes'</span>).addEventListener(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">let</span> element = &lt;HTMLInputElement&gt;<span class="hljs-keyword">this</span>;
+    cfg.limit_nodes = +element.value || <span class="hljs-literal">undefined</span>;
+    cfg.redraw();
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p><strong>Limit the Links</strong></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'limit_links'</span>).addEventListener(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">let</span> element = &lt;HTMLInputElement&gt;<span class="hljs-keyword">this</span>;
+    cfg.limit_links = +element.value || <span class="hljs-literal">undefined</span>;
+    cfg.redraw();
+});</pre></div></div>
+            
+        </li>
+        
     </ul>
   </div>
 </body>
