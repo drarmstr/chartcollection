@@ -167,7 +167,7 @@ class c3.Plot extends c3.Chart
     scale: (origin)=>
         refresh = false
         if @h_domain?
-            h_domain = if typeof @h_domain is 'function' then @h_domain.call(this) else @h_domain
+            h_domain = if typeof @h_domain is 'function' then @h_domain.call(this) else @h_domain[..]
             if h_domain[0] is 'auto' then h_domain[0] = @min_x()
             if h_domain[1] is 'auto' then h_domain[1] = @max_x()
             if h_domain[0]!=@h.domain()[0] or h_domain[1]!=@h.domain()[1]
@@ -175,7 +175,7 @@ class c3.Plot extends c3.Chart
                 @orig_h?.domain h_domain # TODO Ugly hack; need to cleanup zoom as a mixin
                 refresh = true
         if @v_domain?
-            v_domain = if typeof @v_domain is 'function' then @v_domain.call(this) else @v_domain
+            v_domain = if typeof @v_domain is 'function' then @v_domain.call(this) else @v_domain[..]
             if v_domain[0] is 'auto' then v_domain[0] = @min_y()
             if v_domain[1] is 'auto' then v_domain[1] = @max_y()
             if v_domain[0]!=@v.domain()[0] or v_domain[1]!=@v.domain()[1]

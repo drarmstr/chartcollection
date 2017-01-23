@@ -233,7 +233,7 @@
       var h_domain, i, layer, len, ref, ref1, refresh, v_domain;
       refresh = false;
       if (this.h_domain != null) {
-        h_domain = typeof this.h_domain === 'function' ? this.h_domain.call(this) : this.h_domain;
+        h_domain = typeof this.h_domain === 'function' ? this.h_domain.call(this) : this.h_domain.slice(0);
         if (h_domain[0] === 'auto') {
           h_domain[0] = this.min_x();
         }
@@ -249,7 +249,7 @@
         }
       }
       if (this.v_domain != null) {
-        v_domain = typeof this.v_domain === 'function' ? this.v_domain.call(this) : this.v_domain;
+        v_domain = typeof this.v_domain === 'function' ? this.v_domain.call(this) : this.v_domain.slice(0);
         if (v_domain[0] === 'auto') {
           v_domain[0] = this.min_y();
         }
