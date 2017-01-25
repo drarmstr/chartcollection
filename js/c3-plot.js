@@ -593,8 +593,6 @@
 
     Axis.prototype.type = 'axis';
 
-    Axis._next_uid = 0;
-
     Axis.prototype.scale = void 0;
 
     Axis.prototype.orient = void 0;
@@ -621,7 +619,6 @@
       this._draw = bind(this._draw, this);
       this._init = bind(this._init, this);
       Axis.__super__.constructor.apply(this, arguments);
-      this.uid = c3.Axis._next_uid++;
     }
 
     Axis.prototype._init = function() {

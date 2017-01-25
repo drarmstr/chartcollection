@@ -475,7 +475,6 @@ class c3.Plot.Zoomable extends c3.Plot
 class c3.Axis extends c3.Chart
     @version: 0.1
     type: 'axis'
-    @_next_uid: 0
 
     # [{https://github.com/mbostock/d3/wiki/Scales d3.scale}, Boolean] Scale where the _domain()_ specifies the units to display in the axis.
     # _c3 will automatically set the range()_.
@@ -506,7 +505,6 @@ class c3.Axis extends c3.Chart
 
     constructor: (opt)->
         super
-        @uid = c3.Axis._next_uid++
 
     _init: =>
         @scale ?= d3.scale.linear()

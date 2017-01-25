@@ -216,6 +216,11 @@
       if (this.nested_item_options == null) {
         this.nested_item_options = {};
       }
+      if (this.nest_key == null) {
+        this.nest_key = function(stack) {
+          return stack.key;
+        };
+      }
       layer_title = (function(_this) {
         return function(layer, i) {
           var ref, ref1, ref2, ref3, ref4, ref5;

@@ -176,6 +176,7 @@ class c3.Legend.PlotLegend extends c3.Legend
         @nest ?= (layer)-> layer.stacks ? []
         @item_options ?= {}
         @nested_item_options ?= {}
+        @nest_key ?= (stack)-> stack.key
 
         # Callbacks to get the layer and stack names and titles
         layer_title = (layer,i)=> layer.options?.title ? @plot.layer_options?.title?(layer,i) ? @plot.layer_options?.title ? layer.name

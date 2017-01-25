@@ -627,6 +627,7 @@ class c3.Dispatch
 #   });
 #   my_table.on('redraw', function() { console.log("Table redraw was called; add customizations here."); });
 class c3.Base
+    @_next_uid: 0
     # [String, DOM node] Optional selector string or DOM node to attach visualization to.
     # _If no anchor is provided, then a div node is created but not attached to the DOM when you render().
     # The anchor proprety refers to this node so you can attach it to the DOM later as you wish._
@@ -655,6 +656,7 @@ class c3.Base
         initialize()
         c3.util.extend this, new c3.Dispatch
         c3.util.extend this, opt
+        @uid = c3.Base._next_uid++
 
 
     ####################

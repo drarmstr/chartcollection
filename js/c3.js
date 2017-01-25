@@ -561,6 +561,8 @@
   })();
 
   c3.Base = (function() {
+    Base._next_uid = 0;
+
     Base.prototype.anchor = void 0;
 
     Base.prototype.height = void 0;
@@ -579,6 +581,7 @@
       initialize();
       c3.util.extend(this, new c3.Dispatch);
       c3.util.extend(this, opt);
+      this.uid = c3.Base._next_uid++;
     }
 
     Base.prototype.render = function(opt) {
