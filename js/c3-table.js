@@ -73,7 +73,7 @@
     }
 
     Table.prototype._init = function() {
-      var base, base1, base2, base3, column, k, len, ref, ref1, ref2;
+      var base, base1, base2, column, k, len, ref, ref1, ref2;
       this.table = c3.select(d3.select(this.anchor), 'table').singleton();
       if (this.table_options == null) {
         this.table_options = {};
@@ -98,17 +98,11 @@
         if (column.key == null) {
           column.key = this.next_column_key++;
         }
-        if (column.header == null) {
-          column.header = {};
-        }
-        if ((base2 = column.header).text == null) {
-          base2.text = "";
-        }
         if (column.cells == null) {
           column.cells = {};
         }
-        if ((base3 = column.cells).text == null) {
-          base3.text = "";
+        if ((base2 = column.cells).text == null) {
+          base2.text = "";
         }
         if (column.sortable == null) {
           column.sortable = column.sort != null;
@@ -151,10 +145,13 @@
     Table.prototype._update_headers = function() {
       var self;
       self = this;
-      this.headers = this.header.select('th').bind(this.columns, function(column) {
+      this.headers = this.header.select('th').bind(this.columns.some(function(column) {
+        return column.header != null;
+      }) ? this.columns : [], function(column) {
         return column.key;
       }).options(this.header_options, (function(column) {
-        return column.header;
+        var ref;
+        return (ref = column.header) != null ? ref : {};
       })).update();
       this.headers["new"].on('click.sort', (function(_this) {
         return function(column) {
@@ -227,6 +224,7 @@
           return this.current_data.slice(this.limit_rows * (this.page - 1), +((this.limit_rows * this.page) - 1) + 1 || 9e9);
         }
       }).call(this);
+      console.debug("BLARG PAGE", this.page);
       this.rows = this.body.select('tr').bind(data, this.key);
       this.rows.options(this.row_options).update();
       if (this.key != null) {

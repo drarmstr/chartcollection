@@ -53,6 +53,7 @@ class c3.Table extends c3.Base
     # Column objects can contain the following members:
     # * **header** [{c3.Selection.Options}] Options to describe the header contents, styles, events, etc.
     #   Use `text` or `html` to define the content for the header.
+    #   Column headers are optional.
     # * **cells** [{c3.Selection.Options}] Options to describe the cell contents, styles, events, etc.
     #   Use `text` or `html` to define the cell contents.
     # * **sortable** [Boolean] - Boolean to define if the counter should be user-sortable by clicking on the header.
@@ -166,7 +167,6 @@ class c3.Table extends c3.Base
         for column in @columns
             column.key ?= @next_column_key++
             # Default text to "" so contents are cleared so we don't append duplicate arrows and div.vis nodes.
-            column.header ?= {}; column.header.text ?= ""
             column.cells ?= {}; column.cells.text ?= ""
             column.sortable ?= column.sort?
             column.value ?= column.sort
@@ -197,8 +197,10 @@ class c3.Table extends c3.Base
     _update_headers: =>
         self = this
         # Update the headers
-        @headers = @header.select('th').bind @columns, (column)->column.key
-            .options(@header_options, ((column)->column.header)).update()
+        @headers = @header.select('th').bind(
+            if @columns.some((column)-> column.header?) then @columns else [],
+            (column)->column.key
+        ).options(@header_options, ((column)->column.header ? {})).update()
         @headers.new.on 'click.sort', (column)=> if @sortable and column.sortable then @sort column
         if @sortable then @headers.all.each (column)-> if column is self.sort_column
             title = d3.select(this)
@@ -230,6 +232,7 @@ class c3.Table extends c3.Base
             if isNaN @limit_rows then throw Error "limit_rows set to non-numeric value: "+@limit_rows
             @page = Math.max(1, Math.min(Math.ceil(@current_data.length/@limit_rows), @page ? 1))
             @current_data[@limit_rows*(@page-1)..(@limit_rows*@page)-1]
+        console.debug "BLARG PAGE", @page
         @rows = @body.select('tr').bind data, @key
         @rows.options(@row_options).update()
         if @key? then @rows.all.order()

@@ -1,3 +1,4 @@
+* Make table column headers optional.
 * Fix plot's ability to rescale auto-scaled scales.
 * Add ability for Sankey to limit the number of nodes or links rendered.
 * Polish how trailing links to unrendered nodes are drawn.
