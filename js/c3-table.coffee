@@ -232,7 +232,6 @@ class c3.Table extends c3.Base
             if isNaN @limit_rows then throw Error "limit_rows set to non-numeric value: "+@limit_rows
             @page = Math.max(1, Math.min(Math.ceil(@current_data.length/@limit_rows), @page ? 1))
             @current_data[@limit_rows*(@page-1)..(@limit_rows*@page)-1]
-        console.debug "BLARG PAGE", @page
         @rows = @body.select('tr').bind data, @key
         @rows.options(@row_options).update()
         if @key? then @rows.all.order()

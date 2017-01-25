@@ -224,7 +224,6 @@
           return this.current_data.slice(this.limit_rows * (this.page - 1), +((this.limit_rows * this.page) - 1) + 1 || 9e9);
         }
       }).call(this);
-      console.debug("BLARG PAGE", this.page);
       this.rows = this.body.select('tr').bind(data, this.key);
       this.rows.options(this.row_options).update();
       if (this.key != null) {
