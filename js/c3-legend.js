@@ -198,7 +198,6 @@
       if (!this.plot.rendered) {
         throw Error("plot_legend's linked plot should be rendered before rendering the legend.");
       }
-      this.data = this.plot.layers;
       if (this.key == null) {
         this.key = function(layer) {
           return layer.uid;
@@ -218,7 +217,8 @@
       }
       if (this.nest_key == null) {
         this.nest_key = function(stack) {
-          return stack.key;
+          var ref;
+          return (ref = stack.key) != null ? ref : stack.name;
         };
       }
       layer_title = (function(_this) {
@@ -390,6 +390,7 @@
       delete this.layer_paths_caches;
       delete this.bullet_options.text;
       delete this.bullet_options.html;
+      this.data = this.plot.layers;
       PlotLegend.__super__._update.apply(this, arguments);
       size = 16;
       generate_glyph = function(svg, layer, stack_idx) {

@@ -171,12 +171,11 @@ class c3.Legend.PlotLegend extends c3.Legend
         if not @plot.rendered then throw Error "plot_legend's linked plot should be rendered before rendering the legend."
 
         # Setup default data to refer to the layers and stacks in a C3 plot
-        @data = @plot.layers
         @key ?= (layer)-> layer.uid
         @nest ?= (layer)-> layer.stacks ? []
         @item_options ?= {}
         @nested_item_options ?= {}
-        @nest_key ?= (stack)-> stack.key
+        @nest_key ?= (stack)-> stack.key ? stack.name
 
         # Callbacks to get the layer and stack names and titles
         layer_title = (layer,i)=> layer.options?.title ? @plot.layer_options?.title?(layer,i) ? @plot.layer_options?.title ? layer.name
@@ -284,6 +283,10 @@ class c3.Legend.PlotLegend extends c3.Legend
         # Create empty bullets to be populated with SVG glyphs.
         delete @bullet_options.text
         delete @bullet_options.html
+
+        # Setup default data to refer to the layers in a C3 plot
+        # @data = @plot.layers[..].reverse()
+        @data = @plot.layers
         super
 
         # Create an SVG glyph for each layer or stack.  Bind it to an example "node" in the
