@@ -154,6 +154,10 @@ class c3.Legend.PlotLegend extends c3.Legend
 
     # [{c3.Plot}] Plot to link with this legend
     plot: undefined
+    # [Boolean] Invert the order of the layers in the legend.
+    # * `false` - Layers on top are at the top of the legend.
+    # * `true` - Layers on top are at the bottom of the legend.
+    invert_layers: false
     # [Boolean] By default, the layer and stack names will display as raw text.  If you would like
     # HTML tags in the name string to render as HTML, then enable this option.  Please be careful of
     # user-provided strings and security.
@@ -180,11 +184,11 @@ class c3.Legend.PlotLegend extends c3.Legend
         # Callbacks to get the layer and stack names and titles
         layer_title = (layer,i)=> layer.options?.title ? @plot.layer_options?.title?(layer,i) ? @plot.layer_options?.title ? layer.name
         layer_name = (layer,i)-> layer.name ? layer_title(layer,i) ? layer.type
-        stack_title = (stack,stack_idx,layer_idx)=>
+        stack_title = (stack, stack_idx, layer_idx)=>
             layer = @plot.layers[layer_idx]
             stack.options?.title ? layer?.stack_options?.title?(stack) ? layer?.stack_options?.title ? stack.name
-        stack_name = (stack,stack_idx,layer_idx)->
-            stack.name ? stack_title(stack,stack_idx,layer_idx) ? "stack"
+        stack_name = (stack, stack_idx, layer_idx)->
+            stack.name ? stack_title(stack, stack_idx, layer_idx) ? "stack"
 
         # Setup the legend names and titles
         if @html_names
@@ -215,7 +219,7 @@ class c3.Legend.PlotLegend extends c3.Legend
 
             # Highlight the stacks in the chart layer when hovering over nested items
             @nested_item_options.events ?= {}
-            @nested_item_options.events.mouseenter ?= (hover_stack,hover_stack_idx,hover_layer_idx)=>
+            @nested_item_options.events.mouseenter ?= (hover_stack, hover_stack_idx, hover_layer_idx)=>
                 layer = @plot.layers[hover_layer_idx]
 
                 # Fade other stacks
@@ -247,7 +251,7 @@ class c3.Legend.PlotLegend extends c3.Legend
 
                 @trigger 'stack_mouseenter', hover_stack, hover_stack_idx, hover_layer_idx
 
-            @nested_item_options.events.mouseleave ?= (hover_stack,hover_stack_idx,hover_layer_idx)=>
+            @nested_item_options.events.mouseleave ?= (hover_stack, hover_stack_idx, hover_layer_idx)=>
                 layer = @plot.layers[hover_layer_idx]
 
                 # Restore all stacks to their proper opacity
@@ -285,9 +289,12 @@ class c3.Legend.PlotLegend extends c3.Legend
         delete @bullet_options.html
 
         # Setup default data to refer to the layers in a C3 plot
-        # @data = @plot.layers[..].reverse()
         @data = @plot.layers
         super
+        if @invert_layers
+            @items.all.order()
+        else
+            @items.all.sort((a,b)=> @plot.layers.indexOf(a) < @plot.layers.indexOf(b))
 
         # Create an SVG glyph for each layer or stack.  Bind it to an example "node" in the
         # plot's actual layer that will represent what styles we should copy for the legend.

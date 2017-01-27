@@ -192,7 +192,7 @@ plot.render({
 
 // Now actually create the `plot_legend` and link it with the chart we just created.
 // Everything else is automatic, though we could override or extend the behaviour if we wanted to.
-new c3.Legend.PlotLegend({
+var plot_legend = new c3.Legend.PlotLegend({
     anchor: $('<div></div>').appendTo($('#plot_legend_example'))[0],
     anchor_styles: {
         'display': 'inline-block',
@@ -204,3 +204,11 @@ new c3.Legend.PlotLegend({
 
 // Resize the chart to fit the window
 window.onresize = function () { plot.resize(); }
+
+// ## Forms to modify legend options
+
+// Invert the layers in the legend
+$('#invert_layers').on('change', function () {
+    (<c3.Legend.PlotLegend>plot_legend).invert_layers = this.checked;
+    plot_legend.redraw();
+});

@@ -498,7 +498,7 @@ Everything else is automatic, though we could override or extend the behaviour i
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">new</span> c3.Legend.PlotLegend({
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> plot_legend = <span class="hljs-keyword">new</span> c3.Legend.PlotLegend({
     anchor: $(<span class="hljs-string">'&lt;div&gt;&lt;/div&gt;'</span>).appendTo($(<span class="hljs-string">'#plot_legend_example'</span>))[<span class="hljs-number">0</span>],
     anchor_styles: {
         <span class="hljs-string">'display'</span>: <span class="hljs-string">'inline-block'</span>,
@@ -522,6 +522,37 @@ Everything else is automatic, though we could override or extend the behaviour i
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-built_in">window</span>.onresize = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{ plot.resize(); }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <h2 id="forms-to-modify-legend-options">Forms to modify legend options</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>Invert the layers in the legend</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>$(<span class="hljs-string">'#invert_layers'</span>).on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    (&lt;c3.Legend.PlotLegend&gt;plot_legend).invert_layers = <span class="hljs-keyword">this</span>.checked;
+    plot_legend.redraw();
+});</pre></div></div>
             
         </li>
         

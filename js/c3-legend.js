@@ -181,6 +181,8 @@
 
     PlotLegend.prototype.plot = void 0;
 
+    PlotLegend.prototype.invert_layers = false;
+
     PlotLegend.prototype.html_names = false;
 
     PlotLegend.prototype.hover_fade = 0.2;
@@ -392,6 +394,15 @@
       delete this.bullet_options.html;
       this.data = this.plot.layers;
       PlotLegend.__super__._update.apply(this, arguments);
+      if (this.invert_layers) {
+        this.items.all.order();
+      } else {
+        this.items.all.sort((function(_this) {
+          return function(a, b) {
+            return _this.plot.layers.indexOf(a) < _this.plot.layers.indexOf(b);
+          };
+        })(this));
+      }
       size = 16;
       generate_glyph = function(svg, layer, stack_idx) {
         var node, ref, ref1, ref2, ref3, ref4, ref5;

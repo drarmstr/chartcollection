@@ -215,6 +215,7 @@ declare module c3 {
 
         interface PlotLegendOptions extends LegendOptions<c3.Plot.Layer<any>, c3.Plot.Layer.Stackable.Stack<any>> {
             plot?: c3.Plot<any>;
+            invert_layers?: boolean;
             html_names?: boolean;
             hover_fade?: number;
             duration?: number;
@@ -851,6 +852,8 @@ declare module c3 {
         navigatable?: boolean;
         depth_of_field?: number;
         focal?: D;
+        limit_nodes?: number;
+        limit_links?: number;
       }
       interface Butterfly<D, L> extends ButterflyOptions<D, L> { }
       class Butterfly<D, L> extends Sankey<D, L> implements ButterflyOptions<D, L> {
