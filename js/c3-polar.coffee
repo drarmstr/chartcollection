@@ -636,6 +636,7 @@ class c3.Polar.Layer.Sunburst extends c3.Polar.Layer.Segment
                     set_depth(child,depth+1) for child in node.children
                 set_depth(node,0) for node in @root_nodes
             else if @children_keys?
+                # Build hierarchy based on user providing keys to the children
                 roots = {}
                 for datum in data
                     key = @key datum
@@ -643,17 +644,17 @@ class c3.Polar.Layer.Sunburst extends c3.Polar.Layer.Segment
                     roots[key] = true
                 for node in nodes
                     if node?.children?
-                      for child_key in node.children
-                          roots[child_key] = false
-                          if !nodes[child_key]? then throw "Missing child node"
-                      node.children = (nodes[child_key] for child_key in node.children)
+                        for child_key in node.children
+                            roots[child_key] = false
+                            if !nodes[child_key]? then throw "Missing child node"
+                        node.children = (nodes[child_key] for child_key in node.children)
                 @root_nodes = (nodes[key] for key,root of roots when root)
                 set_depth = (node, depth)=>
                     node.y1 = depth
                     node.y2 = depth+1
                     set_depth(child,depth+1) for child in node.children
                 set_depth(node,0) for node in @root_nodes
-            else
+            else if @children?
                 # Build hierarchy based on user providing children (or there is no hierarchy)
                 build_nodes = (datum, depth)=>
                     node = nodes[@key datum] =
@@ -663,6 +664,8 @@ class c3.Polar.Layer.Sunburst extends c3.Polar.Layer.Segment
                         children: if @children? then (build_nodes(child,depth+1) for child in (@children(datum) ? [])) else []
                     return node
                 @root_nodes = (build_nodes(datum, 0) for datum in data)
+            else throw Error "Sunburst must define either `parent_key`, `children_keys` or `children` to describe data hierarhcy"
+
             # If we are animating then save the old values from the last node hierarchy for transitions
             if @arc_options.animate
                 for node,key in nodes
