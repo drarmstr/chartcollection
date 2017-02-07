@@ -209,6 +209,309 @@
     }
   };
 
+  c3.Layout = (function() {
+    function Layout() {}
+
+    return Layout;
+
+  })();
+
+  c3.Layout.Tree = (function() {
+    function Tree(opt) {
+      this.layout = bind(this.layout, this);
+      this.revalue = bind(this.revalue, this);
+      this.construct = bind(this.construct, this);
+      c3.util.extend(this, opt);
+    }
+
+    Tree.prototype.construct = function(data) {
+      var build_nodes, child_key, datum, key, l, len, len1, len2, len3, len4, m, n, name1, node, nodes, o, old_node, old_nodes, p, parent_key, parent_node, ref, ref1, ref2, root, roots, set_depth;
+      old_nodes = this.nodes;
+      nodes = {};
+      if (this.parent_key != null) {
+        this.root_nodes = [];
+        for (l = 0, len = data.length; l < len; l++) {
+          datum = data[l];
+          node = nodes[name1 = this.key(datum)] != null ? nodes[name1] : nodes[name1] = {
+            children: []
+          };
+          node.datum = datum;
+          parent_key = this.parent_key(datum);
+          if (parent_key != null) {
+            parent_node = nodes[parent_key];
+            if (parent_node != null) {
+              parent_node.children.push(node);
+            } else {
+              nodes[parent_key] = {
+                children: [node]
+              };
+            }
+          } else {
+            this.root_nodes.push(node);
+          }
+        }
+        set_depth = function(node, depth) {
+          var child, len1, m, ref, results;
+          node.y1 = depth;
+          node.y2 = depth + 1;
+          ref = node.children;
+          results = [];
+          for (m = 0, len1 = ref.length; m < len1; m++) {
+            child = ref[m];
+            results.push(set_depth(child, depth + 1));
+          }
+          return results;
+        };
+        ref = this.root_nodes;
+        for (m = 0, len1 = ref.length; m < len1; m++) {
+          node = ref[m];
+          set_depth(node, 0);
+        }
+      } else if (this.children_keys != null) {
+        roots = {};
+        for (n = 0, len2 = data.length; n < len2; n++) {
+          datum = data[n];
+          key = this.key(datum);
+          nodes[key] = {
+            datum: datum,
+            children: this.children_keys(datum)
+          };
+          roots[key] = true;
+        }
+        for (key in nodes) {
+          node = nodes[key];
+          if (node.children != null) {
+            ref1 = node.children;
+            for (o = 0, len3 = ref1.length; o < len3; o++) {
+              child_key = ref1[o];
+              roots[child_key] = false;
+              if (nodes[child_key] == null) {
+                throw Error("Missing child node");
+              }
+            }
+            node.children = (function() {
+              var len4, p, ref2, results;
+              ref2 = node.children;
+              results = [];
+              for (p = 0, len4 = ref2.length; p < len4; p++) {
+                child_key = ref2[p];
+                results.push(nodes[child_key]);
+              }
+              return results;
+            })();
+          } else {
+            node.children = [];
+          }
+        }
+        this.root_nodes = (function() {
+          var results;
+          results = [];
+          for (root in roots) {
+            if (root) {
+              results.push(nodes[key]);
+            }
+          }
+          return results;
+        })();
+        set_depth = function(node, depth) {
+          var child, len4, p, ref2, results;
+          node.y1 = depth;
+          node.y2 = depth + 1;
+          ref2 = node.children;
+          results = [];
+          for (p = 0, len4 = ref2.length; p < len4; p++) {
+            child = ref2[p];
+            results.push(set_depth(child, depth + 1));
+          }
+          return results;
+        };
+        ref2 = this.root_nodes;
+        for (p = 0, len4 = ref2.length; p < len4; p++) {
+          node = ref2[p];
+          set_depth(node, 0);
+        }
+      } else if (this.children != null) {
+        build_nodes = (function(_this) {
+          return function(datum, depth) {
+            var child;
+            return node = nodes[_this.key(datum)] = {
+              datum: datum,
+              y1: depth,
+              y2: depth + 1,
+              children: _this.children != null ? (function() {
+                var len5, q, ref3, ref4, results;
+                ref4 = (ref3 = this.children(datum)) != null ? ref3 : [];
+                results = [];
+                for (q = 0, len5 = ref4.length; q < len5; q++) {
+                  child = ref4[q];
+                  results.push(build_nodes(child, depth + 1));
+                }
+                return results;
+              }).call(_this) : []
+            };
+          };
+        })(this);
+        this.root_nodes = (function() {
+          var len5, q, results;
+          results = [];
+          for (q = 0, len5 = data.length; q < len5; q++) {
+            datum = data[q];
+            results.push(build_nodes(datum, 0));
+          }
+          return results;
+        })();
+      } else {
+        throw Error("Tree layout must define either `parent_key`, `children_keys`, or `children` options to describe data hierarchy.");
+      }
+      if (old_nodes != null) {
+        for (node in nodes) {
+          key = nodes[node];
+          old_node = old_nodes[key];
+          if (old_node != null) {
+            node.x1 = node.px1 = old_node.x1;
+            node.x2 = node.px2 = old_node.x2;
+            node.py1 = old_node.y1;
+            node.py2 = old_node.y2;
+          }
+        }
+      }
+      return this.nodes = nodes;
+    };
+
+    Tree.prototype.revalue = function() {
+      var compute_values, key, l, len, node, ref, ref1, self_value;
+      if (this.self_value != null) {
+        self_value = this.self_value;
+        compute_values = function(node) {
+          var child, l, len, ref;
+          node.value = self_value(node.datum);
+          ref = node.children;
+          for (l = 0, len = ref.length; l < len; l++) {
+            child = ref[l];
+            node.value += compute_values(child);
+          }
+          return node.value;
+        };
+        ref = this.root_nodes;
+        for (l = 0, len = ref.length; l < len; l++) {
+          node = ref[l];
+          compute_values(node, 0);
+        }
+        return (function(_this) {
+          return function(d) {
+            return _this.nodes[_this.key(d)].value;
+          };
+        })(this);
+      }
+      if (this.value != null) {
+        ref1 = this.nodes;
+        for (key in ref1) {
+          node = ref1[key];
+          node.value = this.value(node.datum);
+        }
+        return this.value;
+      } else {
+        throw Error("Tree layout must define either `value` or `self_value` option.");
+      }
+    };
+
+    Tree.prototype.layout = function(sort1, limit_min_percent, root_datum) {
+      var collect_nodes, current_data, l, len, limit_min, node, partition, ref, ref1, ref2, root_domain, root_node, sort, total_value;
+      this.sort = sort1 != null ? sort1 : false;
+      if (limit_min_percent == null) {
+        limit_min_percent = 0;
+      }
+      if (root_datum == null) {
+        root_datum = null;
+      }
+      sort = (function() {
+        switch (this.sort) {
+          case true:
+            return function(node) {
+              return -node.value;
+            };
+          case false:
+          case null:
+            return null;
+          default:
+            return (function(_this) {
+              return function(node) {
+                return -_this.sort(node.datum);
+              };
+            })(this);
+        }
+      }).call(this);
+      total_value = 0;
+      ref = this.root_nodes;
+      for (l = 0, len = ref.length; l < len; l++) {
+        node = ref[l];
+        total_value += node.value;
+      }
+      root_node = this.root_datum != null ? this.nodes[this.key(root_datum)] : null;
+      limit_min = ((root_node != null ? root_node.value : void 0) / total_value) || limit_min_percent;
+      partition = (function(_this) {
+        return function(nodes, domain, total) {
+          var angle, delta, dx, len1, len2, m, n, start;
+          delta = domain[1] - domain[0];
+          angle = domain[0];
+          if (!total || delta < limit_min) {
+            for (m = 0, len1 = nodes.length; m < len1; m++) {
+              node = nodes[m];
+              if (node.px1 === angle && node.px2 === angle && node.x1 === angle && node.x2 === angle) {
+                continue;
+              }
+              node.px1 = node.x1;
+              node.px2 = node.x2;
+              node.x1 = angle;
+              node.x2 = angle;
+              if (node.children.length) {
+                partition(node.children, domain, 0);
+              }
+            }
+            return false;
+          } else {
+            if (sort) {
+              c3.array.sort_up(nodes, sort);
+            }
+            dx = delta / total;
+            for (n = 0, len2 = nodes.length; n < len2; n++) {
+              node = nodes[n];
+              node.px1 = node.x1;
+              node.px2 = node.x2;
+              node.x1 = start = angle;
+              node.x2 = angle += dx * node.value;
+              if (node.children.length) {
+                partition(node.children, [start, angle], node.value);
+              }
+            }
+            return true;
+          }
+        };
+      })(this);
+      partition(this.root_nodes, [0, 1], total_value);
+      current_data = [];
+      root_domain = [(ref1 = root_node != null ? root_node.x1 : void 0) != null ? ref1 : 0, (ref2 = root_node != null ? root_node.x2 : void 0) != null ? ref2 : 1];
+      collect_nodes = function(nodes) {
+        var len1, m;
+        for (m = 0, len1 = nodes.length; m < len1; m++) {
+          node = nodes[m];
+          if (node.x2 - node.x1 > limit_min && node.x2 > root_domain[0] && node.x1 < root_domain[1]) {
+            current_data.push(node.datum);
+            if (node.children.length) {
+              collect_nodes(node.children);
+            }
+          }
+        }
+        return null;
+      };
+      collect_nodes(this.root_nodes);
+      return current_data;
+    };
+
+    return Tree;
+
+  })();
+
   c3.Selection = (function() {
     function Selection() {}
 

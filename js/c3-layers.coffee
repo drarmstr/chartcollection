@@ -1173,6 +1173,30 @@ class c3.Plot.Layer.Swimlane.Flamechart extends c3.Plot.Layer.Swimlane.Segment
 
 
 ###################################################################
+# Icicle
+###################################################################
+
+# A {c3.Plot.Layer.Swimlane swimlane layer} for rendering icicle charts.
+# You should not define `x` or `y`, but you must define `dx` and `dy`.
+# A `key()` is required for this layer.
+#
+# @author Douglas Armstrong
+class c3.Plot.Layer.Swimlane.Icicle extends c3.Plot.Layer.Swimlane.Segment
+    @version: 0.1
+    type: 'flamechart'
+
+    _init: =>
+        super
+        if not @key? then throw Error "`key()` accessor function is required for Icicle layers"
+        if not @dy? then throw Error "`dy` option is required for Icicle layers"
+        if @x? then throw Error "`x` option cannot be defined for Icicle layers"
+        if @y? then throw Error "`y` option cannot be defined for Icicle layers"
+
+    _update: (origin)=>
+        super
+
+
+###################################################################
 # XY Plot Sampled Swimlane Layers
 ###################################################################
 

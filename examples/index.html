@@ -5,7 +5,7 @@
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="../favicon.ico" type="image/x-icon" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    
+
     <link rel="stylesheet" href="../css/doc.css" />
     <style>
         body {
@@ -125,6 +125,7 @@
             swimlanes: { title: "Swimlanes" },
             pie: { title: "Pie & Donut Charts" },
             flamechart_sunburst: { title: "Flamechart & Sunburst" },
+            icicle: { title: "Icicle" },
             sankey: { title: "Sankey Flow Graph" },
             butterfly: { title: "Butterfly Caller/Callee" },
             worldbank: { title: "World Bank Crossfilter" },
@@ -178,10 +179,7 @@
             document.querySelector('main > iframe').style.display = example ? '' : 'none';
             if (example) {
                 var iframe = document.querySelector('iframe');
-                iframe.onload = function () {
-                    document.querySelector('#title').textContent = document.title =
-                        (iframe.contentDocument || iframe.contentWindow.document).title;
-                };
+                document.querySelector('#title').textContent = document.title = examples[example].title;
                 switch (route) {
                     case 'source':
                         iframe.src = 'doc/' + example + '_example.html';
