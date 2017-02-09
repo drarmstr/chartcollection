@@ -211,7 +211,7 @@ properties, which will then be used as appropriate when redraw() or restyle() is
       <a href='#position-dynamic'>
         #
 (void)
-<b>position</b><span>(attrs)</span>
+<b>position</b><span>(attrs, old_attrs = null)</span>
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -589,7 +589,7 @@ text, and html for all nodes based on the current data and <a href='../../class/
     <p class='signature' id='position-dynamic'>
       #
 (void)
-<b>position</b><span>(attrs)</span>
+<b>position</b><span>(attrs, old_attrs = null)</span>
       <span class='bound note'>Bound</span>
       <br>
     </p>
@@ -609,6 +609,16 @@ and callbacks set in attrs.</p>
       </span>
       &mdash;
       <span class='desc'>A map where the keys represent DOM attribute names and the values are the corresponding values or functions to set them.  The functions are called via D3.  They are passed the bound datum and index to the data as arguments and the <code>this</code> context is set to refer to the HTML element. </span>
+    </li>
+    <li>
+      <span class='name'>old_attrs</span>
+      <span class='type'>
+        (
+          <tt>Object</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>A map for the previous attributes to use for new elements if they are animated. </span>
     </li>
   </ul>
 </div>

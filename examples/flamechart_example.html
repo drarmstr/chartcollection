@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Icicle Example</title>
+    <title>Flamechart Example</title>
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
@@ -27,16 +27,24 @@
 
   <section>
     <p>
-        Example <b>Icicle</b> for aggregated Call Trace visualization:
+        <b>Flamechart</b> example Call Trace for stacks over time.
+        In C3 a <i>Flamechart</i> is used for visualizing a timeline of
+        instances of hierarchical events.  Use an <i>Icicle</i> or <i>Sunburst</i>
+        for aggregated tree data.
     </p>
-    Click on a node to focus visualization on that node and its children.
+    Pan by dragging.  Zoom with the mouse wheel or touch pinching.
+    <br />
     <label>
         Limit number of elements
-        <input id="limit_call_trace_elements" type="range" min=1 max=400 value=400 />
+        <input id="limit_elements" type="range" min=1 max=400 value=400 />
+    </label><br />
+    <label>
+        <input type="checkbox" id="bottom_up" checked />
+        Grow bottom-up
     </label>
-    <div id="icicle_example" style="width:90%; margin-left:5%"></div>
+    <div id="flamechart_example" style="width:90%; margin-left:5%"></div>
   </section>
 
-  <script src="icicle_example.js"></script>
+  <script src="flamechart_example.js"></script>
 </body>
 </html>

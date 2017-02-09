@@ -49,13 +49,15 @@
       </table>
       <h2>Overview</h2>
       <div class='docstring'>
-  <div class='note todo'>
-    <strong>TODO:</strong>
-    Remove requirement for <code>key()</code> accessor. 
-  </div>
-  <p>A <a href='../../class/c3/Plot.Layer.Swimlane.html'>swimlane layer</a> for rendering flamecharts.
-You should not define <code>y</code>, but you must define a <code>dy</code>.
-A <code>key()</code> is required for this layer.</p>
+  <p>A <a href='../../class/c3/Plot.Layer.Swimlane.html'>swimlane layer</a> for rendering <em>flamecharts</em> or <em>flamegraphs</em>.</p><p>In C3, both a <a href='../../class/c3/Plot.Layer.Swimlane.Flamechart.html'>Flamechart</a> and an
+<a href='../../class/c3/Plot.Layer.Swimlane.Icicle.html'>Icicle</a> can actually grow either up or down
+depending if you set <code>v_orient</code> as <code>top</code> or <code>bottom</code>.
+A <em>Flamechart</em> defaults to growing up and an <em>Icicle</em> defaults to growing down.
+In C3, a <a href='../../class/c3/Plot.Layer.Swimlane.Flamechart.html'>Flamechart</a> visualizes a timeline
+of instances of nested events over time, while an <a href='../../class/c3/Plot.Layer.Swimlane.Icicle.html'>Icicle</a>
+visualizes an aggregated tree hierarchy of nodes.  The <a href='../../class/c3/Polar.Layer.Sunburst.html'>Sunburst</a>
+is the equivalent of an <em>Icicle</em> rendered on a polar axis.</p><p>A <code>key()</code> is required for this layer.
+You should not define <code>y</code>, but you must define a <code>x</code>, <code>dx</code>, and <code>dy</code>.</p>
 </div>
 <div class='tags'>
   <h3>Author:</h3>
@@ -83,6 +85,19 @@ A <code>key()</code> is required for this layer.</p>
     <pre><code class='coffeescript'>&#39;flamechart&#39;</code></pre>
     
   </dd>
+  <dt id='v_orient-variable'>
+    v_orient
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>&#39;bottom&#39;</code></pre>
+    <div class='docstring'>
+  <p>[String] <code>top</code> for 0 to be at the top, <code>bottom</code> for the bottom.
+Flamechart defaults to bottom-up.</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
 </dl>
       <h3 class='inherited'>
         Variable inherited from
@@ -98,6 +113,7 @@ A <code>key()</code> is required for this layer.</p>
         <a href='../../class/c3/Plot.Layer.Swimlane.Segment.html#limit_elements-variable'>limit_elements</a>
         <a href='../../class/c3/Plot.Layer.Swimlane.Segment.html#rect_options-variable'>rect_options</a>
         <a href='../../class/c3/Plot.Layer.Swimlane.Segment.html#label_options-variable'>label_options</a>
+        <a href='../../class/c3/Plot.Layer.Swimlane.html#v_orient-variable'>v_orient</a>
         <a href='../../class/c3/Plot.Layer.Swimlane.html#dy-variable'>dy</a>
         <a href='../../class/c3/Plot.Layer.Swimlane.html#hover-variable'>hover</a>
         <a href='../../class/c3/Plot.Layer.Swimlane.html#lane_options-variable'>lane_options</a>
@@ -110,6 +126,7 @@ A <code>key()</code> is required for this layer.</p>
         <a href='../../class/c3/Plot.Layer.html#v-variable'>v</a>
         <a href='../../class/c3/Plot.Layer.html#x-variable'>x</a>
         <a href='../../class/c3/Plot.Layer.html#y-variable'>y</a>
+        <a href='../../class/c3/Plot.Layer.html#h_orient-variable'>h_orient</a>
         <a href='../../class/c3/Plot.Layer.html#options-variable'>options</a>
         <a href='../../class/c3/Plot.Layer.html#handlers-variable'>handlers</a>
         <a href='../../class/c3/Plot.Layer.html#restyle-variable'>restyle</a>

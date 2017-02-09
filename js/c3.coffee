@@ -195,21 +195,20 @@ class c3.Layout
 # Tree Layout
 ###################################################################
 
-# INPUT
-# key
-# parent_key or children_keys or children
-# value or self_value
-# OUTPUT
-# nodes
-#  datum, children, x1, x2, y1, y2, px1, px2, py1, py2
-# root_nodes
+# A tree layout to parition elements hierarchically.
 class c3.Layout.Tree
-    constructor: (opt)->
-        c3.util.extend this, opt
+    # @param options must contain:
+    # `key` - accessor to get a key from a data element
+    # Either `parent_key, `children_keys`, or `children` to define the tree
+    # Either `value` or `self_value` for partitioning the nodes.
+    constructor: (options)->
+        c3.util.extend this, options
 
     # Construct the tree hierarchy.
     # @param data [Array] Array of data elements
     # @return [Object] Return an object mapping element keys to nodes
+    # A node is an object with the following properties:
+    #  datum, children, x1, x2, y1, y2, px1, px2, py1, py2
     construct: (data)=>
         old_nodes = @nodes
         nodes = {}
@@ -223,7 +222,8 @@ class c3.Layout.Tree
                 if parent_key?
                     parent_node = nodes[parent_key]
                     if parent_node? then parent_node.children.push node
-                    else nodes[parent_key] = { children: [node] }
+                    else parent_node = nodes[parent_key] = { children: [node] }
+                    node.parent = parent_node
                 else @root_nodes.push node
             set_depth = (node, depth)->
                 node.y1 = depth
@@ -238,12 +238,14 @@ class c3.Layout.Tree
                 nodes[key] = { datum, children: @children_keys(datum) }
                 roots[key] = true
             for key,node of nodes
-                if node.children?
+                node.children = if node.children?
                     for child_key in node.children
                         roots[child_key] = false
-                        if !nodes[child_key]? then throw Error "Missing child node"
-                    node.children = (nodes[child_key] for child_key in node.children)
-                else node.children = []
+                        child_node = nodes[child_key]
+                        if !child_node? then throw Error "Missing child node"
+                        child_node.parent = node
+                    (nodes[child_key] for child_key in node.children)
+                else []
             @root_nodes = (nodes[key] for root of roots when root)
             set_depth = (node, depth)->
                 node.y1 = depth
@@ -251,22 +253,22 @@ class c3.Layout.Tree
                 set_depth(child, depth+1) for child in node.children
             set_depth(node, 0) for node in @root_nodes
 
-        else if @children?
-            build_nodes = (datum, depth)=>
+        else # @children? or no hierarchy
+            build_nodes = (datum, depth, parent)=>
                 return node = nodes[@key datum] = {
                     datum,
+                    parent,
                     y1: depth
                     y2: depth+1
-                    children: if @children?
-                        (build_nodes(child, depth+1) for child in (@children(datum) ? []))
-                    else []
+                    children: (build_nodes(child, depth+1, null) for child in (@children?(datum) ? []))
                 }
             @root_nodes = (build_nodes(datum, 0) for datum in data)
-
-        else throw Error "Tree layout must define either `parent_key`, `children_keys`, or `children` options to describe data hierarchy."
+            for key,node of nodes
+                for child in node.children
+                    child.parent = node
 
         if old_nodes?
-            for node,key of nodes
+            for key,node of nodes
                 old_node = old_nodes[key]
                 if old_node?
                     node.x1 = node.px1 = old_node.x1
@@ -315,8 +317,8 @@ class c3.Layout.Tree
         total_value += node.value for node in @root_nodes
 
         # Calculate the minimum value to render based on the current root.
-        root_node = if @root_datum? then @nodes[@key root_datum] else null
-        limit_min = (root_node?.value / total_value) || limit_min_percent
+        root_node = if root_datum? then @nodes[@key root_datum] else null
+        limit_min = limit_min_percent * ((root_node?.value / total_value) || 1)
 
         # Order and partition the nodes
         partition = (nodes, domain, total)=>
@@ -331,6 +333,8 @@ class c3.Layout.Tree
                         continue
                     node.px1 = node.x1
                     node.px2 = node.x2
+                    node.py1 = node.y1
+                    node.py2 = node.y2
                     node.x1 = angle
                     node.x2 = angle
                     if node.children.length
@@ -342,6 +346,8 @@ class c3.Layout.Tree
                 for node in nodes
                     node.px1 = node.x1
                     node.px2 = node.x2
+                    node.py1 = node.y1
+                    node.py2 = node.y2
                     node.x1 = start = angle
                     node.x2 = angle += dx * node.value
                     if node.children.length
@@ -640,9 +646,11 @@ class c3.Selection
     #   values are the corresponding values or functions to set them.  The functions are called
     #   via D3.  They are passed the bound datum and index to the data as arguments and the `this`
     #   context is set to refer to the HTML element.
-    position: (attrs)=>
+    # @param old_attrs [Object] A map for the previous attributes to use for
+    #   new elements if they are animated.
+    position: (attrs, old_attrs = null)=>
         if @_animate
-            @new.attr attrs
+            @new.attr old_attrs ? attrs
             selection = @all.transition('position.attrs').duration @opt.duration
         else selection = @all
         selection.attr attrs

@@ -386,8 +386,7 @@ class c3.Polar.Layer.Segment extends c3.Polar.Layer
             # Remember the previous domain in case the last redraw/revalue animation was interrupted.
             # But, don't do this with a rebase in case the user interrupts an ongoing rebase.
             prev_t_domain = (if origin isnt 'rebase' then @prev_t_domain) ? @t.domain()
-            @prev_t_domain = [root_node.x1, root_node.x2]
-            new_t_domain = [root_node.x1, root_node.x2]
+            new_t_domain = @prev_t_domain = [root_node.x1, root_node.x2]
             new_r_domain = [root_node.y1, root_node.y1+@r.domain()[1]-@r.domain()[0]]
             t_interpolation = d3.interpolate prev_t_domain, new_t_domain
             r_interpolation = d3.interpolate @r.domain(), new_r_domain
@@ -422,6 +421,7 @@ class c3.Polar.Layer.Segment extends c3.Polar.Layer
     # * **x2** - end angle in `t` domain
     # * **y1** - inner radius in `r` domain
     # * **y2** - outer radius in `r` domain
+    # * **datum** - reference to the associated datum
     get_position_from_key: (key)=> @nodes?[key]
 
 
@@ -552,14 +552,20 @@ class c3.Polar.Layer.Pie extends c3.Polar.Layer.Segment
 ###################################################################
 
 # A polar layer that is similar to a {c3.Polar.Layer.Pie pie chart} except that you
-# can visualize hierarchical data.  Specify a callback for either `parent_key`,
+# can visualize hierarchical tree data.  It is like a polar version of the
+# {c3.Plot.Layer.Swimlane.Icicle Icicle} Plot layer.
+#
+# A `key()` callback is required for this layer.
+# Specify a callback for either `parent_key`,
 # `children`, or `children_keys` to describe the hierarchy.
 # If using `parent_key` or `children_keys` the `data` array shoud include all nodes,
 # if using `children` it only should include the root nodes.
+# Define either `value()` or `self_value()` to value the nodes in the hierarchy.
 #
-# If you care about performance, you can pass the parameter `revalue` to `redraw('revalue')`
-# if you are keeping the same dataset and only changing the element's values.
-# The sunburst layer can use a more optimized alrogithm in this situation.
+# For proper animation, or if you care about performance, you can pass the
+# parameter `revalue` to `redraw('revalue')` if you are keeping the same dataset
+# hierarchy, and only changing the element's values.
+# The Sunburst layer can use a more optimized algorithm in this situation.
 #
 # ## Events
 # * **rebase** Called with the datum of a node when it becomes the new root
@@ -576,9 +582,9 @@ class c3.Polar.Layer.Sunburst extends c3.Polar.Layer.Segment
     # The `value` option will then also be defined for you, which you can use to get the total value
     # of an element after the layer has been drawn.
     self_value: undefined
-    # [Boolean, Function] How to sort the partitioned sunburst chart segments.
-    # `true` sorts based on value, or you can define an alternative accessor function
-    # to be used for sorting.
+    # [Boolean, Function] How to sort the partitioned tree segments.
+    # `true` sorts based on _total_ value, or you can define an alternative
+    # accessor function to be used for sorting.
     sort: false
     # [Function] A callback that should return the key of the parent of an element.
     # It is called with a data element as the first parameter.
@@ -591,12 +597,13 @@ class c3.Polar.Layer.Sunburst extends c3.Polar.Layer.Segment
     # The returned array may be empty or null.
     # It is called with a data element as the first parameter.
     children: undefined
-    # [Number] Don't bother rendering arc segments whose value is smaller than this percentage of the total. (1==100%)
-    limit_angle_percentage: 0.001
+    # [Number] Don't bother rendering segments whose value is smaller than this
+    # percentage of the current domain focus. (1==100%)
+    limit_min_percent: 0.001
     # Data element that represents the root of the hierarchy to render.
     # If this is specified then only this root and its subtree will be rendered
     # When {c3.Polar.Layer.Sunburst#rebase rebase()} is called or a node is clicked on
-    # it will animate the transition to a new root node.
+    # it will animate the transition to a new root node, if animation is enabled.
     root_datum: null
 
     _init: =>
@@ -605,7 +612,8 @@ class c3.Polar.Layer.Sunburst extends c3.Polar.Layer.Segment
         @arc_options ?= {}
         @arc_options.events ?= {}
         @arc_options.events.click ?= (d)=>
-          @rebase_key((if d is @root_datum then @parent_key else @key)(d) ? null)
+            @rebase if d isnt @root_datum then d
+            else (if @parent_key? then @nodes[@parent_key d] else @nodes[@key d].parent)?.datum
         @bullseye = @content.select('circle.bullseye')
         @bullseye_options ?= {}
         @bullseye_options.events ?= {}
@@ -614,6 +622,7 @@ class c3.Polar.Layer.Sunburst extends c3.Polar.Layer.Segment
         @center = @content.select('circle.center').singleton()
 
     _layout: (data, origin)=>
+        # Construct the tree hierarchy
         if origin isnt 'revalue' and origin isnt 'rebase'
             @tree = new c3.Layout.Tree
                 key: @key,
@@ -627,9 +636,7 @@ class c3.Polar.Layer.Sunburst extends c3.Polar.Layer.Segment
 
         # Partition the arc segments based on the node values
         # We need to do this even for 'rebase' in case we shot-circuited previous paritioning
-        # root_node = @nodes[@key root_datum] if @root_datum?
-        # return @tree.layout [root_node?.x1 ? 0, root_node?.x2 ? 1], @sort, @limit_angle_percentage
-        return @tree.layout @sort, @limit_angle_percentage, @root_datum
+        return @tree.layout @sort, @limit_min_percent, @root_datum
 
         # # Construct the hierarchy of nodes.  Skip this if only "revaluing"
         # if origin isnt 'revalue' and origin isnt 'rebase'
@@ -763,9 +770,9 @@ class c3.Polar.Layer.Sunburst extends c3.Polar.Layer.Segment
 
     # Navigate to a new root node in the hierarchy representing the `datum` element
     rebase: (@root_datum)=>
-      @trigger 'rebase_start', @root_datum
-      @chart.redraw 'rebase' # redraw all layers since the scales will change
-      @trigger 'rebase', @root_datum
+        @trigger 'rebase_start', @root_datum
+        @chart.redraw 'rebase' # redraw all layers since the scales will change
+        @trigger 'rebase', @root_datum
 
     # Navigate to a new root node in the hierarchy represented by `key`
     rebase_key: (root_key)=> @rebase @nodes[root_key]?.datum

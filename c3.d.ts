@@ -355,6 +355,8 @@ declare module c3 {
             v?: d3_Scale;
             x?: number | { (d: D, i: number, j: number): number };
             y?: number | { (d: D, i: number, j: number): number };
+            h_orient?: string;
+            v_orient?: string;
             options?: c3.Selection.Options<c3.Plot.Layer<D>>;
             handlers?: { [key: string]: Function };
         }
@@ -579,6 +581,29 @@ declare module c3 {
                     constructor(opt?: FlamechartOptions<D>);
                 }
 
+                interface IcicleOptions<D> extends SwimlaneOptions<D> {
+                    key?: (d: D) => number | string;
+                    value?: (d: D) => number;
+                    self_value?: (d: D) => number;
+                    parent_key?: (d: D) => number | string;
+                    children_keys?: (d: D) => (number | string)[];
+                    children?: (d: D) => D[];
+                    sort?: boolean | { (d: D): number };
+                    limit_elements?: number;
+                    limit_min_percent?: number;
+                    rect_options?: c3.Selection.Options<D>;
+                    label_options?: c3.Selection.Options<D>;
+                }
+                interface Icicle<D> extends IcicleOptions<D> { }
+                class Icicle<D> extends Swimlane<D> implements IcicleOptions<D> {
+                    rects: c3.Selection<D>;
+                    labels: c3.Selection<D>;
+
+                    constructor(opt?: IcicleOptions<D>);
+                    rebase(d: D);
+                    rebase_key(key: number);
+                }
+
                 interface SampledOptions<D> extends SwimlaneOptions<D> {
                     dx: number | { (d: D): number };
                     filter?: (d: D, i: number) => boolean;
@@ -762,9 +787,10 @@ declare module c3 {
             //////////////////////////////////////////////////////////////////////////////////////
             interface SunburstOptions<D> extends SegmentOptions<D> {
                 self_value?: (d: D) => number;
-                limit_angle_percentage?: number;
+                limit_min_percent?: number;
                 sort?: boolean | number | { (d: D): number };
                 parent_key?: (d: D) => number;
+                children_keys?: (d: D) => number[];
                 children?: (d: D) => D[];
                 center_options?: c3.Selection.Options<void>;
                 bullseye_options?: c3.Selection.Options<void>;

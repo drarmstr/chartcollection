@@ -2,11 +2,10 @@
 (function() {
   var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty,
-    slice = [].slice;
+    hasProp = {}.hasOwnProperty;
 
   c3.Plot.Layer = (function() {
-    Layer.version = 0.1;
+    Layer.version = 0.2;
 
     c3.Layer = Layer;
 
@@ -29,6 +28,10 @@
     Layer.prototype.x = void 0;
 
     Layer.prototype.y = void 0;
+
+    Layer.prototype.h_orient = void 0;
+
+    Layer.prototype.v_orient = void 0;
 
     Layer.prototype.options = void 0;
 
@@ -72,6 +75,12 @@
       if (this.y == null) {
         this.y = this.chart.y;
       }
+      if (this.h_orient == null) {
+        this.h_orient = this.chart.h_orient;
+      }
+      if (this.v_orient == null) {
+        this.v_orient = this.chart.v_orient;
+      }
       if (this["class"] != null) {
         this.g.classed(this["class"], true);
       }
@@ -100,8 +109,14 @@
       this.width = width1;
       this.height = height1;
       this.trigger('resize_start');
-      c3.d3.set_range(this.h, [0, this.width]);
-      c3.d3.set_range(this.v, [this.height, 0]);
+      if (this.h_orient !== this.chart.h_orient && this.h === this.chart.h) {
+        this.h = this.h.copy();
+      }
+      c3.d3.set_range(this.h, this.h_orient === 'left' ? [0, this.width] : [this.width, 0]);
+      if (this.v_orient !== this.chart.v_orient && this.v === this.chart.v) {
+        this.v = this.v.copy();
+      }
+      c3.d3.set_range(this.v, this.v_orient === 'bottom' ? [this.height, 0] : [0, this.height]);
       if (typeof this._size === "function") {
         this._size();
       }
@@ -1291,6 +1306,8 @@
 
     Swimlane.prototype.type = 'swimlane';
 
+    Swimlane.prototype.v_orient = 'top';
+
     Swimlane.prototype.dy = void 0;
 
     Swimlane.prototype.hover = void 0;
@@ -1307,12 +1324,13 @@
         this.tip = c3.select(anchor, 'div.c3.hover').singleton();
         layer = this;
         mousemove = function() {
-          var hover_html, layerX, layerY, ref, swimlane, x;
+          var hover_datum, hover_html, layerX, layerY, ref, swimlane, x;
           ref = d3.mouse(this), layerX = ref[0], layerY = ref[1];
-          swimlane = Math.floor(layer._v.invert(layerY));
+          swimlane = Math.floor(layer.v.invert(layerY));
           swimlane = Math.min(swimlane, Math.max(layer.v.domain()[0], layer.v.domain()[1] - 1));
           x = layer.h.invert(layerX);
-          hover_html = (c3.functor(layer.hover)).apply(null, slice.call(layer._hover_datum(x, swimlane)).concat([swimlane]));
+          hover_datum = layer._hover_datum(x, swimlane);
+          hover_html = (c3.functor(layer.hover))(hover_datum, (hover_datum ? layer.data.indexOf(hover_datum) : null), swimlane);
           if (!hover_html) {
             return layer.tip.all.style('display', 'none');
           } else {
@@ -1353,10 +1371,13 @@
 
     Swimlane.prototype._size = function() {
       if (this.y == null) {
-        return this.dy = this.height;
+        this.dy = this.height;
       } else {
-        return this.dy != null ? this.dy : this.dy = Math.round(this.height / (Math.abs(this.v.domain()[1] - this.v.domain()[0])));
+        if (this.dy == null) {
+          this.dy = Math.round(this.height / (Math.abs(this.v.domain()[1] - this.v.domain()[0])));
+        }
       }
+      return this.g.attr('transform', this.v_orient === 'bottom' ? 'translate(0,-' + this.dy + ')' : '');
     };
 
     Swimlane.prototype._update = function() {
@@ -1377,13 +1398,11 @@
 
     Swimlane.prototype._draw = function(origin) {
       var ref;
-      this._v = this.v.copy();
-      c3.d3.set_range(this._v, [0, this.height]);
       if (origin === 'resize' || origin === 'render') {
         return (ref = this.lanes) != null ? ref.position({
           y: (function(_this) {
             return function(lane) {
-              return _this._v(lane + (_this.invert_y ? 1 : 0));
+              return _this.v(lane);
             };
           })(this),
           width: this.chart.orig_h.range()[1],
@@ -1459,9 +1478,9 @@
         }
       }
       if (idx === this.current_data.length) {
-        return [null, null];
+        return null;
       } else {
-        return [datum, idx];
+        return datum;
       }
     };
 
@@ -1529,7 +1548,7 @@
         })(this),
         y: this.y == null ? 0 : (function(_this) {
           return function(d) {
-            return _this._v(_this.y(d));
+            return _this.v(_this.y(d));
           };
         })(this)
       });
@@ -1557,7 +1576,7 @@
           })(this),
           y: this.y == null ? 0 : (function(_this) {
             return function(d, i) {
-              return _this._v(_this.y(d, i));
+              return _this.v(_this.y(d, i));
             };
           })(this),
           width: (function(_this) {
@@ -1580,6 +1599,7 @@
         });
       } else {
         c3.select(this.g, 'g.labels').all.remove();
+        delete this.labels;
       }
       if (origin === 'resize' && (!this.rects["new"].empty() || ((this.labels != null) && !this.labels["new"].empty()))) {
         return this._style(true);
@@ -1609,6 +1629,8 @@
     Flamechart.version = 0.1;
 
     Flamechart.prototype.type = 'flamechart';
+
+    Flamechart.prototype.v_orient = 'bottom';
 
     Flamechart.prototype._init = function() {
       Flamechart.__super__._init.apply(this, arguments);
@@ -1657,6 +1679,259 @@
 
   })(c3.Plot.Layer.Swimlane.Segment);
 
+  c3.Plot.Layer.Swimlane.Icicle = (function(superClass) {
+    extend(Icicle, superClass);
+
+    function Icicle() {
+      this.rebase_key = bind(this.rebase_key, this);
+      this.rebase = bind(this.rebase, this);
+      this._style = bind(this._style, this);
+      this._draw = bind(this._draw, this);
+      this._update = bind(this._update, this);
+      this._hover_datum = bind(this._hover_datum, this);
+      this._init = bind(this._init, this);
+      return Icicle.__super__.constructor.apply(this, arguments);
+    }
+
+    Icicle.version = 0.1;
+
+    Icicle.prototype.type = 'icicle';
+
+    Icicle.prototype.key = void 0;
+
+    Icicle.prototype.value = void 0;
+
+    Icicle.prototype.self_value = void 0;
+
+    Icicle.prototype.parent_key = void 0;
+
+    Icicle.prototype.children_keys = void 0;
+
+    Icicle.prototype.children = void 0;
+
+    Icicle.prototype.sort = false;
+
+    Icicle.prototype.limit_elements = void 0;
+
+    Icicle.prototype.limit_min_percent = 0.001;
+
+    Icicle.prototype.root_datum = null;
+
+    Icicle.prototype.rect_options = void 0;
+
+    Icicle.prototype.label_options = void 0;
+
+    Icicle.prototype._init = function() {
+      var base, base1;
+      Icicle.__super__._init.apply(this, arguments);
+      if (this.key == null) {
+        throw Error("`key()` accessor function is required for Icicle layers");
+      }
+      if (this.dy == null) {
+        throw Error("`dy` option is required for Icicle layers");
+      }
+      if (this.x != null) {
+        throw Error("`x` option cannot be defined for Icicle layers");
+      }
+      if (this.y != null) {
+        throw Error("`y` option cannot be defined for Icicle layers");
+      }
+      this.y = (function(_this) {
+        return function(datum) {
+          return _this.nodes[_this.key(datum)].y1;
+        };
+      })(this);
+      this.segments_g = c3.select(this.g, 'g.segments').singleton();
+      this.segment_options = {
+        events: {
+          click: (function(_this) {
+            return function(d) {
+              var ref;
+              return _this.rebase(d !== _this.root_datum ? d : (ref = (_this.parent_key != null ? _this.nodes[_this.parent_key(d)] : _this.nodes[_this.key(d)].parent)) != null ? ref.datum : void 0);
+            };
+          })(this)
+        }
+      };
+      if (this.label_options != null) {
+        if ((base = this.label_options).animate == null) {
+          base.animate = this.rect_options.animate;
+        }
+        return (base1 = this.label_options).duration != null ? base1.duration : base1.duration = this.rect_options.duration;
+      }
+    };
+
+    Icicle.prototype._hover_datum = function(x, swimlane) {
+      var key, node, ref, right;
+      right = this.h.invert(this.h(x) + 1);
+      ref = this.nodes;
+      for (key in ref) {
+        node = ref[key];
+        if (node.y1 === swimlane && node.x1 <= right && x <= node.x2) {
+          return node.datum;
+        }
+      }
+      return null;
+    };
+
+    Icicle.prototype._update = function(origin) {
+      var ref, ref1, ref2, ref3, ref4;
+      Icicle.__super__._update.apply(this, arguments);
+      if (origin !== 'revalue' && origin !== 'rebase') {
+        this.tree = new c3.Layout.Tree({
+          key: this.key,
+          parent_key: this.parent_key,
+          children_keys: this.children_keys,
+          children: this.children,
+          value: this.value,
+          self_value: this.self_value
+        });
+        this.nodes = this.tree.construct(this.data);
+        this.v.domain([
+          0, d3.max(Object.keys(this.nodes), (function(_this) {
+            return function(key) {
+              return _this.nodes[key].y2;
+            };
+          })(this))
+        ]);
+        c3.Plot.Layer.Swimlane.prototype._update.call(this, origin);
+      }
+      if (origin !== 'rebase') {
+        this.value = this.tree.revalue();
+      }
+      this.current_data = this.tree.layout(this.sort, this.limit_min_percent, this.root_datum);
+      if (this.current_data.length > this.limit_elements) {
+        c3.array.sort_up(this.current_data, this.value);
+        this.current_data = this.current_data.slice(-this.limit_elements);
+      }
+      this.segment_options.animate = (ref = this.rect_options) != null ? ref.animate : void 0;
+      this.segment_options.animate_old = (ref1 = this.rect_options) != null ? ref1.animate : void 0;
+      this.segment_options.duration = (ref2 = this.rect_options) != null ? ref2.duration : void 0;
+      if ((ref3 = this.rect_options) != null) {
+        if (ref3.animate_old == null) {
+          ref3.animate_old = (ref4 = this.rect_options) != null ? ref4.animate : void 0;
+        }
+      }
+      this.segments = this.segments_g.select('svg.segment').options(this.segment_options).animate(origin === 'redraw' || origin === 'revalue' || origin === 'rebase').bind(this.current_data, this.key).update();
+      return this.rects = this.segments.inherit('rect').options(this.rect_options).update();
+    };
+
+    Icicle.prototype._draw = function(origin) {
+      var prev_h, prev_zero_pos, ref, ref1, root_node, zero_pos;
+      Icicle.__super__._draw.apply(this, arguments);
+      prev_h = this.h.copy();
+      prev_zero_pos = prev_h(0);
+      if (this.root_datum != null) {
+        root_node = this.nodes[this.key(this.root_datum)];
+      }
+      this.h.domain([(ref = root_node != null ? root_node.x1 : void 0) != null ? ref : 0, (ref1 = root_node != null ? root_node.x2 : void 0) != null ? ref1 : 1]);
+      zero_pos = this.h(0);
+      this.segments.animate(origin === 'redraw' || origin === 'revalue' || origin === 'rebase').position({
+        x: (function(_this) {
+          return function(d) {
+            return _this.h(_this.nodes[_this.key(d)].x1);
+          };
+        })(this),
+        y: (function(_this) {
+          return function(d) {
+            return _this.v(_this.nodes[_this.key(d)].y1);
+          };
+        })(this),
+        width: (function(_this) {
+          return function(d) {
+            var node;
+            return _this.h((node = _this.nodes[_this.key(d)]).x2 - node.x1) - zero_pos;
+          };
+        })(this)
+      }, {
+        x: (function(_this) {
+          return function(d) {
+            return prev_h(_this.nodes[_this.key(d)].px1);
+          };
+        })(this),
+        y: (function(_this) {
+          return function(d) {
+            return _this.v(_this.nodes[_this.key(d)].y1);
+          };
+        })(this),
+        width: (function(_this) {
+          return function(d) {
+            var node;
+            return prev_h((node = _this.nodes[_this.key(d)]).px2 - node.px1) - prev_zero_pos;
+          };
+        })(this)
+      });
+      (origin === 'resize' ? this.rects.all : this.rects["new"]).attr('height', this.dy);
+      this.rects.animate(origin === 'redraw' || origin === 'revalue' || origin === 'rebase').position({
+        width: (function(_this) {
+          return function(d) {
+            var node;
+            return _this.h((node = _this.nodes[_this.key(d)]).x2 - node.x1) - zero_pos;
+          };
+        })(this)
+      }, {
+        width: (function(_this) {
+          return function(d) {
+            var node;
+            return prev_h((node = _this.nodes[_this.key(d)]).px2 - node.px1) - prev_zero_pos;
+          };
+        })(this)
+      });
+      if (this.label_options != null) {
+        this.segments.all.filter((function(_this) {
+          return function(d) {
+            var node;
+            return _this.h((node = _this.nodes[_this.key(d)]).x2 - node.x1) - zero_pos < 50;
+          };
+        })(this)).selectAll('text').transition('fade').duration(this.label_options.duration).style('opacity', 0).remove();
+        this.labels = c3.select(this.segments.all.filter((function(_this) {
+          return function(d) {
+            var node;
+            return _this.h((node = _this.nodes[_this.key(d)]).x2 - node.x1) - zero_pos >= 50;
+          };
+        })(this))).inherit('text', 'restore').options(this.label_options).update().animate(origin === 'redraw' || origin === 'revalue' || origin === 'rebase').position({
+          y: this.dy / 2,
+          x: (function(_this) {
+            return function(d) {
+              var left, node, right;
+              node = _this.nodes[_this.key(d)];
+              left = Math.max(node.x1, _this.h.domain()[0]);
+              right = Math.min(node.x2, _this.h.domain()[1]);
+              return _this.h((right - left) / 2 + (left - node.x1)) - zero_pos;
+            };
+          })(this)
+        });
+      } else {
+        this.segments.all.selectAll('text').remove();
+        delete this.labels;
+      }
+      if (origin === 'resize' && (!this.rects["new"].empty() || ((this.labels != null) && !this.labels["new"].empty()))) {
+        return this._style(true);
+      }
+    };
+
+    Icicle.prototype._style = function(style_new) {
+      var ref;
+      Icicle.__super__._style.apply(this, arguments);
+      this.rects.style(style_new);
+      return (ref = this.labels) != null ? ref.style(style_new) : void 0;
+    };
+
+    Icicle.prototype.rebase = function(root_datum) {
+      this.root_datum = root_datum;
+      this.trigger('rebase_start', this.root_datum);
+      this.chart.redraw('rebase');
+      return this.trigger('rebase', this.root_datum);
+    };
+
+    Icicle.prototype.rebase_key = function(root_key) {
+      var ref;
+      return this.rebase((ref = this.nodes[root_key]) != null ? ref.datum : void 0);
+    };
+
+    return Icicle;
+
+  })(c3.Plot.Layer.Swimlane);
+
   c3.Plot.Layer.Swimlane.Sampled = (function(superClass) {
     extend(Sampled, superClass);
 
@@ -1683,13 +1958,13 @@
       right = this.h.invert(this.h(x) + 1);
       idx = d3.bisector(this.x).right(data, x) - 1;
       if (idx < 0) {
-        return [null, null];
+        return null;
       } else if (x < this.x(datum = data[idx]) + this.dx(datum)) {
-        return [datum, idx];
+        return datum;
       } else if (++idx < data.length && this.x(datum = data[idx]) <= right) {
-        return [datum, idx];
+        return datum;
       } else {
-        return [null, null];
+        return null;
       }
     };
 
@@ -1727,7 +2002,7 @@
       var bisector, data, datum, datum_x, idx, l, pixel, prev_idx, ref, ref1, swimlane, v, x;
       bisector = d3.bisector(this.x).right;
       for (swimlane = l = ref = this.v.domain()[0], ref1 = this.v.domain()[1]; ref <= ref1 ? l < ref1 : l > ref1; swimlane = ref <= ref1 ? ++l : --l) {
-        v = this._v(swimlane);
+        v = this.v(swimlane);
         data = this.swimlane_data[swimlane];
         if (!data.length) {
           continue;

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset='UTF-8'>
+  <title>C3 Documentation</title>
+  <script src='../../javascript/application.js'></script>
+  <script src='../../javascript/search.js'></script>
+  <link rel='stylesheet' href='../../stylesheets/application.css' type='text/css'>
+</head>
+  <body>
+    <div id='base' data-path='../../'></div>
+<div id='header'>
+  <div id='menu'>
+    <a href='../../extra/README.md.html' title='Chartcollection'>
+      Chartcollection
+    </a>
+    &raquo;
+    <a href='../../alphabetical_index.html' title='Index'>
+      Index
+    </a>
+    &raquo;
+    <span class='title'>c3</span>
+    &raquo;
+    <span class='title'>Layout</span>
+    &raquo;
+    <span class='title'>Tree</span>
+  </div>
+</div>
+    <div id='content'>
+      <h1>
+        Class:
+        c3.Layout.Tree
+      </h1>
+      <table class='box'>
+        <tr>
+          <td>Defined in:</td>
+          <td>js&#47;c3.coffee</td>
+        </tr>
+      </table>
+      <h2>Overview</h2>
+      <div class='docstring'>
+  <p>A tree layout to parition elements hierarchically.</p>
+</div>
+<div class='tags'>
+</div>
+      <h2>Instance Method Summary</h2>
+      <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#construct-dynamic'>
+        #
+(Object)
+<b>construct</b><span>(data)</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      Construct the tree hierarchy. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#revalue-dynamic'>
+        #
+(?)
+<b>revalue</b><span>()</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      Compute the &quot;total value&quot; of each node 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#layout-dynamic'>
+        #
+(Array)
+<b>layout</b><span>(sort = false, limit_min_percent = 0, root_datum = null)</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      Layout the nodes x and y values 
+<code>true</code> - Sort based on the <em>total value</em> of the child node.
+
+
+    </span>
+  </li>
+</ul>
+      <h2>Constructor Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='constructor-dynamic'>
+      #
+(void)
+<b>constructor</b><span>(options)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>@param options must contain:
+<code>key</code> - accessor to get a key from a data element
+Either <code>parent_key,</code>children_keys<code>, or</code>children<code>to define the tree
+Either</code>value<code>or</code>self_value` for partitioning the nodes.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+</div>
+      <h2>Instance Method Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='construct-dynamic'>
+      #
+(Object)
+<b>construct</b><span>(data)</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Construct the tree hierarchy.
+A node is an object with the following properties:
+ datum, children, x1, x2, y1, y2, px1, px2, py1, py2</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>data</span>
+      <span class='type'>
+        (
+          <tt>Array</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>Array of data elements </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt>Object</tt>
+      )
+      &mdash;
+      <span class='desc'>Return an object mapping element keys to nodes </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='revalue-dynamic'>
+      #
+(?)
+<b>revalue</b><span>()</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Compute the &quot;total value&quot; of each node</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt>?</tt>
+      )
+      &mdash;
+      <span class='desc'>a callback to get the total value of a data element. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='layout-dynamic'>
+      #
+(Array)
+<b>layout</b><span>(sort = false, limit_min_percent = 0, root_datum = null)</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Layout the nodes x and y values</p><ul>
+<li><code>true</code> - Sort based on the <em>total value</em> of the child node.</li>
+<li><code>false</code> - Don&#39;t sort</li>
+<li>Callback function - Function that takes a data element and returns the value to sort by.
+@param root_datum Only layout elements that are parents or children of this element.</li>
+</ul>
+
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>sort</span>
+      <span class='type'>
+        (
+          <tt>Boolean, Function</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>Specify if child nodes should be sorted in the layout </span>
+    </li>
+    <li>
+      <span class='name'>limit_min_percent</span>
+      <span class='type'>
+        (
+          <tt>Number</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'> Minimum percentage of the root_domain to actually layout an element and its children.
+
+</span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt>Array</tt>
+      )
+      &mdash;
+      <span class='desc'>Return an array of data elements that were actually laid out given the limit_min_percent and root_datum filters. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+</div>
+    </div>
+    <div id='footer'>
+  By
+  <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
+    Codo
+  </a>
+  2.1.2
+  &#10034;
+  Press H to see the keyboard shortcuts
+  &#10034;
+  <a href='http://twitter.com/netzpirat' target='_parent'>@netzpirat</a>
+  &#10034;
+  <a href='http://twitter.com/_inossidabile' target='_parent'>@_inossidabile</a>
+</div>
+<iframe id='search_frame'></iframe>
+<div id='fuzzySearch'>
+  <input type='text'>
+  <ol></ol>
+</div>
+<div id='help'>
+  <p>
+    Quickly fuzzy find classes, mixins, methods, file:
+  </p>
+  <ul>
+    <li>
+      <span>T</span>
+      Open fuzzy finder dialog
+    </li>
+  </ul>
+  <p>
+    Control the navigation frame:
+  </p>
+  <ul>
+    <li>
+      <span>L</span>
+      Toggle list view
+    </li>
+    <li>
+      <span>C</span>
+      Show class list
+    </li>
+    <li>
+      <span>I</span>
+      Show mixin list
+    </li>
+    <li>
+      <span>F</span>
+      Show file list
+    </li>
+    <li>
+      <span>M</span>
+      Show method list
+    </li>
+    <li>
+      <span>E</span>
+      Show extras list
+    </li>
+  </ul>
+  <p>
+    You can focus and blur the search input:
+  </p>
+  <ul>
+    <li>
+      <span>S</span>
+      Focus search input
+    </li>
+    <li>
+      <span>Esc</span>
+      Blur search input
+    </li>
+  </ul>
+</div>
+  </body>
+</html>

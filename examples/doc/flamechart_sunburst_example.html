@@ -30,8 +30,8 @@
                 </a>
               
                 
-                <a class="source" href="icicle_example.html">
-                  icicle_example.ts
+                <a class="source" href="icicle_sunburst_example.html">
+                  icicle_sunburst_example.ts
                 </a>
               
                 
@@ -225,7 +225,8 @@ a list of <em>leaves</em> and their <em>parents</em>.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> flamechart_calltrace = <span class="hljs-keyword">new</span> c3.Plot.Zoomable&lt;<span class="hljs-built_in">void</span>&gt;({
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> flamechart_layer: c3.Plot.Layer.Swimlane.Flamechart&lt;CallTraceRecord&gt;;
+<span class="hljs-keyword">var</span> flamechart_calltrace = <span class="hljs-keyword">new</span> c3.Plot.Zoomable&lt;<span class="hljs-built_in">void</span>&gt;({
     anchor: <span class="hljs-string">'#flamechart_example'</span>,</pre></div></div>
             
         </li>
@@ -274,7 +275,7 @@ a list of <em>leaves</em> and their <em>parents</em>.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>    layers: [
-        <span class="hljs-keyword">new</span> c3.Plot.Layer.Swimlane.Flamechart&lt;CallTraceRecord&gt;({
+        flamechart_layer = <span class="hljs-keyword">new</span> c3.Plot.Layer.Swimlane.Flamechart&lt;CallTraceRecord&gt;({
             data: calltrace,</pre></div></div>
             
         </li>
@@ -477,9 +478,10 @@ can use to get the total value of a node after it has been drawn.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
-              <p>The <strong>hierarchy</strong> can be described by the user either providing the <em>children</em> or the <em>parent</em>
-for each node.  This example defaults to specifying the <em>parent</em>, but it can be toggled
-to test both.</p>
+              <p>The <strong>hierarchy</strong> can be described by the user either providing the
+<em>children</em>, _children<em>keys</em>, or the _parent<em>key</em> for each node.
+This example defaults to specifying the _parent<em>key</em>,
+but it can be toggled to test both.</p>
 
             </div>
             
@@ -622,7 +624,7 @@ a nested node.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>    $(<span class="hljs-string">'#limit_call_trace_elements'</span>).on(event_name, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-        (&lt;c3.Plot.Layer.Swimlane.Flamechart&lt;<span class="hljs-built_in">any</span>&gt;&gt;flamechart_calltrace.layers[<span class="hljs-number">0</span>]).limit_elements = +$(<span class="hljs-keyword">this</span>).val();
+        flamechart_layer.limit_elements = +$(<span class="hljs-keyword">this</span>).val();
         flamechart_calltrace.redraw();
     });</pre></div></div>
             
@@ -639,15 +641,15 @@ a nested node.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    $(<span class="hljs-string">'#limit_call_tree_elements'</span>).on(event_name, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+            <div class="content"><div class='highlight'><pre>    $(<span class="hljs-string">'#limit_sunburst_elements'</span>).on(event_name, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
         sunburst_layer.arc_options.animate = <span class="hljs-literal">false</span>;
         sunburst_layer.limit_elements = +$(<span class="hljs-keyword">this</span>).val();
         sunburst_calltree.redraw();
         sunburst_layer.arc_options.animate = <span class="hljs-literal">true</span>;
     });
-    $(<span class="hljs-string">'#limit_call_tree_angle'</span>).on(event_name, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    $(<span class="hljs-string">'#limit_sunburst_min_percent'</span>).on(event_name, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
         sunburst_layer.arc_options.animate = <span class="hljs-literal">false</span>;
-        sunburst_layer.limit_angle_percentage = +$(<span class="hljs-keyword">this</span>).val();
+        sunburst_layer.limit_min_percent = +$(<span class="hljs-keyword">this</span>).val();
         sunburst_calltree.redraw();
         sunburst_layer.arc_options.animate = <span class="hljs-literal">true</span>;
     });

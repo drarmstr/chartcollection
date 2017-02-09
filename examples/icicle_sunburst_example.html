@@ -1,7 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Flamechart &amp; Sunburst Examples</title>
+    <title>Icicle &amp; Sunburst Examples</title>
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
@@ -76,34 +76,43 @@
 </head>
 
 <body>
+  <div>
+    <button id="revalue" type="button">Generate random revaluing</button>
+  </div>
 
   <section>
     <p>
-        Example stack Call Trace <b>Flamechart</b>:
+        <b>Icicle</b> example for an aggregated Call Tree visualization.
+        Use a <i>Flamechart</i> for a timeline of instances.
     </p>
-    Pan by dragging.  Zoom with the mouse wheel or touch pinching.
+    Click on a node to focus visualization on that node and its children.
+    <br />
     <label>
         Limit number of elements
-        <input id="limit_call_trace_elements" type="range" min=1 max=400 value=400 />
+        <input id="limit_icicle_elements" type="range" min=1 max=400 value=400 />
     </label>
-    <div id="flamechart_example" style="width:90%; margin-left:5%"></div>
+    <label>
+        Limit min percentage
+        <input id="limit_icicle_min_percent" type="range" min="0.001" max="0.1" value="0.001" step="0.001" />
+    </label>
+    <div id="icicle_example" style="width:90%; margin-left:5%"></div>
   </section>
 
   <section>
-    <p>Example stack Call Tree <b>Sunburst</b>:</p>
+    <p><b>Sunburst</b> example for an aggregated Call Tree:</p>
     <form>
         <label>
             Limit number of elements
-            <input id="limit_call_tree_elements" type="range" min=1 max=350 value=350 />
+            <input id="limit_sunburst_elements" type="range" min=1 max=350 value=350 />
         </label><br /><br />
         <label>
             Limit angular percentage
-            <input id="limit_call_tree_angle" type="range" min="0.001" max="0.1" value="0.001" step="0.001" />
+            <input id="limit_sunburst_min_percent" type="range" min="0.001" max="0.1" value="0.001" step="0.001" />
         </label><br /><br />
         Express hierachy via:<br />
         <label><input type="radio" name="hierarchy" value="parents" checked />Parents</label>
         <label><input type="radio" name="hierarchy" value="children" />Children</label>
-        <br /><i>(they should appear identical)</i>
+        <br /><i>(they should appear identical unless revalued)</i>
         <p>
             Click on nodes to navigate.<br />
             Click in the center to reset.<br />
@@ -113,6 +122,6 @@
     <div id="sunburst_example"></div>
   </section>
 
-  <script src="flamechart_sunburst_example.js"></script>
+  <script src="icicle_sunburst_example.js"></script>
 </body>
 </html>

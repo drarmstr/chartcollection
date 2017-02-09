@@ -502,8 +502,7 @@
           y1: -1
         };
         prev_t_domain = (ref = (origin !== 'rebase' ? this.prev_t_domain : void 0)) != null ? ref : this.t.domain();
-        this.prev_t_domain = [root_node.x1, root_node.x2];
-        new_t_domain = [root_node.x1, root_node.x2];
+        new_t_domain = this.prev_t_domain = [root_node.x1, root_node.x2];
         new_r_domain = [root_node.y1, root_node.y1 + this.r.domain()[1] - this.r.domain()[0]];
         t_interpolation = d3.interpolate(prev_t_domain, new_t_domain);
         r_interpolation = d3.interpolate(this.r.domain(), new_r_domain);
@@ -728,7 +727,7 @@
 
     Sunburst.prototype.children = void 0;
 
-    Sunburst.prototype.limit_angle_percentage = 0.001;
+    Sunburst.prototype.limit_min_percent = 0.001;
 
     Sunburst.prototype.root_datum = null;
 
@@ -748,7 +747,7 @@
         base1.click = (function(_this) {
           return function(d) {
             var ref;
-            return _this.rebase_key((ref = (d === _this.root_datum ? _this.parent_key : _this.key)(d)) != null ? ref : null);
+            return _this.rebase(d !== _this.root_datum ? d : (ref = (_this.parent_key != null ? _this.nodes[_this.parent_key(d)] : _this.nodes[_this.key(d)].parent)) != null ? ref.datum : void 0);
           };
         })(this);
       }
@@ -787,7 +786,7 @@
       if (origin !== 'rebase') {
         this.value = this.tree.revalue();
       }
-      return this.tree.layout(this.sort, this.limit_angle_percentage, this.root_datum);
+      return this.tree.layout(this.sort, this.limit_min_percent, this.root_datum);
     };
 
     Sunburst.prototype.rebase = function(root_datum) {

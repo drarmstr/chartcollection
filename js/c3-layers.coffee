@@ -40,7 +40,7 @@
 # @abstract
 # @author Douglas Armstrong
 class c3.Plot.Layer
-    @version: 0.1
+    @version: 0.2
     c3.Layer = this # Shortcut for accessing plot layers.
     type: 'layer'
     @_next_uid: 0
@@ -69,6 +69,10 @@ class c3.Plot.Layer
     # _This can be set for each individual layer or a default for the entire chart._
     # Some plots support calling this accessor with the index of the data as well as the datum itself.
     y: undefined
+    # [String] `left` for 0 to be at the left, `right` for the right.
+    h_orient: undefined
+    # [String] `top` for 0 to be at the top, `bottom` for the bottom.
+    v_orient: undefined
     # [{c3.Selection.Options}] Options to set the **class**, **classes**, **styles**,
     # **events**, and **title** for this layer.
     options: undefined
@@ -89,6 +93,8 @@ class c3.Plot.Layer
         @v ?= @chart.v
         @x ?= @chart.x
         @y ?= @chart.y
+        @h_orient ?= @chart.h_orient
+        @v_orient ?= @chart.v_orient
         if @class? then @g.classed @class, true
         if @handlers? then @on event, handler for event, handler of @handlers
         @content = c3.select(@g)
@@ -105,8 +111,10 @@ class c3.Plot.Layer
     # Resize the layer, but _doesn't_ update the rendering, `resize()` should be used for that.
     size: (@width, @height)=>
         @trigger 'resize_start'
-        c3.d3.set_range @h, [0, @width]
-        c3.d3.set_range @v, [@height, 0]
+        if @h_orient != @chart.h_orient and @h == @chart.h then @h = @h.copy()
+        c3.d3.set_range @h, if @h_orient is 'left' then [0, @width] else [@width, 0]
+        if @v_orient != @chart.v_orient and @v == @chart.v then @v = @v.copy()
+        c3.d3.set_range @v, if @v_orient is 'bottom' then [@height, 0] else [0, @height]
         @_size?()
         @trigger 'resize'
 
@@ -915,6 +923,9 @@ class c3.Plot.Layer.Scatter extends c3.Plot.Layer
 class c3.Plot.Layer.Swimlane extends c3.Plot.Layer
     type: 'swimlane'
 
+    # [String] `top` for 0 to be at the top, `bottom` for the bottom.
+    # Swimlanes default to 0 at the top.
+    v_orient: 'top'
     # [Number] Height of a swimlane in pixels.
     # Chart height will be adjusted if number of swimlanes changes in a redraw()
     dy: undefined
@@ -936,11 +947,16 @@ class c3.Plot.Layer.Swimlane extends c3.Plot.Layer
             mousemove = ->
                 [layerX,layerY] = d3.mouse(this)
                 # Get swimlane and ensure it is properly in range (mouse may be over last pixel)
-                swimlane = Math.floor layer._v.invert layerY
+                swimlane = Math.floor layer.v.invert layerY
                 swimlane = Math.min swimlane, Math.max layer.v.domain()[0], layer.v.domain()[1]-1
                 x = layer.h.invert layerX
 
-                hover_html = (c3.functor layer.hover) layer._hover_datum(x, swimlane)..., swimlane
+                hover_datum = layer._hover_datum(x, swimlane)
+                hover_html = (c3.functor layer.hover)(
+                  hover_datum,
+                  (if hover_datum then layer.data.indexOf(hover_datum) else null),
+                  swimlane
+                )
                 if not hover_html
                     layer.tip.all.style 'display', 'none'
                 else
@@ -963,6 +979,10 @@ class c3.Plot.Layer.Swimlane extends c3.Plot.Layer
         if not @y? then @dy = @height
         else @dy ?= Math.round @height / (Math.abs(@v.domain()[1]-@v.domain()[0]))
 
+        # If a swimlane starts at the bottom, then shift up by dy because SVG always
+        # renders the height of element downward.
+        @g.attr 'transform', if @v_orient is 'bottom' then 'translate(0,-'+@dy+')' else ''
+
     _update: =>
         # Support constant values and accessors
         @x = c3.functor @x
@@ -974,15 +994,9 @@ class c3.Plot.Layer.Swimlane extends c3.Plot.Layer
         if @y? then @chart.size null, @dy*(Math.abs(@v.domain()[1]-@v.domain()[0])) + @chart.margins.top + @chart.margins.bottom
 
     _draw: (origin)=>
-        # Swimlanes go from top to bottom.
-        # The domain works because the end-point isn't inclusive which allows room for the swimlane width.
-        # Don't mess with @v in case it is shared among layers
-        @_v = @v.copy()
-        c3.d3.set_range @_v, [0, @height]
-
         if origin is 'resize' or origin is 'render'
             @lanes?.position
-                y: (lane)=> @_v lane+(if @invert_y then 1 else 0)
+                y: (lane)=> @v lane
                 width: @chart.orig_h.range()[1]
                 height: @dy
 
@@ -1044,7 +1058,7 @@ class c3.Plot.Layer.Swimlane.Segment extends c3.Plot.Layer.Swimlane
         right = @h.invert @h(x)+1 # Get the pixel width
         for datum,idx in @current_data
             if (!@y? or @y(datum)==swimlane) and (_x=@x(datum)) <= right and x <= _x+@dx(datum) then break
-        return if idx==@current_data.length then [null,null] else [datum,idx]
+        return if idx==@current_data.length then null else datum
 
     _update: =>
         super
@@ -1080,7 +1094,7 @@ class c3.Plot.Layer.Swimlane.Segment extends c3.Plot.Layer.Swimlane
         then @rects.all else @rects.new).attr
             x: (d)=> h @x(d)
             width: (d)=> (h @dx(d)) - zero_pos
-            y: if not @y? then 0 else (d)=> @_v @y(d)
+            y: if not @y? then 0 else (d)=> @v @y(d)
 
         # Bind and render lables here (not in _update() since the set is dynamic based on zooming and resizing)
         if @label_options?
@@ -1093,7 +1107,7 @@ class c3.Plot.Layer.Swimlane.Segment extends c3.Plot.Layer.Swimlane
             (if origin is 'resize' then @labels_clip.all else @labels_clip.new).attr 'height', @dy
             @labels_clip.position
                 x: (d)=> @h @x(d)
-                y: if not @y? then 0 else (d,i)=> @_v @y(d,i)
+                y: if not @y? then 0 else (d,i)=> @v @y(d,i)
                 width: (d)=> (@h @dx(d)) - zero_pos
             self = this
             (if origin is 'resize' then @labels.all else @labels.new).attr 'y', self.dy/2
@@ -1115,7 +1129,9 @@ class c3.Plot.Layer.Swimlane.Segment extends c3.Plot.Layer.Swimlane
 #                        return self.h( (right-left)/2 + (left-x) ) - zero_pos - (text_width/2)
 #                    else
 #                        return if x < left then self.h(left-x)-zero_pos+1 else 1
-        else c3.select(@g,'g.labels').all.remove()
+        else
+            c3.select(@g,'g.labels').all.remove()
+            delete @labels
 
         # Style any new elements we added by resizing larger that allowed new relevant elements to be drawn
         if origin is 'resize' and (not @rects.new.empty() or (@labels? and not @labels.new.empty()))
@@ -1131,15 +1147,28 @@ class c3.Plot.Layer.Swimlane.Segment extends c3.Plot.Layer.Swimlane
 # Flamechart
 ###################################################################
 
-# A {c3.Plot.Layer.Swimlane swimlane layer} for rendering flamecharts.
-# You should not define `y`, but you must define a `dy`.
-# A `key()` is required for this layer.
+# A {c3.Plot.Layer.Swimlane swimlane layer} for rendering _flamecharts_ or _flamegraphs_.
 #
-# @todo Remove requirement for `key()` accessor.
+# In C3, both a {c3.Plot.Layer.Swimlane.Flamechart Flamechart} and an
+# {c3.Plot.Layer.Swimlane.Icicle Icicle} can actually grow either up or down
+# depending if you set `v_orient` as `top` or `bottom`.
+# A _Flamechart_ defaults to growing up and an _Icicle_ defaults to growing down.
+# In C3, a {c3.Plot.Layer.Swimlane.Flamechart Flamechart} visualizes a timeline
+# of instances of nested events over time, while an {c3.Plot.Layer.Swimlane.Icicle Icicle}
+# visualizes an aggregated tree hierarchy of nodes.  The {c3.Polar.Layer.Sunburst Sunburst}
+# is the equivalent of an _Icicle_ rendered on a polar axis.
+#
+# A `key()` is required for this layer.
+# You should not define `y`, but you must define a `x`, `dx`, and `dy`.
+#
 # @author Douglas Armstrong
 class c3.Plot.Layer.Swimlane.Flamechart extends c3.Plot.Layer.Swimlane.Segment
     @version: 0.1
     type: 'flamechart'
+
+    # [String] `top` for 0 to be at the top, `bottom` for the bottom.
+    # Flamechart defaults to bottom-up.
+    v_orient: 'bottom'
 
     _init: =>
         super
@@ -1176,14 +1205,88 @@ class c3.Plot.Layer.Swimlane.Flamechart extends c3.Plot.Layer.Swimlane.Segment
 # Icicle
 ###################################################################
 
-# A {c3.Plot.Layer.Swimlane swimlane layer} for rendering icicle charts.
-# You should not define `x` or `y`, but you must define `dx` and `dy`.
+# A {c3.Plot.Layer.Swimlane swimlane layer} for rendering _icicle_ charts.
+#
+# In C3, both a {c3.Plot.Layer.Swimlane.Flamechart Flamechart} and an
+# {c3.Plot.Layer.Swimlane.Icicle Icicle} can actually grow either up or down
+# depending if you set `v_orient` as `top` or `bottom`.
+# A _Flamechart_ defaults to growing up and an _Icicle_ defaults to growing down.
+# In C3, a {c3.Plot.Layer.Swimlane.Flamechart Flamechart} visualizes a timeline
+# of instances of nested events over time, while an {c3.Plot.Layer.Swimlane.Icicle Icicle}
+# visualizes an aggregated tree hierarchy of nodes.  The {c3.Polar.Layer.Sunburst Sunburst}
+# is the equivalent of an _Icicle_ rendered on a polar axis.
+#
 # A `key()` is required for this layer.
+# You should not define `x` or `y`, but you must define `dy`.
+# Specify a callback for either `parent_key`,
+# `children`, or `children_keys` to describe the hierarchy.
+# If using `parent_key` or `children_keys` the `data` array shoud include all nodes,
+# if using `children` it only should include the root nodes.
+# Define either `value()` or `self_value()` to value the nodes in the hierarchy.
+#
+# If you care about performance, you can pass the
+# parameter `revalue` to `redraw('revalue')` if you are keeping the same dataset
+# hierarchy, and only changing the element's values.
+# The Icicle layer can use a more optimized algorithm in this situation.
+#
+# ## Events
+# * **rebase** Called with the datum of a node when it becomes the new root
+#   or with `null` if reverting to the top of the hierarchy.
 #
 # @author Douglas Armstrong
-class c3.Plot.Layer.Swimlane.Icicle extends c3.Plot.Layer.Swimlane.Segment
+class c3.Plot.Layer.Swimlane.Icicle extends c3.Plot.Layer.Swimlane
     @version: 0.1
-    type: 'flamechart'
+    type: 'icicle'
+
+    # **REQUIRED** [Function] Accessor function to define a unique key for each data element.
+    # _This has performance implications and is required for some layers and **animations**._
+    key: undefined
+
+    # [Function] Accessor to get the "_total_" value of the data element.
+    # That is the total value of the element itself inclusive of all of it's children's value.
+    # You can define either _value_ or _self_value_.
+    value: undefined
+    # [Function] The `value` accessor defines the "_total_" value for an element, that is the value of
+    # the element itself plus that of all of its children.  If you know the "self" value of an
+    # element without the value of its children, then define this callback accessor instead.
+    # The `value` option will then also be defined for you, which you can use to get the total value
+    # of an element after the layer has been drawn.
+    self_value: undefined
+
+    # [Function] A callback that should return the key of the parent of an element.
+    # It is called with a data element as the first parameter.
+    parent_key: undefined
+    # [Function] A callback that should return an array of child keys of an element.
+    # The returned array may be empty or null.
+    # It is called with a data element as the first parameter.
+    children_keys: undefined
+    # [Function] A callback that should return an array of children elements of an element.
+    # The returned array may be empty or null.
+    # It is called with a data element as the first parameter.
+    children: undefined
+
+    # [Boolean, Function] How to sort the partitioned tree segments.
+    # `true` sorts based on _total_ value, or you can define an alternative
+    # accessor function to be used for sorting.
+    sort: false
+
+    # [Number] Limit the number of data elements to render based on their value.
+    # _This affects the callback index parameter_
+    limit_elements: undefined
+    # [Number] Don't bother rendering segments whose value is smaller than this
+    # percentage of the current domain focus. (1==100%)
+    limit_min_percent: 0.001
+
+    # Data element that represents the root of the hierarchy to render.
+    # If this is specified, then only this root and its parents and children will be rendered
+    # When {c3.Plot.Layer.Icicle#rebase rebase()} is called or a node is clicked on
+    # it will animate the transition to a new root node, if animation is enabled.
+    root_datum: null
+
+    # [{c3.Selection.Options}] Options for the svg:rect nodes for each segment
+    rect_options: undefined
+    # [{c3.Selection.Options}] Options for the label svg:text nodes for each segment
+    label_options: undefined
 
     _init: =>
         super
@@ -1191,9 +1294,130 @@ class c3.Plot.Layer.Swimlane.Icicle extends c3.Plot.Layer.Swimlane.Segment
         if not @dy? then throw Error "`dy` option is required for Icicle layers"
         if @x? then throw Error "`x` option cannot be defined for Icicle layers"
         if @y? then throw Error "`y` option cannot be defined for Icicle layers"
+        @y = (datum)=> @nodes[@key datum].y1
+
+        @segments_g = c3.select(@g, 'g.segments').singleton()
+
+        @segment_options = { events: { click: (d)=>
+            @rebase if d isnt @root_datum then d
+            else (if @parent_key? then @nodes[@parent_key d] else @nodes[@key d].parent)?.datum
+        } }
+        if @label_options?
+            @label_options.animate ?= @rect_options.animate
+            @label_options.duration ?= @rect_options.duration
+
+    _hover_datum: (x, swimlane)=>
+        right = @h.invert @h(x)+1 # Get the pixel width
+        for key,node of @nodes
+            if node.y1 is swimlane and node.x1 <= right and x <= node.x2
+                return node.datum
+        return null
 
     _update: (origin)=>
         super
+
+        # Construct the tree hierarchy
+        if origin isnt 'revalue' and origin isnt 'rebase'
+            @tree = new c3.Layout.Tree
+                key: @key,
+                parent_key: @parent_key, children_keys: @children_keys, children: @children
+                value: @value, self_value: @self_value
+            @nodes = @tree.construct @data
+
+            # Set the vertical domain and resize chart based on maximum flamechart depth
+            @v.domain [0, d3.max Object.keys(@nodes), (key)=> @nodes[key].y2]
+            c3.Plot.Layer.Swimlane::_update.call this, origin
+
+        # Compute the "total value" of each node
+        if origin isnt 'rebase'
+            @value = @tree.revalue()
+
+        # Partition the arc segments based on the node values
+        # We need to do this even for 'rebase' in case we shot-circuited previous paritioning
+        @current_data = @tree.layout @sort, @limit_min_percent, @root_datum
+
+        # Limit the number of elements to bind to the DOM
+        if @current_data.length > @limit_elements
+            c3.array.sort_up @current_data, @value # sort_up is more efficient than sort_down
+            @current_data = @current_data[-@limit_elements..]
+
+        # Bind data elements to the DOM
+        @segment_options.animate = @rect_options?.animate
+        @segment_options.animate_old = @rect_options?.animate
+        @segment_options.duration = @rect_options?.duration
+        @rect_options?.animate_old ?= @rect_options?.animate
+        @segments = @segments_g.select('svg.segment').options(@segment_options)
+            .animate(origin is 'redraw' or origin is 'revalue' or origin is 'rebase')
+            .bind(@current_data, @key).update()
+        @rects = @segments.inherit('rect').options(@rect_options).update()
+
+    _draw: (origin)=>
+        super
+
+        # Set the horizontal domain based on the root node.
+        prev_h = @h.copy()
+        prev_zero_pos = prev_h(0)
+        root_node = @nodes[@key @root_datum] if @root_datum?
+        @h.domain [root_node?.x1 ? 0, root_node?.x2 ? 1]
+        zero_pos = @h(0)
+
+        # Position the segments.
+        # Place any new segments where they would have been if not decimated.
+        @segments.animate(origin is 'redraw' or origin is 'revalue' or origin is 'rebase').position {
+            x: (d)=> @h @nodes[@key d].x1
+            y: (d)=> @v @nodes[@key d].y1
+            width: (d)=> @h((node=@nodes[@key d]).x2 - node.x1) - zero_pos
+          }, {
+            x: (d)=> prev_h @nodes[@key d].px1
+            y: (d)=> @v @nodes[@key d].y1
+            width: (d)=> prev_h((node=@nodes[@key d]).px2 - node.px1) - prev_zero_pos
+          }
+        (if origin is 'resize' then @rects.all else @rects.new).attr 'height', @dy
+        @rects.animate(origin is 'redraw' or origin is 'revalue' or origin is 'rebase').position {
+            width: (d)=> @h((node=@nodes[@key d]).x2 - node.x1) - zero_pos
+          }, {
+            width: (d)=> prev_h((node=@nodes[@key d]).px2 - node.px1) - prev_zero_pos
+          }
+
+        if @label_options?
+            # Remove any stale labels from segments that are now too small
+            @segments.all
+                .filter((d)=> @h((node=@nodes[@key d]).x2 - node.x1) - zero_pos < 50)
+                .selectAll('text')
+                .transition('fade').duration(@label_options.duration).style('opacity',0)
+                .remove()
+            # Bind and position labels for larger segments.
+            @labels = c3.select(
+                @segments.all.filter((d)=> @h((node=@nodes[@key d]).x2 - node.x1) - zero_pos >= 50),
+            ).inherit('text', 'restore').options(@label_options).update()
+            .animate(origin is 'redraw' or origin is 'revalue' or origin is 'rebase').position
+                y: @dy / 2
+                x: (d)=>
+                    node = @nodes[@key d]
+                    left = Math.max node.x1, @h.domain()[0]
+                    right = Math.min node.x2, @h.domain()[1]
+                    return @h( (right-left)/2 + (left-node.x1) ) - zero_pos
+        else
+            @segments.all.selectAll('text').remove()
+            delete @labels
+
+        # Style any new elements we added by resizing larger that allowed new relevant elements to be drawn
+        if origin is 'resize' and (not @rects.new.empty() or (@labels? and not @labels.new.empty()))
+            @_style true
+
+    _style: (style_new)=>
+        super
+        @rects.style(style_new)
+        @labels?.style(style_new)
+
+    # Navigate to a new root node in the hierarchy representing the `datum` element
+    rebase: (@root_datum)=>
+        @trigger 'rebase_start', @root_datum
+        @chart.redraw 'rebase' # redraw all layers, since the scales will change
+        @trigger 'rebase', @root_datum
+
+    # Navigate to a new root node in the hierarchy represented by `key`
+    rebase_key: (root_key)=> @rebase @nodes[root_key]?.datum
 
 
 ###################################################################
@@ -1218,10 +1442,10 @@ class c3.Plot.Layer.Swimlane.Sampled extends c3.Plot.Layer.Swimlane
         data = @swimlane_data[swimlane]
         right = @h.invert @h(x)+1 # Get the pixel width
         idx = d3.bisector(@x).right(data, x) - 1
-        return if idx<0 then [null,null]
-        else if x < @x(datum=data[idx])+@dx(datum) then [datum,idx]
-        else if ++idx<data.length and @x(datum=data[idx]) <= right then [datum,idx]
-        else [null,null]
+        return if idx<0 then null
+        else if x < @x(datum=data[idx])+@dx(datum) then datum
+        else if ++idx<data.length and @x(datum=data[idx]) <= right then datum
+        else null
 
     _update: =>
         super
@@ -1241,7 +1465,7 @@ class c3.Plot.Layer.Swimlane.Sampled extends c3.Plot.Layer.Swimlane
         # Sample data points for each pixel in each swimlane
         bisector = d3.bisector(@x).right
         for swimlane in [@v.domain()[0]...@v.domain()[1]]
-            v = @_v swimlane
+            v = @v swimlane
             data = @swimlane_data[swimlane]
             if not data.length then continue
 

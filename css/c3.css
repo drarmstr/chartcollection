@@ -108,16 +108,22 @@ svg.c3.global {
 .c3.plot .layer.bar {
   shape-rendering: crispEdges;
 }
-.c3.plot .layer.segment {
+.c3.plot .layer.segment,
+.c3.plot .layer.icicle {
   shape-rendering: crispEdges;
 }
-.c3.plot .layer.segment rect {
+.c3.plot .layer.segment rect,
+.c3.plot .layer.icicle rect {
   vector-effect: non-scaling-stroke;
 }
-.c3.plot .layer.segment text {
+.c3.plot .layer.segment text,
+.c3.plot .layer.icicle text {
   alignment-baseline: middle;
   pointer-events: none;
   text-anchor: middle;
+}
+.c3.plot .layer.icicle rect {
+  cursor: pointer;
 }
 .c3.hover {
   display: none;

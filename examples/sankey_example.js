@@ -140,14 +140,14 @@ for (var _i = 0, _a = ['input', 'change']; _i < _a.length; _i++) {
     document.querySelector('#us_node_width').addEventListener(event_name_1, function () {
         us_sankey.node_width = +this.value;
         if (document.querySelector('input[name=us_node_width_type]:checked').value === 'percent')
-            us_sankey.node_width += '%';
+            us_sankey.node_width = us_sankey.node_width + '%';
         us_sankey.redraw();
     });
     // Set node padding
     document.querySelector('#us_node_padding').addEventListener(event_name_1, function () {
         us_sankey.node_padding = +this.value;
         if (document.querySelector('input[name=us_node_padding_type]:checked').value === 'percent')
-            us_sankey.node_padding += '%';
+            us_sankey.node_padding = us_sankey.node_padding + '%';
         us_sankey.redraw();
     });
     // Set link path curvature
@@ -218,14 +218,14 @@ for (var _h = 0, _j = ['input', 'change']; _h < _j.length; _h++) {
     document.querySelector('#uk_node_width').addEventListener(event_name_2, function () {
         uk_sankey.node_width = +this.value;
         if (document.querySelector('input[name=uk_node_width_type]:checked').value === 'percent')
-            uk_sankey.node_width += '%';
+            uk_sankey.node_width = uk_sankey.node_width + '%';
         uk_sankey.redraw();
     });
     // Set node padding
     document.querySelector('#uk_node_padding').addEventListener(event_name_2, function () {
         uk_sankey.node_padding = +this.value;
         if (document.querySelector('input[name=uk_node_padding_type]:checked').value === 'percent')
-            uk_sankey.node_padding += '%';
+            uk_sankey.node_padding = uk_sankey.node_padding + '%';
         uk_sankey.redraw();
     });
     // Set link path curvature
