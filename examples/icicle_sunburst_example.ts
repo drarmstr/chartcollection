@@ -1,7 +1,7 @@
 // # C3 Icicle and Sunburst
 // _Demonstrate an example icicle and sunburst visualization of an aggregated call tree_.
 
-// The `Icicle` and `Sunburst are used to visualize a hierarchical **call tree**
+// The `Icicle` and `Sunburst` are used to visualize a hierarchical **call tree**
 // of aggregated funciton times.
 
 // ## Sample call tree data
