@@ -786,7 +786,7 @@
       if (origin !== 'rebase') {
         this.value = this.tree.revalue();
       }
-      return this.tree.layout(this.sort, this.limit_min_percent, this.root_datum);
+      return this.tree.layout(origin !== 'revalue' && origin !== 'rebase' ? this.sort : false, this.limit_min_percent, this.root_datum);
     };
 
     Sunburst.prototype.rebase = function(root_datum) {

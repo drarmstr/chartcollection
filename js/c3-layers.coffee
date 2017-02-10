@@ -1334,7 +1334,11 @@ class c3.Plot.Layer.Swimlane.Icicle extends c3.Plot.Layer.Swimlane
 
         # Partition the arc segments based on the node values
         # We need to do this even for 'rebase' in case we shot-circuited previous paritioning
-        @current_data = @tree.layout @sort, @limit_min_percent, @root_datum
+        @current_data = @tree.layout(
+            if origin isnt 'revalue' and origin isnt 'rebase' then @sort else false
+            @limit_min_percent
+            @root_datum
+        )
 
         # Limit the number of elements to bind to the DOM
         if @current_data.length > @limit_elements

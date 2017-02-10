@@ -1798,7 +1798,7 @@
       if (origin !== 'rebase') {
         this.value = this.tree.revalue();
       }
-      this.current_data = this.tree.layout(this.sort, this.limit_min_percent, this.root_datum);
+      this.current_data = this.tree.layout(origin !== 'revalue' && origin !== 'rebase' ? this.sort : false, this.limit_min_percent, this.root_datum);
       if (this.current_data.length > this.limit_elements) {
         c3.array.sort_up(this.current_data, this.value);
         this.current_data = this.current_data.slice(-this.limit_elements);
