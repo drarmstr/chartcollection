@@ -648,7 +648,7 @@ class c3.Selection
     #   context is set to refer to the HTML element.
     # @param old_attrs [Object] A map for the previous attributes to use for
     #   new elements if they are animated.
-    position: (attrs, old_attrs = null)=>
+    position: (attrs, old_attrs)=>
         if @_animate
             @new.attr old_attrs ? attrs
             selection = @all.transition('position.attrs').duration @opt.duration

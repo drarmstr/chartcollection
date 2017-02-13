@@ -770,9 +770,6 @@
 
     Selection.prototype.position = function(attrs, old_attrs) {
       var selection;
-      if (old_attrs == null) {
-        old_attrs = null;
-      }
       if (this._animate) {
         this["new"].attr(old_attrs != null ? old_attrs : attrs);
         selection = this.all.transition('position.attrs').duration(this.opt.duration);
