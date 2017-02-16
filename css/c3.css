@@ -243,6 +243,9 @@ table.c3.table td div.bar {
   background-color: lightgray;
   border-radius: 0.4em;
 }
+table.c3.table td div.bar span {
+  white-space: pre;
+}
 table.c3.table caption {
   caption-side: bottom;
   -webkit-touch-callout: none;

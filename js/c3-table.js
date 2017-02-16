@@ -172,7 +172,7 @@
     };
 
     Table.prototype._update = function(origin) {
-      var cell_contents, column, d, data, datum, i, k, l, left_pages, len, len1, m, next_button, num_pages, page_buttons, pages, paginate, paginator, prev_button, ref, ref1, ref2, ref3, ref4, ref5, results, right_pages, rows_limited, search_control, search_input, searchable, self;
+      var cell_contents, column, d, data, datum, i, k, l, left_pages, len, len1, m, next_button, num_pages, page_buttons, pages, paginate, paginator, prev_button, ref, ref1, ref2, ref3, ref4, results, right_pages, rows_limited, search_control, search_input, searchable, self;
       self = this;
       ref = this.columns;
       for (k = 0, len = ref.length; k < len; k++) {
@@ -180,22 +180,22 @@
         if (!column.vis) {
           continue;
         }
-        column.value_total = (ref1 = (ref2 = typeof column.total_value === "function" ? column.total_value() : void 0) != null ? ref2 : column.total_value) != null ? ref1 : void 0;
+        column.value_total = (ref1 = typeof column.total_value === "function" ? column.total_value() : void 0) != null ? ref1 : column.total_value;
         if (column.value_total == null) {
           column.value_total = 0;
-          ref3 = this.data;
-          for (l = 0, len1 = ref3.length; l < len1; l++) {
-            datum = ref3[l];
+          ref2 = this.data;
+          for (l = 0, len1 = ref2.length; l < len1; l++) {
+            datum = ref2[l];
             column.value_total += column.value(datum);
           }
         }
       }
       this.current_data = this.filter != null ? (function() {
-        var len2, m, ref4, results;
-        ref4 = this.data;
+        var len2, m, ref3, results;
+        ref3 = this.data;
         results = [];
-        for (i = m = 0, len2 = ref4.length; m < len2; i = ++m) {
-          d = ref4[i];
+        for (i = m = 0, len2 = ref3.length; m < len2; i = ++m) {
+          d = ref3[i];
           if (this.filter(d, i)) {
             results.push(d);
           }
@@ -212,7 +212,7 @@
         }
       }
       data = (function() {
-        var ref4;
+        var ref3;
         if (!this.limit_rows) {
           return this.current_data;
         } else {
@@ -220,7 +220,7 @@
           if (isNaN(this.limit_rows)) {
             throw Error("limit_rows set to non-numeric value: " + this.limit_rows);
           }
-          this.page = Math.max(1, Math.min(Math.ceil(this.current_data.length / this.limit_rows), (ref4 = this.page) != null ? ref4 : 1));
+          this.page = Math.max(1, Math.min(Math.ceil(this.current_data.length / this.limit_rows), (ref3 = this.page) != null ? ref3 : 1));
           return this.current_data.slice(this.limit_rows * (this.page - 1), +((this.limit_rows * this.page) - 1) + 1 || 9e9);
         }
       }).call(this);
@@ -231,11 +231,11 @@
       }
       this.cells = this.rows.select('td').bind(((function(_this) {
         return function(d) {
-          var len2, m, ref4, results;
-          ref4 = _this.columns;
+          var len2, m, ref3, results;
+          ref3 = _this.columns;
           results = [];
-          for (m = 0, len2 = ref4.length; m < len2; m++) {
-            column = ref4[m];
+          for (m = 0, len2 = ref3.length; m < len2; m++) {
+            column = ref3[m];
             results.push(d);
           }
           return results;
@@ -308,7 +308,7 @@
           prev_button.all.classed('disabled', this.page <= 1);
           pages = [1].concat(slice.call((num_pages > 2 ? (function() {
               results = [];
-              for (var m = ref4 = Math.max(2, Math.min(this.page - left_pages, num_pages - 1 - left_pages - right_pages)), ref5 = Math.min(num_pages - 1, Math.max(this.page + right_pages, 2 + left_pages + right_pages)); ref4 <= ref5 ? m <= ref5 : m >= ref5; ref4 <= ref5 ? m++ : m--){ results.push(m); }
+              for (var m = ref3 = Math.max(2, Math.min(this.page - left_pages, num_pages - 1 - left_pages - right_pages)), ref4 = Math.min(num_pages - 1, Math.max(this.page + right_pages, 2 + left_pages + right_pages)); ref3 <= ref4 ? m <= ref4 : m >= ref4; ref3 <= ref4 ? m++ : m--){ results.push(m); }
               return results;
             }).apply(this) : [])), [num_pages]);
           if (pages[1] - pages[0] > 1) {

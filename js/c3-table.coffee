@@ -211,7 +211,7 @@ class c3.Table extends c3.Base
         self = this
         # Prepare the column totals
         for column in @columns when column.vis
-            column.value_total = column.total_value?() ? column.total_value ? undefined
+            column.value_total = column.total_value?() ? column.total_value
             if not column.value_total? # Default total_value is the sum of all values
                 column.value_total = 0
                 column.value_total += column.value(datum) for datum in @data
