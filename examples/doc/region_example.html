@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>C3 Plot Regions</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="butterfly_example.html">
+                  butterfly_example.ts
+                </a>
+              
+                
+                <a class="source" href="flamechart_example.html">
+                  flamechart_example.ts
+                </a>
+              
+                
+                <a class="source" href="icicle_sunburst_example.html">
+                  icicle_sunburst_example.ts
+                </a>
+              
+                
+                <a class="source" href="legend_example.html">
+                  legend_example.ts
+                </a>
+              
+                
+                <a class="source" href="pie_example.html">
+                  pie_example.ts
+                </a>
+              
+                
+                <a class="source" href="plot_area_example.html">
+                  plot_area_example.ts
+                </a>
+              
+                
+                <a class="source" href="plot_zoom_example.html">
+                  plot_zoom_example.ts
+                </a>
+              
+                
+                <a class="source" href="region_example.html">
+                  region_example.ts
+                </a>
+              
+                
+                <a class="source" href="sankey_example.html">
+                  sankey_example.ts
+                </a>
+              
+                
+                <a class="source" href="scatterplot_example.html">
+                  scatterplot_example.ts
+                </a>
+              
+                
+                <a class="source" href="stack_example.html">
+                  stack_example.ts
+                </a>
+              
+                
+                <a class="source" href="swimlanes_example.html">
+                  swimlanes_example.ts
+                </a>
+              
+                
+                <a class="source" href="sync_example.html">
+                  sync_example.ts
+                </a>
+              
+                
+                <a class="source" href="table_searchable_example.html">
+                  table_searchable_example.ts
+                </a>
+              
+                
+                <a class="source" href="table_selectable_example.html">
+                  table_selectable_example.ts
+                </a>
+              
+                
+                <a class="source" href="table_sortable_example.html">
+                  table_sortable_example.ts
+                </a>
+              
+                
+                <a class="source" href="timeline_example.html">
+                  timeline_example.ts
+                </a>
+              
+                
+                <a class="source" href="worldbank_example.html">
+                  worldbank_example.ts
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <h1 id="c3-plot-regions">C3 Plot Regions</h1>
+<p><em>Demonstrate moveable regions in a Plot</em></p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <h2 id="chart-plot-legend">Chart Plot Legend</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Create a chart with various layers for demonstration purposes.
+We will then link a <code>plot_legend</code> to this chart.
+Notice how the <code>name</code> properties of each layer and stack is used in the legend.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> region_layer: c3.Plot.Layer.Region&lt;<span class="hljs-built_in">number</span>&gt;;
+<span class="hljs-keyword">var</span> plot = <span class="hljs-keyword">new</span> c3.Plot({
+    anchor: &lt;HTMLElement&gt;<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'#region_example'</span>),
+    anchor_styles: { <span class="hljs-string">'display'</span>: <span class="hljs-string">'inline-block'</span>, <span class="hljs-string">'margin-left'</span>: <span class="hljs-string">'10%'</span> },
+    height: <span class="hljs-number">300</span>,
+    width: <span class="hljs-string">'80%'</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>This chart will treat the value of data elements as the Y value and the
+index of the element as the X value.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    h: d3.scale.linear().domain([<span class="hljs-number">0</span>, <span class="hljs-number">100</span>]),
+    v: d3.scale.linear().domain([<span class="hljs-number">0</span>, <span class="hljs-number">1</span>]),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Add a horizontal axis with grid lines.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    axes: [
+        <span class="hljs-keyword">new</span> c3.Axis.X({
+            grid: <span class="hljs-literal">true</span>,
+        }),
+    ],
+
+    layers: [
+        <span class="hljs-keyword">new</span> c3.Plot.Layer.Line&lt;<span class="hljs-built_in">number</span>&gt;({
+            data: (() =&gt; {
+                <span class="hljs-keyword">const</span> data = [];
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">100</span>; i++) {
+                    data.push(<span class="hljs-built_in">Math</span>.random());
+                }
+                <span class="hljs-keyword">return</span> data;
+            })(),
+            x: (d, i) =&gt; i,
+            y: (d) =&gt; d,
+            path_options: { styles: { stroke: <span class="hljs-string">'darkblue'</span> } },
+        }),
+
+        <span class="hljs-keyword">new</span> c3.Plot.Layer.Region&lt;{x:<span class="hljs-built_in">number</span>, x2: <span class="hljs-built_in">number</span>, color: <span class="hljs-built_in">string</span>}&gt;({
+            data: [
+                { x: <span class="hljs-number">20</span>, x2: <span class="hljs-number">30</span>, color: <span class="hljs-string">'red'</span> },
+                { x: <span class="hljs-number">65</span>, x2: <span class="hljs-number">85</span>, color: <span class="hljs-string">'green'</span> },
+            ],
+            x: (d) =&gt; d.x,
+            x2: (d) =&gt; d.x2,
+            draggable: <span class="hljs-literal">true</span>,
+            rect_options: {
+                styles: {
+                    fill: (d) =&gt; d.color,
+                    opacity: <span class="hljs-number">0.5</span>,
+                },
+            },
+
+            handlers: {
+                dragend: (v, d) =&gt; { d.x = v.x; d.x2 = v.x2; },
+            }
+        }),
+
+        <span class="hljs-keyword">new</span> c3.Plot.Layer.Region&lt;{x:<span class="hljs-built_in">number</span>, x2: <span class="hljs-built_in">number</span>, y: <span class="hljs-built_in">number</span>, y2: <span class="hljs-built_in">number</span>, color: <span class="hljs-built_in">string</span>}&gt;({
+            data: [
+                { x: <span class="hljs-number">45</span>, x2: <span class="hljs-number">55</span>, y: <span class="hljs-number">.4</span>, y2: <span class="hljs-number">.6</span>, color: <span class="hljs-string">'blue'</span> },
+            ],
+            x: (d) =&gt; d.x,
+            x2: (d) =&gt; d.x2,
+            y: (d) =&gt; d.y,
+            y2: (d) =&gt; d.y2,
+            draggable: <span class="hljs-literal">true</span>,
+            rect_options: {
+                styles: {
+                    fill: (d) =&gt; d.color,
+                    opacity: <span class="hljs-number">0.5</span>,
+                },
+            },
+
+            handlers: {
+                dragend: (v, d) =&gt; { d.x=v.x; d.x2=v.x2; d.y=v.y; d.y2=v.y2; },
+            }
+        }),
+
+    ],
+}).render();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Resize the chart to fit the window</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">window</span>.onresize = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{ plot.resize(); }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <h2 id="forms-to-modify-legend-options">Forms to modify legend options</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>// Invert the layers in the legend
+$(‘#invert_layers’).on(‘change’, function () {
+    (<c3.Legend.PlotLegend>plot_legend).invert_layers = this.checked;
+    plot_legend.redraw();
+});</p>
+
+            </div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
