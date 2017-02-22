@@ -126,22 +126,44 @@ svg.c3.global {
         &.straight {
             shape-rendering: crispEdges;
 
-            text {
-                pointer-events: none;
-            }
-
-            line.grab {
-              visibility: hidden;
-              stroke-width: 9px;
-              stroke-dasharray: none;
-              pointer-events: all;
-            }
             &.draggable {
                 &.horizontal {
                     cursor: row-resize;
                 }
                 &.vertical {
                     cursor: col-resize;
+                }
+            }
+
+            text {
+                pointer-events: none;
+            }
+
+            line.grab {
+                visibility: hidden;
+                stroke-width: 9px;
+                stroke-dasharray: none;
+                pointer-events: all;
+            }
+        }
+
+        &.region {
+            shape-rendering: crispEdges;
+
+            &.draggable {
+                cursor: move;
+            }
+
+            line.grab {
+                visibility: hidden;
+                stroke-width: 9px;
+                stroke-dasharray: none;
+                pointer-events: all;
+                &.top, &.bottom {
+                    cursor: ns-resize;
+                }
+                &.left, &.right {
+                    cursor: ew-resize;
                 }
             }
         }

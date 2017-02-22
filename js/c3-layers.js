@@ -1145,10 +1145,416 @@
     extend(Region, superClass);
 
     function Region() {
+      this._style = bind(this._style, this);
+      this._draw = bind(this._draw, this);
+      this._update = bind(this._update, this);
+      this._size = bind(this._size, this);
+      this._init = bind(this._init, this);
       return Region.__super__.constructor.apply(this, arguments);
     }
 
     Region.prototype.type = 'region';
+
+    Region.prototype._init = function() {
+      var drag_value, dragger, l, len, origin, ref, results, self;
+      if (((this.x != null) && (this.x2 == null)) || ((this.x == null) && (this.x2 != null)) || ((this.y != null) && (this.y2 == null)) || ((this.y == null) && (this.y2 != null))) {
+        throw Error("x and x2 options or y and y2 options must either be both defined or undefined");
+      }
+      if (this.draggable || this.resizeable) {
+        drag_value = void 0;
+        origin = void 0;
+        self = this;
+        this.dragger = d3.behavior.drag().origin((function(_this) {
+          return function(d, i) {
+            return {
+              x: _this.x != null ? _this.h(_this.x(d, i)) : 0,
+              y: _this.y != null ? _this.v(_this.y(d, i)) : 0
+            };
+          };
+        })(this)).on('drag', function(d, i) {
+          var h_domain, height, ref, v_domain, width;
+          h_domain = ((ref = self.orig_h) != null ? ref : self.h).domain();
+          v_domain = self.v.domain();
+          if (self.x != null) {
+            width = self.x2(d) - self.x(d);
+          }
+          if (self.y != null) {
+            height = self.y2(d) - self.y(d);
+          }
+          drag_value = {
+            x: self.x != null ? Math.min(Math.max(self.h.invert(d3.event.x), h_domain[0]), h_domain[1] - width) : void 0,
+            y: self.y != null ? Math.min(Math.max(self.v.invert(d3.event.y), v_domain[0]), v_domain[1] - height) : void 0
+          };
+          drag_value.x2 = drag_value.x + width;
+          drag_value.y2 = drag_value.y + height;
+          if (self.x != null) {
+            d3.select(this).attr('x', self.h(drag_value.x));
+          }
+          if (self.y != null) {
+            d3.select(this).attr('y', self.v(drag_value.y2));
+          }
+          return self.trigger('drag', drag_value, d, i);
+        });
+        this.left_resizer = d3.behavior.drag().origin((function(_this) {
+          return function(d, i) {
+            return {
+              x: _this.h(_this.x(d, i))
+            };
+          };
+        })(this)).on('drag', function(d, i) {
+          var h_domain, ref, x, x2;
+          h_domain = ((ref = self.orig_h) != null ? ref : self.h).domain();
+          x = Math.min(Math.max(self.h.invert(d3.event.x), h_domain[0]), h_domain[1]);
+          x2 = self.x2(d);
+          drag_value = {
+            x: Math.min(x, x2),
+            x2: Math.max(x, x2),
+            y: self.y != null ? self.y(d) : void 0,
+            y2: self.y2 != null ? self.y2(d) : void 0
+          };
+          return d3.select(this.parentNode).select('rect').attr({
+            x: self.h(drag_value.x),
+            width: self.h(drag_value.x2 - drag_value.x)
+          });
+        });
+        this.right_resizer = d3.behavior.drag().origin((function(_this) {
+          return function(d, i) {
+            return {
+              x: _this.h(_this.x2(d, i))
+            };
+          };
+        })(this)).on('drag', function(d, i) {
+          var h_domain, ref, x, x2;
+          h_domain = ((ref = self.orig_h) != null ? ref : self.h).domain();
+          x = Math.min(Math.max(self.h.invert(d3.event.x), h_domain[0]), h_domain[1]);
+          x2 = self.x(d);
+          drag_value = {
+            x: Math.min(x, x2),
+            x2: Math.max(x, x2),
+            y: self.y != null ? self.y(d) : void 0,
+            y2: self.y2 != null ? self.y2(d) : void 0
+          };
+          return d3.select(this.parentNode).select('rect').attr({
+            x: self.h(drag_value.x),
+            width: self.h(drag_value.x2 - drag_value.x)
+          });
+        });
+        this.top_resizer = d3.behavior.drag().origin((function(_this) {
+          return function(d, i) {
+            return {
+              y: _this.v(_this.y2(d, i))
+            };
+          };
+        })(this)).on('drag', function(d, i) {
+          var v_domain, y, y2;
+          v_domain = self.v.domain();
+          y = Math.min(Math.max(self.v.invert(d3.event.y), v_domain[0]), v_domain[1]);
+          y2 = self.y(d);
+          drag_value = {
+            x: self.x != null ? self.x(d) : void 0,
+            x2: self.x2 != null ? self.x2(d) : void 0,
+            y: Math.min(y, y2),
+            y2: Math.max(y, y2)
+          };
+          return d3.select(this.parentNode).select('rect').attr({
+            y: self.v(drag_value.y2),
+            height: self.v(drag_value.y) - self.v(drag_value.y2)
+          });
+        });
+        this.bottom_resizer = d3.behavior.drag().origin((function(_this) {
+          return function(d, i) {
+            return {
+              y: _this.v(_this.y(d, i))
+            };
+          };
+        })(this)).on('drag', function(d, i) {
+          var v_domain, y, y2;
+          v_domain = self.v.domain();
+          y = Math.min(Math.max(self.v.invert(d3.event.y), v_domain[0]), v_domain[1]);
+          y2 = self.y2(d);
+          drag_value = {
+            x: self.x != null ? self.x(d) : void 0,
+            x2: self.x2 != null ? self.x2(d) : void 0,
+            y: Math.min(y, y2),
+            y2: Math.max(y, y2)
+          };
+          return d3.select(this.parentNode).select('rect').attr({
+            y: self.v(drag_value.y2),
+            height: self.v(drag_value.y) - self.v(drag_value.y2)
+          });
+        });
+        ref = [this.dragger, this.left_resizer, this.right_resizer, this.top_resizer, this.bottom_resizer];
+        results = [];
+        for (l = 0, len = ref.length; l < len; l++) {
+          dragger = ref[l];
+          results.push(dragger.on('dragstart', (function(_this) {
+            return function(d, i) {
+              d3.event.sourceEvent.stopPropagation();
+              return _this.trigger('dragstart', d, i);
+            };
+          })(this)).on('dragend', (function(_this) {
+            return function(d, i) {
+              _this.trigger('dragend', drag_value, d, i);
+              return _this._draw();
+            };
+          })(this)));
+        }
+        return results;
+      }
+    };
+
+    Region.prototype._size = function() {
+      var ref, ref1, ref2, ref3, ref4, ref5;
+      if (this.x == null) {
+        if ((ref = this.rects) != null) {
+          ref.all.attr('width', this.width);
+        }
+        if ((ref1 = this.left_grab_lines) != null) {
+          ref1.all.attr('width', this.width);
+        }
+        if ((ref2 = this.right_grab_lines) != null) {
+          ref2.all.attr('width', this.width);
+        }
+      }
+      if (this.y == null) {
+        if ((ref3 = this.rects) != null) {
+          ref3.all.attr('height', this.height);
+        }
+        if ((ref4 = this.top_grab_lines) != null) {
+          ref4.all.attr('height', this.height);
+        }
+        return (ref5 = this.bottom_grab_lines) != null ? ref5.all.attr('height', this.height) : void 0;
+      }
+    };
+
+    Region.prototype._update = function(origin) {
+      var d, i;
+      this.current_data = this.filter != null ? (function() {
+        var l, len, ref, results;
+        ref = this.data;
+        results = [];
+        for (i = l = 0, len = ref.length; l < len; i = ++l) {
+          d = ref[i];
+          if (this.filter(d, i)) {
+            results.push(d);
+          }
+        }
+        return results;
+      }).call(this) : this.data;
+      this.regions = this.content.select('g.region').options(this.region_options).animate(origin === 'redraw').bind(this.current_data, this.key).update();
+      this.rects = this.regions.inherit('rect').options(this.rect_options).update();
+      if (this.draggable) {
+        this.rects["new"].call(this.dragger);
+      }
+      if (this.resizeable) {
+        if (this.x != null) {
+          this.left_grab_lines = this.regions.inherit('line.grab.left');
+          this.left_grab_lines["new"].call(this.left_resizer);
+        }
+        if (this.x2 != null) {
+          this.right_grab_lines = this.regions.inherit('line.grab.right');
+          this.right_grab_lines["new"].call(this.right_resizer);
+        }
+        if (this.y != null) {
+          this.top_grab_lines = this.regions.inherit('line.grab.top');
+          this.top_grab_lines["new"].call(this.top_resizer);
+        }
+        if (this.y2 != null) {
+          this.bottom_grab_lines = this.regions.inherit('line.grab.bottom');
+          return this.bottom_grab_lines["new"].call(this.bottom_resizer);
+        }
+      }
+    };
+
+    Region.prototype._draw = function(origin) {
+      var ref, ref1, ref2, ref3, ref4, ref5;
+      this.rects.animate(origin === 'redraw').position({
+        x: (function(_this) {
+          return function(d) {
+            if (_this.x != null) {
+              return _this.h(_this.x(d));
+            } else {
+              return void 0;
+            }
+          };
+        })(this),
+        width: (function(_this) {
+          return function(d) {
+            if (_this.x2 != null) {
+              return _this.h(_this.x2(d) - _this.x(d));
+            } else {
+              return void 0;
+            }
+          };
+        })(this),
+        y: (function(_this) {
+          return function(d) {
+            if (_this.y2 != null) {
+              return _this.v(_this.y2(d));
+            } else {
+              return void 0;
+            }
+          };
+        })(this),
+        height: (function(_this) {
+          return function(d) {
+            if (_this.y != null) {
+              return _this.v(_this.y(d)) - _this.v(_this.y2(d));
+            } else {
+              return void 0;
+            }
+          };
+        })(this)
+      });
+      if (this.x == null) {
+        if ((ref = this.rects) != null) {
+          ref["new"].attr('width', this.width);
+        }
+      }
+      if (this.y == null) {
+        if ((ref1 = this.rects) != null) {
+          ref1["new"].attr('height', this.height);
+        }
+      }
+      if (this.resizeable) {
+        if ((ref2 = this.left_grab_lines) != null) {
+          ref2.animate(origin === 'redraw').position({
+            x1: (function(_this) {
+              return function(d) {
+                return _this.h(_this.x(d));
+              };
+            })(this),
+            x2: (function(_this) {
+              return function(d) {
+                return _this.h(_this.x(d));
+              };
+            })(this),
+            y1: (function(_this) {
+              return function(d) {
+                if (_this.y != null) {
+                  return _this.v(_this.y(d));
+                } else {
+                  return 0;
+                }
+              };
+            })(this),
+            y2: (function(_this) {
+              return function(d) {
+                if (_this.y2 != null) {
+                  return _this.v(_this.y2(d));
+                } else {
+                  return _this.height;
+                }
+              };
+            })(this)
+          });
+        }
+        if ((ref3 = this.right_grab_lines) != null) {
+          ref3.animate(origin === 'redraw').position({
+            x1: (function(_this) {
+              return function(d) {
+                return _this.h(_this.x2(d));
+              };
+            })(this),
+            x2: (function(_this) {
+              return function(d) {
+                return _this.h(_this.x2(d));
+              };
+            })(this),
+            y1: (function(_this) {
+              return function(d) {
+                if (_this.y != null) {
+                  return _this.v(_this.y(d));
+                } else {
+                  return 0;
+                }
+              };
+            })(this),
+            y2: (function(_this) {
+              return function(d) {
+                if (_this.y2 != null) {
+                  return _this.v(_this.y2(d));
+                } else {
+                  return _this.height;
+                }
+              };
+            })(this)
+          });
+        }
+        if ((ref4 = this.top_grab_lines) != null) {
+          ref4.animate(origin === 'redraw').position({
+            x1: (function(_this) {
+              return function(d) {
+                if (_this.x != null) {
+                  return _this.h(_this.x(d));
+                } else {
+                  return 0;
+                }
+              };
+            })(this),
+            x2: (function(_this) {
+              return function(d) {
+                if (_this.x2 != null) {
+                  return _this.h(_this.x2(d));
+                } else {
+                  return _this.width;
+                }
+              };
+            })(this),
+            y1: (function(_this) {
+              return function(d) {
+                return _this.v(_this.y2(d));
+              };
+            })(this),
+            y2: (function(_this) {
+              return function(d) {
+                return _this.v(_this.y2(d));
+              };
+            })(this)
+          });
+        }
+        return (ref5 = this.bottom_grab_lines) != null ? ref5.animate(origin === 'redraw').position({
+          x1: (function(_this) {
+            return function(d) {
+              if (_this.x != null) {
+                return _this.h(_this.x(d));
+              } else {
+                return 0;
+              }
+            };
+          })(this),
+          x2: (function(_this) {
+            return function(d) {
+              if (_this.x2 != null) {
+                return _this.h(_this.x2(d));
+              } else {
+                return _this.width;
+              }
+            };
+          })(this),
+          y1: (function(_this) {
+            return function(d) {
+              return _this.v(_this.y(d));
+            };
+          })(this),
+          y2: (function(_this) {
+            return function(d) {
+              return _this.v(_this.y(d));
+            };
+          })(this)
+        }) : void 0;
+      }
+    };
+
+    Region.prototype._style = function(style_new) {
+      this.g.classed({
+        'draggable': this.draggable,
+        'horizontal': this.x == null,
+        'vertical': this.y == null
+      });
+      this.regions.style(style_new);
+      return this.rects.style(style_new);
+    };
 
     return Region;
 

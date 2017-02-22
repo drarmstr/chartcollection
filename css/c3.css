@@ -85,6 +85,12 @@ svg.c3.global {
 .c3.plot .layer.straight {
   shape-rendering: crispEdges;
 }
+.c3.plot .layer.straight.draggable.horizontal {
+  cursor: row-resize;
+}
+.c3.plot .layer.straight.draggable.vertical {
+  cursor: col-resize;
+}
 .c3.plot .layer.straight text {
   pointer-events: none;
 }
@@ -94,11 +100,25 @@ svg.c3.global {
   stroke-dasharray: none;
   pointer-events: all;
 }
-.c3.plot .layer.straight.draggable.horizontal {
-  cursor: row-resize;
+.c3.plot .layer.region {
+  shape-rendering: crispEdges;
 }
-.c3.plot .layer.straight.draggable.vertical {
-  cursor: col-resize;
+.c3.plot .layer.region.draggable {
+  cursor: move;
+}
+.c3.plot .layer.region line.grab {
+  visibility: hidden;
+  stroke-width: 9px;
+  stroke-dasharray: none;
+  pointer-events: all;
+}
+.c3.plot .layer.region line.grab.top,
+.c3.plot .layer.region line.grab.bottom {
+  cursor: ns-resize;
+}
+.c3.plot .layer.region line.grab.left,
+.c3.plot .layer.region line.grab.right {
+  cursor: ew-resize;
 }
 .c3.plot .layer.scatter text {
   text-anchor: middle;

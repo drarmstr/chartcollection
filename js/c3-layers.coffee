@@ -801,10 +801,204 @@ class c3.Plot.Layer.Line.Vertical extends c3.Plot.Layer.Line.Straight
 ###################################################################
 
 # Render a rectangular region in an {c3.Plot XY Plot Chart}.
+#
+# Define `x` and `x2` options for vertical regions,
+# `y` and `y2` for horizontal regions, or all four for rectangular regions.
+#
+# The regions may be enabled to be `draggable` and/or `resizeable`.
+# The chart will move or resize the region interactively, however it is up to
+# the user code to modify the data elements based on the `drag` or `dragend`
+# events.  These callbacks are called with a structure of the new values and
+# the data element as parameters.  The structure of new values is an object
+# with `x`, `x2` and `y`, `y2` members.
+#
+# ## Extensibility
+# The following {c3.Selection} members are made available if appropriate:
+# * **regions**
+# * **rects**
+#
+# ## Events
+# * **dragstart** - called with the data element.
+# * **drag** - called with the new position and the data element.
+# * **dragend** - called with the new position and the data element.
+#
 # @author Douglas Armstrong
-# @todo Implement this layer type
 class c3.Plot.Layer.Region extends c3.Plot.Layer
     type: 'region'
+
+    _init: =>
+        if (@x? and !@x2?) or (!@x? and @x2?) or (@y? and !@y2?) or (!@y? and @y2?)
+            throw Error "x and x2 options or y and y2 options must either be both defined or undefined"
+
+        # Draggable lines
+        if @draggable or @resizeable
+            drag_value = undefined
+            origin = undefined
+            self = this
+            @dragger = d3.behavior.drag()
+                .origin (d,i)=>
+                    x: if @x? then @h @x d,i else 0
+                    y: if @y? then @v @y d,i else 0
+                .on 'drag', (d,i)->
+                    h_domain = (self.orig_h ? self.h).domain()
+                    v_domain = self.v.domain()
+                    width = self.x2(d) - self.x(d) if self.x?
+                    height = self.y2(d) - self.y(d) if self.y?
+                    drag_value =
+                        x: if self.x? then Math.min(Math.max(self.h.invert(d3.event.x), h_domain[0]), h_domain[1]-width)
+                        y: if self.y? then Math.min(Math.max(self.v.invert(d3.event.y), v_domain[0]), v_domain[1]-height)
+                    drag_value.x2 = drag_value.x + width
+                    drag_value.y2 = drag_value.y + height
+                    if self.x? then d3.select(this).attr 'x', self.h drag_value.x
+                    if self.y? then d3.select(this).attr 'y', self.v drag_value.y2
+                    self.trigger 'drag', drag_value, d, i
+
+            @left_resizer = d3.behavior.drag()
+                .origin (d,i)=>
+                    x: @h @x d, i
+                .on 'drag', (d,i)->
+                    h_domain = (self.orig_h ? self.h).domain()
+                    x = Math.min(Math.max(self.h.invert(d3.event.x), h_domain[0]), h_domain[1])
+                    x2 = self.x2 d
+                    drag_value =
+                        x: Math.min(x, x2)
+                        x2: Math.max(x, x2)
+                        y: if self.y? then self.y(d) else undefined
+                        y2: if self.y2? then self.y2(d) else undefined
+                    d3.select(this.parentNode).select('rect').attr
+                        x: self.h drag_value.x
+                        width: self.h drag_value.x2 - drag_value.x
+
+            @right_resizer = d3.behavior.drag()
+                .origin (d,i)=>
+                    x: @h @x2 d, i
+                .on 'drag', (d,i)->
+                    h_domain = (self.orig_h ? self.h).domain()
+                    x = Math.min(Math.max(self.h.invert(d3.event.x), h_domain[0]), h_domain[1])
+                    x2 = self.x d
+                    drag_value =
+                        x: Math.min(x, x2)
+                        x2: Math.max(x, x2)
+                        y: if self.y? then self.y(d) else undefined
+                        y2: if self.y2? then self.y2(d) else undefined
+                    d3.select(this.parentNode).select('rect').attr
+                        x: self.h drag_value.x
+                        width: self.h drag_value.x2 - drag_value.x
+
+            @top_resizer = d3.behavior.drag()
+                .origin (d,i)=>
+                    y: @v @y2 d, i
+                .on 'drag', (d,i)->
+                    v_domain = self.v.domain()
+                    y = Math.min(Math.max(self.v.invert(d3.event.y), v_domain[0]), v_domain[1])
+                    y2 = self.y d
+                    drag_value =
+                        x: if self.x? then self.x(d) else undefined
+                        x2: if self.x2? then self.x2(d) else undefined
+                        y: Math.min(y, y2)
+                        y2: Math.max(y, y2)
+                    d3.select(this.parentNode).select('rect').attr
+                        y: self.v drag_value.y2
+                        height: self.v(drag_value.y) - self.v(drag_value.y2)
+
+            @bottom_resizer = d3.behavior.drag()
+                .origin (d,i)=>
+                    y: @v @y d, i
+                .on 'drag', (d,i)->
+                    v_domain = self.v.domain()
+                    y = Math.min(Math.max(self.v.invert(d3.event.y), v_domain[0]), v_domain[1])
+                    y2 = self.y2 d
+                    drag_value =
+                        x: if self.x? then self.x(d) else undefined
+                        x2: if self.x2? then self.x2(d) else undefined
+                        y: Math.min(y, y2)
+                        y2: Math.max(y, y2)
+                    d3.select(this.parentNode).select('rect').attr
+                        y: self.v drag_value.y2
+                        height: self.v(drag_value.y) - self.v(drag_value.y2)
+
+            for dragger in [@dragger, @left_resizer, @right_resizer, @top_resizer, @bottom_resizer]
+                dragger
+                    .on 'dragstart', (d,i)=>
+                        d3.event.sourceEvent.stopPropagation() # Prevent panning in zoomable charts
+                        @trigger 'dragstart', d, i
+                    .on 'dragend', (d,i)=>
+                        @trigger 'dragend', drag_value, d, i
+                        @_draw() # reposition the grab lines for the moved region
+
+    _size: =>
+        if not @x?
+            @rects?.all.attr 'width', @width
+            @left_grab_lines?.all.attr 'width', @width
+            @right_grab_lines?.all.attr 'width', @width
+        if not @y?
+            @rects?.all.attr 'height', @height
+            @top_grab_lines?.all.attr 'height', @height
+            @bottom_grab_lines?.all.attr 'height', @height
+
+    _update: (origin)=>
+        @current_data = if @filter? then (d for d,i in @data when @filter(d,i)) else @data
+
+        @regions = @content.select('g.region').options(@region_options).animate(origin is 'redraw')
+            .bind(@current_data, @key).update()
+        @rects = @regions.inherit('rect').options(@rect_options).update()
+
+        if @draggable
+            @rects.new.call @dragger
+
+        # Add extra lines for resizing regions
+        if @resizeable
+            if @x?
+                @left_grab_lines = @regions.inherit('line.grab.left')
+                @left_grab_lines.new.call @left_resizer
+            if @x2?
+                @right_grab_lines = @regions.inherit('line.grab.right')
+                @right_grab_lines.new.call @right_resizer
+            if @y?
+                @top_grab_lines = @regions.inherit('line.grab.top')
+                @top_grab_lines.new.call @top_resizer
+            if @y2?
+                @bottom_grab_lines = @regions.inherit('line.grab.bottom')
+                @bottom_grab_lines.new.call @bottom_resizer
+
+    _draw: (origin)=>
+        @rects.animate(origin is 'redraw').position
+            x: (d)=> if @x? then @h @x d else undefined
+            width: (d)=> if @x2? then @h @x2(d)-@x(d) else undefined
+            y: (d)=> if @y2? then @v @y2 d else undefined
+            height: (d)=> if @y? then @v(@y(d))-@v(@y2(d)) else undefined
+        if not @x? then @rects?.new.attr 'width', @width
+        if not @y? then @rects?.new.attr 'height', @height
+
+        if @resizeable
+            @left_grab_lines?.animate(origin is 'redraw').position
+                x1: (d)=> @h @x d
+                x2: (d)=> @h @x d
+                y1: (d)=> if @y? then @v @y d else 0
+                y2: (d)=> if @y2? then @v @y2 d else @height
+            @right_grab_lines?.animate(origin is 'redraw').position
+                x1: (d)=> @h @x2 d
+                x2: (d)=> @h @x2 d
+                y1: (d)=> if @y? then @v @y d else 0
+                y2: (d)=> if @y2? then @v @y2 d else @height
+            @top_grab_lines?.animate(origin is 'redraw').position
+                x1: (d)=> if @x? then @h @x d else 0
+                x2: (d)=> if @x2? then @h @x2 d else @width
+                y1: (d)=> @v @y2 d
+                y2: (d)=> @v @y2 d
+            @bottom_grab_lines?.animate(origin is 'redraw').position
+                x1: (d)=> if @x? then @h @x d else 0
+                x2: (d)=> if @x2? then @h @x2 d else @width
+                y1: (d)=> @v @y d
+                y2: (d)=> @v @y d
+
+    _style: (style_new)=>
+        @g.classed
+            'draggable': @draggable
+            'horizontal': not @x?
+            'vertical': not @y?
+        @regions.style style_new
+        @rects.style style_new
 
 
 ###################################################################

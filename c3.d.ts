@@ -510,8 +510,21 @@ declare module c3 {
             //////////////////////////////////////////////////////////////////////////////////////
             // Region Layer
             //////////////////////////////////////////////////////////////////////////////////////
-            class Region<D> extends Layer<D> {
-                // TODO
+            interface RegionOptions<D> extends LayerOptions<D> {
+                filter?: (d: D, i: number) => boolean;
+                key?: (d: D, i: number) => number | string;
+                x2?: (d: D) => number;
+                y2?: (d: D) => number;
+                draggable?: boolean;
+                resizeable?: boolean;
+                region_options?: c3.Selection.Options<D>;
+                rect_options?: c3.Selection.Options<D>;
+            }
+            interface Region<D> extends RegionOptions<D> { }
+            class Region<D> extends Layer<D> implements RegionOptions<D>{
+                constructor(opt?: RegionOptions<D>);
+                regions: c3.Selection<D>;
+                rects: c3.Selection<D>;
             }
 
 

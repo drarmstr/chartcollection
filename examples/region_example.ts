@@ -27,6 +27,7 @@ var plot = new c3.Plot({
     ],
 
     layers: [
+        // Add a silly line layer for the background
         new c3.Plot.Layer.Line<number>({
             data: (() => {
                 const data = [];
@@ -40,6 +41,9 @@ var plot = new c3.Plot({
             path_options: { styles: { stroke: 'darkblue' } },
         }),
 
+        // Add a **Region** layer with vertical regions.
+        // Vertical regions don't define `y` or `y2`.
+        // These regions are draggable and resizable.
         new c3.Plot.Layer.Region<{x:number, x2: number, color: string}>({
             data: [
                 { x: 20, x2: 30, color: 'red' },
@@ -47,7 +51,10 @@ var plot = new c3.Plot({
             ],
             x: (d) => d.x,
             x2: (d) => d.x2,
+
             draggable: true,
+            resizeable: true,
+
             rect_options: {
                 styles: {
                     fill: (d) => d.color,
@@ -55,11 +62,16 @@ var plot = new c3.Plot({
                 },
             },
 
+            // It is important to update the original data element based on the
+            // new location/size.  This must be done manually as there is no
+            // automatic inverse of the user-provided accessors for setting the
+            // opaque data type.
             handlers: {
                 dragend: (v, d) => { d.x = v.x; d.x2 = v.x2; },
             }
         }),
 
+        // Add a **Region** layer with a rectangular region.
         new c3.Plot.Layer.Region<{x:number, x2: number, y: number, y2: number, color: string}>({
             data: [
                 { x: 45, x2: 55, y: .4, y2: .6, color: 'blue' },
@@ -68,7 +80,10 @@ var plot = new c3.Plot({
             x2: (d) => d.x2,
             y: (d) => d.y,
             y2: (d) => d.y2,
+
             draggable: true,
+            resizeable: true,
+
             rect_options: {
                 styles: {
                     fill: (d) => d.color,
@@ -76,6 +91,10 @@ var plot = new c3.Plot({
                 },
             },
 
+            // It is important to update the original data element based on the
+            // new location/size.  This must be done manually as there is no
+            // automatic inverse of the user-provided accessors for setting the
+            // opaque data type.
             handlers: {
                 dragend: (v, d) => { d.x=v.x; d.x2=v.x2; d.y=v.y; d.y2=v.y2; },
             }

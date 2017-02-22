@@ -200,63 +200,7 @@ index of the element as the X value.</p>
         }),
     ],
 
-    layers: [
-        <span class="hljs-keyword">new</span> c3.Plot.Layer.Line&lt;<span class="hljs-built_in">number</span>&gt;({
-            data: (() =&gt; {
-                <span class="hljs-keyword">const</span> data = [];
-                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">100</span>; i++) {
-                    data.push(<span class="hljs-built_in">Math</span>.random());
-                }
-                <span class="hljs-keyword">return</span> data;
-            })(),
-            x: (d, i) =&gt; i,
-            y: (d) =&gt; d,
-            path_options: { styles: { stroke: <span class="hljs-string">'darkblue'</span> } },
-        }),
-
-        <span class="hljs-keyword">new</span> c3.Plot.Layer.Region&lt;{x:<span class="hljs-built_in">number</span>, x2: <span class="hljs-built_in">number</span>, color: <span class="hljs-built_in">string</span>}&gt;({
-            data: [
-                { x: <span class="hljs-number">20</span>, x2: <span class="hljs-number">30</span>, color: <span class="hljs-string">'red'</span> },
-                { x: <span class="hljs-number">65</span>, x2: <span class="hljs-number">85</span>, color: <span class="hljs-string">'green'</span> },
-            ],
-            x: (d) =&gt; d.x,
-            x2: (d) =&gt; d.x2,
-            draggable: <span class="hljs-literal">true</span>,
-            rect_options: {
-                styles: {
-                    fill: (d) =&gt; d.color,
-                    opacity: <span class="hljs-number">0.5</span>,
-                },
-            },
-
-            handlers: {
-                dragend: (v, d) =&gt; { d.x = v.x; d.x2 = v.x2; },
-            }
-        }),
-
-        <span class="hljs-keyword">new</span> c3.Plot.Layer.Region&lt;{x:<span class="hljs-built_in">number</span>, x2: <span class="hljs-built_in">number</span>, y: <span class="hljs-built_in">number</span>, y2: <span class="hljs-built_in">number</span>, color: <span class="hljs-built_in">string</span>}&gt;({
-            data: [
-                { x: <span class="hljs-number">45</span>, x2: <span class="hljs-number">55</span>, y: <span class="hljs-number">.4</span>, y2: <span class="hljs-number">.6</span>, color: <span class="hljs-string">'blue'</span> },
-            ],
-            x: (d) =&gt; d.x,
-            x2: (d) =&gt; d.x2,
-            y: (d) =&gt; d.y,
-            y2: (d) =&gt; d.y2,
-            draggable: <span class="hljs-literal">true</span>,
-            rect_options: {
-                styles: {
-                    fill: (d) =&gt; d.color,
-                    opacity: <span class="hljs-number">0.5</span>,
-                },
-            },
-
-            handlers: {
-                dragend: (v, d) =&gt; { d.x=v.x; d.x2=v.x2; d.y=v.y; d.y2=v.y2; },
-            }
-        }),
-
-    ],
-}).render();</pre></div></div>
+    layers: [</pre></div></div>
             
         </li>
         
@@ -267,11 +211,22 @@ index of the element as the X value.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
-              <p>Resize the chart to fit the window</p>
+              <p>Add a silly line layer for the background</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">window</span>.onresize = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{ plot.resize(); }</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">new</span> c3.Plot.Layer.Line&lt;<span class="hljs-built_in">number</span>&gt;({
+            data: (() =&gt; {
+                <span class="hljs-keyword">const</span> data = [];
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">100</span>; i++) {
+                    data.push(<span class="hljs-built_in">Math</span>.random());
+                }
+                <span class="hljs-keyword">return</span> data;
+            })(),
+            x: (d, i) =&gt; i,
+            y: (d) =&gt; d,
+            path_options: { styles: { stroke: <span class="hljs-string">'darkblue'</span> } },
+        }),</pre></div></div>
             
         </li>
         
@@ -282,9 +237,29 @@ index of the element as the X value.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
-              <h2 id="forms-to-modify-legend-options">Forms to modify legend options</h2>
+              <p>Add a <strong>Region</strong> layer with vertical regions.
+Vertical regions don’t define <code>y</code> or <code>y2</code>.
+These regions are draggable and resizable.</p>
 
             </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">new</span> c3.Plot.Layer.Region&lt;{x:<span class="hljs-built_in">number</span>, x2: <span class="hljs-built_in">number</span>, color: <span class="hljs-built_in">string</span>}&gt;({
+            data: [
+                { x: <span class="hljs-number">20</span>, x2: <span class="hljs-number">30</span>, color: <span class="hljs-string">'red'</span> },
+                { x: <span class="hljs-number">65</span>, x2: <span class="hljs-number">85</span>, color: <span class="hljs-string">'green'</span> },
+            ],
+            x: (d) =&gt; d.x,
+            x2: (d) =&gt; d.x2,
+
+            draggable: <span class="hljs-literal">true</span>,
+            resizeable: <span class="hljs-literal">true</span>,
+
+            rect_options: {
+                styles: {
+                    fill: (d) =&gt; d.color,
+                    opacity: <span class="hljs-number">0.5</span>,
+                },
+            },</pre></div></div>
             
         </li>
         
@@ -294,6 +269,111 @@ index of the element as the X value.</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>It is important to update the original data element based on the
+new location/size.  This must be done manually as there is no
+automatic inverse of the user-provided accessors for setting the
+opaque data type.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            handlers: {
+                dragend: (v, d) =&gt; { d.x = v.x; d.x2 = v.x2; },
+            }
+        }),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Add a <strong>Region</strong> layer with a rectangular region.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">new</span> c3.Plot.Layer.Region&lt;{x:<span class="hljs-built_in">number</span>, x2: <span class="hljs-built_in">number</span>, y: <span class="hljs-built_in">number</span>, y2: <span class="hljs-built_in">number</span>, color: <span class="hljs-built_in">string</span>}&gt;({
+            data: [
+                { x: <span class="hljs-number">45</span>, x2: <span class="hljs-number">55</span>, y: <span class="hljs-number">.4</span>, y2: <span class="hljs-number">.6</span>, color: <span class="hljs-string">'blue'</span> },
+            ],
+            x: (d) =&gt; d.x,
+            x2: (d) =&gt; d.x2,
+            y: (d) =&gt; d.y,
+            y2: (d) =&gt; d.y2,
+
+            draggable: <span class="hljs-literal">true</span>,
+            resizeable: <span class="hljs-literal">true</span>,
+
+            rect_options: {
+                styles: {
+                    fill: (d) =&gt; d.color,
+                    opacity: <span class="hljs-number">0.5</span>,
+                },
+            },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>It is important to update the original data element based on the
+new location/size.  This must be done manually as there is no
+automatic inverse of the user-provided accessors for setting the
+opaque data type.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            handlers: {
+                dragend: (v, d) =&gt; { d.x=v.x; d.x2=v.x2; d.y=v.y; d.y2=v.y2; },
+            }
+        }),
+
+    ],
+}).render();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>Resize the chart to fit the window</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">window</span>.onresize = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{ plot.resize(); }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <h2 id="forms-to-modify-legend-options">Forms to modify legend options</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
               <p>// Invert the layers in the legend
 $(‘#invert_layers’).on(‘change’, function () {
