@@ -867,7 +867,7 @@ class c3.Plot.Layer.Region extends c3.Plot.Layer
                         y2: if self.y2? then self.y2(d) else undefined
                     d3.select(this.parentNode).select('rect').attr
                         x: self.h drag_value.x
-                        width: self.h drag_value.x2 - drag_value.x
+                        width: self.h(drag_value.x2) - self.h(drag_value.x)
 
             @right_resizer = d3.behavior.drag()
                 .origin (d,i)=>
@@ -883,7 +883,7 @@ class c3.Plot.Layer.Region extends c3.Plot.Layer
                         y2: if self.y2? then self.y2(d) else undefined
                     d3.select(this.parentNode).select('rect').attr
                         x: self.h drag_value.x
-                        width: self.h drag_value.x2 - drag_value.x
+                        width: self.h(drag_value.x2) - self.h(drag_value.x)
 
             @top_resizer = d3.behavior.drag()
                 .origin (d,i)=>
@@ -964,7 +964,7 @@ class c3.Plot.Layer.Region extends c3.Plot.Layer
     _draw: (origin)=>
         @rects.animate(origin is 'redraw').position
             x: (d)=> if @x? then @h @x d else undefined
-            width: (d)=> if @x2? then @h @x2(d)-@x(d) else undefined
+            width: (d)=> if @x2? then @h(@x2(d))-@h(@x(d)) else undefined
             y: (d)=> if @y2? then @v @y2 d else undefined
             height: (d)=> if @y? then @v(@y(d))-@v(@y2(d)) else undefined
         if not @x? then @rects?.new.attr 'width', @width

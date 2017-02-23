@@ -1230,7 +1230,7 @@
           };
           return d3.select(this.parentNode).select('rect').attr({
             x: self.h(drag_value.x),
-            width: self.h(drag_value.x2 - drag_value.x)
+            width: self.h(drag_value.x2) - self.h(drag_value.x)
           });
         });
         this.right_resizer = d3.behavior.drag().origin((function(_this) {
@@ -1252,7 +1252,7 @@
           };
           return d3.select(this.parentNode).select('rect').attr({
             x: self.h(drag_value.x),
-            width: self.h(drag_value.x2 - drag_value.x)
+            width: self.h(drag_value.x2) - self.h(drag_value.x)
           });
         });
         this.top_resizer = d3.behavior.drag().origin((function(_this) {
@@ -1397,7 +1397,7 @@
         width: (function(_this) {
           return function(d) {
             if (_this.x2 != null) {
-              return _this.h(_this.x2(d) - _this.x(d));
+              return _this.h(_this.x2(d)) - _this.h(_this.x(d));
             } else {
               return void 0;
             }
