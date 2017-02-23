@@ -842,19 +842,17 @@ class c3.Plot.Layer.Region extends c3.Plot.Layer
                 .on 'drag', (d,i)->
                     h_domain = (self.orig_h ? self.h).domain()
                     v_domain = self.v.domain()
-                    # Run values through scale round-trip in case it is a time scale.
                     if self.x?
                         width = self.x2(d) - self.x(d)
-                        x = self.h.invert self.h Math.min(Math.max(
-                            self.h.invert(d3.event.x), h_domain[0]), h_domain[1]-width)
+                        x = Math.min(Math.max(self.h.invert(d3.event.x), h_domain[0]), h_domain[1]-width)
                     if self.y?
                         height = self.y2(d) - self.y(d)
-                        y = self.v.invert self.v Math.min(Math.max(
-                            self.v.invert(d3.event.y), v_domain[0]), v_domain[1]-height)
+                        y = Math.min(Math.max(self.v.invert(d3.event.y), v_domain[0]), v_domain[1]-height)
+                    # Run values through scale round-trip in case it is a time scale.
                     drag_value =
-                        x: if x? then x
+                        x: if x? then self.h.invert self.h x
                         x2: if x? then self.h.invert self.h x + width
-                        y: if y? then y
+                        y: if y? then self.v.invert self.v y
                         y2: if y? then self.v.invert self.v y + height
                     if self.x? then d3.select(this).attr 'x', self.h drag_value.x
                     if self.y? then d3.select(this).attr 'y', self.v drag_value.y2

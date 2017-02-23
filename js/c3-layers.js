@@ -1185,16 +1185,16 @@
           v_domain = self.v.domain();
           if (self.x != null) {
             width = self.x2(d) - self.x(d);
-            x = self.h.invert(self.h(Math.min(Math.max(self.h.invert(d3.event.x), h_domain[0]), h_domain[1] - width)));
+            x = Math.min(Math.max(self.h.invert(d3.event.x), h_domain[0]), h_domain[1] - width);
           }
           if (self.y != null) {
             height = self.y2(d) - self.y(d);
-            y = self.v.invert(self.v(Math.min(Math.max(self.v.invert(d3.event.y), v_domain[0]), v_domain[1] - height)));
+            y = Math.min(Math.max(self.v.invert(d3.event.y), v_domain[0]), v_domain[1] - height);
           }
           drag_value = {
-            x: x != null ? x : void 0,
+            x: x != null ? self.h.invert(self.h(x)) : void 0,
             x2: x != null ? self.h.invert(self.h(x + width)) : void 0,
-            y: y != null ? y : void 0,
+            y: y != null ? self.v.invert(self.v(y)) : void 0,
             y2: y != null ? self.v.invert(self.v(y + height)) : void 0
           };
           if (self.x != null) {
