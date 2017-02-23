@@ -213,19 +213,35 @@
     };
 
     Layer.prototype.min_x = function() {
-      return d3.min(this.data, this.x);
+      if (this.x != null) {
+        return d3.min(this.data, this.x);
+      } else {
+        return void 0;
+      }
     };
 
     Layer.prototype.max_x = function() {
-      return d3.max(this.data, this.x);
+      if (this.x != null) {
+        return d3.max(this.data, this.x);
+      } else {
+        return void 0;
+      }
     };
 
     Layer.prototype.min_y = function() {
-      return d3.min(this.data, this.y);
+      if (this.y != null) {
+        return d3.min(this.data, this.y);
+      } else {
+        return void 0;
+      }
     };
 
     Layer.prototype.max_y = function() {
-      return d3.max(this.data, this.y);
+      if (this.y != null) {
+        return d3.max(this.data, this.y);
+      } else {
+        return void 0;
+      }
     };
 
     return Layer;

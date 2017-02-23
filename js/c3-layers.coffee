@@ -178,10 +178,10 @@ class c3.Plot.Layer
                 refresh = true
         return refresh
 
-    min_x: => d3.min @data, @x
-    max_x: => d3.max @data, @x
-    min_y: => d3.min @data, @y
-    max_y: => d3.max @data, @y
+    min_x: => if @x? then d3.min @data, @x else undefined
+    max_x: => if @x? then d3.max @data, @x else undefined
+    min_y: => if @y? then d3.min @data, @y else undefined
+    max_y: => if @y? then d3.max @data, @y else undefined
 
 
 ###################################################################
