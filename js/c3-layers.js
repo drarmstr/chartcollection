@@ -1193,9 +1193,9 @@
           }
           drag_value = {
             x: x != null ? x : void 0,
-            x2: (typeof x === "function" ? x(self.h.invert(self.h)) : void 0) ? x + width : void 0,
+            x2: x != null ? self.h.invert(self.h(x + width)) : void 0,
             y: y != null ? y : void 0,
-            y2: (typeof y === "function" ? y(self.v.invert(self.v)) : void 0) ? y + height : void 0
+            y2: y != null ? self.v.invert(self.v(y + height)) : void 0
           };
           if (self.x != null) {
             d3.select(this).attr('x', self.h(drag_value.x));

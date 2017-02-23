@@ -853,9 +853,9 @@ class c3.Plot.Layer.Region extends c3.Plot.Layer
                             self.v.invert(d3.event.y), v_domain[0]), v_domain[1]-height)
                     drag_value =
                         x: if x? then x
-                        x2: if x? self.h.invert self.h then x + width
+                        x2: if x? then self.h.invert self.h x + width
                         y: if y? then y
-                        y2: if y? self.v.invert self.v then y + height
+                        y2: if y? then self.v.invert self.v y + height
                     if self.x? then d3.select(this).attr 'x', self.h drag_value.x
                     if self.y? then d3.select(this).attr 'y', self.v drag_value.y2
                     self.trigger 'drag', drag_value, d, i
