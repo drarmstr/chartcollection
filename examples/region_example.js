@@ -45,7 +45,7 @@ var plot = new c3.Plot({
             x: function (d) { return d.x; },
             x2: function (d) { return d.x2; },
             draggable: true,
-            resizeable: true,
+            resizable: true,
             rect_options: {
                 styles: {
                     fill: function (d) { return d.color; },
@@ -70,7 +70,7 @@ var plot = new c3.Plot({
             y: function (d) { return d.y; },
             y2: function (d) { return d.y2; },
             draggable: true,
-            resizeable: true,
+            resizable: true,
             rect_options: {
                 styles: {
                     fill: function (d) { return d.color; },

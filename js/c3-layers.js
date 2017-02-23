@@ -1176,7 +1176,7 @@
       if (((this.x != null) && (this.x2 == null)) || ((this.x == null) && (this.x2 != null)) || ((this.y != null) && (this.y2 == null)) || ((this.y == null) && (this.y2 != null))) {
         throw Error("x and x2 options or y and y2 options must either be both defined or undefined");
       }
-      if (this.draggable || this.resizeable) {
+      if (this.draggable || this.resizable) {
         drag_value = void 0;
         origin = void 0;
         self = this;
@@ -1362,7 +1362,7 @@
       if (this.draggable) {
         this.rects["new"].call(this.dragger);
       }
-      if (this.resizeable) {
+      if (this.resizable) {
         if (this.x != null) {
           this.left_grab_lines = this.regions.inherit('line.grab.left');
           this.left_grab_lines["new"].call(this.left_resizer);
@@ -1432,7 +1432,7 @@
           ref1["new"].attr('height', this.height);
         }
       }
-      if (this.resizeable) {
+      if (this.resizable) {
         if ((ref2 = this.left_grab_lines) != null) {
           ref2.animate(origin === 'redraw').position({
             x1: (function(_this) {

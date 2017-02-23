@@ -516,7 +516,7 @@ declare module c3 {
                 x2?: (d: D) => number;
                 y2?: (d: D) => number;
                 draggable?: boolean;
-                resizeable?: boolean;
+                resizable?: boolean;
                 region_options?: c3.Selection.Options<D>;
                 rect_options?: c3.Selection.Options<D>;
             }

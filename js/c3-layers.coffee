@@ -805,7 +805,7 @@ class c3.Plot.Layer.Line.Vertical extends c3.Plot.Layer.Line.Straight
 # Define `x` and `x2` options for vertical regions,
 # `y` and `y2` for horizontal regions, or all four for rectangular regions.
 #
-# The regions may be enabled to be `draggable` and/or `resizeable`.
+# The regions may be enabled to be `draggable` and/or `resizable`.
 # The chart will move or resize the region interactively, however it is up to
 # the user code to modify the data elements based on the `drag` or `dragend`
 # events.  These callbacks are called with a structure of the new values and
@@ -831,7 +831,7 @@ class c3.Plot.Layer.Region extends c3.Plot.Layer
             throw Error "x and x2 options or y and y2 options must either be both defined or undefined"
 
         # Draggable lines
-        if @draggable or @resizeable
+        if @draggable or @resizable
             drag_value = undefined
             origin = undefined
             self = this
@@ -947,7 +947,7 @@ class c3.Plot.Layer.Region extends c3.Plot.Layer
             @rects.new.call @dragger
 
         # Add extra lines for resizing regions
-        if @resizeable
+        if @resizable
             if @x?
                 @left_grab_lines = @regions.inherit('line.grab.left')
                 @left_grab_lines.new.call @left_resizer
@@ -970,7 +970,7 @@ class c3.Plot.Layer.Region extends c3.Plot.Layer
         if not @x? then @rects?.new.attr 'width', @width
         if not @y? then @rects?.new.attr 'height', @height
 
-        if @resizeable
+        if @resizable
             @left_grab_lines?.animate(origin is 'redraw').position
                 x1: (d)=> @h @x d
                 x2: (d)=> @h @x d

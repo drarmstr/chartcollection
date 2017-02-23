@@ -53,7 +53,7 @@ var plot = new c3.Plot({
             x2: (d) => d.x2,
 
             draggable: true,
-            resizeable: true,
+            resizable: true,
 
             rect_options: {
                 styles: {
@@ -82,7 +82,7 @@ var plot = new c3.Plot({
             y2: (d) => d.y2,
 
             draggable: true,
-            resizeable: true,
+            resizable: true,
 
             rect_options: {
                 styles: {
