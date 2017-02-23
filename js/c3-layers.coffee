@@ -178,10 +178,10 @@ class c3.Plot.Layer
                 refresh = true
         return refresh
 
-    min_x: => if @x? then d3.min @data, @x else undefined
-    max_x: => if @x? then d3.max @data, @x else undefined
-    min_y: => if @y? then d3.min @data, @y else undefined
-    max_y: => if @y? then d3.max @data, @y else undefined
+    min_x: => if @x? then d3.min @data, @x
+    max_x: => if @x? then d3.max @data, @x
+    min_y: => if @y? then d3.min @data, @y
+    max_y: => if @y? then d3.max @data, @y
 
 
 ###################################################################
@@ -842,13 +842,20 @@ class c3.Plot.Layer.Region extends c3.Plot.Layer
                 .on 'drag', (d,i)->
                     h_domain = (self.orig_h ? self.h).domain()
                     v_domain = self.v.domain()
-                    width = self.x2(d) - self.x(d) if self.x?
-                    height = self.y2(d) - self.y(d) if self.y?
+                    # Run values through scale round-trip in case it is a time scale.
+                    if self.x?
+                        width = self.x2(d) - self.x(d)
+                        x = self.h.invert self.h Math.min(Math.max(
+                            self.h.invert(d3.event.x), h_domain[0]), h_domain[1]-width)
+                    if self.y?
+                        height = self.y2(d) - self.y(d)
+                        y = self.v.invert self.v Math.min(Math.max(
+                            self.v.invert(d3.event.y), v_domain[0]), v_domain[1]-height)
                     drag_value =
-                        x: if self.x? then Math.min(Math.max(self.h.invert(d3.event.x), h_domain[0]), h_domain[1]-width)
-                        y: if self.y? then Math.min(Math.max(self.v.invert(d3.event.y), v_domain[0]), v_domain[1]-height)
-                    drag_value.x2 = drag_value.x + width
-                    drag_value.y2 = drag_value.y + height
+                        x: if x? then x
+                        x2: if x? then x + width
+                        y: if y? then y
+                        y2: if y? then y + height
                     if self.x? then d3.select(this).attr 'x', self.h drag_value.x
                     if self.y? then d3.select(this).attr 'y', self.v drag_value.y2
                     self.trigger 'drag', drag_value, d, i
@@ -861,10 +868,10 @@ class c3.Plot.Layer.Region extends c3.Plot.Layer
                     x = Math.min(Math.max(self.h.invert(d3.event.x), h_domain[0]), h_domain[1])
                     x2 = self.x2 d
                     drag_value =
-                        x: Math.min(x, x2)
-                        x2: Math.max(x, x2)
-                        y: if self.y? then self.y(d) else undefined
-                        y2: if self.y2? then self.y2(d) else undefined
+                        x: self.h.invert self.h Math.min(x, x2)
+                        x2: self.h.invert self.h Math.max(x, x2)
+                        y: if self.y? then self.y(d)
+                        y2: if self.y2? then self.y2(d)
                     d3.select(this.parentNode).select('rect').attr
                         x: self.h drag_value.x
                         width: self.h(drag_value.x2) - self.h(drag_value.x)
@@ -877,10 +884,10 @@ class c3.Plot.Layer.Region extends c3.Plot.Layer
                     x = Math.min(Math.max(self.h.invert(d3.event.x), h_domain[0]), h_domain[1])
                     x2 = self.x d
                     drag_value =
-                        x: Math.min(x, x2)
-                        x2: Math.max(x, x2)
-                        y: if self.y? then self.y(d) else undefined
-                        y2: if self.y2? then self.y2(d) else undefined
+                        x: self.h.invert self.h Math.min(x, x2)
+                        x2: self.h.invert self.h Math.max(x, x2)
+                        y: if self.y? then self.y(d)
+                        y2: if self.y2? then self.y2(d)
                     d3.select(this.parentNode).select('rect').attr
                         x: self.h drag_value.x
                         width: self.h(drag_value.x2) - self.h(drag_value.x)
@@ -893,10 +900,10 @@ class c3.Plot.Layer.Region extends c3.Plot.Layer
                     y = Math.min(Math.max(self.v.invert(d3.event.y), v_domain[0]), v_domain[1])
                     y2 = self.y d
                     drag_value =
-                        x: if self.x? then self.x(d) else undefined
-                        x2: if self.x2? then self.x2(d) else undefined
-                        y: Math.min(y, y2)
-                        y2: Math.max(y, y2)
+                        x: if self.x? then self.x(d)
+                        x2: if self.x2? then self.x2(d)
+                        y: self.v.invert self.v Math.min(y, y2)
+                        y2: self.v.invert self.v Math.max(y, y2)
                     d3.select(this.parentNode).select('rect').attr
                         y: self.v drag_value.y2
                         height: self.v(drag_value.y) - self.v(drag_value.y2)
@@ -909,10 +916,10 @@ class c3.Plot.Layer.Region extends c3.Plot.Layer
                     y = Math.min(Math.max(self.v.invert(d3.event.y), v_domain[0]), v_domain[1])
                     y2 = self.y2 d
                     drag_value =
-                        x: if self.x? then self.x(d) else undefined
-                        x2: if self.x2? then self.x2(d) else undefined
-                        y: Math.min(y, y2)
-                        y2: Math.max(y, y2)
+                        x: if self.x? then self.x(d)
+                        x2: if self.x2? then self.x2(d)
+                        y: self.v.invert self.v Math.min(y, y2)
+                        y2: self.v.invert self.v Math.max(y, y2)
                     d3.select(this.parentNode).select('rect').attr
                         y: self.v drag_value.y2
                         height: self.v(drag_value.y) - self.v(drag_value.y2)
@@ -963,10 +970,10 @@ class c3.Plot.Layer.Region extends c3.Plot.Layer
 
     _draw: (origin)=>
         @rects.animate(origin is 'redraw').position
-            x: (d)=> if @x? then @h @x d else undefined
-            width: (d)=> if @x2? then @h(@x2(d))-@h(@x(d)) else undefined
-            y: (d)=> if @y2? then @v @y2 d else undefined
-            height: (d)=> if @y? then @v(@y(d))-@v(@y2(d)) else undefined
+            x: (d)=> if @x? then @h @x d
+            width: (d)=> if @x2? then @h(@x2(d))-@h(@x(d))
+            y: (d)=> if @y2? then @v @y2 d
+            height: (d)=> if @y? then @v(@y(d))-@v(@y2(d))
         if not @x? then @rects?.new.attr 'width', @width
         if not @y? then @rects?.new.attr 'height', @height
 

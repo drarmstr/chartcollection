@@ -215,32 +215,24 @@
     Layer.prototype.min_x = function() {
       if (this.x != null) {
         return d3.min(this.data, this.x);
-      } else {
-        return void 0;
       }
     };
 
     Layer.prototype.max_x = function() {
       if (this.x != null) {
         return d3.max(this.data, this.x);
-      } else {
-        return void 0;
       }
     };
 
     Layer.prototype.min_y = function() {
       if (this.y != null) {
         return d3.min(this.data, this.y);
-      } else {
-        return void 0;
       }
     };
 
     Layer.prototype.max_y = function() {
       if (this.y != null) {
         return d3.max(this.data, this.y);
-      } else {
-        return void 0;
       }
     };
 
@@ -1188,21 +1180,23 @@
             };
           };
         })(this)).on('drag', function(d, i) {
-          var h_domain, height, ref, v_domain, width;
+          var h_domain, height, ref, v_domain, width, x, y;
           h_domain = ((ref = self.orig_h) != null ? ref : self.h).domain();
           v_domain = self.v.domain();
           if (self.x != null) {
             width = self.x2(d) - self.x(d);
+            x = self.h.invert(self.h(Math.min(Math.max(self.h.invert(d3.event.x), h_domain[0]), h_domain[1] - width)));
           }
           if (self.y != null) {
             height = self.y2(d) - self.y(d);
+            y = self.v.invert(self.v(Math.min(Math.max(self.v.invert(d3.event.y), v_domain[0]), v_domain[1] - height)));
           }
           drag_value = {
-            x: self.x != null ? Math.min(Math.max(self.h.invert(d3.event.x), h_domain[0]), h_domain[1] - width) : void 0,
-            y: self.y != null ? Math.min(Math.max(self.v.invert(d3.event.y), v_domain[0]), v_domain[1] - height) : void 0
+            x: x != null ? x : void 0,
+            x2: x != null ? x + width : void 0,
+            y: y != null ? y : void 0,
+            y2: y != null ? y + height : void 0
           };
-          drag_value.x2 = drag_value.x + width;
-          drag_value.y2 = drag_value.y + height;
           if (self.x != null) {
             d3.select(this).attr('x', self.h(drag_value.x));
           }
@@ -1223,8 +1217,8 @@
           x = Math.min(Math.max(self.h.invert(d3.event.x), h_domain[0]), h_domain[1]);
           x2 = self.x2(d);
           drag_value = {
-            x: Math.min(x, x2),
-            x2: Math.max(x, x2),
+            x: self.h.invert(self.h(Math.min(x, x2))),
+            x2: self.h.invert(self.h(Math.max(x, x2))),
             y: self.y != null ? self.y(d) : void 0,
             y2: self.y2 != null ? self.y2(d) : void 0
           };
@@ -1245,8 +1239,8 @@
           x = Math.min(Math.max(self.h.invert(d3.event.x), h_domain[0]), h_domain[1]);
           x2 = self.x(d);
           drag_value = {
-            x: Math.min(x, x2),
-            x2: Math.max(x, x2),
+            x: self.h.invert(self.h(Math.min(x, x2))),
+            x2: self.h.invert(self.h(Math.max(x, x2))),
             y: self.y != null ? self.y(d) : void 0,
             y2: self.y2 != null ? self.y2(d) : void 0
           };
@@ -1269,8 +1263,8 @@
           drag_value = {
             x: self.x != null ? self.x(d) : void 0,
             x2: self.x2 != null ? self.x2(d) : void 0,
-            y: Math.min(y, y2),
-            y2: Math.max(y, y2)
+            y: self.v.invert(self.v(Math.min(y, y2))),
+            y2: self.v.invert(self.v(Math.max(y, y2)))
           };
           return d3.select(this.parentNode).select('rect').attr({
             y: self.v(drag_value.y2),
@@ -1291,8 +1285,8 @@
           drag_value = {
             x: self.x != null ? self.x(d) : void 0,
             x2: self.x2 != null ? self.x2(d) : void 0,
-            y: Math.min(y, y2),
-            y2: Math.max(y, y2)
+            y: self.v.invert(self.v(Math.min(y, y2))),
+            y2: self.v.invert(self.v(Math.max(y, y2)))
           };
           return d3.select(this.parentNode).select('rect').attr({
             y: self.v(drag_value.y2),
@@ -1389,8 +1383,6 @@
           return function(d) {
             if (_this.x != null) {
               return _this.h(_this.x(d));
-            } else {
-              return void 0;
             }
           };
         })(this),
@@ -1398,8 +1390,6 @@
           return function(d) {
             if (_this.x2 != null) {
               return _this.h(_this.x2(d)) - _this.h(_this.x(d));
-            } else {
-              return void 0;
             }
           };
         })(this),
@@ -1407,8 +1397,6 @@
           return function(d) {
             if (_this.y2 != null) {
               return _this.v(_this.y2(d));
-            } else {
-              return void 0;
             }
           };
         })(this),
@@ -1416,8 +1404,6 @@
           return function(d) {
             if (_this.y != null) {
               return _this.v(_this.y(d)) - _this.v(_this.y2(d));
-            } else {
-              return void 0;
             }
           };
         })(this)
