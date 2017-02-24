@@ -1222,10 +1222,11 @@
             y: self.y != null ? self.y(d) : void 0,
             y2: self.y2 != null ? self.y2(d) : void 0
           };
-          return d3.select(this.parentNode).select('rect').attr({
+          d3.select(this.parentNode).select('rect').attr({
             x: self.h(drag_value.x),
             width: self.h(drag_value.x2) - self.h(drag_value.x)
           });
+          return self.trigger('drag', drag_value, d, i);
         });
         this.right_resizer = d3.behavior.drag().origin((function(_this) {
           return function(d, i) {
@@ -1244,10 +1245,11 @@
             y: self.y != null ? self.y(d) : void 0,
             y2: self.y2 != null ? self.y2(d) : void 0
           };
-          return d3.select(this.parentNode).select('rect').attr({
+          d3.select(this.parentNode).select('rect').attr({
             x: self.h(drag_value.x),
             width: self.h(drag_value.x2) - self.h(drag_value.x)
           });
+          return self.trigger('drag', drag_value, d, i);
         });
         this.top_resizer = d3.behavior.drag().origin((function(_this) {
           return function(d, i) {
@@ -1266,10 +1268,11 @@
             y: self.v.invert(self.v(Math.min(y, y2))),
             y2: self.v.invert(self.v(Math.max(y, y2)))
           };
-          return d3.select(this.parentNode).select('rect').attr({
+          d3.select(this.parentNode).select('rect').attr({
             y: self.v(drag_value.y2),
             height: self.v(drag_value.y) - self.v(drag_value.y2)
           });
+          return self.trigger('drag', drag_value, d, i);
         });
         this.bottom_resizer = d3.behavior.drag().origin((function(_this) {
           return function(d, i) {
@@ -1288,10 +1291,11 @@
             y: self.v.invert(self.v(Math.min(y, y2))),
             y2: self.v.invert(self.v(Math.max(y, y2)))
           };
-          return d3.select(this.parentNode).select('rect').attr({
+          d3.select(this.parentNode).select('rect').attr({
             y: self.v(drag_value.y2),
             height: self.v(drag_value.y) - self.v(drag_value.y2)
           });
+          return self.trigger('drag', drag_value, d, i);
         });
         ref = [this.dragger, this.left_resizer, this.right_resizer, this.top_resizer, this.bottom_resizer];
         results = [];

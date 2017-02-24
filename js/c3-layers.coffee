@@ -873,6 +873,7 @@ class c3.Plot.Layer.Region extends c3.Plot.Layer
                     d3.select(this.parentNode).select('rect').attr
                         x: self.h drag_value.x
                         width: self.h(drag_value.x2) - self.h(drag_value.x)
+                    self.trigger 'drag', drag_value, d, i
 
             @right_resizer = d3.behavior.drag()
                 .origin (d,i)=>
@@ -889,6 +890,7 @@ class c3.Plot.Layer.Region extends c3.Plot.Layer
                     d3.select(this.parentNode).select('rect').attr
                         x: self.h drag_value.x
                         width: self.h(drag_value.x2) - self.h(drag_value.x)
+                    self.trigger 'drag', drag_value, d, i
 
             @top_resizer = d3.behavior.drag()
                 .origin (d,i)=>
@@ -905,6 +907,7 @@ class c3.Plot.Layer.Region extends c3.Plot.Layer
                     d3.select(this.parentNode).select('rect').attr
                         y: self.v drag_value.y2
                         height: self.v(drag_value.y) - self.v(drag_value.y2)
+                    self.trigger 'drag', drag_value, d, i
 
             @bottom_resizer = d3.behavior.drag()
                 .origin (d,i)=>
@@ -921,6 +924,7 @@ class c3.Plot.Layer.Region extends c3.Plot.Layer
                     d3.select(this.parentNode).select('rect').attr
                         y: self.v drag_value.y2
                         height: self.v(drag_value.y) - self.v(drag_value.y2)
+                    self.trigger 'drag', drag_value, d, i
 
             for dragger in [@dragger, @left_resizer, @right_resizer, @top_resizer, @bottom_resizer]
                 dragger
