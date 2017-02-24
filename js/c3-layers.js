@@ -1377,12 +1377,14 @@
     };
 
     Region.prototype._draw = function(origin) {
-      var ref, ref1, ref2, ref3, ref4, ref5;
+      var ref, ref1, ref2, ref3;
       this.rects.animate(origin === 'redraw').position({
         x: (function(_this) {
           return function(d) {
             if (_this.x != null) {
               return _this.h(_this.x(d));
+            } else {
+              return 0;
             }
           };
         })(this),
@@ -1390,6 +1392,8 @@
           return function(d) {
             if (_this.x2 != null) {
               return _this.h(_this.x2(d)) - _this.h(_this.x(d));
+            } else {
+              return _this.width;
             }
           };
         })(this),
@@ -1397,6 +1401,8 @@
           return function(d) {
             if (_this.y2 != null) {
               return _this.v(_this.y2(d));
+            } else {
+              return 0;
             }
           };
         })(this),
@@ -1404,87 +1410,79 @@
           return function(d) {
             if (_this.y != null) {
               return _this.v(_this.y(d)) - _this.v(_this.y2(d));
+            } else {
+              return _this.height;
             }
           };
         })(this)
       });
-      if (this.x == null) {
-        if ((ref = this.rects) != null) {
-          ref["new"].attr('width', this.width);
-        }
-      }
-      if (this.y == null) {
-        if ((ref1 = this.rects) != null) {
-          ref1["new"].attr('height', this.height);
-        }
-      }
       if (this.resizable) {
-        if ((ref2 = this.left_grab_lines) != null) {
+        if ((ref = this.left_grab_lines) != null) {
+          ref.animate(origin === 'redraw').position({
+            x1: (function(_this) {
+              return function(d) {
+                return _this.h(_this.x(d));
+              };
+            })(this),
+            x2: (function(_this) {
+              return function(d) {
+                return _this.h(_this.x(d));
+              };
+            })(this),
+            y1: (function(_this) {
+              return function(d) {
+                if (_this.y != null) {
+                  return _this.v(_this.y(d));
+                } else {
+                  return 0;
+                }
+              };
+            })(this),
+            y2: (function(_this) {
+              return function(d) {
+                if (_this.y2 != null) {
+                  return _this.v(_this.y2(d));
+                } else {
+                  return _this.height;
+                }
+              };
+            })(this)
+          });
+        }
+        if ((ref1 = this.right_grab_lines) != null) {
+          ref1.animate(origin === 'redraw').position({
+            x1: (function(_this) {
+              return function(d) {
+                return _this.h(_this.x2(d));
+              };
+            })(this),
+            x2: (function(_this) {
+              return function(d) {
+                return _this.h(_this.x2(d));
+              };
+            })(this),
+            y1: (function(_this) {
+              return function(d) {
+                if (_this.y != null) {
+                  return _this.v(_this.y(d));
+                } else {
+                  return 0;
+                }
+              };
+            })(this),
+            y2: (function(_this) {
+              return function(d) {
+                if (_this.y2 != null) {
+                  return _this.v(_this.y2(d));
+                } else {
+                  return _this.height;
+                }
+              };
+            })(this)
+          });
+        }
+        if ((ref2 = this.top_grab_lines) != null) {
           ref2.animate(origin === 'redraw').position({
-            x1: (function(_this) {
-              return function(d) {
-                return _this.h(_this.x(d));
-              };
-            })(this),
-            x2: (function(_this) {
-              return function(d) {
-                return _this.h(_this.x(d));
-              };
-            })(this),
-            y1: (function(_this) {
-              return function(d) {
-                if (_this.y != null) {
-                  return _this.v(_this.y(d));
-                } else {
-                  return 0;
-                }
-              };
-            })(this),
-            y2: (function(_this) {
-              return function(d) {
-                if (_this.y2 != null) {
-                  return _this.v(_this.y2(d));
-                } else {
-                  return _this.height;
-                }
-              };
-            })(this)
-          });
-        }
-        if ((ref3 = this.right_grab_lines) != null) {
-          ref3.animate(origin === 'redraw').position({
-            x1: (function(_this) {
-              return function(d) {
-                return _this.h(_this.x2(d));
-              };
-            })(this),
-            x2: (function(_this) {
-              return function(d) {
-                return _this.h(_this.x2(d));
-              };
-            })(this),
-            y1: (function(_this) {
-              return function(d) {
-                if (_this.y != null) {
-                  return _this.v(_this.y(d));
-                } else {
-                  return 0;
-                }
-              };
-            })(this),
-            y2: (function(_this) {
-              return function(d) {
-                if (_this.y2 != null) {
-                  return _this.v(_this.y2(d));
-                } else {
-                  return _this.height;
-                }
-              };
-            })(this)
-          });
-        }
-        if ((ref4 = this.top_grab_lines) != null) {
-          ref4.animate(origin === 'redraw').position({
             x1: (function(_this) {
               return function(d) {
                 if (_this.x != null) {
@@ -1515,7 +1513,7 @@
             })(this)
           });
         }
-        return (ref5 = this.bottom_grab_lines) != null ? ref5.animate(origin === 'redraw').position({
+        return (ref3 = this.bottom_grab_lines) != null ? ref3.animate(origin === 'redraw').position({
           x1: (function(_this) {
             return function(d) {
               if (_this.x != null) {

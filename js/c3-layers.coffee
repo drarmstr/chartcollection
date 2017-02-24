@@ -968,12 +968,10 @@ class c3.Plot.Layer.Region extends c3.Plot.Layer
 
     _draw: (origin)=>
         @rects.animate(origin is 'redraw').position
-            x: (d)=> if @x? then @h @x d
-            width: (d)=> if @x2? then @h(@x2(d))-@h(@x(d))
-            y: (d)=> if @y2? then @v @y2 d
-            height: (d)=> if @y? then @v(@y(d))-@v(@y2(d))
-        if not @x? then @rects?.new.attr 'width', @width
-        if not @y? then @rects?.new.attr 'height', @height
+            x: (d)=> if @x? then @h @x d else 0
+            width: (d)=> if @x2? then @h(@x2(d))-@h(@x(d)) else @width
+            y: (d)=> if @y2? then @v @y2 d else 0
+            height: (d)=> if @y? then @v(@y(d))-@v(@y2(d)) else @height
 
         if @resizable
             @left_grab_lines?.animate(origin is 'redraw').position
