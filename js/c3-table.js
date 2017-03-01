@@ -153,7 +153,7 @@
         var ref;
         return (ref = column.header) != null ? ref : {};
       })).update();
-      this.headers["new"].on('click.sort', (function(_this) {
+      this.headers.all.on('click.sort', (function(_this) {
         return function(column) {
           if (_this.sortable && column.sortable) {
             return _this.sort(column);

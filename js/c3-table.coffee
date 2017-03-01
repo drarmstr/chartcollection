@@ -201,7 +201,7 @@ class c3.Table extends c3.Base
             if @columns.some((column)-> column.header?) then @columns else [],
             (column)->column.key
         ).options(@header_options, ((column)->column.header ? {})).update()
-        @headers.new.on 'click.sort', (column)=> if @sortable and column.sortable then @sort column
+        @headers.all.on 'click.sort', (column)=> if @sortable and column.sortable then @sort column
         if @sortable then @headers.all.each (column)-> if column is self.sort_column
             title = d3.select(this)
             title.html title.html()+"<span class='arrow' style='float:right'>#{if column.sort_ascending then '▲' else '▼'}</span>"
