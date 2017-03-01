@@ -284,10 +284,10 @@ class c3.Table extends c3.Base
 
                 # Previous page button
                 prev_button = paginator.select('span.prev.button').singleton()
-                prev_button.new
+                prev_button.all
                     .text '◀'
+                    .classed 'disabled', @page <= 1
                     .on 'click', => @page--; @redraw()
-                prev_button.all.classed 'disabled', @page <= 1
 
                 # Prepare the set of pages to show in the paginator
                 pages = [
@@ -304,19 +304,18 @@ class c3.Table extends c3.Base
 
                 # Render the pages
                 page_buttons = paginator.select('ul').singleton().select('li').bind pages
-                page_buttons.new
-                    .on 'click', (p)=> @page=p; @redraw()
                 page_buttons.all
+                    .text (p,i)-> p
                     .classed 'active', (p)=> p == @page
                     .classed 'disabled', (p)=> p == '…'
-                    .text (p,i)-> p
+                    .on 'click', (p)=> @page=p; @redraw()
 
                 # Next page button
                 next_button = paginator.select('span.next.button').singleton()
-                next_button.new
+                next_button.all
                     .text '▶'
+                    .classed 'disabled', @page >= @current_data.length / @limit_rows
                     .on 'click', => @page++; @redraw()
-                next_button.all.classed 'disabled', @page >= @current_data.length / @limit_rows
             else paginator.remove()
 
             # Searchable

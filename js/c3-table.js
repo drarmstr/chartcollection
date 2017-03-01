@@ -299,13 +299,12 @@
           left_pages = Math.ceil((this.max_pages_in_paginator - 3) / 2);
           right_pages = Math.floor((this.max_pages_in_paginator - 3) / 2);
           prev_button = paginator.select('span.prev.button').singleton();
-          prev_button["new"].text('◀').on('click', (function(_this) {
+          prev_button.all.text('◀').classed('disabled', this.page <= 1).on('click', (function(_this) {
             return function() {
               _this.page--;
               return _this.redraw();
             };
           })(this));
-          prev_button.all.classed('disabled', this.page <= 1);
           pages = [1].concat(slice.call((num_pages > 2 ? (function() {
               results = [];
               for (var m = ref3 = Math.max(2, Math.min(this.page - left_pages, num_pages - 1 - left_pages - right_pages)), ref4 = Math.min(num_pages - 1, Math.max(this.page + right_pages, 2 + left_pages + right_pages)); ref3 <= ref4 ? m <= ref4 : m >= ref4; ref3 <= ref4 ? m++ : m--){ results.push(m); }
@@ -318,13 +317,9 @@
             pages.splice(pages.length - 1, 0, '…');
           }
           page_buttons = paginator.select('ul').singleton().select('li').bind(pages);
-          page_buttons["new"].on('click', (function(_this) {
-            return function(p) {
-              _this.page = p;
-              return _this.redraw();
-            };
-          })(this));
-          page_buttons.all.classed('active', (function(_this) {
+          page_buttons.all.text(function(p, i) {
+            return p;
+          }).classed('active', (function(_this) {
             return function(p) {
               return p === _this.page;
             };
@@ -332,17 +327,19 @@
             return function(p) {
               return p === '…';
             };
-          })(this)).text(function(p, i) {
-            return p;
-          });
+          })(this)).on('click', (function(_this) {
+            return function(p) {
+              _this.page = p;
+              return _this.redraw();
+            };
+          })(this));
           next_button = paginator.select('span.next.button').singleton();
-          next_button["new"].text('▶').on('click', (function(_this) {
+          next_button.all.text('▶').classed('disabled', this.page >= this.current_data.length / this.limit_rows).on('click', (function(_this) {
             return function() {
               _this.page++;
               return _this.redraw();
             };
           })(this));
-          next_button.all.classed('disabled', this.page >= this.current_data.length / this.limit_rows);
         } else {
           paginator.remove();
         }
