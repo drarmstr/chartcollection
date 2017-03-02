@@ -242,7 +242,8 @@
         };
       })(this)), (function(_this) {
         return function(d, i) {
-          return _this.columns[i].key;
+          var ref3;
+          return (ref3 = _this.columns[i]) != null ? ref3.key : void 0;
         };
       })(this));
       if (!this.columns.some(function(column) {
@@ -262,6 +263,11 @@
           switch (column.vis) {
             case 'bar':
               return d3.select(this).classed('bar', true).style('width', column.value(d) / column.value_total * 100 + '%');
+            default:
+              return d3.select(this).attr({
+                "class": 'vis',
+                style: ''
+              });
           }
         });
       }

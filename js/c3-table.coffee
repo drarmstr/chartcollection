@@ -237,7 +237,7 @@ class c3.Table extends c3.Base
         if @key? then @rows.all.order()
 
         # Update the cells
-        @cells = @rows.select('td').bind ((d)=> (d for column in @columns)), (d,i)=> @columns[i].key
+        @cells = @rows.select('td').bind ((d)=> (d for column in @columns)), (d,i)=> @columns[i]?.key
         if not @columns.some((column)-> column.vis?)
             cell_contents = @cells
         else
@@ -253,6 +253,10 @@ class c3.Table extends c3.Base
                         d3.select(this)
                             .classed 'bar', true
                             .style 'width', column.value(d)/column.value_total*100+'%'
+                    else
+                        d3.select(this).attr
+                            class: 'vis'
+                            style: ''
 
         cell_contents.options(@cell_options, ((d,i)=>@columns[i].cells)).update()
         @cells.options(@cell_options, ((d,i)=>@columns[i].cells)) # For use in _style()
