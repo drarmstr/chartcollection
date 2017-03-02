@@ -337,6 +337,7 @@
     };
 
     Selectable.prototype._size = function() {
+      var extent_node;
       Selectable.__super__._size.apply(this, arguments);
       if (this.brush == null) {
         this.brush = d3.svg.brush();
@@ -383,6 +384,10 @@
             this.brush_selection.all.selectAll('g.resize > rect').attr('height', this.content.height);
           }
         }
+        extent_node = this.brush_selection.select('rect.extent').node();
+        this.brush_selection.select('rect.background').all.each(function() {
+          return this.parentNode.insertBefore(this, extent_node);
+        });
       }
       this.brush_selection.all.selectAll('rect.extent, g.resize').style('pointer-events', !this.drag_selections ? 'none' : '');
       return this.select(this.selection);

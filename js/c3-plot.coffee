@@ -277,6 +277,12 @@ class c3.Plot.Selectable extends c3.Plot
                 if 'v' not in @selectable
                     @brush_selection.all.selectAll('g.resize > rect').attr('height',@content.height)
 
+            # Ensure D3's brush background stays behind extent, sometimes when
+            # rendering a plot over an existing DOM it would get out of order.
+            extent_node = @brush_selection.select('rect.extent').node()
+            @brush_selection.select('rect.background').all.each ->
+                this.parentNode.insertBefore this, extent_node
+
         # Move existing selection or start a new one
         @brush_selection.all.selectAll('rect.extent, g.resize')
             .style 'pointer-events', if not @drag_selections then 'none' else ''
