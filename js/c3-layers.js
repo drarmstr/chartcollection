@@ -2132,7 +2132,7 @@
     Icicle.prototype.label_options = void 0;
 
     Icicle.prototype._init = function() {
-      var base, base1;
+      var base, base1, base2, base3;
       Icicle.__super__._init.apply(this, arguments);
       if (this.key == null) {
         throw Error("`key()` accessor function is required for Icicle layers");
@@ -2162,11 +2162,18 @@
           })(this)
         }
       };
+      this.label_clip_options = {};
       if (this.label_options != null) {
         if ((base = this.label_options).animate == null) {
           base.animate = this.rect_options.animate;
         }
-        return (base1 = this.label_options).duration != null ? base1.duration : base1.duration = this.rect_options.duration;
+        if ((base1 = this.label_options).duration == null) {
+          base1.duration = this.rect_options.duration;
+        }
+        if ((base2 = this.label_clip_options).animate == null) {
+          base2.animate = this.rect_options.animate;
+        }
+        return (base3 = this.label_clip_options).duration != null ? base3.duration : base3.duration = this.rect_options.duration;
       }
     };
 
@@ -2184,7 +2191,7 @@
     };
 
     Icicle.prototype._update = function(origin) {
-      var ref, ref1, ref2, ref3, ref4;
+      var ref, ref1, ref2, ref3, ref4, ref5;
       Icicle.__super__._update.apply(this, arguments);
       if (origin !== 'revalue' && origin !== 'rebase') {
         this.tree = new c3.Layout.Tree({
@@ -2216,13 +2223,17 @@
       this.segment_options.animate = (ref = this.rect_options) != null ? ref.animate : void 0;
       this.segment_options.animate_old = (ref1 = this.rect_options) != null ? ref1.animate : void 0;
       this.segment_options.duration = (ref2 = this.rect_options) != null ? ref2.duration : void 0;
+      this.segments = this.segments_g.select('g.segment').options(this.segment_options).animate(origin === 'redraw' || origin === 'revalue' || origin === 'rebase').bind(this.current_data, this.key).update();
       if ((ref3 = this.rect_options) != null) {
         if (ref3.animate_old == null) {
           ref3.animate_old = (ref4 = this.rect_options) != null ? ref4.animate : void 0;
         }
       }
-      this.segments = this.segments_g.select('svg.segment').options(this.segment_options).animate(origin === 'redraw' || origin === 'revalue' || origin === 'rebase').bind(this.current_data, this.key).update();
-      return this.rects = this.segments.inherit('rect').options(this.rect_options).update();
+      this.rects = this.segments.inherit('rect').options(this.rect_options).update();
+      if (this.label_options != null) {
+        this.label_clip_options.animate_old = (ref5 = this.label_options) != null ? ref5.animate : void 0;
+        return this.label_clips = this.segments.inherit('svg.label').options(this.label_clip_options);
+      }
     };
 
     Icicle.prototype._draw = function(origin) {
@@ -2235,7 +2246,8 @@
       }
       this.h.domain([(ref = root_node != null ? root_node.x1 : void 0) != null ? ref : 0, (ref1 = root_node != null ? root_node.x2 : void 0) != null ? ref1 : 1]);
       zero_pos = this.h(0);
-      this.segments.animate(origin === 'redraw' || origin === 'revalue' || origin === 'rebase').position({
+      (origin === 'resize' ? this.rects.all : this.rects["new"]).attr('height', this.dy);
+      this.rects.animate(origin === 'redraw' || origin === 'revalue' || origin === 'rebase').position({
         x: (function(_this) {
           return function(d) {
             return _this.h(_this.nodes[_this.key(d)].x1);
@@ -2260,7 +2272,7 @@
         })(this),
         y: (function(_this) {
           return function(d) {
-            return _this.v(_this.nodes[_this.key(d)].y1);
+            return _this.v(_this.nodes[_this.key(d)].py1);
           };
         })(this),
         width: (function(_this) {
@@ -2270,30 +2282,44 @@
           };
         })(this)
       });
-      (origin === 'resize' ? this.rects.all : this.rects["new"]).attr('height', this.dy);
-      this.rects.animate(origin === 'redraw' || origin === 'revalue' || origin === 'rebase').position({
-        width: (function(_this) {
-          return function(d) {
-            var node;
-            return _this.h((node = _this.nodes[_this.key(d)]).x2 - node.x1) - zero_pos;
-          };
-        })(this)
-      }, {
-        width: (function(_this) {
-          return function(d) {
-            var node;
-            return prev_h((node = _this.nodes[_this.key(d)]).px2 - node.px1) - prev_zero_pos;
-          };
-        })(this)
-      });
       if (this.label_options != null) {
-        this.segments.all.filter((function(_this) {
-          return function(d) {
-            var node;
-            return _this.h((node = _this.nodes[_this.key(d)]).x2 - node.x1) - zero_pos < 50;
-          };
-        })(this)).selectAll('text').transition('fade').duration(this.label_options.duration).style('opacity', 0).remove();
-        this.labels = c3.select(this.segments.all.filter((function(_this) {
+        (origin === 'resize' ? this.rects.all : this.rects["new"]).attr('height', this.dy);
+        this.label_clips.animate(origin === 'redraw' || origin === 'revalue' || origin === 'rebase').position({
+          x: (function(_this) {
+            return function(d) {
+              return _this.h(_this.nodes[_this.key(d)].x1);
+            };
+          })(this),
+          y: (function(_this) {
+            return function(d) {
+              return _this.v(_this.nodes[_this.key(d)].y1);
+            };
+          })(this),
+          width: (function(_this) {
+            return function(d) {
+              var node;
+              return _this.h((node = _this.nodes[_this.key(d)]).x2 - node.x1) - zero_pos;
+            };
+          })(this)
+        }, {
+          x: (function(_this) {
+            return function(d) {
+              return prev_h(_this.nodes[_this.key(d)].px1);
+            };
+          })(this),
+          y: (function(_this) {
+            return function(d) {
+              return _this.v(_this.nodes[_this.key(d)].py1);
+            };
+          })(this),
+          width: (function(_this) {
+            return function(d) {
+              var node;
+              return prev_h((node = _this.nodes[_this.key(d)]).px2 - node.px1) - prev_zero_pos;
+            };
+          })(this)
+        });
+        this.labels = c3.select(this.label_clips.all.filter((function(_this) {
           return function(d) {
             var node;
             return _this.h((node = _this.nodes[_this.key(d)]).x2 - node.x1) - zero_pos >= 50;
@@ -2310,6 +2336,12 @@
             };
           })(this)
         });
+        this.segments.all.filter((function(_this) {
+          return function(d) {
+            var node;
+            return _this.h((node = _this.nodes[_this.key(d)]).x2 - node.x1) - zero_pos < 50;
+          };
+        })(this)).selectAll('text').transition('fade').duration(this.label_options.duration).style('opacity', 0).remove();
       } else {
         this.segments.all.selectAll('text').remove();
         delete this.labels;

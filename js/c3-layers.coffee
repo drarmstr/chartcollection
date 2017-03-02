@@ -1503,9 +1503,12 @@ class c3.Plot.Layer.Swimlane.Icicle extends c3.Plot.Layer.Swimlane
             @rebase if d isnt @root_datum then d
             else (if @parent_key? then @nodes[@parent_key d] else @nodes[@key d].parent)?.datum
         } }
+        @label_clip_options = {}
         if @label_options?
             @label_options.animate ?= @rect_options.animate
             @label_options.duration ?= @rect_options.duration
+            @label_clip_options.animate ?= @rect_options.animate
+            @label_clip_options.duration ?= @rect_options.duration
 
     _hover_datum: (x, swimlane)=>
         right = @h.invert @h(x)+1 # Get the pixel width
@@ -1550,11 +1553,14 @@ class c3.Plot.Layer.Swimlane.Icicle extends c3.Plot.Layer.Swimlane
         @segment_options.animate = @rect_options?.animate
         @segment_options.animate_old = @rect_options?.animate
         @segment_options.duration = @rect_options?.duration
-        @rect_options?.animate_old ?= @rect_options?.animate
-        @segments = @segments_g.select('svg.segment').options(@segment_options)
+        @segments = @segments_g.select('g.segment').options(@segment_options)
             .animate(origin is 'redraw' or origin is 'revalue' or origin is 'rebase')
             .bind(@current_data, @key).update()
+        @rect_options?.animate_old ?= @rect_options?.animate
         @rects = @segments.inherit('rect').options(@rect_options).update()
+        if @label_options?
+            @label_clip_options.animate_old = @label_options?.animate
+            @label_clips = @segments.inherit('svg.label').options(@label_clip_options)
 
     _draw: (origin)=>
         super
@@ -1568,40 +1574,48 @@ class c3.Plot.Layer.Swimlane.Icicle extends c3.Plot.Layer.Swimlane
 
         # Position the segments.
         # Place any new segments where they would have been if not decimated.
-        @segments.animate(origin is 'redraw' or origin is 'revalue' or origin is 'rebase').position {
+        (if origin is 'resize' then @rects.all else @rects.new).attr 'height', @dy
+        @rects.animate(origin is 'redraw' or origin is 'revalue' or origin is 'rebase').position {
             x: (d)=> @h @nodes[@key d].x1
             y: (d)=> @v @nodes[@key d].y1
             width: (d)=> @h((node=@nodes[@key d]).x2 - node.x1) - zero_pos
           }, {
             x: (d)=> prev_h @nodes[@key d].px1
-            y: (d)=> @v @nodes[@key d].y1
-            width: (d)=> prev_h((node=@nodes[@key d]).px2 - node.px1) - prev_zero_pos
-          }
-        (if origin is 'resize' then @rects.all else @rects.new).attr 'height', @dy
-        @rects.animate(origin is 'redraw' or origin is 'revalue' or origin is 'rebase').position {
-            width: (d)=> @h((node=@nodes[@key d]).x2 - node.x1) - zero_pos
-          }, {
+            y: (d)=> @v @nodes[@key d].py1
             width: (d)=> prev_h((node=@nodes[@key d]).px2 - node.px1) - prev_zero_pos
           }
 
         if @label_options?
-            # Remove any stale labels from segments that are now too small
-            @segments.all
-                .filter((d)=> @h((node=@nodes[@key d]).x2 - node.x1) - zero_pos < 50)
-                .selectAll('text')
-                .transition('fade').duration(@label_options.duration).style('opacity',0)
-                .remove()
+            (if origin is 'resize' then @rects.all else @rects.new).attr 'height', @dy
+            @label_clips.animate(origin is 'redraw' or origin is 'revalue' or origin is 'rebase').position {
+                x: (d)=> @h @nodes[@key d].x1
+                y: (d)=> @v @nodes[@key d].y1
+                width: (d)=> @h((node=@nodes[@key d]).x2 - node.x1) - zero_pos
+              }, {
+                x: (d)=> prev_h @nodes[@key d].px1
+                y: (d)=> @v @nodes[@key d].py1
+                width: (d)=> prev_h((node=@nodes[@key d]).px2 - node.px1) - prev_zero_pos
+              }
+
             # Bind and position labels for larger segments.
             @labels = c3.select(
-                @segments.all.filter((d)=> @h((node=@nodes[@key d]).x2 - node.x1) - zero_pos >= 50),
-            ).inherit('text', 'restore').options(@label_options).update()
-            .animate(origin is 'redraw' or origin is 'revalue' or origin is 'rebase').position
+                @label_clips.all.filter((d)=> @h((node=@nodes[@key d]).x2 - node.x1) - zero_pos >= 50)
+            ).inherit('text', 'restore')
+              .options(@label_options).update()
+              .animate(origin is 'redraw' or origin is 'revalue' or origin is 'rebase').position
                 y: @dy / 2
                 x: (d)=>
                     node = @nodes[@key d]
                     left = Math.max node.x1, @h.domain()[0]
                     right = Math.min node.x2, @h.domain()[1]
                     return @h( (right-left)/2 + (left-node.x1) ) - zero_pos
+
+            # Remove any stale labels from segments that are now too small
+            @segments.all
+                .filter((d)=> @h((node=@nodes[@key d]).x2 - node.x1) - zero_pos < 50)
+                .selectAll('text')
+                .transition('fade').duration(@label_options.duration).style('opacity',0)
+                .remove()
         else
             @segments.all.selectAll('text').remove()
             delete @labels
