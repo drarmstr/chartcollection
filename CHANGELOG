@@ -1,3 +1,9 @@
+0.1.9
+* New Region chart layer
+* New Icicle chart layer for tree visualization.
+* Allow table column sorting functions to change with redraw and pagination
+* Better support changing set of columns with table redraw
+* Make Plot Layer orientation configurable
 * Add ability to invert order of layers in plot legends.
 * Make table column headers optional.
 * Fix plot's ability to rescale auto-scaled scales.

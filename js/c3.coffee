@@ -185,6 +185,188 @@ class c3.d3
 c3.functor = (f)-> if typeof f is 'function' then f else -> f
 
 
+###################################################################
+# Common Layouts
+###################################################################
+class c3.Layout
+
+
+###################################################################
+# Tree Layout
+###################################################################
+
+# A tree layout to parition elements hierarchically.
+class c3.Layout.Tree
+    # @param options must contain:
+    # `key` - accessor to get a key from a data element
+    # Either `parent_key, `children_keys`, or `children` to define the tree
+    # Either `value` or `self_value` for partitioning the nodes.
+    constructor: (options)->
+        c3.util.extend this, options
+
+    # Construct the tree hierarchy.
+    # @param data [Array] Array of data elements
+    # @return [Object] Return an object mapping element keys to nodes
+    # A node is an object with the following properties:
+    #  datum, children, x1, x2, y1, y2, px1, px2, py1, py2
+    construct: (data)=>
+        old_nodes = @nodes
+        nodes = {}
+
+        if @parent_key?
+            @root_nodes = []
+            for datum in data
+                node = nodes[@key datum] ?= { children: [] }
+                node.datum = datum
+                parent_key = @parent_key datum
+                if parent_key?
+                    parent_node = nodes[parent_key]
+                    if parent_node? then parent_node.children.push node
+                    else parent_node = nodes[parent_key] = { children: [node] }
+                    node.parent = parent_node
+                else @root_nodes.push node
+            set_depth = (node, depth)->
+                node.y1 = depth
+                node.y2 = depth+1
+                set_depth(child, depth+1) for child in node.children
+            set_depth(node, 0) for node in @root_nodes
+
+        else if @children_keys?
+            roots = {}
+            for datum in data
+                key = @key datum
+                nodes[key] = { datum, children: @children_keys(datum) }
+                roots[key] = true
+            for key,node of nodes
+                node.children = if node.children?
+                    for child_key in node.children
+                        roots[child_key] = false
+                        child_node = nodes[child_key]
+                        if !child_node? then throw Error "Missing child node"
+                        child_node.parent = node
+                    (nodes[child_key] for child_key in node.children)
+                else []
+            @root_nodes = (nodes[key] for root of roots when root)
+            set_depth = (node, depth)->
+                node.y1 = depth
+                node.y2 = depth+1
+                set_depth(child, depth+1) for child in node.children
+            set_depth(node, 0) for node in @root_nodes
+
+        else # @children? or no hierarchy
+            build_nodes = (datum, depth, parent)=>
+                return node = nodes[@key datum] = {
+                    datum,
+                    parent,
+                    y1: depth
+                    y2: depth+1
+                    children: (build_nodes(child, depth+1, null) for child in (@children?(datum) ? []))
+                }
+            @root_nodes = (build_nodes(datum, 0) for datum in data)
+            for key,node of nodes
+                for child in node.children
+                    child.parent = node
+
+        if old_nodes?
+            for key,node of nodes
+                old_node = old_nodes[key]
+                if old_node?
+                    node.x1 = node.px1 = old_node.x1
+                    node.x2 = node.px2 = old_node.x2
+                    node.py1 = old_node.y1
+                    node.py2 = old_node.y2
+        return @nodes = nodes
+
+    # Compute the "total value" of each node
+    # @return a callback to get the total value of a data element.
+    revalue: =>
+        if @self_value?
+            self_value = @self_value
+            compute_values = (node)->
+                node.value = self_value node.datum
+                node.value += compute_values(child) for child in node.children
+                return node.value
+            compute_values(node, 0) for node in @root_nodes
+            return (d)=> @nodes[@key d].value
+
+        if @value?
+            for key,node of @nodes
+                node.value = @value node.datum
+            return @value
+
+        else throw Error "Tree layout must define either `value` or `self_value` option."
+
+    # Layout the nodes x and y values
+    # @param sort [Boolean, Function] Specify if child nodes should be sorted in the layout
+    #    * `true` - Sort based on the _total value_ of the child node.
+    #    * `false` - Don't sort
+    #    * Callback function - Function that takes a data element and returns the value to sort by.
+    # @param limit_min_percent [Number] - Minimum percentage of the root_domain to
+    #   actually layout an element and its children.
+    # @param root_datum Only layout elements that are parents or children of this element.
+    # @return [Array] Return an array of data elements that were actually laid out
+    #   given the limit_min_percent and root_datum filters.
+    layout: (@sort = false, limit_min_percent = 0, root_datum = null)=>
+        sort = switch @sort
+          when true then (node)-> -node.value
+          when false, null then null
+          else (node)=> -@sort node.datum
+
+        # Calculate the total value for the entire hierarchy
+        total_value = 0
+        total_value += node.value for node in @root_nodes
+
+        # Calculate the minimum value to render based on the current root.
+        root_node = if root_datum? then @nodes[@key root_datum] else null
+        limit_min = limit_min_percent * ((root_node?.value / total_value) || 1)
+
+        # Order and partition the nodes
+        partition = (nodes, domain, total)=>
+            delta = domain[1]-domain[0]
+            angle = domain[0]
+
+            # If the domain is inconsequential, then simplify the partitioning.
+            if not total or delta < limit_min
+                for node in nodes
+                    # If the node is inconsequential and hasn't modved, then skip branch
+                    if node.px1==angle and node.px2==angle and node.x1==angle and node.x2==angle
+                        continue
+                    node.px1 = node.x1
+                    node.px2 = node.x2
+                    node.py1 = node.y1
+                    node.py2 = node.y2
+                    node.x1 = angle
+                    node.x2 = angle
+                    if node.children.length
+                        partition node.children, domain, 0
+                return false
+            else
+                if sort then c3.array.sort_up nodes, sort
+                dx = delta / total
+                for node in nodes
+                    node.px1 = node.x1
+                    node.px2 = node.x2
+                    node.py1 = node.y1
+                    node.py2 = node.y2
+                    node.x1 = start = angle
+                    node.x2 = angle += dx * node.value
+                    if node.children.length
+                        partition node.children, [start, angle], node.value
+                return true
+        partition @root_nodes, [0,1], total_value
+
+        # Collect current set of relevant data based on the root node and limit filter
+        current_data = []
+        root_domain = [root_node?.x1 ? 0, root_node?.x2 ? 1]
+        collect_nodes = (nodes)->
+            for node in nodes
+                if node.x2-node.x1 > limit_min and node.x2 > root_domain[0] and node.x1 < root_domain[1]
+                    current_data.push node.datum
+                    if node.children.length then collect_nodes node.children
+            return null # avoid coffee comprehension
+        collect_nodes @root_nodes
+        return current_data
+
 
 ###################################################################
 # Selection
@@ -464,9 +646,11 @@ class c3.Selection
     #   values are the corresponding values or functions to set them.  The functions are called
     #   via D3.  They are passed the bound datum and index to the data as arguments and the `this`
     #   context is set to refer to the HTML element.
-    position: (attrs)=>
+    # @param old_attrs [Object] A map for the previous attributes to use for
+    #   new elements if they are animated.
+    position: (attrs, old_attrs)=>
         if @_animate
-            @new.attr attrs
+            @new.attr old_attrs ? attrs
             selection = @all.transition('position.attrs').duration @opt.duration
         else selection = @all
         selection.attr attrs

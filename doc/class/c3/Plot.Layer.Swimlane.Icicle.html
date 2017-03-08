@@ -25,14 +25,15 @@
     &raquo;
     <span class='title'>Layer</span>
     &raquo;
-    <span class='title'>Path</span>
+    <span class='title'>Swimlane</span>
+    &raquo;
+    <span class='title'>Icicle</span>
   </div>
 </div>
     <div id='content'>
       <h1>
         Class:
-        c3.Plot.Layer.Path
-        <span class='note title'>Abstract</span>
+        c3.Plot.Layer.Swimlane.Icicle
       </h1>
       <table class='box'>
         <tr>
@@ -42,26 +43,31 @@
         <tr>
           <td>Inherits:</td>
           <td>
-            <a href='../../class/c3/Plot.Layer.Stackable.html'>c3.Plot.Layer.Stackable</a>
+            <a href='../../class/c3/Plot.Layer.Swimlane.html'>c3.Plot.Layer.Swimlane</a>
           </td>
         </tr>
       </table>
       <h2>Overview</h2>
       <div class='docstring'>
-  <div class='abstract note'>
-    <strong>
-      This
-      class
-      is abstract.
-    </strong>
-    
-  </div>
-  <p>Abstract chart layer for the <a href='../../class/c3/Plot.html'>XY Plot Chart</a>.
-Please instantiate a <a href='../../class/c3/Plot.Layer.Line.html'>c3.Plot.Layer.Line</a> or <a href='../../class/c3/Plot.Layer.Area.html'>c3.Plot.Layer.Area</a></p><p>Define an <code>r</code> or <code>a</code> to create circles at the various data points along the path
-with that associated radius or area.</p><h2 id="extensibility">Extensibility</h2><p>The following <a href='../../class/c3/Selection.html'>c3.Selection</a> members are made available if appropriate:</p><ul>
-<li><strong>paths</strong> - There will be an element in paths for each stack in the layer</li>
-<li><strong>circles</strong> - Circles for each datapoint</li>
-<li><strong>labels</strong> - Labels for each datapoint</li>
+  <p>A <a href='../../class/c3/Plot.Layer.Swimlane.html'>swimlane layer</a> for rendering <em>icicle</em> charts.</p><p>In C3, both a <a href='../../class/c3/Plot.Layer.Swimlane.Flamechart.html'>Flamechart</a> and an
+<a href='../../class/c3/Plot.Layer.Swimlane.Icicle.html'>Icicle</a> can actually grow either up or down
+depending if you set <code>v_orient</code> as <code>top</code> or <code>bottom</code>.
+A <em>Flamechart</em> defaults to growing up and an <em>Icicle</em> defaults to growing down.
+In C3, a <a href='../../class/c3/Plot.Layer.Swimlane.Flamechart.html'>Flamechart</a> visualizes a timeline
+of instances of nested events over time, while an <a href='../../class/c3/Plot.Layer.Swimlane.Icicle.html'>Icicle</a>
+visualizes an aggregated tree hierarchy of nodes.  The <a href='../../class/c3/Polar.Layer.Sunburst.html'>Sunburst</a>
+is the equivalent of an <em>Icicle</em> rendered on a polar axis.</p><p>A <code>key()</code> is required for this layer.
+You should not define <code>x</code> or <code>y</code>, but you must define <code>dy</code>.
+Specify a callback for either <code>parent_key</code>,
+<code>children</code>, or <code>children_keys</code> to describe the hierarchy.
+If using <code>parent_key</code> or <code>children_keys</code> the <code>data</code> array shoud include all nodes,
+if using <code>children</code> it only should include the root nodes.
+Define either <code>value()</code> or <code>self_value()</code> to value the nodes in the hierarchy.</p><p>If you care about performance, you can pass the
+parameter <code>revalue</code> to <code>redraw(&#39;revalue&#39;)</code> if you are keeping the same dataset
+hierarchy, and only changing the element&#39;s values.
+The Icicle layer can use a more optimized algorithm in this situation.</p><h2 id="events">Events</h2>
+<ul>
+<li><strong>rebase</strong> Called with the datum of a node when it becomes the new root or with <code>null</code> if reverting to the top of the hierarchy.</li>
 </ul>
 
 </div>
@@ -72,21 +78,7 @@ with that associated radius or area.</p><h2 id="extensibility">Extensibility</h2
       Douglas Armstrong 
     </li>
   </ul>
-  <h3>See also:</h3>
-  <ul class='see'>
-    <li>
-      <a href='../../class/c3/Plot.Layer.Line.html'>c3.Plot.Layer.Line</a>
-    </li>
-    <li>
-      <a href='../../class/c3/Plot.Layer.Area.html'>c3.Plot.Layer.Area</a>
-    </li>
-  </ul>
 </div>
-      <h2>Direct Known Subclasses</h2>
-      <p class='children'>
-        <a href='../../class/c3/Plot.Layer.Line.html'>c3.Plot.Layer.Line</a>
-        <a href='../../class/c3/Plot.Layer.Area.html'>c3.Plot.Layer.Area</a>
-      </p>
       <h2>Variables Summary</h2>
       <dl class='constants'>
   <dt id='version-variable'>
@@ -94,7 +86,7 @@ with that associated radius or area.</p><h2 id="extensibility">Extensibility</h2
     =
   </dt>
   <dd>
-    <pre><code class='coffeescript'>0.2</code></pre>
+    <pre><code class='coffeescript'>0.1</code></pre>
     
   </dd>
   <dt id='type-variable'>
@@ -102,113 +94,156 @@ with that associated radius or area.</p><h2 id="extensibility">Extensibility</h2
     =
   </dt>
   <dd>
-    <pre><code class='coffeescript'>&#39;path&#39;</code></pre>
+    <pre><code class='coffeescript'>&#39;icicle&#39;</code></pre>
     
   </dd>
-  <dt id='path_generator_factory-variable'>
-    path_generator_factory
+  <dt id='key-variable'>
+    key
     =
   </dt>
   <dd>
     <pre><code class='coffeescript'>undefined</code></pre>
     <div class='docstring'>
-  <p>[Function] Factory to generate an SVG path string generator function.  _See <a href='https://github.com/mbostock/d3/wiki/SVG-Shapes#path-data-generators'>https://github.com/mbostock/d3/wiki/SVG-Shapes#path-data-generators</a> for details.</p>
+  <p><strong>REQUIRED</strong> [Function] Accessor function to define a unique key for each data element.
+<em>This has performance implications and is required for some layers and <strong>animations</strong>.</em></p>
 </div>
 <div class='tags'>
 </div>
   </dd>
-  <dt id='interpolate-variable'>
-    interpolate
+  <dt id='value-variable'>
+    value
     =
   </dt>
   <dd>
     <pre><code class='coffeescript'>undefined</code></pre>
     <div class='docstring'>
-  <p>[String] The type of D3 line interpolation to use.  _See <a href='https://github.com/mbostock/d3/wiki/SVG-Shapes#area_interpolate'>d3.svg.area.interpolate</a> for options._  Some useful examples:</p><ul>
-<li><em>linear</em> - Straight lines between data points</li>
-<li><em>basis</em> - Smooth curve based on a B-spline, the curve may not touch the data points</li>
-<li><em>cardinal</em> - Smooth curve that intersects all data points.</li>
-<li><em>step-before</em> - A step function where the horizontal segments are to the left of the data points</li>
-<li><em>step-after</em> - A step function where the horizontal segments are to the right of the data points</li>
-</ul>
-
+  <p>[Function] Accessor to get the &quot;<em>total</em>&quot; value of the data element.
+That is the total value of the element itself inclusive of all of it&#39;s children&#39;s value.
+You can define either <em>value</em> or _self<em>value</em>.</p>
 </div>
 <div class='tags'>
 </div>
   </dd>
-  <dt id='tension-variable'>
-    tension
+  <dt id='self_value-variable'>
+    self_value
     =
   </dt>
   <dd>
     <pre><code class='coffeescript'>undefined</code></pre>
     <div class='docstring'>
-  <p>[Number] The tension value [0,1] for cardinal interpolation.  _See <a href='https://github.com/mbostock/d3/wiki/SVG-Shapes#area_tension'>d3.svg.area.tension</a>._</p>
+  <p>[Function] The <code>value</code> accessor defines the &quot;<em>total</em>&quot; value for an element, that is the value of
+the element itself plus that of all of its children.  If you know the &quot;self&quot; value of an
+element without the value of its children, then define this callback accessor instead.
+The <code>value</code> option will then also be defined for you, which you can use to get the total value
+of an element after the layer has been drawn.</p>
 </div>
 <div class='tags'>
 </div>
   </dd>
-  <dt id='defined-variable'>
-    defined
+  <dt id='parent_key-variable'>
+    parent_key
     =
   </dt>
   <dd>
     <pre><code class='coffeescript'>undefined</code></pre>
     <div class='docstring'>
-  <p>[Function] Accessor function you can return true or false if the data point in data[] is defined or should be skipped.  _See <a href='https://github.com/mbostock/d3/wiki/SVG-Shapes#wiki-area_defined'>d3.svg.area.defined</a>._
-Note that this will cause disjoint paths on either side of the missing element,
-it will not render a continuous path that skips the undefined element.  For that
-behaviour simply enable <code>safe</code> mode and have the x or y accessor return undefined.</p>
+  <p>[Function] A callback that should return the key of the parent of an element.
+It is called with a data element as the first parameter.</p>
 </div>
 <div class='tags'>
 </div>
   </dd>
-  <dt id='r-variable'>
-    r
+  <dt id='children_keys-variable'>
+    children_keys
     =
   </dt>
   <dd>
     <pre><code class='coffeescript'>undefined</code></pre>
     <div class='docstring'>
-  <p>[Number, Function] Define to create circles at the data points along the path with this radius.</p>
+  <p>[Function] A callback that should return an array of child keys of an element.
+The returned array may be empty or null.
+It is called with a data element as the first parameter.</p>
 </div>
 <div class='tags'>
 </div>
   </dd>
-  <dt id='a-variable'>
-    a
+  <dt id='children-variable'>
+    children
     =
   </dt>
   <dd>
     <pre><code class='coffeescript'>undefined</code></pre>
     <div class='docstring'>
-  <p>[Number, Function] Define to create circles at the data points along the path with this area.
-Takes precedence over r.</p>
+  <p>[Function] A callback that should return an array of children elements of an element.
+The returned array may be empty or null.
+It is called with a data element as the first parameter.</p>
 </div>
 <div class='tags'>
 </div>
   </dd>
-  <dt id='path_options-variable'>
-    path_options
+  <dt id='sort-variable'>
+    sort
     =
   </dt>
   <dd>
-    <pre><code class='coffeescript'>undefined</code></pre>
+    <pre><code class='coffeescript'>false</code></pre>
     <div class='docstring'>
-  <p>[<a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a>] Options for the svg:path.  For example, to enable animations.</p>
+  <p>[Boolean, Function] How to sort the partitioned tree segments.
+<code>true</code> sorts based on <em>total</em> value, or you can define an alternative
+accessor function to be used for sorting.</p>
 </div>
 <div class='tags'>
 </div>
   </dd>
-  <dt id='circle_options-variable'>
-    circle_options
+  <dt id='limit_elements-variable'>
+    limit_elements
     =
   </dt>
   <dd>
     <pre><code class='coffeescript'>undefined</code></pre>
     <div class='docstring'>
-  <p>[<a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a>] If circles are created at the data points via <code>r</code> or <code>a</code>, then this
-defines options used to style or extend them.</p>
+  <p>[Number] Limit the number of data elements to render based on their value.
+<em>This affects the callback index parameter</em></p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='limit_min_percent-variable'>
+    limit_min_percent
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>0.001</code></pre>
+    <div class='docstring'>
+  <p>[Number] Don&#39;t bother rendering segments whose value is smaller than this
+percentage of the current domain focus. (1==100%)</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='root_datum-variable'>
+    root_datum
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>null</code></pre>
+    <div class='docstring'>
+  <p>Data element that represents the root of the hierarchy to render.
+If this is specified, then only this root and its parents and children will be rendered
+When {c3.Plot.Layer.Icicle#rebase rebase()} is called or a node is clicked on
+it will animate the transition to a new root node, if animation is enabled.</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='rect_options-variable'>
+    rect_options
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>undefined</code></pre>
+    <div class='docstring'>
+  <p>[<a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a>] Options for the svg:rect nodes for each segment</p>
 </div>
 <div class='tags'>
 </div>
@@ -220,7 +255,7 @@ defines options used to style or extend them.</p>
   <dd>
     <pre><code class='coffeescript'>undefined</code></pre>
     <div class='docstring'>
-  <p>[<a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a>] Create labels for each datapoint with these options</p>
+  <p>[<a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a>] Options for the label svg:text nodes for each segment</p>
 </div>
 <div class='tags'>
 </div>
@@ -228,14 +263,15 @@ defines options used to style or extend them.</p>
 </dl>
       <h3 class='inherited'>
         Variable inherited from
-        <a href='../../class/c3/Plot.Layer.Stackable.html'>c3.Plot.Layer.Stackable</a>
+        <a href='../../class/c3/Plot.Layer.Swimlane.html'>c3.Plot.Layer.Swimlane</a>
       </h3>
       <p class='inherited'>
-        <a href='../../class/c3/Plot.Layer.Stackable.html#version-variable'>version</a>
-        <a href='../../class/c3/Plot.Layer.Stackable.html#type-variable'>type</a>
-        <a href='../../class/c3/Plot.Layer.Stackable.html#stack_options-variable'>stack_options</a>
-        <a href='../../class/c3/Plot.Layer.Stackable.html#stacks-variable'>stacks</a>
-        <a href='../../class/c3/Plot.Layer.Stackable.html#safe-variable'>safe</a>
+        <a href='../../class/c3/Plot.Layer.Swimlane.html#type-variable'>type</a>
+        <a href='../../class/c3/Plot.Layer.Swimlane.html#v_orient-variable'>v_orient</a>
+        <a href='../../class/c3/Plot.Layer.Swimlane.html#dy-variable'>dy</a>
+        <a href='../../class/c3/Plot.Layer.Swimlane.html#hover-variable'>hover</a>
+        <a href='../../class/c3/Plot.Layer.Swimlane.html#lane_options-variable'>lane_options</a>
+        <a href='../../class/c3/Plot.Layer.html#version-variable'>version</a>
         <a href='../../class/c3/Plot.Layer.html#_next_uid-variable'>_next_uid</a>
         <a href='../../class/c3/Plot.Layer.html#data-variable'>data</a>
         <a href='../../class/c3/Plot.Layer.html#name-variable'>name</a>
@@ -246,7 +282,6 @@ defines options used to style or extend them.</p>
         <a href='../../class/c3/Plot.Layer.html#x-variable'>x</a>
         <a href='../../class/c3/Plot.Layer.html#y-variable'>y</a>
         <a href='../../class/c3/Plot.Layer.html#h_orient-variable'>h_orient</a>
-        <a href='../../class/c3/Plot.Layer.html#v_orient-variable'>v_orient</a>
         <a href='../../class/c3/Plot.Layer.html#options-variable'>options</a>
         <a href='../../class/c3/Plot.Layer.html#handlers-variable'>handlers</a>
         <a href='../../class/c3/Plot.Layer.html#restyle-variable'>restyle</a>
@@ -259,6 +294,18 @@ defines options used to style or extend them.</p>
         #
 (void)
 <b>_init</b><span>()</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#_hover_datum-dynamic'>
+        #
+(void)
+<b>_hover_datum</b><span>(x, swimlane)</span>
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -303,26 +350,28 @@ defines options used to style or extend them.</p>
   </li>
   <li>
     <span class='signature'>
-      <a href='#min_x-dynamic'>
+      <a href='#rebase-dynamic'>
         #
 (void)
-<b>min_x</b><span>()</span>
+<b>rebase</b><span>(root_datum)</span>
       </a>
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
+      Navigate to a new root node in the hierarchy representing the <code>datum</code> element 
     </span>
   </li>
   <li>
     <span class='signature'>
-      <a href='#max_x-dynamic'>
+      <a href='#rebase_key-dynamic'>
         #
 (void)
-<b>max_x</b><span>()</span>
+<b>rebase_key</b><span>(root_key)</span>
       </a>
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
+      Navigate to a new root node in the hierarchy represented by <code>key</code> 
     </span>
   </li>
 </ul>
@@ -330,16 +379,14 @@ defines options used to style or extend them.</p>
         <small>Inherited Method Summary</small>
         <h3 class='inherited'>
           Methods inherited from
-          <a href='../../class/c3/Plot.Layer.Stackable.html'>c3.Plot.Layer.Stackable</a>
+          <a href='../../class/c3/Plot.Layer.Swimlane.html'>c3.Plot.Layer.Swimlane</a>
         </h3>
         <p class='inherited'>
-          <a href='../../class/c3/Plot.Layer.Stackable.html#_stack-dynamic'>#_stack</a>
-          <a href='../../class/c3/Plot.Layer.Stackable.html#_update-dynamic'>#_update</a>
-          <a href='../../class/c3/Plot.Layer.Stackable.html#_style-dynamic'>#_style</a>
-          <a href='../../class/c3/Plot.Layer.Stackable.html#min_x-dynamic'>#min_x</a>
-          <a href='../../class/c3/Plot.Layer.Stackable.html#max_x-dynamic'>#max_x</a>
-          <a href='../../class/c3/Plot.Layer.Stackable.html#min_y-dynamic'>#min_y</a>
-          <a href='../../class/c3/Plot.Layer.Stackable.html#max_y-dynamic'>#max_y</a>
+          <a href='../../class/c3/Plot.Layer.Swimlane.html#_init-dynamic'>#_init</a>
+          <a href='../../class/c3/Plot.Layer.Swimlane.html#_size-dynamic'>#_size</a>
+          <a href='../../class/c3/Plot.Layer.Swimlane.html#_update-dynamic'>#_update</a>
+          <a href='../../class/c3/Plot.Layer.Swimlane.html#_draw-dynamic'>#_draw</a>
+          <a href='../../class/c3/Plot.Layer.Swimlane.html#_style-dynamic'>#_style</a>
           <a href='../../class/c3/Plot.Layer.html#init-dynamic'>#init</a>
           <a href='../../class/c3/Plot.Layer.html#size-dynamic'>#size</a>
           <a href='../../class/c3/Plot.Layer.html#update-dynamic'>#update</a>
@@ -348,6 +395,10 @@ defines options used to style or extend them.</p>
           <a href='../../class/c3/Plot.Layer.html#zoom-dynamic'>#zoom</a>
           <a href='../../class/c3/Plot.Layer.html#redraw-dynamic'>#redraw</a>
           <a href='../../class/c3/Plot.Layer.html#scale-dynamic'>#scale</a>
+          <a href='../../class/c3/Plot.Layer.html#min_x-dynamic'>#min_x</a>
+          <a href='../../class/c3/Plot.Layer.html#max_x-dynamic'>#max_x</a>
+          <a href='../../class/c3/Plot.Layer.html#min_y-dynamic'>#min_y</a>
+          <a href='../../class/c3/Plot.Layer.html#max_y-dynamic'>#max_y</a>
         </p>
       </h2>
       <h2>Instance Method Details</h2>
@@ -357,6 +408,16 @@ defines options used to style or extend them.</p>
       #
 (void)
 <b>_init</b><span>()</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='_hover_datum-dynamic'>
+      #
+(void)
+<b>_hover_datum</b><span>(x, swimlane)</span>
       <span class='bound note'>Bound</span>
       <br>
     </p>
@@ -393,24 +454,32 @@ defines options used to style or extend them.</p>
     
   </div>
   <div class='method_details'>
-    <p class='signature' id='min_x-dynamic'>
+    <p class='signature' id='rebase-dynamic'>
       #
 (void)
-<b>min_x</b><span>()</span>
+<b>rebase</b><span>(root_datum)</span>
       <span class='bound note'>Bound</span>
       <br>
     </p>
-    
+    <div class='docstring'>
+  <p>Navigate to a new root node in the hierarchy representing the <code>datum</code> element</p>
+</div>
+<div class='tags'>
+</div>
   </div>
   <div class='method_details'>
-    <p class='signature' id='max_x-dynamic'>
+    <p class='signature' id='rebase_key-dynamic'>
       #
 (void)
-<b>max_x</b><span>()</span>
+<b>rebase_key</b><span>(root_key)</span>
       <span class='bound note'>Bound</span>
       <br>
     </p>
-    
+    <div class='docstring'>
+  <p>Navigate to a new root node in the hierarchy represented by <code>key</code></p>
+</div>
+<div class='tags'>
+</div>
   </div>
 </div>
     </div>

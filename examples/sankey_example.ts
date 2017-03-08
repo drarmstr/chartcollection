@@ -164,7 +164,7 @@ for (let event_name of ['input', 'change']) {
     document.querySelector('#us_node_width').addEventListener(event_name, function () {
         us_sankey.node_width = +this.value;
         if ((<HTMLInputElement>document.querySelector('input[name=us_node_width_type]:checked')).value === 'percent')
-            us_sankey.node_width += '%';
+            us_sankey.node_width = us_sankey.node_width + '%';
         us_sankey.redraw();
     });
 
@@ -172,7 +172,7 @@ for (let event_name of ['input', 'change']) {
     document.querySelector('#us_node_padding').addEventListener(event_name, function () {
         us_sankey.node_padding = +this.value;
         if ((<HTMLInputElement>document.querySelector('input[name=us_node_padding_type]:checked')).value === 'percent')
-            us_sankey.node_padding += '%';
+            us_sankey.node_padding = us_sankey.node_padding + '%';
         us_sankey.redraw();
     });
 
@@ -250,7 +250,7 @@ for (let event_name of ['input', 'change']) {
     document.querySelector('#uk_node_width').addEventListener(event_name, function () {
         uk_sankey.node_width = +this.value;
         if ((<HTMLInputElement>document.querySelector('input[name=uk_node_width_type]:checked')).value === 'percent')
-            uk_sankey.node_width += '%';
+            uk_sankey.node_width = uk_sankey.node_width + '%';
         uk_sankey.redraw();
     });
 
@@ -258,7 +258,7 @@ for (let event_name of ['input', 'change']) {
     document.querySelector('#uk_node_padding').addEventListener(event_name, function () {
         uk_sankey.node_padding = +this.value;
         if ((<HTMLInputElement>document.querySelector('input[name=uk_node_padding_type]:checked')).value === 'percent')
-            uk_sankey.node_padding += '%';
+            uk_sankey.node_padding = uk_sankey.node_padding + '%';
         uk_sankey.redraw();
     });
 

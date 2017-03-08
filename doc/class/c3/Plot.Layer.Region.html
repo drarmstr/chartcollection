@@ -47,11 +47,23 @@
       </table>
       <h2>Overview</h2>
       <div class='docstring'>
-  <div class='note todo'>
-    <strong>TODO:</strong>
-    Implement this layer type 
-  </div>
-  <p>Render a rectangular region in an <a href='../../class/c3/Plot.html'>XY Plot Chart</a>.</p>
+  <p>Render a rectangular region in an <a href='../../class/c3/Plot.html'>XY Plot Chart</a>.</p><p>Define <code>x</code> and <code>x2</code> options for vertical regions,
+<code>y</code> and <code>y2</code> for horizontal regions, or all four for rectangular regions.</p><p>The regions may be enabled to be <code>draggable</code> and/or <code>resizable</code>.
+The chart will move or resize the region interactively, however it is up to
+the user code to modify the data elements based on the <code>drag</code> or <code>dragend</code>
+events.  These callbacks are called with a structure of the new values and
+the data element as parameters.  The structure of new values is an object
+with <code>x</code>, <code>x2</code> and <code>y</code>, <code>y2</code> members.</p><h2 id="extensibility">Extensibility</h2><p>The following <a href='../../class/c3/Selection.html'>c3.Selection</a> members are made available if appropriate:</p><ul>
+<li><strong>regions</strong></li>
+<li><strong>rects</strong></li>
+</ul>
+<h2 id="events">Events</h2>
+<ul>
+<li><strong>dragstart</strong> - called with the data element.</li>
+<li><strong>drag</strong> - called with the new position and the data element.</li>
+<li><strong>dragend</strong> - called with the new position and the data element.</li>
+</ul>
+
 </div>
 <div class='tags'>
   <h3>Author:</h3>
@@ -88,10 +100,75 @@
         <a href='../../class/c3/Plot.Layer.html#v-variable'>v</a>
         <a href='../../class/c3/Plot.Layer.html#x-variable'>x</a>
         <a href='../../class/c3/Plot.Layer.html#y-variable'>y</a>
+        <a href='../../class/c3/Plot.Layer.html#h_orient-variable'>h_orient</a>
+        <a href='../../class/c3/Plot.Layer.html#v_orient-variable'>v_orient</a>
         <a href='../../class/c3/Plot.Layer.html#options-variable'>options</a>
         <a href='../../class/c3/Plot.Layer.html#handlers-variable'>handlers</a>
         <a href='../../class/c3/Plot.Layer.html#restyle-variable'>restyle</a>
       </p>
+      <h2>Instance Method Summary</h2>
+      <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#_init-dynamic'>
+        #
+(void)
+<b>_init</b><span>()</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#_size-dynamic'>
+        #
+(void)
+<b>_size</b><span>()</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#_update-dynamic'>
+        #
+(void)
+<b>_update</b><span>(origin)</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#_draw-dynamic'>
+        #
+(void)
+<b>_draw</b><span>(origin)</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#_style-dynamic'>
+        #
+(void)
+<b>_style</b><span>(style_new)</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+    </span>
+  </li>
+</ul>
       <h2>
         <small>Inherited Method Summary</small>
         <h3 class='inherited'>
@@ -113,6 +190,59 @@
           <a href='../../class/c3/Plot.Layer.html#max_y-dynamic'>#max_y</a>
         </p>
       </h2>
+      <h2>Instance Method Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='_init-dynamic'>
+      #
+(void)
+<b>_init</b><span>()</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='_size-dynamic'>
+      #
+(void)
+<b>_size</b><span>()</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='_update-dynamic'>
+      #
+(void)
+<b>_update</b><span>(origin)</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='_draw-dynamic'>
+      #
+(void)
+<b>_draw</b><span>(origin)</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='_style-dynamic'>
+      #
+(void)
+<b>_style</b><span>(style_new)</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    
+  </div>
+</div>
     </div>
     <div id='footer'>
   By

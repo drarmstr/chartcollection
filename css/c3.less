@@ -126,22 +126,44 @@ svg.c3.global {
         &.straight {
             shape-rendering: crispEdges;
 
-            text {
-                pointer-events: none;
-            }
-
-            line.grab {
-              visibility: hidden;
-              stroke-width: 9px;
-              stroke-dasharray: none;
-              pointer-events: all;
-            }
             &.draggable {
                 &.horizontal {
                     cursor: row-resize;
                 }
                 &.vertical {
                     cursor: col-resize;
+                }
+            }
+
+            text {
+                pointer-events: none;
+            }
+
+            line.grab {
+                visibility: hidden;
+                stroke-width: 9px;
+                stroke-dasharray: none;
+                pointer-events: all;
+            }
+        }
+
+        &.region {
+            shape-rendering: crispEdges;
+
+            &.draggable {
+                cursor: move;
+            }
+
+            line.grab {
+                visibility: hidden;
+                stroke-width: 9px;
+                stroke-dasharray: none;
+                pointer-events: all;
+                &.top, &.bottom {
+                    cursor: ns-resize;
+                }
+                &.left, &.right {
+                    cursor: ew-resize;
                 }
             }
         }
@@ -158,7 +180,7 @@ svg.c3.global {
             shape-rendering: crispEdges;
         }
 
-        &.segment {
+        &.segment, &.icicle {
             shape-rendering: crispEdges;
 
             rect {
@@ -169,6 +191,11 @@ svg.c3.global {
                 alignment-baseline: middle;
                 pointer-events: none;
                 text-anchor: middle;
+            }
+        }
+        &.icicle {
+            rect {
+                cursor: pointer;
             }
         }
     }
@@ -187,6 +214,7 @@ svg.c3.global {
         color: black;
         background-color: wheat;
         box-shadow: 3px 3px 6px black;
+        white-space: pre;
     &:before {
         content: "";
         position: absolute;
@@ -337,6 +365,10 @@ table.c3.table {
             margin: 1px 0;
             background-color: lightgray;
             border-radius: 0.4em;
+
+            span {
+                white-space: pre;
+            }
         }
     }
 

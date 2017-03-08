@@ -495,15 +495,14 @@
 
     Segment.prototype._draw = function(origin) {
       var new_r_domain, new_t_domain, prev_t_domain, r_interpolation, ref, root_node, t_interpolation;
-      if (this.root_nodes != null) {
+      if (this.tree != null) {
         root_node = this.root_datum != null ? this.nodes[this.key(this.root_datum)] : {
           x1: 0,
           x2: 1,
           y1: -1
         };
         prev_t_domain = (ref = (origin !== 'rebase' ? this.prev_t_domain : void 0)) != null ? ref : this.t.domain();
-        this.prev_t_domain = [root_node.x1, root_node.x2];
-        new_t_domain = [root_node.x1, root_node.x2];
+        new_t_domain = this.prev_t_domain = [root_node.x1, root_node.x2];
         new_r_domain = [root_node.y1, root_node.y1 + this.r.domain()[1] - this.r.domain()[0]];
         t_interpolation = d3.interpolate(prev_t_domain, new_t_domain);
         r_interpolation = d3.interpolate(this.r.domain(), new_r_domain);
@@ -522,7 +521,7 @@
               y2: (ref4 = node.py2) != null ? ref4 : node.y2
             }, node);
             return function(t) {
-              if (_this.root_nodes != null) {
+              if (_this.tree != null) {
                 _this.t.domain(t_interpolation(t));
                 _this.r.domain(r_interpolation(t));
               }
@@ -728,7 +727,7 @@
 
     Sunburst.prototype.children = void 0;
 
-    Sunburst.prototype.limit_angle_percentage = 0.001;
+    Sunburst.prototype.limit_min_percent = 0.001;
 
     Sunburst.prototype.root_datum = null;
 
@@ -748,7 +747,7 @@
         base1.click = (function(_this) {
           return function(d) {
             var ref;
-            return _this.rebase_key((ref = (d === _this.root_datum ? _this.parent_key : _this.key)(d)) != null ? ref : null);
+            return _this.rebase(d !== _this.root_datum ? d : (ref = (_this.parent_key != null ? _this.nodes[_this.parent_key(d)] : _this.nodes[_this.key(d)].parent)) != null ? ref.datum : void 0);
           };
         })(this);
       }
@@ -773,269 +772,21 @@
     };
 
     Sunburst.prototype._layout = function(data, origin) {
-      var build_nodes, child_key, collect_nodes, compute_values, current_data, datum, j, k, key, l, len, len1, len2, len3, len4, len5, len6, len7, limit_angle_percentage, m, name, node, nodes, o, old_node, old_nodes, p, parent_key, parent_node, partition, q, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, root, root_domain, root_node, roots, s, set_depth, sort, value;
       if (origin !== 'revalue' && origin !== 'rebase') {
-        old_nodes = this.nodes;
-        nodes = [];
-        if (this.parent_key != null) {
-          this.root_nodes = [];
-          for (j = 0, len = data.length; j < len; j++) {
-            datum = data[j];
-            node = nodes[name = this.key(datum)] != null ? nodes[name] : nodes[name] = {
-              children: []
-            };
-            node.datum = datum;
-            parent_key = this.parent_key(datum);
-            if (parent_key != null) {
-              parent_node = nodes[parent_key];
-              if (parent_node) {
-                parent_node.children.push(node);
-              } else {
-                nodes[parent_key] = {
-                  children: [node]
-                };
-              }
-            } else {
-              this.root_nodes.push(node);
-            }
-          }
-          set_depth = (function(_this) {
-            return function(node, depth) {
-              var child, k, len1, ref, results;
-              node.y1 = depth;
-              node.y2 = depth + 1;
-              ref = node.children;
-              results = [];
-              for (k = 0, len1 = ref.length; k < len1; k++) {
-                child = ref[k];
-                results.push(set_depth(child, depth + 1));
-              }
-              return results;
-            };
-          })(this);
-          ref = this.root_nodes;
-          for (k = 0, len1 = ref.length; k < len1; k++) {
-            node = ref[k];
-            set_depth(node, 0);
-          }
-        } else if (this.children_keys != null) {
-          roots = {};
-          for (l = 0, len2 = data.length; l < len2; l++) {
-            datum = data[l];
-            key = this.key(datum);
-            nodes[key] = {
-              datum: datum,
-              children: this.children_keys(datum)
-            };
-            roots[key] = true;
-          }
-          for (m = 0, len3 = nodes.length; m < len3; m++) {
-            node = nodes[m];
-            if ((node != null ? node.children : void 0) != null) {
-              ref1 = node.children;
-              for (o = 0, len4 = ref1.length; o < len4; o++) {
-                child_key = ref1[o];
-                roots[child_key] = false;
-                if (nodes[child_key] == null) {
-                  throw "Missing child node";
-                }
-              }
-              node.children = (function() {
-                var len5, p, ref2, results;
-                ref2 = node.children;
-                results = [];
-                for (p = 0, len5 = ref2.length; p < len5; p++) {
-                  child_key = ref2[p];
-                  results.push(nodes[child_key]);
-                }
-                return results;
-              })();
-            }
-          }
-          this.root_nodes = (function() {
-            var results;
-            results = [];
-            for (key in roots) {
-              root = roots[key];
-              if (root) {
-                results.push(nodes[key]);
-              }
-            }
-            return results;
-          })();
-          set_depth = (function(_this) {
-            return function(node, depth) {
-              var child, len5, p, ref2, results;
-              node.y1 = depth;
-              node.y2 = depth + 1;
-              ref2 = node.children;
-              results = [];
-              for (p = 0, len5 = ref2.length; p < len5; p++) {
-                child = ref2[p];
-                results.push(set_depth(child, depth + 1));
-              }
-              return results;
-            };
-          })(this);
-          ref2 = this.root_nodes;
-          for (p = 0, len5 = ref2.length; p < len5; p++) {
-            node = ref2[p];
-            set_depth(node, 0);
-          }
-        } else {
-          build_nodes = (function(_this) {
-            return function(datum, depth) {
-              var child;
-              node = nodes[_this.key(datum)] = {
-                datum: datum,
-                y1: depth,
-                y2: depth + 1,
-                children: _this.children != null ? (function() {
-                  var len6, q, ref3, ref4, results;
-                  ref4 = (ref3 = this.children(datum)) != null ? ref3 : [];
-                  results = [];
-                  for (q = 0, len6 = ref4.length; q < len6; q++) {
-                    child = ref4[q];
-                    results.push(build_nodes(child, depth + 1));
-                  }
-                  return results;
-                }).call(_this) : []
-              };
-              return node;
-            };
-          })(this);
-          this.root_nodes = (function() {
-            var len6, q, results;
-            results = [];
-            for (q = 0, len6 = data.length; q < len6; q++) {
-              datum = data[q];
-              results.push(build_nodes(datum, 0));
-            }
-            return results;
-          })();
-        }
-        if (this.arc_options.animate) {
-          for (key = q = 0, len6 = nodes.length; q < len6; key = ++q) {
-            node = nodes[key];
-            old_node = old_nodes[key];
-            if (old_node != null) {
-              node.x1 = old_node.x1;
-              node.x2 = old_node.x2;
-              node.py1 = old_node.y1;
-              node.py2 = old_node.y2;
-            }
-          }
-        }
-        this.nodes = nodes;
+        this.tree = new c3.Layout.Tree({
+          key: this.key,
+          parent_key: this.parent_key,
+          children_keys: this.children_keys,
+          children: this.children,
+          value: this.value,
+          self_value: this.self_value
+        });
+        this.nodes = this.tree.construct(data);
       }
       if (origin !== 'rebase') {
-        if (this.self_value != null) {
-          value = this.self_value;
-          this.value = (function(_this) {
-            return function(d) {
-              return _this.nodes[_this.key(d)].value;
-            };
-          })(this);
-          compute_values = function(node) {
-            var child, len7, ref3, s;
-            node.value = value(node.datum);
-            ref3 = node.children;
-            for (s = 0, len7 = ref3.length; s < len7; s++) {
-              child = ref3[s];
-              node.value += compute_values(child);
-            }
-            return node.value;
-          };
-          ref3 = this.root_nodes;
-          for (s = 0, len7 = ref3.length; s < len7; s++) {
-            node = ref3[s];
-            compute_values(node, 0);
-          }
-        } else {
-          value = this.value;
-          ref4 = this.nodes;
-          for (key in ref4) {
-            node = ref4[key];
-            node.value = value(node.datum);
-          }
-        }
+        this.value = this.tree.revalue();
       }
-      if (this.sort && origin !== 'revalue' && origin !== 'rebase') {
-        sort = this.sort === true ? function(n) {
-          return -n.value;
-        } : (function(_this) {
-          return function(n) {
-            return -_this.sort(n.datum);
-          };
-        })(this);
-      }
-      limit_angle_percentage = this.limit_angle_percentage;
-      root_node = this.root_datum != null ? this.nodes[this.key(this.root_datum)] : null;
-      if (root_node != null) {
-        limit_angle_percentage *= ((ref5 = root_node.x2) != null ? ref5 : 1) - ((ref6 = root_node.x1) != null ? ref6 : 0);
-      }
-      partition = (function(_this) {
-        return function(nodes, domain, total) {
-          var angle, delta, dx, len8, len9, start, u, v;
-          delta = domain[1] - domain[0];
-          angle = domain[0];
-          if (!total || (origin === 'rebase' && delta < limit_angle_percentage)) {
-            for (u = 0, len8 = nodes.length; u < len8; u++) {
-              node = nodes[u];
-              if (node.px1 === angle && node.px2 === angle && node.x1 === angle && node.x2 === angle) {
-                continue;
-              }
-              node.px1 = node.x1;
-              node.px2 = node.x2;
-              node.x1 = angle;
-              node.x2 = angle;
-              if (node.children.length) {
-                partition(node.children, domain, 0);
-              }
-            }
-            return false;
-          } else {
-            if (sort) {
-              c3.array.sort_up(nodes, sort);
-            }
-            dx = delta / total;
-            for (v = 0, len9 = nodes.length; v < len9; v++) {
-              node = nodes[v];
-              node.px1 = node.x1;
-              node.px2 = node.x2;
-              node.x1 = start = angle;
-              node.x2 = angle += dx * node.value;
-              if (node.children.length) {
-                partition(node.children, [start, angle], node.value);
-              }
-            }
-            return true;
-          }
-        };
-      })(this);
-      partition(this.root_nodes, [0, 1], d3.sum(this.root_nodes, function(n) {
-        return n.value;
-      }));
-      if (root_node != null) {
-        limit_angle_percentage = this.limit_angle_percentage * (root_node.x2 - root_node.x1);
-      }
-      current_data = [];
-      root_domain = [(ref7 = root_node != null ? root_node.x1 : void 0) != null ? ref7 : 0, (ref8 = root_node != null ? root_node.x2 : void 0) != null ? ref8 : 1];
-      collect_nodes = function(nodes) {
-        var len8, u;
-        for (u = 0, len8 = nodes.length; u < len8; u++) {
-          node = nodes[u];
-          if (node.x2 - node.x1 > limit_angle_percentage && node.x2 > root_domain[0] && node.x1 < root_domain[1]) {
-            current_data.push(node.datum);
-            if (node.children.length) {
-              collect_nodes(node.children);
-            }
-          }
-        }
-        return null;
-      };
-      collect_nodes(this.root_nodes);
-      return current_data;
+      return this.tree.layout(origin !== 'revalue' && origin !== 'rebase' ? this.sort : false, this.limit_min_percent, this.root_datum);
     };
 
     Sunburst.prototype.rebase = function(root_datum) {
@@ -1076,7 +827,7 @@
 
     Sunburst.prototype.get_leaf = function(position) {
       var get_leaf;
-      if (this.root_nodes != null) {
+      if (this.tree != null) {
         get_leaf = function(nodes, parent) {
           var j, len, node;
           for (j = 0, len = nodes.length; j < len; j++) {
@@ -1091,7 +842,7 @@
           }
           return parent.datum;
         };
-        return get_leaf(this.root_nodes);
+        return get_leaf(this.tree.root_nodes);
       }
     };
 

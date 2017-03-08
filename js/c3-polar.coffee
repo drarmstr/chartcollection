@@ -381,13 +381,12 @@ class c3.Polar.Layer.Segment extends c3.Polar.Layer
 
     _draw: (origin)=>
         # Prepare to transition to the updated domain for a new root
-        if @root_nodes?
+        if @tree?
             root_node = if @root_datum? then @nodes[@key @root_datum] else { x1:0, x2:1, y1:-1 }
             # Remember the previous domain in case the last redraw/revalue animation was interrupted.
             # But, don't do this with a rebase in case the user interrupts an ongoing rebase.
             prev_t_domain = (if origin isnt 'rebase' then @prev_t_domain) ? @t.domain()
-            @prev_t_domain = [root_node.x1, root_node.x2]
-            new_t_domain = [root_node.x1, root_node.x2]
+            new_t_domain = @prev_t_domain = [root_node.x1, root_node.x2]
             new_r_domain = [root_node.y1, root_node.y1+@r.domain()[1]-@r.domain()[0]]
             t_interpolation = d3.interpolate prev_t_domain, new_t_domain
             r_interpolation = d3.interpolate @r.domain(), new_r_domain
@@ -405,7 +404,7 @@ class c3.Polar.Layer.Segment extends c3.Polar.Layer
                     { x1:node.px1 ? node.x1, x2:node.px2 ? node.x2, y1:node.py1 ? node.y1, y2:node.py2 ? node.y2 },
                     node )
                 (t)=>
-                    if @root_nodes?
+                    if @tree?
                         @t.domain t_interpolation(t)
                         @r.domain r_interpolation(t)
                     @arc arc_interpolation(t)
@@ -422,6 +421,7 @@ class c3.Polar.Layer.Segment extends c3.Polar.Layer
     # * **x2** - end angle in `t` domain
     # * **y1** - inner radius in `r` domain
     # * **y2** - outer radius in `r` domain
+    # * **datum** - reference to the associated datum
     get_position_from_key: (key)=> @nodes?[key]
 
 
@@ -552,14 +552,20 @@ class c3.Polar.Layer.Pie extends c3.Polar.Layer.Segment
 ###################################################################
 
 # A polar layer that is similar to a {c3.Polar.Layer.Pie pie chart} except that you
-# can visualize hierarchical data.  Specify a callback for either `parent_key`,
+# can visualize hierarchical tree data.  It is like a polar version of the
+# {c3.Plot.Layer.Swimlane.Icicle Icicle} Plot layer.
+#
+# A `key()` callback is required for this layer.
+# Specify a callback for either `parent_key`,
 # `children`, or `children_keys` to describe the hierarchy.
 # If using `parent_key` or `children_keys` the `data` array shoud include all nodes,
 # if using `children` it only should include the root nodes.
+# Define either `value()` or `self_value()` to value the nodes in the hierarchy.
 #
-# If you care about performance, you can pass the parameter `revalue` to `redraw('revalue')`
-# if you are keeping the same dataset and only changing the element's values.
-# The sunburst layer can use a more optimized alrogithm in this situation.
+# For proper animation, or if you care about performance, you can pass the
+# parameter `revalue` to `redraw('revalue')` if you are keeping the same dataset
+# hierarchy, and only changing the element's values.
+# The Sunburst layer can use a more optimized algorithm in this situation.
 #
 # ## Events
 # * **rebase** Called with the datum of a node when it becomes the new root
@@ -576,9 +582,9 @@ class c3.Polar.Layer.Sunburst extends c3.Polar.Layer.Segment
     # The `value` option will then also be defined for you, which you can use to get the total value
     # of an element after the layer has been drawn.
     self_value: undefined
-    # [Boolean, Function] How to sort the partitioned sunburst chart segments.
-    # `true` sorts based on value, or you can define an alternative accessor function
-    # to be used for sorting.
+    # [Boolean, Function] How to sort the partitioned tree segments.
+    # `true` sorts based on _total_ value, or you can define an alternative
+    # accessor function to be used for sorting.
     sort: false
     # [Function] A callback that should return the key of the parent of an element.
     # It is called with a data element as the first parameter.
@@ -591,12 +597,13 @@ class c3.Polar.Layer.Sunburst extends c3.Polar.Layer.Segment
     # The returned array may be empty or null.
     # It is called with a data element as the first parameter.
     children: undefined
-    # [Number] Don't bother rendering arc segments whose value is smaller than this percentage of the total. (1==100%)
-    limit_angle_percentage: 0.001
+    # [Number] Don't bother rendering segments whose value is smaller than this
+    # percentage of the current domain focus. (1==100%)
+    limit_min_percent: 0.001
     # Data element that represents the root of the hierarchy to render.
     # If this is specified then only this root and its subtree will be rendered
     # When {c3.Polar.Layer.Sunburst#rebase rebase()} is called or a node is clicked on
-    # it will animate the transition to a new root node.
+    # it will animate the transition to a new root node, if animation is enabled.
     root_datum: null
 
     _init: =>
@@ -605,7 +612,8 @@ class c3.Polar.Layer.Sunburst extends c3.Polar.Layer.Segment
         @arc_options ?= {}
         @arc_options.events ?= {}
         @arc_options.events.click ?= (d)=>
-          @rebase_key((if d is @root_datum then @parent_key else @key)(d) ? null)
+            @rebase if d isnt @root_datum then d
+            else (if @parent_key? then @nodes[@parent_key d] else @nodes[@key d].parent)?.datum
         @bullseye = @content.select('circle.bullseye')
         @bullseye_options ?= {}
         @bullseye_options.events ?= {}
@@ -614,138 +622,31 @@ class c3.Polar.Layer.Sunburst extends c3.Polar.Layer.Segment
         @center = @content.select('circle.center').singleton()
 
     _layout: (data, origin)=>
-        # Construct the hierarchy of nodes.  Skip this if only "revaluing"
+        # Construct the tree hierarchy
         if origin isnt 'revalue' and origin isnt 'rebase'
-            old_nodes = @nodes
-            nodes = []
-            if @parent_key?
-                # Build hierarchy based on user providing parents
-                @root_nodes = []
-                for datum in data
-                    node = nodes[@key datum] ?= { children: [] }
-                    node.datum = datum
-                    parent_key = @parent_key datum
-                    if parent_key?
-                        parent_node = nodes[parent_key]
-                        if parent_node then parent_node.children.push node
-                        else nodes[parent_key] = { children: [node] }
-                    else @root_nodes.push node
-                set_depth = (node, depth)=>
-                    node.y1 = depth
-                    node.y2 = depth+1
-                    set_depth(child,depth+1) for child in node.children
-                set_depth(node,0) for node in @root_nodes
-            else if @children_keys?
-                roots = {}
-                for datum in data
-                    key = @key datum
-                    nodes[key] = { datum, children: @children_keys(datum) }
-                    roots[key] = true
-                for node in nodes
-                    if node?.children?
-                      for child_key in node.children
-                          roots[child_key] = false
-                          if !nodes[child_key]? then throw "Missing child node"
-                      node.children = (nodes[child_key] for child_key in node.children)
-                @root_nodes = (nodes[key] for key,root of roots when root)
-                set_depth = (node, depth)=>
-                    node.y1 = depth
-                    node.y2 = depth+1
-                    set_depth(child,depth+1) for child in node.children
-                set_depth(node,0) for node in @root_nodes
-            else
-                # Build hierarchy based on user providing children (or there is no hierarchy)
-                build_nodes = (datum, depth)=>
-                    node = nodes[@key datum] =
-                        datum: datum
-                        y1: depth
-                        y2: depth+1
-                        children: if @children? then (build_nodes(child,depth+1) for child in (@children(datum) ? [])) else []
-                    return node
-                @root_nodes = (build_nodes(datum, 0) for datum in data)
-            # If we are animating then save the old values from the last node hierarchy for transitions
-            if @arc_options.animate
-                for node,key in nodes
-                    old_node = old_nodes[key]
-                    if old_node?
-                        node.x1 = old_node.x1
-                        node.x2 = old_node.x2
-                        node.py1 = old_node.y1
-                        node.py2 = old_node.y2
-            @nodes = nodes
+            @tree = new c3.Layout.Tree
+                key: @key,
+                parent_key: @parent_key, children_keys: @children_keys, children: @children
+                value: @value, self_value: @self_value
+            @nodes = @tree.construct data
 
         # Compute the "total value" of each node
         if origin isnt 'rebase'
-            if @self_value?
-                value = @self_value
-                @value = (d)=> @nodes[@key d].value
-                compute_values = (node)->
-                    node.value = value node.datum
-                    node.value += compute_values(child) for child in node.children
-                    return node.value
-                compute_values(node,0) for node in @root_nodes
-            else
-                value = @value
-                for key,node of @nodes
-                    node.value = value node.datum
+            @value = @tree.revalue()
 
         # Partition the arc segments based on the node values
         # We need to do this even for 'rebase' in case we shot-circuited previous paritioning
-        if @sort and origin isnt 'revalue' and origin isnt 'rebase'
-            sort = if @sort is true then (n)-> -n.value else (n)=> -@sort n.datum
-        limit_angle_percentage = @limit_angle_percentage
-        root_node = if @root_datum? then @nodes[@key @root_datum] else null
-        if root_node? then limit_angle_percentage *= (root_node.x2 ? 1) - (root_node.x1 ? 0)
-        partition = (nodes, domain, total)=>
-            delta = domain[1]-domain[0]
-            angle = domain[0]
-            # If the entire range is inconsequential then simplify the positioning
-            # We can only skip branches based on limit_angle_percentage if we know for certain
-            # the root domain is constant which is only guaranteed when no data changes during 'rebase'
-            if not total or (origin is 'rebase' and delta < limit_angle_percentage)
-                for node in nodes
-                    # If the node is inconsequential and hasn't moved, then skip processing this entire branch.
-                    if node.px1==angle and node.px2==angle and node.x1==angle and node.x2==angle then continue
-                    node.px1 = node.x1
-                    node.px2 = node.x2
-                    node.x1 = angle
-                    node.x2 = angle
-                    if node.children.length
-                        partition node.children, domain, 0
-                return false
-            else
-                if sort then c3.array.sort_up nodes, sort
-                dx = delta / total
-                for node in nodes
-                    node.px1 = node.x1
-                    node.px2 = node.x2
-                    node.x1 = start = angle
-                    node.x2 = angle += dx * node.value
-                    if node.children.length
-                        partition node.children, [start, angle], node.value
-                return true
-        partition @root_nodes, [0,1], d3.sum(@root_nodes,(n)->n.value)
-        # Recalculate the limit angle based on potentially revalued data
-        if root_node? then limit_angle_percentage = @limit_angle_percentage * (root_node.x2 - root_node.x1)
-
-        # Collect current set of nodes
-        # Parition first so we know the new root_domain in case the user revalues while a nested root is set
-        current_data = []
-        root_domain = [root_node?.x1 ? 0, root_node?.x2 ? 1]
-        collect_nodes = (nodes)->
-            for node in nodes
-                if node.x2-node.x1 > limit_angle_percentage and node.x2 > root_domain[0] and node.x1 < root_domain[1]
-                    current_data.push node.datum
-                    if node.children.length then collect_nodes node.children
-            return null # avoid coffee comprehension
-        collect_nodes @root_nodes
-        return current_data
+        return @tree.layout(
+            if origin isnt 'revalue' and origin isnt 'rebase' then @sort else false
+            @limit_min_percent
+            @root_datum
+        )
 
     # Navigate to a new root node in the hierarchy representing the `datum` element
     rebase: (@root_datum)=>
-      @trigger 'rebase_start', @root_datum
-      @chart.redraw 'rebase' # redraw all layers since the scales will change
-      @trigger 'rebase', @root_datum
+        @trigger 'rebase_start', @root_datum
+        @chart.redraw 'rebase' # redraw all layers since the scales will change
+        @trigger 'rebase', @root_datum
 
     # Navigate to a new root node in the hierarchy represented by `key`
     rebase_key: (root_key)=> @rebase @nodes[root_key]?.datum
@@ -771,10 +672,10 @@ class c3.Polar.Layer.Sunburst extends c3.Polar.Layer.Segment
         @center.style(style_new)
         @bullseye.style(style_new)
 
-    get_leaf: (position)=> if @root_nodes?
+    get_leaf: (position)=> if @tree?
         get_leaf = (nodes, parent)->
             for node in nodes when node.x1 <= position <= node.x2
                 if node.children.length then return get_leaf node.children, node
                 return node.datum
             return parent.datum
-        get_leaf @root_nodes
+        get_leaf @tree.root_nodes

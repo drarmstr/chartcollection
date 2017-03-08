@@ -25,8 +25,13 @@
                 </a>
               
                 
-                <a class="source" href="flamechart_sunburst_example.html">
-                  flamechart_sunburst_example.ts
+                <a class="source" href="flamechart_example.html">
+                  flamechart_example.ts
+                </a>
+              
+                
+                <a class="source" href="icicle_sunburst_example.html">
+                  icicle_sunburst_example.ts
                 </a>
               
                 
@@ -47,6 +52,11 @@
                 
                 <a class="source" href="plot_zoom_example.html">
                   plot_zoom_example.ts
+                </a>
+              
+                
+                <a class="source" href="region_example.html">
+                  region_example.ts
                 </a>
               
                 
@@ -657,7 +667,7 @@ This could also be set to a string for a percentage, such as <code>20%</code>.</
             <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'#us_node_width'</span>).addEventListener(event_name, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
         us_sankey.node_width = +<span class="hljs-keyword">this</span>.value;
         <span class="hljs-keyword">if</span> ((&lt;HTMLInputElement&gt;<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'input[name=us_node_width_type]:checked'</span>)).value === <span class="hljs-string">'percent'</span>)
-            us_sankey.node_width += <span class="hljs-string">'%'</span>;
+            us_sankey.node_width = us_sankey.node_width + <span class="hljs-string">'%'</span>;
         us_sankey.redraw();
     });</pre></div></div>
             
@@ -677,7 +687,7 @@ This could also be set to a string for a percentage, such as <code>20%</code>.</
             <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'#us_node_padding'</span>).addEventListener(event_name, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
         us_sankey.node_padding = +<span class="hljs-keyword">this</span>.value;
         <span class="hljs-keyword">if</span> ((&lt;HTMLInputElement&gt;<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'input[name=us_node_padding_type]:checked'</span>)).value === <span class="hljs-string">'percent'</span>)
-            us_sankey.node_padding += <span class="hljs-string">'%'</span>;
+            us_sankey.node_padding = us_sankey.node_padding + <span class="hljs-string">'%'</span>;
         us_sankey.redraw();
     });</pre></div></div>
             
@@ -899,7 +909,7 @@ This could also be set to a string for a percentage, such as <code>20%</code>.</
             <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'#uk_node_width'</span>).addEventListener(event_name, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
         uk_sankey.node_width = +<span class="hljs-keyword">this</span>.value;
         <span class="hljs-keyword">if</span> ((&lt;HTMLInputElement&gt;<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'input[name=uk_node_width_type]:checked'</span>)).value === <span class="hljs-string">'percent'</span>)
-            uk_sankey.node_width += <span class="hljs-string">'%'</span>;
+            uk_sankey.node_width = uk_sankey.node_width + <span class="hljs-string">'%'</span>;
         uk_sankey.redraw();
     });</pre></div></div>
             
@@ -919,7 +929,7 @@ This could also be set to a string for a percentage, such as <code>20%</code>.</
             <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'#uk_node_padding'</span>).addEventListener(event_name, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
         uk_sankey.node_padding = +<span class="hljs-keyword">this</span>.value;
         <span class="hljs-keyword">if</span> ((&lt;HTMLInputElement&gt;<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'input[name=uk_node_padding_type]:checked'</span>)).value === <span class="hljs-string">'percent'</span>)
-            uk_sankey.node_padding += <span class="hljs-string">'%'</span>;
+            uk_sankey.node_padding = uk_sankey.node_padding + <span class="hljs-string">'%'</span>;
         uk_sankey.redraw();
     });</pre></div></div>
             

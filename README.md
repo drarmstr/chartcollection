@@ -1,6 +1,7 @@
 # Configurable Chart Collection (C3)
 
-The [**Configurable Chart Collection**](http://drarmstr.github.io/chartcollection/) is a JavaScript library for data visualization in HTML5 built using [D3](http://d3js.org).
+The [**Configurable Chart Collection**](http://drarmstr.github.io/chartcollection/) is a JavaScript library for data visualization in HTML5 built using [D3](http://d3js.org)
+available as an [NPM package](https://www.npmjs.com/package/chartcollection).
 
 ### Notable visualizations include:
 
@@ -10,8 +11,9 @@ The [**Configurable Chart Collection**](http://drarmstr.github.io/chartcollectio
 * [Pie / Donut Charts](http://drarmstr.github.io/chartcollection/examples/#pie)
 * [Scatter Plots](http://drarmstr.github.io/chartcollection/examples/#scatterplot)
 * [Swimlanes](http://drarmstr.github.io/chartcollection/examples/#swimlanes)
-* [Flame Chart Timeline](http://drarmstr.github.io/chartcollection/examples/#flamechart_sunburst)
-* [Sunburst](http://drarmstr.github.io/chartcollection/examples/#flamechart_sunburst)
+* [Flame Chart Timeline](http://drarmstr.github.io/chartcollection/examples/#flamechart)
+* [Icicle](http://drarmstr.github.io/chartcollection/examples/#icicle_sunburst)
+* [Sunburst](http://drarmstr.github.io/chartcollection/examples/#icicle_sunburst)
 * [Sankey Flow Graph](http://drarmstr.github.io/chartcollection/examples/#sankey)
 * [Butterfly _caller/callee_ Flow Graph](http://drarmstr.github.io/chartcollection/examples/#butterfly)
 * [Legends](http://drarmstr.github.io/chartcollection/examples/#legend)

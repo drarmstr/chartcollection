@@ -201,7 +201,7 @@ class c3.Table extends c3.Base
             if @columns.some((column)-> column.header?) then @columns else [],
             (column)->column.key
         ).options(@header_options, ((column)->column.header ? {})).update()
-        @headers.new.on 'click.sort', (column)=> if @sortable and column.sortable then @sort column
+        @headers.all.on 'click.sort', (column)=> if @sortable and column.sortable then @sort column
         if @sortable then @headers.all.each (column)-> if column is self.sort_column
             title = d3.select(this)
             title.html title.html()+"<span class='arrow' style='float:right'>#{if column.sort_ascending then '▲' else '▼'}</span>"
@@ -211,7 +211,7 @@ class c3.Table extends c3.Base
         self = this
         # Prepare the column totals
         for column in @columns when column.vis
-            column.value_total = column.total_value?() ? column.total_value ? undefined
+            column.value_total = column.total_value?() ? column.total_value
             if not column.value_total? # Default total_value is the sum of all values
                 column.value_total = 0
                 column.value_total += column.value(datum) for datum in @data
@@ -237,7 +237,7 @@ class c3.Table extends c3.Base
         if @key? then @rows.all.order()
 
         # Update the cells
-        @cells = @rows.select('td').bind ((d)=> (d for column in @columns)), (d,i)=> @columns[i].key
+        @cells = @rows.select('td').bind ((d)=> (d for column in @columns)), (d,i)=> @columns[i]?.key
         if not @columns.some((column)-> column.vis?)
             cell_contents = @cells
         else
@@ -253,6 +253,10 @@ class c3.Table extends c3.Base
                         d3.select(this)
                             .classed 'bar', true
                             .style 'width', column.value(d)/column.value_total*100+'%'
+                    else
+                        d3.select(this).attr
+                            class: 'vis'
+                            style: ''
 
         cell_contents.options(@cell_options, ((d,i)=>@columns[i].cells)).update()
         @cells.options(@cell_options, ((d,i)=>@columns[i].cells)) # For use in _style()
@@ -284,10 +288,10 @@ class c3.Table extends c3.Base
 
                 # Previous page button
                 prev_button = paginator.select('span.prev.button').singleton()
-                prev_button.new
+                prev_button.all
                     .text '◀'
+                    .classed 'disabled', @page <= 1
                     .on 'click', => @page--; @redraw()
-                prev_button.all.classed 'disabled', @page <= 1
 
                 # Prepare the set of pages to show in the paginator
                 pages = [
@@ -304,19 +308,18 @@ class c3.Table extends c3.Base
 
                 # Render the pages
                 page_buttons = paginator.select('ul').singleton().select('li').bind pages
-                page_buttons.new
-                    .on 'click', (p)=> @page=p; @redraw()
                 page_buttons.all
+                    .text (p,i)-> p
                     .classed 'active', (p)=> p == @page
                     .classed 'disabled', (p)=> p == '…'
-                    .text (p,i)-> p
+                    .on 'click', (p)=> @page=p; @redraw()
 
                 # Next page button
                 next_button = paginator.select('span.next.button').singleton()
-                next_button.new
+                next_button.all
                     .text '▶'
+                    .classed 'disabled', @page >= @current_data.length / @limit_rows
                     .on 'click', => @page++; @redraw()
-                next_button.all.classed 'disabled', @page >= @current_data.length / @limit_rows
             else paginator.remove()
 
             # Searchable

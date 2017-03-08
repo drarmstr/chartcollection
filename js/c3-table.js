@@ -153,7 +153,7 @@
         var ref;
         return (ref = column.header) != null ? ref : {};
       })).update();
-      this.headers["new"].on('click.sort', (function(_this) {
+      this.headers.all.on('click.sort', (function(_this) {
         return function(column) {
           if (_this.sortable && column.sortable) {
             return _this.sort(column);
@@ -172,7 +172,7 @@
     };
 
     Table.prototype._update = function(origin) {
-      var cell_contents, column, d, data, datum, i, k, l, left_pages, len, len1, m, next_button, num_pages, page_buttons, pages, paginate, paginator, prev_button, ref, ref1, ref2, ref3, ref4, ref5, results, right_pages, rows_limited, search_control, search_input, searchable, self;
+      var cell_contents, column, d, data, datum, i, k, l, left_pages, len, len1, m, next_button, num_pages, page_buttons, pages, paginate, paginator, prev_button, ref, ref1, ref2, ref3, ref4, results, right_pages, rows_limited, search_control, search_input, searchable, self;
       self = this;
       ref = this.columns;
       for (k = 0, len = ref.length; k < len; k++) {
@@ -180,22 +180,22 @@
         if (!column.vis) {
           continue;
         }
-        column.value_total = (ref1 = (ref2 = typeof column.total_value === "function" ? column.total_value() : void 0) != null ? ref2 : column.total_value) != null ? ref1 : void 0;
+        column.value_total = (ref1 = typeof column.total_value === "function" ? column.total_value() : void 0) != null ? ref1 : column.total_value;
         if (column.value_total == null) {
           column.value_total = 0;
-          ref3 = this.data;
-          for (l = 0, len1 = ref3.length; l < len1; l++) {
-            datum = ref3[l];
+          ref2 = this.data;
+          for (l = 0, len1 = ref2.length; l < len1; l++) {
+            datum = ref2[l];
             column.value_total += column.value(datum);
           }
         }
       }
       this.current_data = this.filter != null ? (function() {
-        var len2, m, ref4, results;
-        ref4 = this.data;
+        var len2, m, ref3, results;
+        ref3 = this.data;
         results = [];
-        for (i = m = 0, len2 = ref4.length; m < len2; i = ++m) {
-          d = ref4[i];
+        for (i = m = 0, len2 = ref3.length; m < len2; i = ++m) {
+          d = ref3[i];
           if (this.filter(d, i)) {
             results.push(d);
           }
@@ -212,7 +212,7 @@
         }
       }
       data = (function() {
-        var ref4;
+        var ref3;
         if (!this.limit_rows) {
           return this.current_data;
         } else {
@@ -220,7 +220,7 @@
           if (isNaN(this.limit_rows)) {
             throw Error("limit_rows set to non-numeric value: " + this.limit_rows);
           }
-          this.page = Math.max(1, Math.min(Math.ceil(this.current_data.length / this.limit_rows), (ref4 = this.page) != null ? ref4 : 1));
+          this.page = Math.max(1, Math.min(Math.ceil(this.current_data.length / this.limit_rows), (ref3 = this.page) != null ? ref3 : 1));
           return this.current_data.slice(this.limit_rows * (this.page - 1), +((this.limit_rows * this.page) - 1) + 1 || 9e9);
         }
       }).call(this);
@@ -231,18 +231,19 @@
       }
       this.cells = this.rows.select('td').bind(((function(_this) {
         return function(d) {
-          var len2, m, ref4, results;
-          ref4 = _this.columns;
+          var len2, m, ref3, results;
+          ref3 = _this.columns;
           results = [];
-          for (m = 0, len2 = ref4.length; m < len2; m++) {
-            column = ref4[m];
+          for (m = 0, len2 = ref3.length; m < len2; m++) {
+            column = ref3[m];
             results.push(d);
           }
           return results;
         };
       })(this)), (function(_this) {
         return function(d, i) {
-          return _this.columns[i].key;
+          var ref3;
+          return (ref3 = _this.columns[i]) != null ? ref3.key : void 0;
         };
       })(this));
       if (!this.columns.some(function(column) {
@@ -262,6 +263,11 @@
           switch (column.vis) {
             case 'bar':
               return d3.select(this).classed('bar', true).style('width', column.value(d) / column.value_total * 100 + '%');
+            default:
+              return d3.select(this).attr({
+                "class": 'vis',
+                style: ''
+              });
           }
         });
       }
@@ -299,16 +305,15 @@
           left_pages = Math.ceil((this.max_pages_in_paginator - 3) / 2);
           right_pages = Math.floor((this.max_pages_in_paginator - 3) / 2);
           prev_button = paginator.select('span.prev.button').singleton();
-          prev_button["new"].text('◀').on('click', (function(_this) {
+          prev_button.all.text('◀').classed('disabled', this.page <= 1).on('click', (function(_this) {
             return function() {
               _this.page--;
               return _this.redraw();
             };
           })(this));
-          prev_button.all.classed('disabled', this.page <= 1);
           pages = [1].concat(slice.call((num_pages > 2 ? (function() {
               results = [];
-              for (var m = ref4 = Math.max(2, Math.min(this.page - left_pages, num_pages - 1 - left_pages - right_pages)), ref5 = Math.min(num_pages - 1, Math.max(this.page + right_pages, 2 + left_pages + right_pages)); ref4 <= ref5 ? m <= ref5 : m >= ref5; ref4 <= ref5 ? m++ : m--){ results.push(m); }
+              for (var m = ref3 = Math.max(2, Math.min(this.page - left_pages, num_pages - 1 - left_pages - right_pages)), ref4 = Math.min(num_pages - 1, Math.max(this.page + right_pages, 2 + left_pages + right_pages)); ref3 <= ref4 ? m <= ref4 : m >= ref4; ref3 <= ref4 ? m++ : m--){ results.push(m); }
               return results;
             }).apply(this) : [])), [num_pages]);
           if (pages[1] - pages[0] > 1) {
@@ -318,13 +323,9 @@
             pages.splice(pages.length - 1, 0, '…');
           }
           page_buttons = paginator.select('ul').singleton().select('li').bind(pages);
-          page_buttons["new"].on('click', (function(_this) {
-            return function(p) {
-              _this.page = p;
-              return _this.redraw();
-            };
-          })(this));
-          page_buttons.all.classed('active', (function(_this) {
+          page_buttons.all.text(function(p, i) {
+            return p;
+          }).classed('active', (function(_this) {
             return function(p) {
               return p === _this.page;
             };
@@ -332,17 +333,19 @@
             return function(p) {
               return p === '…';
             };
-          })(this)).text(function(p, i) {
-            return p;
-          });
+          })(this)).on('click', (function(_this) {
+            return function(p) {
+              _this.page = p;
+              return _this.redraw();
+            };
+          })(this));
           next_button = paginator.select('span.next.button').singleton();
-          next_button["new"].text('▶').on('click', (function(_this) {
+          next_button.all.text('▶').classed('disabled', this.page >= this.current_data.length / this.limit_rows).on('click', (function(_this) {
             return function() {
               _this.page++;
               return _this.redraw();
             };
           })(this));
-          next_button.all.classed('disabled', this.page >= this.current_data.length / this.limit_rows);
         } else {
           paginator.remove();
         }

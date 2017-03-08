@@ -47,6 +47,10 @@ class c3.Plot extends c3.Chart
     # _This can be set for each individual layer or a default for the entire chart._
     # Some plots support calling this accessor with the index of the data as well as the datum itself.
     y: undefined
+    # [String] `left` for 0 to be at the left, `right` for the right.
+    h_orient: 'left'
+    # [String] `top` for 0 to be at the top, `bottom` for the bottom.
+    v_orient: 'bottom'
     # [Function | Array<Number|String]] Automatic scaling for horizontal domain.  _EXPERIMENTAL_
     # Optional domain which is used to set the `h` scale at render time or with `rescale()`.
     # It may be a callback to allow for dynamic domains.
@@ -115,8 +119,6 @@ class c3.Plot extends c3.Chart
         @content.width = @width - @margins.left - @margins.right
         if @content.height <= 0 then @content.height = 1
         if @content.width <= 0 then @content.width = 1
-        c3.d3.set_range @h, [0, @content.width]
-        c3.d3.set_range @v, [@content.height, 0]
         @layers_svg.all.attr('height',@content.height).attr('width',@content.width)
         if @crop_margins? then switch @crop_margins
             when true then @layers_svg.all.style 'overflow', 'hidden'
@@ -275,6 +277,12 @@ class c3.Plot.Selectable extends c3.Plot
                 if 'v' not in @selectable
                     @brush_selection.all.selectAll('g.resize > rect').attr('height',@content.height)
 
+            # Ensure D3's brush background stays behind extent, sometimes when
+            # rendering a plot over an existing DOM it would get out of order.
+            extent_node = @brush_selection.select('rect.extent').node()
+            @brush_selection.select('rect.background').all.each ->
+                this.parentNode.insertBefore this, extent_node
+
         # Move existing selection or start a new one
         @brush_selection.all.selectAll('rect.extent, g.resize')
             .style 'pointer-events', if not @drag_selections then 'none' else ''
@@ -381,7 +389,7 @@ class c3.Plot.Zoomable extends c3.Plot
 
     _size: =>
         super
-        c3.d3.set_range @orig_h, [0, @content.width]
+        c3.d3.set_range @orig_h, if @h_orient is 'left' then [0, @content.width] else [@content.width, 0]
         # Update the zooming state for the new size
         current_extent = @h.domain()
         @h.domain @orig_h.domain()

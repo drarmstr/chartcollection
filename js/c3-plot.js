@@ -41,6 +41,10 @@
 
     Plot.prototype.y = void 0;
 
+    Plot.prototype.h_orient = 'left';
+
+    Plot.prototype.v_orient = 'bottom';
+
     Plot.prototype.h_domain = void 0;
 
     Plot.prototype.v_domain = void 0;
@@ -131,8 +135,6 @@
       if (this.content.width <= 0) {
         this.content.width = 1;
       }
-      c3.d3.set_range(this.h, [0, this.content.width]);
-      c3.d3.set_range(this.v, [this.content.height, 0]);
       this.layers_svg.all.attr('height', this.content.height).attr('width', this.content.width);
       if (this.crop_margins != null) {
         switch (this.crop_margins) {
@@ -335,6 +337,7 @@
     };
 
     Selectable.prototype._size = function() {
+      var extent_node;
       Selectable.__super__._size.apply(this, arguments);
       if (this.brush == null) {
         this.brush = d3.svg.brush();
@@ -381,6 +384,10 @@
             this.brush_selection.all.selectAll('g.resize > rect').attr('height', this.content.height);
           }
         }
+        extent_node = this.brush_selection.select('rect.extent').node();
+        this.brush_selection.select('rect.background').all.each(function() {
+          return this.parentNode.insertBefore(this, extent_node);
+        });
       }
       this.brush_selection.all.selectAll('rect.extent, g.resize').style('pointer-events', !this.drag_selections ? 'none' : '');
       return this.select(this.selection);
@@ -487,7 +494,7 @@
     Zoomable.prototype._size = function() {
       var current_extent;
       Zoomable.__super__._size.apply(this, arguments);
-      c3.d3.set_range(this.orig_h, [0, this.content.width]);
+      c3.d3.set_range(this.orig_h, this.h_orient === 'left' ? [0, this.content.width] : [this.content.width, 0]);
       current_extent = this.h.domain();
       this.h.domain(this.orig_h.domain());
       this.zoomer.x(this.h);

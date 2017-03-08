@@ -2,11 +2,10 @@
 (function() {
   var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty,
-    slice = [].slice;
+    hasProp = {}.hasOwnProperty;
 
   c3.Plot.Layer = (function() {
-    Layer.version = 0.1;
+    Layer.version = 0.2;
 
     c3.Layer = Layer;
 
@@ -29,6 +28,10 @@
     Layer.prototype.x = void 0;
 
     Layer.prototype.y = void 0;
+
+    Layer.prototype.h_orient = void 0;
+
+    Layer.prototype.v_orient = void 0;
 
     Layer.prototype.options = void 0;
 
@@ -72,6 +75,12 @@
       if (this.y == null) {
         this.y = this.chart.y;
       }
+      if (this.h_orient == null) {
+        this.h_orient = this.chart.h_orient;
+      }
+      if (this.v_orient == null) {
+        this.v_orient = this.chart.v_orient;
+      }
       if (this["class"] != null) {
         this.g.classed(this["class"], true);
       }
@@ -100,8 +109,14 @@
       this.width = width1;
       this.height = height1;
       this.trigger('resize_start');
-      c3.d3.set_range(this.h, [0, this.width]);
-      c3.d3.set_range(this.v, [this.height, 0]);
+      if (this.h_orient !== this.chart.h_orient && this.h === this.chart.h) {
+        this.h = this.h.copy();
+      }
+      c3.d3.set_range(this.h, this.h_orient === 'left' ? [0, this.width] : [this.width, 0]);
+      if (this.v_orient !== this.chart.v_orient && this.v === this.chart.v) {
+        this.v = this.v.copy();
+      }
+      c3.d3.set_range(this.v, this.v_orient === 'bottom' ? [this.height, 0] : [0, this.height]);
       if (typeof this._size === "function") {
         this._size();
       }
@@ -198,19 +213,27 @@
     };
 
     Layer.prototype.min_x = function() {
-      return d3.min(this.data, this.x);
+      if (this.x != null) {
+        return d3.min(this.data, this.x);
+      }
     };
 
     Layer.prototype.max_x = function() {
-      return d3.max(this.data, this.x);
+      if (this.x != null) {
+        return d3.max(this.data, this.x);
+      }
     };
 
     Layer.prototype.min_y = function() {
-      return d3.min(this.data, this.y);
+      if (this.y != null) {
+        return d3.min(this.data, this.y);
+      }
     };
 
     Layer.prototype.max_y = function() {
-      return d3.max(this.data, this.y);
+      if (this.y != null) {
+        return d3.max(this.data, this.y);
+      }
     };
 
     return Layer;
@@ -1130,10 +1153,412 @@
     extend(Region, superClass);
 
     function Region() {
+      this._style = bind(this._style, this);
+      this._draw = bind(this._draw, this);
+      this._update = bind(this._update, this);
+      this._size = bind(this._size, this);
+      this._init = bind(this._init, this);
       return Region.__super__.constructor.apply(this, arguments);
     }
 
     Region.prototype.type = 'region';
+
+    Region.prototype._init = function() {
+      var drag_value, dragger, l, len, origin, ref, results, self;
+      if (((this.x != null) && (this.x2 == null)) || ((this.x == null) && (this.x2 != null)) || ((this.y != null) && (this.y2 == null)) || ((this.y == null) && (this.y2 != null))) {
+        throw Error("x and x2 options or y and y2 options must either be both defined or undefined");
+      }
+      if (this.draggable || this.resizable) {
+        drag_value = void 0;
+        origin = void 0;
+        self = this;
+        this.dragger = d3.behavior.drag().origin((function(_this) {
+          return function(d, i) {
+            return {
+              x: _this.x != null ? _this.h(_this.x(d, i)) : 0,
+              y: _this.y != null ? _this.v(_this.y(d, i)) : 0
+            };
+          };
+        })(this)).on('drag', function(d, i) {
+          var h_domain, height, ref, v_domain, width, x, y;
+          h_domain = ((ref = self.orig_h) != null ? ref : self.h).domain();
+          v_domain = self.v.domain();
+          if (self.x != null) {
+            width = self.x2(d) - self.x(d);
+            x = Math.min(Math.max(self.h.invert(d3.event.x), h_domain[0]), h_domain[1] - width);
+          }
+          if (self.y != null) {
+            height = self.y2(d) - self.y(d);
+            y = Math.min(Math.max(self.v.invert(d3.event.y), v_domain[0]), v_domain[1] - height);
+          }
+          drag_value = {
+            x: x != null ? self.h.invert(self.h(x)) : void 0,
+            x2: x != null ? self.h.invert(self.h(x + width)) : void 0,
+            y: y != null ? self.v.invert(self.v(y)) : void 0,
+            y2: y != null ? self.v.invert(self.v(y + height)) : void 0
+          };
+          if (self.x != null) {
+            d3.select(this).attr('x', self.h(drag_value.x));
+          }
+          if (self.y != null) {
+            d3.select(this).attr('y', self.v(drag_value.y2));
+          }
+          return self.trigger('drag', drag_value, d, i);
+        });
+        this.left_resizer = d3.behavior.drag().origin((function(_this) {
+          return function(d, i) {
+            return {
+              x: _this.h(_this.x(d, i))
+            };
+          };
+        })(this)).on('drag', function(d, i) {
+          var h_domain, ref, x, x2;
+          h_domain = ((ref = self.orig_h) != null ? ref : self.h).domain();
+          x = Math.min(Math.max(self.h.invert(d3.event.x), h_domain[0]), h_domain[1]);
+          x2 = self.x2(d);
+          drag_value = {
+            x: self.h.invert(self.h(Math.min(x, x2))),
+            x2: self.h.invert(self.h(Math.max(x, x2))),
+            y: self.y != null ? self.y(d) : void 0,
+            y2: self.y2 != null ? self.y2(d) : void 0
+          };
+          d3.select(this.parentNode).select('rect').attr({
+            x: self.h(drag_value.x),
+            width: self.h(drag_value.x2) - self.h(drag_value.x)
+          });
+          return self.trigger('drag', drag_value, d, i);
+        });
+        this.right_resizer = d3.behavior.drag().origin((function(_this) {
+          return function(d, i) {
+            return {
+              x: _this.h(_this.x2(d, i))
+            };
+          };
+        })(this)).on('drag', function(d, i) {
+          var h_domain, ref, x, x2;
+          h_domain = ((ref = self.orig_h) != null ? ref : self.h).domain();
+          x = Math.min(Math.max(self.h.invert(d3.event.x), h_domain[0]), h_domain[1]);
+          x2 = self.x(d);
+          drag_value = {
+            x: self.h.invert(self.h(Math.min(x, x2))),
+            x2: self.h.invert(self.h(Math.max(x, x2))),
+            y: self.y != null ? self.y(d) : void 0,
+            y2: self.y2 != null ? self.y2(d) : void 0
+          };
+          d3.select(this.parentNode).select('rect').attr({
+            x: self.h(drag_value.x),
+            width: self.h(drag_value.x2) - self.h(drag_value.x)
+          });
+          return self.trigger('drag', drag_value, d, i);
+        });
+        this.top_resizer = d3.behavior.drag().origin((function(_this) {
+          return function(d, i) {
+            return {
+              y: _this.v(_this.y2(d, i))
+            };
+          };
+        })(this)).on('drag', function(d, i) {
+          var v_domain, y, y2;
+          v_domain = self.v.domain();
+          y = Math.min(Math.max(self.v.invert(d3.event.y), v_domain[0]), v_domain[1]);
+          y2 = self.y(d);
+          drag_value = {
+            x: self.x != null ? self.x(d) : void 0,
+            x2: self.x2 != null ? self.x2(d) : void 0,
+            y: self.v.invert(self.v(Math.min(y, y2))),
+            y2: self.v.invert(self.v(Math.max(y, y2)))
+          };
+          d3.select(this.parentNode).select('rect').attr({
+            y: self.v(drag_value.y2),
+            height: self.v(drag_value.y) - self.v(drag_value.y2)
+          });
+          return self.trigger('drag', drag_value, d, i);
+        });
+        this.bottom_resizer = d3.behavior.drag().origin((function(_this) {
+          return function(d, i) {
+            return {
+              y: _this.v(_this.y(d, i))
+            };
+          };
+        })(this)).on('drag', function(d, i) {
+          var v_domain, y, y2;
+          v_domain = self.v.domain();
+          y = Math.min(Math.max(self.v.invert(d3.event.y), v_domain[0]), v_domain[1]);
+          y2 = self.y2(d);
+          drag_value = {
+            x: self.x != null ? self.x(d) : void 0,
+            x2: self.x2 != null ? self.x2(d) : void 0,
+            y: self.v.invert(self.v(Math.min(y, y2))),
+            y2: self.v.invert(self.v(Math.max(y, y2)))
+          };
+          d3.select(this.parentNode).select('rect').attr({
+            y: self.v(drag_value.y2),
+            height: self.v(drag_value.y) - self.v(drag_value.y2)
+          });
+          return self.trigger('drag', drag_value, d, i);
+        });
+        ref = [this.dragger, this.left_resizer, this.right_resizer, this.top_resizer, this.bottom_resizer];
+        results = [];
+        for (l = 0, len = ref.length; l < len; l++) {
+          dragger = ref[l];
+          results.push(dragger.on('dragstart', (function(_this) {
+            return function(d, i) {
+              d3.event.sourceEvent.stopPropagation();
+              return _this.trigger('dragstart', d, i);
+            };
+          })(this)).on('dragend', (function(_this) {
+            return function(d, i) {
+              _this.trigger('dragend', drag_value, d, i);
+              return _this._draw();
+            };
+          })(this)));
+        }
+        return results;
+      }
+    };
+
+    Region.prototype._size = function() {
+      var ref, ref1, ref2, ref3, ref4, ref5;
+      if (this.x == null) {
+        if ((ref = this.rects) != null) {
+          ref.all.attr('width', this.width);
+        }
+        if ((ref1 = this.left_grab_lines) != null) {
+          ref1.all.attr('width', this.width);
+        }
+        if ((ref2 = this.right_grab_lines) != null) {
+          ref2.all.attr('width', this.width);
+        }
+      }
+      if (this.y == null) {
+        if ((ref3 = this.rects) != null) {
+          ref3.all.attr('height', this.height);
+        }
+        if ((ref4 = this.top_grab_lines) != null) {
+          ref4.all.attr('height', this.height);
+        }
+        return (ref5 = this.bottom_grab_lines) != null ? ref5.all.attr('height', this.height) : void 0;
+      }
+    };
+
+    Region.prototype._update = function(origin) {
+      var d, i;
+      this.current_data = this.filter != null ? (function() {
+        var l, len, ref, results;
+        ref = this.data;
+        results = [];
+        for (i = l = 0, len = ref.length; l < len; i = ++l) {
+          d = ref[i];
+          if (this.filter(d, i)) {
+            results.push(d);
+          }
+        }
+        return results;
+      }).call(this) : this.data;
+      this.regions = this.content.select('g.region').options(this.region_options).animate(origin === 'redraw').bind(this.current_data, this.key).update();
+      this.rects = this.regions.inherit('rect').options(this.rect_options).update();
+      if (this.draggable) {
+        this.rects["new"].call(this.dragger);
+      }
+      if (this.resizable) {
+        if (this.x != null) {
+          this.left_grab_lines = this.regions.inherit('line.grab.left');
+          this.left_grab_lines["new"].call(this.left_resizer);
+        }
+        if (this.x2 != null) {
+          this.right_grab_lines = this.regions.inherit('line.grab.right');
+          this.right_grab_lines["new"].call(this.right_resizer);
+        }
+        if (this.y != null) {
+          this.top_grab_lines = this.regions.inherit('line.grab.top');
+          this.top_grab_lines["new"].call(this.top_resizer);
+        }
+        if (this.y2 != null) {
+          this.bottom_grab_lines = this.regions.inherit('line.grab.bottom');
+          return this.bottom_grab_lines["new"].call(this.bottom_resizer);
+        }
+      }
+    };
+
+    Region.prototype._draw = function(origin) {
+      var ref, ref1, ref2, ref3;
+      this.rects.animate(origin === 'redraw').position({
+        x: (function(_this) {
+          return function(d) {
+            if (_this.x != null) {
+              return _this.h(_this.x(d));
+            } else {
+              return 0;
+            }
+          };
+        })(this),
+        width: (function(_this) {
+          return function(d) {
+            if (_this.x2 != null) {
+              return _this.h(_this.x2(d)) - _this.h(_this.x(d));
+            } else {
+              return _this.width;
+            }
+          };
+        })(this),
+        y: (function(_this) {
+          return function(d) {
+            if (_this.y2 != null) {
+              return _this.v(_this.y2(d));
+            } else {
+              return 0;
+            }
+          };
+        })(this),
+        height: (function(_this) {
+          return function(d) {
+            if (_this.y != null) {
+              return _this.v(_this.y(d)) - _this.v(_this.y2(d));
+            } else {
+              return _this.height;
+            }
+          };
+        })(this)
+      });
+      if (this.resizable) {
+        if ((ref = this.left_grab_lines) != null) {
+          ref.animate(origin === 'redraw').position({
+            x1: (function(_this) {
+              return function(d) {
+                return _this.h(_this.x(d));
+              };
+            })(this),
+            x2: (function(_this) {
+              return function(d) {
+                return _this.h(_this.x(d));
+              };
+            })(this),
+            y1: (function(_this) {
+              return function(d) {
+                if (_this.y != null) {
+                  return _this.v(_this.y(d));
+                } else {
+                  return 0;
+                }
+              };
+            })(this),
+            y2: (function(_this) {
+              return function(d) {
+                if (_this.y2 != null) {
+                  return _this.v(_this.y2(d));
+                } else {
+                  return _this.height;
+                }
+              };
+            })(this)
+          });
+        }
+        if ((ref1 = this.right_grab_lines) != null) {
+          ref1.animate(origin === 'redraw').position({
+            x1: (function(_this) {
+              return function(d) {
+                return _this.h(_this.x2(d));
+              };
+            })(this),
+            x2: (function(_this) {
+              return function(d) {
+                return _this.h(_this.x2(d));
+              };
+            })(this),
+            y1: (function(_this) {
+              return function(d) {
+                if (_this.y != null) {
+                  return _this.v(_this.y(d));
+                } else {
+                  return 0;
+                }
+              };
+            })(this),
+            y2: (function(_this) {
+              return function(d) {
+                if (_this.y2 != null) {
+                  return _this.v(_this.y2(d));
+                } else {
+                  return _this.height;
+                }
+              };
+            })(this)
+          });
+        }
+        if ((ref2 = this.top_grab_lines) != null) {
+          ref2.animate(origin === 'redraw').position({
+            x1: (function(_this) {
+              return function(d) {
+                if (_this.x != null) {
+                  return _this.h(_this.x(d));
+                } else {
+                  return 0;
+                }
+              };
+            })(this),
+            x2: (function(_this) {
+              return function(d) {
+                if (_this.x2 != null) {
+                  return _this.h(_this.x2(d));
+                } else {
+                  return _this.width;
+                }
+              };
+            })(this),
+            y1: (function(_this) {
+              return function(d) {
+                return _this.v(_this.y2(d));
+              };
+            })(this),
+            y2: (function(_this) {
+              return function(d) {
+                return _this.v(_this.y2(d));
+              };
+            })(this)
+          });
+        }
+        return (ref3 = this.bottom_grab_lines) != null ? ref3.animate(origin === 'redraw').position({
+          x1: (function(_this) {
+            return function(d) {
+              if (_this.x != null) {
+                return _this.h(_this.x(d));
+              } else {
+                return 0;
+              }
+            };
+          })(this),
+          x2: (function(_this) {
+            return function(d) {
+              if (_this.x2 != null) {
+                return _this.h(_this.x2(d));
+              } else {
+                return _this.width;
+              }
+            };
+          })(this),
+          y1: (function(_this) {
+            return function(d) {
+              return _this.v(_this.y(d));
+            };
+          })(this),
+          y2: (function(_this) {
+            return function(d) {
+              return _this.v(_this.y(d));
+            };
+          })(this)
+        }) : void 0;
+      }
+    };
+
+    Region.prototype._style = function(style_new) {
+      this.g.classed({
+        'draggable': this.draggable,
+        'horizontal': this.x == null,
+        'vertical': this.y == null
+      });
+      this.regions.style(style_new);
+      return this.rects.style(style_new);
+    };
 
     return Region;
 
@@ -1291,6 +1716,8 @@
 
     Swimlane.prototype.type = 'swimlane';
 
+    Swimlane.prototype.v_orient = 'top';
+
     Swimlane.prototype.dy = void 0;
 
     Swimlane.prototype.hover = void 0;
@@ -1307,12 +1734,13 @@
         this.tip = c3.select(anchor, 'div.c3.hover').singleton();
         layer = this;
         mousemove = function() {
-          var hover_html, layerX, layerY, ref, swimlane, x;
+          var hover_datum, hover_html, layerX, layerY, ref, swimlane, x;
           ref = d3.mouse(this), layerX = ref[0], layerY = ref[1];
-          swimlane = Math.floor(layer._v.invert(layerY));
+          swimlane = Math.floor(layer.v.invert(layerY));
           swimlane = Math.min(swimlane, Math.max(layer.v.domain()[0], layer.v.domain()[1] - 1));
           x = layer.h.invert(layerX);
-          hover_html = (c3.functor(layer.hover)).apply(null, slice.call(layer._hover_datum(x, swimlane)).concat([swimlane]));
+          hover_datum = layer._hover_datum(x, swimlane);
+          hover_html = (c3.functor(layer.hover))(hover_datum, (hover_datum ? layer.data.indexOf(hover_datum) : null), swimlane);
           if (!hover_html) {
             return layer.tip.all.style('display', 'none');
           } else {
@@ -1353,10 +1781,13 @@
 
     Swimlane.prototype._size = function() {
       if (this.y == null) {
-        return this.dy = this.height;
+        this.dy = this.height;
       } else {
-        return this.dy != null ? this.dy : this.dy = Math.round(this.height / (Math.abs(this.v.domain()[1] - this.v.domain()[0])));
+        if (this.dy == null) {
+          this.dy = Math.round(this.height / (Math.abs(this.v.domain()[1] - this.v.domain()[0])));
+        }
       }
+      return this.g.attr('transform', this.v_orient === 'bottom' ? 'translate(0,-' + this.dy + ')' : '');
     };
 
     Swimlane.prototype._update = function() {
@@ -1377,13 +1808,11 @@
 
     Swimlane.prototype._draw = function(origin) {
       var ref;
-      this._v = this.v.copy();
-      c3.d3.set_range(this._v, [0, this.height]);
       if (origin === 'resize' || origin === 'render') {
         return (ref = this.lanes) != null ? ref.position({
           y: (function(_this) {
             return function(lane) {
-              return _this._v(lane + (_this.invert_y ? 1 : 0));
+              return _this.v(lane);
             };
           })(this),
           width: this.chart.orig_h.range()[1],
@@ -1459,9 +1888,9 @@
         }
       }
       if (idx === this.current_data.length) {
-        return [null, null];
+        return null;
       } else {
-        return [datum, idx];
+        return datum;
       }
     };
 
@@ -1529,7 +1958,7 @@
         })(this),
         y: this.y == null ? 0 : (function(_this) {
           return function(d) {
-            return _this._v(_this.y(d));
+            return _this.v(_this.y(d));
           };
         })(this)
       });
@@ -1557,7 +1986,7 @@
           })(this),
           y: this.y == null ? 0 : (function(_this) {
             return function(d, i) {
-              return _this._v(_this.y(d, i));
+              return _this.v(_this.y(d, i));
             };
           })(this),
           width: (function(_this) {
@@ -1580,6 +2009,7 @@
         });
       } else {
         c3.select(this.g, 'g.labels').all.remove();
+        delete this.labels;
       }
       if (origin === 'resize' && (!this.rects["new"].empty() || ((this.labels != null) && !this.labels["new"].empty()))) {
         return this._style(true);
@@ -1609,6 +2039,8 @@
     Flamechart.version = 0.1;
 
     Flamechart.prototype.type = 'flamechart';
+
+    Flamechart.prototype.v_orient = 'bottom';
 
     Flamechart.prototype._init = function() {
       Flamechart.__super__._init.apply(this, arguments);
@@ -1657,6 +2089,291 @@
 
   })(c3.Plot.Layer.Swimlane.Segment);
 
+  c3.Plot.Layer.Swimlane.Icicle = (function(superClass) {
+    extend(Icicle, superClass);
+
+    function Icicle() {
+      this.rebase_key = bind(this.rebase_key, this);
+      this.rebase = bind(this.rebase, this);
+      this._style = bind(this._style, this);
+      this._draw = bind(this._draw, this);
+      this._update = bind(this._update, this);
+      this._hover_datum = bind(this._hover_datum, this);
+      this._init = bind(this._init, this);
+      return Icicle.__super__.constructor.apply(this, arguments);
+    }
+
+    Icicle.version = 0.1;
+
+    Icicle.prototype.type = 'icicle';
+
+    Icicle.prototype.key = void 0;
+
+    Icicle.prototype.value = void 0;
+
+    Icicle.prototype.self_value = void 0;
+
+    Icicle.prototype.parent_key = void 0;
+
+    Icicle.prototype.children_keys = void 0;
+
+    Icicle.prototype.children = void 0;
+
+    Icicle.prototype.sort = false;
+
+    Icicle.prototype.limit_elements = void 0;
+
+    Icicle.prototype.limit_min_percent = 0.001;
+
+    Icicle.prototype.root_datum = null;
+
+    Icicle.prototype.rect_options = void 0;
+
+    Icicle.prototype.label_options = void 0;
+
+    Icicle.prototype._init = function() {
+      var base, base1, base2, base3;
+      Icicle.__super__._init.apply(this, arguments);
+      if (this.key == null) {
+        throw Error("`key()` accessor function is required for Icicle layers");
+      }
+      if (this.dy == null) {
+        throw Error("`dy` option is required for Icicle layers");
+      }
+      if (this.x != null) {
+        throw Error("`x` option cannot be defined for Icicle layers");
+      }
+      if (this.y != null) {
+        throw Error("`y` option cannot be defined for Icicle layers");
+      }
+      this.y = (function(_this) {
+        return function(datum) {
+          return _this.nodes[_this.key(datum)].y1;
+        };
+      })(this);
+      this.segments_g = c3.select(this.g, 'g.segments').singleton();
+      this.segment_options = {
+        events: {
+          click: (function(_this) {
+            return function(d) {
+              var ref;
+              return _this.rebase(d !== _this.root_datum ? d : (ref = (_this.parent_key != null ? _this.nodes[_this.parent_key(d)] : _this.nodes[_this.key(d)].parent)) != null ? ref.datum : void 0);
+            };
+          })(this)
+        }
+      };
+      this.label_clip_options = {};
+      if (this.label_options != null) {
+        if ((base = this.label_options).animate == null) {
+          base.animate = this.rect_options.animate;
+        }
+        if ((base1 = this.label_options).duration == null) {
+          base1.duration = this.rect_options.duration;
+        }
+        if ((base2 = this.label_clip_options).animate == null) {
+          base2.animate = this.rect_options.animate;
+        }
+        return (base3 = this.label_clip_options).duration != null ? base3.duration : base3.duration = this.rect_options.duration;
+      }
+    };
+
+    Icicle.prototype._hover_datum = function(x, swimlane) {
+      var key, node, ref, right;
+      right = this.h.invert(this.h(x) + 1);
+      ref = this.nodes;
+      for (key in ref) {
+        node = ref[key];
+        if (node.y1 === swimlane && node.x1 <= right && x <= node.x2) {
+          return node.datum;
+        }
+      }
+      return null;
+    };
+
+    Icicle.prototype._update = function(origin) {
+      var ref, ref1, ref2, ref3, ref4, ref5;
+      Icicle.__super__._update.apply(this, arguments);
+      if (origin !== 'revalue' && origin !== 'rebase') {
+        this.tree = new c3.Layout.Tree({
+          key: this.key,
+          parent_key: this.parent_key,
+          children_keys: this.children_keys,
+          children: this.children,
+          value: this.value,
+          self_value: this.self_value
+        });
+        this.nodes = this.tree.construct(this.data);
+        this.v.domain([
+          0, d3.max(Object.keys(this.nodes), (function(_this) {
+            return function(key) {
+              return _this.nodes[key].y2;
+            };
+          })(this))
+        ]);
+        c3.Plot.Layer.Swimlane.prototype._update.call(this, origin);
+      }
+      if (origin !== 'rebase') {
+        this.value = this.tree.revalue();
+      }
+      this.current_data = this.tree.layout(origin !== 'revalue' && origin !== 'rebase' ? this.sort : false, this.limit_min_percent, this.root_datum);
+      if (this.current_data.length > this.limit_elements) {
+        c3.array.sort_up(this.current_data, this.value);
+        this.current_data = this.current_data.slice(-this.limit_elements);
+      }
+      this.segment_options.animate = (ref = this.rect_options) != null ? ref.animate : void 0;
+      this.segment_options.animate_old = (ref1 = this.rect_options) != null ? ref1.animate : void 0;
+      this.segment_options.duration = (ref2 = this.rect_options) != null ? ref2.duration : void 0;
+      this.segments = this.segments_g.select('g.segment').options(this.segment_options).animate(origin === 'redraw' || origin === 'revalue' || origin === 'rebase').bind(this.current_data, this.key).update();
+      if ((ref3 = this.rect_options) != null) {
+        if (ref3.animate_old == null) {
+          ref3.animate_old = (ref4 = this.rect_options) != null ? ref4.animate : void 0;
+        }
+      }
+      this.rects = this.segments.inherit('rect').options(this.rect_options).update();
+      if (this.label_options != null) {
+        this.label_clip_options.animate_old = (ref5 = this.label_options) != null ? ref5.animate : void 0;
+        return this.label_clips = this.segments.inherit('svg.label').options(this.label_clip_options);
+      }
+    };
+
+    Icicle.prototype._draw = function(origin) {
+      var prev_h, prev_zero_pos, ref, ref1, root_node, zero_pos;
+      Icicle.__super__._draw.apply(this, arguments);
+      prev_h = this.h.copy();
+      prev_zero_pos = prev_h(0);
+      if (this.root_datum != null) {
+        root_node = this.nodes[this.key(this.root_datum)];
+      }
+      this.h.domain([(ref = root_node != null ? root_node.x1 : void 0) != null ? ref : 0, (ref1 = root_node != null ? root_node.x2 : void 0) != null ? ref1 : 1]);
+      zero_pos = this.h(0);
+      (origin === 'resize' ? this.rects.all : this.rects["new"]).attr('height', this.dy);
+      this.rects.animate(origin === 'redraw' || origin === 'revalue' || origin === 'rebase').position({
+        x: (function(_this) {
+          return function(d) {
+            return _this.h(_this.nodes[_this.key(d)].x1);
+          };
+        })(this),
+        y: (function(_this) {
+          return function(d) {
+            return _this.v(_this.nodes[_this.key(d)].y1);
+          };
+        })(this),
+        width: (function(_this) {
+          return function(d) {
+            var node;
+            return _this.h((node = _this.nodes[_this.key(d)]).x2 - node.x1) - zero_pos;
+          };
+        })(this)
+      }, {
+        x: (function(_this) {
+          return function(d) {
+            return prev_h(_this.nodes[_this.key(d)].px1);
+          };
+        })(this),
+        y: (function(_this) {
+          return function(d) {
+            return _this.v(_this.nodes[_this.key(d)].py1);
+          };
+        })(this),
+        width: (function(_this) {
+          return function(d) {
+            var node;
+            return prev_h((node = _this.nodes[_this.key(d)]).px2 - node.px1) - prev_zero_pos;
+          };
+        })(this)
+      });
+      if (this.label_options != null) {
+        (origin === 'resize' ? this.rects.all : this.rects["new"]).attr('height', this.dy);
+        this.label_clips.animate(origin === 'redraw' || origin === 'revalue' || origin === 'rebase').position({
+          x: (function(_this) {
+            return function(d) {
+              return _this.h(_this.nodes[_this.key(d)].x1);
+            };
+          })(this),
+          y: (function(_this) {
+            return function(d) {
+              return _this.v(_this.nodes[_this.key(d)].y1);
+            };
+          })(this),
+          width: (function(_this) {
+            return function(d) {
+              var node;
+              return _this.h((node = _this.nodes[_this.key(d)]).x2 - node.x1) - zero_pos;
+            };
+          })(this)
+        }, {
+          x: (function(_this) {
+            return function(d) {
+              return prev_h(_this.nodes[_this.key(d)].px1);
+            };
+          })(this),
+          y: (function(_this) {
+            return function(d) {
+              return _this.v(_this.nodes[_this.key(d)].py1);
+            };
+          })(this),
+          width: (function(_this) {
+            return function(d) {
+              var node;
+              return prev_h((node = _this.nodes[_this.key(d)]).px2 - node.px1) - prev_zero_pos;
+            };
+          })(this)
+        });
+        this.labels = c3.select(this.label_clips.all.filter((function(_this) {
+          return function(d) {
+            var node;
+            return _this.h((node = _this.nodes[_this.key(d)]).x2 - node.x1) - zero_pos >= 50;
+          };
+        })(this))).inherit('text', 'restore').options(this.label_options).update().animate(origin === 'redraw' || origin === 'revalue' || origin === 'rebase').position({
+          y: this.dy / 2,
+          x: (function(_this) {
+            return function(d) {
+              var left, node, right;
+              node = _this.nodes[_this.key(d)];
+              left = Math.max(node.x1, _this.h.domain()[0]);
+              right = Math.min(node.x2, _this.h.domain()[1]);
+              return _this.h((right - left) / 2 + (left - node.x1)) - zero_pos;
+            };
+          })(this)
+        });
+        this.segments.all.filter((function(_this) {
+          return function(d) {
+            var node;
+            return _this.h((node = _this.nodes[_this.key(d)]).x2 - node.x1) - zero_pos < 50;
+          };
+        })(this)).selectAll('text').transition('fade').duration(this.label_options.duration).style('opacity', 0).remove();
+      } else {
+        this.segments.all.selectAll('text').remove();
+        delete this.labels;
+      }
+      if (origin === 'resize' && (!this.rects["new"].empty() || ((this.labels != null) && !this.labels["new"].empty()))) {
+        return this._style(true);
+      }
+    };
+
+    Icicle.prototype._style = function(style_new) {
+      var ref;
+      Icicle.__super__._style.apply(this, arguments);
+      this.rects.style(style_new);
+      return (ref = this.labels) != null ? ref.style(style_new) : void 0;
+    };
+
+    Icicle.prototype.rebase = function(root_datum) {
+      this.root_datum = root_datum;
+      this.trigger('rebase_start', this.root_datum);
+      this.chart.redraw('rebase');
+      return this.trigger('rebase', this.root_datum);
+    };
+
+    Icicle.prototype.rebase_key = function(root_key) {
+      var ref;
+      return this.rebase((ref = this.nodes[root_key]) != null ? ref.datum : void 0);
+    };
+
+    return Icicle;
+
+  })(c3.Plot.Layer.Swimlane);
+
   c3.Plot.Layer.Swimlane.Sampled = (function(superClass) {
     extend(Sampled, superClass);
 
@@ -1683,13 +2400,13 @@
       right = this.h.invert(this.h(x) + 1);
       idx = d3.bisector(this.x).right(data, x) - 1;
       if (idx < 0) {
-        return [null, null];
+        return null;
       } else if (x < this.x(datum = data[idx]) + this.dx(datum)) {
-        return [datum, idx];
+        return datum;
       } else if (++idx < data.length && this.x(datum = data[idx]) <= right) {
-        return [datum, idx];
+        return datum;
       } else {
-        return [null, null];
+        return null;
       }
     };
 
@@ -1727,7 +2444,7 @@
       var bisector, data, datum, datum_x, idx, l, pixel, prev_idx, ref, ref1, swimlane, v, x;
       bisector = d3.bisector(this.x).right;
       for (swimlane = l = ref = this.v.domain()[0], ref1 = this.v.domain()[1]; ref <= ref1 ? l < ref1 : l > ref1; swimlane = ref <= ref1 ? ++l : --l) {
-        v = this._v(swimlane);
+        v = this.v(swimlane);
         data = this.swimlane_data[swimlane];
         if (!data.length) {
           continue;

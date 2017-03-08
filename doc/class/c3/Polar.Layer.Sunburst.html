@@ -48,12 +48,16 @@
       <h2>Overview</h2>
       <div class='docstring'>
   <p>A polar layer that is similar to a <a href='../../class/c3/Polar.Layer.Pie.html'>pie chart</a> except that you
-can visualize hierarchical data.  Specify a callback for either <code>parent_key</code>,
+can visualize hierarchical tree data.  It is like a polar version of the
+<a href='../../class/c3/Plot.Layer.Swimlane.Icicle.html'>Icicle</a> Plot layer.</p><p>A <code>key()</code> callback is required for this layer.
+Specify a callback for either <code>parent_key</code>,
 <code>children</code>, or <code>children_keys</code> to describe the hierarchy.
 If using <code>parent_key</code> or <code>children_keys</code> the <code>data</code> array shoud include all nodes,
-if using <code>children</code> it only should include the root nodes.</p><p>If you care about performance, you can pass the parameter <code>revalue</code> to <code>redraw(&#39;revalue&#39;)</code>
-if you are keeping the same dataset and only changing the element&#39;s values.
-The sunburst layer can use a more optimized alrogithm in this situation.</p><h2 id="events">Events</h2>
+if using <code>children</code> it only should include the root nodes.
+Define either <code>value()</code> or <code>self_value()</code> to value the nodes in the hierarchy.</p><p>For proper animation, or if you care about performance, you can pass the
+parameter <code>revalue</code> to <code>redraw(&#39;revalue&#39;)</code> if you are keeping the same dataset
+hierarchy, and only changing the element&#39;s values.
+The Sunburst layer can use a more optimized algorithm in this situation.</p><h2 id="events">Events</h2>
 <ul>
 <li><strong>rebase</strong> Called with the datum of a node when it becomes the new root or with <code>null</code> if reverting to the top of the hierarchy.</li>
 </ul>
@@ -108,9 +112,9 @@ of an element after the layer has been drawn.</p>
   <dd>
     <pre><code class='coffeescript'>false</code></pre>
     <div class='docstring'>
-  <p>[Boolean, Function] How to sort the partitioned sunburst chart segments.
-<code>true</code> sorts based on value, or you can define an alternative accessor function
-to be used for sorting.</p>
+  <p>[Boolean, Function] How to sort the partitioned tree segments.
+<code>true</code> sorts based on <em>total</em> value, or you can define an alternative
+accessor function to be used for sorting.</p>
 </div>
 <div class='tags'>
 </div>
@@ -156,14 +160,15 @@ It is called with a data element as the first parameter.</p>
 <div class='tags'>
 </div>
   </dd>
-  <dt id='limit_angle_percentage-variable'>
-    limit_angle_percentage
+  <dt id='limit_min_percent-variable'>
+    limit_min_percent
     =
   </dt>
   <dd>
     <pre><code class='coffeescript'>0.001</code></pre>
     <div class='docstring'>
-  <p>[Number] Don&#39;t bother rendering arc segments whose value is smaller than this percentage of the total. (1==100%)</p>
+  <p>[Number] Don&#39;t bother rendering segments whose value is smaller than this
+percentage of the current domain focus. (1==100%)</p>
 </div>
 <div class='tags'>
 </div>
@@ -178,7 +183,7 @@ It is called with a data element as the first parameter.</p>
   <p>Data element that represents the root of the hierarchy to render.
 If this is specified then only this root and its subtree will be rendered
 When <a href='../../class/c3/Polar.Layer.Sunburst.html#rebase-dynamic'>rebase()</a> is called or a node is clicked on
-it will animate the transition to a new root node.</p>
+it will animate the transition to a new root node, if animation is enabled.</p>
 </div>
 <div class='tags'>
 </div>
