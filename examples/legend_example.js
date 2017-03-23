@@ -39,6 +39,28 @@ var legend2 = new c3.Legend({
     bullet_options: false
 });
 legend2.render();
+// ## Legend
+// This example uses an `item_option` accessor to define each data item to directly
+// specify it's own options object.
+var legend3 = new c3.Legend({
+    anchor: $('<div></div>').css('display', 'inline-block').appendTo($('#legend_examples'))[0],
+    width: 150,
+    data: [
+        {
+            options: {
+                text: "Red",
+                styles: { color: 'red' }
+            }
+        },
+        {
+            options: {
+                text: "Blue",
+                styles: { color: 'skyblue' }
+            }
+        },
+    ],
+    item_option: function (item) { return item.options; }
+}).render();
 // ## Chart Plot Legend
 // A function to generate random data series for the line graphs that jiggle but stay in bounds.
 function generate_random_legend_data() {

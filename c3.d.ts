@@ -201,7 +201,10 @@ declare module c3 {
         nest_key?: (d: DD, i: number, j: number) => number|string;
         hoverable?: boolean;
         list_options?: c3.Selection.Options<void>;
+        list_item_options?: c3.Selection.Options<D>;
         item_options?: c3.Selection.Options<D>;
+        item_option?: (d: D) => c3.Selection.Options<D>;
+        nested_list_item_options?: c3.Selection.Options<DD>;
         nested_item_options?: c3.Selection.Options<DD>;
         bullet_options?: c3.Selection.Options<D> | boolean;
         nested_bullet_options?: c3.Selection.Options<DD> | boolean;

@@ -14,7 +14,7 @@
       return Legend.__super__.constructor.apply(this, arguments);
     }
 
-    Legend.version = 0.1;
+    Legend.version = 0.2;
 
     Legend.prototype.type = 'legend';
 
@@ -32,7 +32,13 @@
 
     Legend.prototype.list_options = void 0;
 
+    Legend.prototype.list_item_options = void 0;
+
     Legend.prototype.item_options = void 0;
+
+    Legend.prototype.item_option = void 0;
+
+    Legend.prototype.nested_list_item_options = void 0;
 
     Legend.prototype.nested_item_options = void 0;
 
@@ -51,25 +57,30 @@
           }
         };
       }
-      if (this.filter == null) {
-        this.filter = (function(_this) {
-          return function(d) {
-            var base, base1, ref, ref1, ref2;
-            return (ref = (ref1 = (ref2 = typeof (base = _this.item_options).html === "function" ? base.html(d) : void 0) != null ? ref2 : _this.item_options.html) != null ? ref1 : typeof (base1 = _this.item_options).text === "function" ? base1.text(d) : void 0) != null ? ref : _this.item_options.text;
-          };
-        })(this);
-      }
       if (this.item_options == null) {
         this.item_options = {};
       }
-      if ((base = this.item_options).text == null) {
-        base.text = function(d) {
-          if (Array.isArray(d)) {
-            return d.length + " items";
-          } else {
-            return d;
-          }
-        };
+      if (this.item_option == null) {
+        if ((base = this.item_options).text == null) {
+          base.text = function(d) {
+            if (Array.isArray(d)) {
+              return d.length + " items";
+            } else {
+              return d;
+            }
+          };
+        }
+        if (this.filter == null) {
+          this.filter = (function(_this) {
+            return function(d) {
+              var base1, base2, ref, ref1, ref2;
+              return (ref = (ref1 = (ref2 = typeof (base1 = _this.item_options).html === "function" ? base1.html(d) : void 0) != null ? ref2 : _this.item_options.html) != null ? ref1 : typeof (base2 = _this.item_options).text === "function" ? base2.text(d) : void 0) != null ? ref : _this.item_options.text;
+            };
+          })(this);
+        }
+      }
+      if (this.nested_list_item_options == null) {
+        this.nested_list_item_options = this.list_item_options;
       }
       if (this.nested_item_options == null) {
         this.nested_item_options = this.item_options;
@@ -87,7 +98,7 @@
     };
 
     Legend.prototype._update = function() {
-      var datum, i, item_content, nested_item_content, ref, ref1;
+      var datum, i;
       this.current_data = this.filter ? (function() {
         var j, len, ref, results;
         ref = this.data;
@@ -100,46 +111,24 @@
         }
         return results;
       }).call(this) : this.data;
-      item_content = {
-        text: this.item_options.text,
-        html: this.item_options.html
-      };
-      nested_item_content = {
-        text: this.nested_item_options.text,
-        html: this.nested_item_options.html
-      };
-      delete this.item_options.html;
-      delete this.item_options.text;
-      delete this.nested_item_options.html;
-      delete this.nested_item_options.text;
-      if ((ref = this.list_options) != null) {
-        delete ref.html;
-      }
-      if ((ref1 = this.list_options) != null) {
-        delete ref1.text;
-      }
       this.list.options(this.list_options).update();
-      this.items = this.list.select('ul:not(.child) > li').bind(this.current_data, this.key);
-      this.items.options(this.item_options).update();
-      this.items.inherit('span.content').options(item_content).update();
+      this.list_items = this.list.select('ul:not(.child) > li').bind(this.current_data, this.key);
+      this.list_items.options(this.list_item_options).update();
+      this.items = this.list_items.inherit('span.content').options(this.item_options, this.item_option).update();
       if (this.bullet_options) {
-        this.bullets = this.items.inherit('ul:not(.child) > li > span.bullet', true, true);
+        this.bullets = this.list_items.inherit('ul:not(.child) > li > span.bullet', true, true);
         this.bullets.options(this.bullet_options).update();
       }
       if (this.nest) {
-        this.nested_items = this.items.inherit('ul.child').select('li').bind(this.nest, this.nest_key);
-        this.nested_items.options(this.nested_item_options).update();
-        this.nested_items.inherit('span.content').options(nested_item_content).update();
+        this.nested_items = this.list_items.inherit('ul.child').select('li').bind(this.nest, this.nest_key);
+        this.nested_items.options(this.nested_list_item_options).update();
+        this.nested_items.inherit('span.content').options(this.nested_item_options).update();
         if (this.nested_bullet_options) {
           this.nested_bullets = this.nested_items.inherit('span.bullet', true, true);
           this.nested_bullets.options(this.nested_bullet_options).update();
         }
       }
-      this.item_options.text = item_content.text;
-      this.item_options.html = item_content.html;
-      this.nested_item_options.text = nested_item_content.text;
-      this.nested_item_options.html = nested_item_content.html;
-      return this.items.select('ul > li').all.each(function() {
+      return this.list_items.select('ul > li').all.each(function() {
         return d3.select(this).node().parentNode.parentNode.classList.add('parent');
       });
     };
@@ -151,6 +140,7 @@
         'legend': true,
         'hoverable': this.hoverable
       });
+      this.list_items.style(style_new);
       this.items.style(style_new);
       if ((ref = this.nested_items) != null) {
         ref.style(style_new);
@@ -211,8 +201,14 @@
           return (ref = layer.stacks) != null ? ref : [];
         };
       }
+      if (this.list_item_options == null) {
+        this.list_item_options = {};
+      }
       if (this.item_options == null) {
         this.item_options = {};
+      }
+      if (this.nested_list_item_options == null) {
+        this.nested_list_item_options = {};
       }
       if (this.nested_item_options == null) {
         this.nested_item_options = {};
@@ -266,10 +262,10 @@
         base5.title = stack_title;
       }
       if (this.hoverable) {
-        if ((base6 = this.item_options).events == null) {
+        if ((base6 = this.list_item_options).events == null) {
           base6.events = {};
         }
-        if ((base7 = this.item_options.events).mouseenter == null) {
+        if ((base7 = this.list_item_options.events).mouseenter == null) {
           base7.mouseenter = (function(_this) {
             return function(hover_layer, hover_layer_idx) {
               var fade;
@@ -287,7 +283,7 @@
             };
           })(this);
         }
-        if ((base8 = this.item_options.events).mouseleave == null) {
+        if ((base8 = this.list_item_options.events).mouseleave == null) {
           base8.mouseleave = (function(_this) {
             return function(hover_layer, hover_layer_idx) {
               _this.plot.layers_selection.all.style('opacity', function(layer, i) {
@@ -298,10 +294,10 @@
             };
           })(this);
         }
-        if ((base9 = this.nested_item_options).events == null) {
+        if ((base9 = this.nested_list_item_options).events == null) {
           base9.events = {};
         }
-        if ((base10 = this.nested_item_options.events).mouseenter == null) {
+        if ((base10 = this.nested_list_item_options.events).mouseenter == null) {
           base10.mouseenter = (function(_this) {
             return function(hover_stack, hover_stack_idx, hover_layer_idx) {
               var cache, duration, fade, layer, ref, ref1, ref2;
@@ -351,7 +347,7 @@
             };
           })(this);
         }
-        if ((base11 = this.nested_item_options.events).mouseleave == null) {
+        if ((base11 = this.nested_list_item_options.events).mouseleave == null) {
           base11.mouseleave = (function(_this) {
             return function(hover_stack, hover_stack_idx, hover_layer_idx) {
               var layer, ref, ref1, ref2;
@@ -395,9 +391,9 @@
       this.data = this.plot.layers;
       PlotLegend.__super__._update.apply(this, arguments);
       if (this.invert_layers) {
-        this.items.all.order();
+        this.list_items.all.order();
       } else {
-        this.items.all.sort((function(_this) {
+        this.list_items.all.sort((function(_this) {
           return function(a, b) {
             return _this.plot.layers.indexOf(a) < _this.plot.layers.indexOf(b);
           };

@@ -68,7 +68,7 @@ The <code>li</code> elements get the <code>parent</code> class if they have chil
     =
   </dt>
   <dd>
-    <pre><code class='coffeescript'>0.1</code></pre>
+    <pre><code class='coffeescript'>0.2</code></pre>
     
   </dd>
   <dt id='type-variable'>
@@ -164,7 +164,19 @@ mouse hovers or with a touch event.</p>
   <dd>
     <pre><code class='coffeescript'>undefined</code></pre>
     <div class='docstring'>
-  <p>[{c3.selection.options}] Options for the legend <code>ul</code> as a whole</p>
+  <p>[<a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a>] Options for the legend <code>ul</code> as a whole</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='list_item_options-variable'>
+    list_item_options
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>undefined</code></pre>
+    <div class='docstring'>
+  <p>[<a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a>] Options to set the <strong>styles</strong> and <strong>events</strong> for the <code>li</code> items in the list.</p>
 </div>
 <div class='tags'>
 </div>
@@ -176,9 +188,35 @@ mouse hovers or with a touch event.</p>
   <dd>
     <pre><code class='coffeescript'>undefined</code></pre>
     <div class='docstring'>
-  <p>[{c3.selection.options}] Options to set the <strong>text</strong>, <strong>html</strong>, and other <strong>styles</strong> and
-<strong>events</strong> for the <code>li</code> items in the list.
+  <p>[<a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a>] Options to set the <strong>text</strong>, <strong>html</strong>, and other <strong>styles</strong> and
+<strong>events</strong> for the content span for items in the list.
 By default it will display data elements by converting them to a string.</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='item_option-variable'>
+    item_option
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>undefined</code></pre>
+    <div class='docstring'>
+  <p>[Function] A callback to get a <a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a> object for the content span
+based on a datum as an input parameter</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='nested_list_item_options-variable'>
+    nested_list_item_options
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>undefined</code></pre>
+    <div class='docstring'>
+  <p>[<a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a>] Options for <em>nested</em> <code>li</code> list items.
+These will default to <code>list_item_options</code> unless specified.</p>
 </div>
 <div class='tags'>
 </div>
@@ -190,7 +228,7 @@ By default it will display data elements by converting them to a string.</p>
   <dd>
     <pre><code class='coffeescript'>undefined</code></pre>
     <div class='docstring'>
-  <p>[{c3.selection.options}] Options for <em>nested</em> <code>li</code> list items.
+  <p>[<a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a>] Options for <em>nested</em> content spans for list items.
 These will default to <code>item_options</code> unless specified.</p>
 </div>
 <div class='tags'>
@@ -203,8 +241,8 @@ These will default to <code>item_options</code> unless specified.</p>
   <dd>
     <pre><code class='coffeescript'>undefined</code></pre>
     <div class='docstring'>
-  <p>[Boolean, {c3.selection.options}] Set to <code>false</code> to disable <strong>bullets</strong> for legend items.
-Otherwise it is the {c3.selection.options options} to set the <strong>text</strong>, <strong>html</strong>, or other
+  <p>[Boolean, <a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a>] Set to <code>false</code> to disable <strong>bullets</strong> for legend items.
+Otherwise it is the <a href='../../class/c3/Selection.Options.html'>options</a> to set the <strong>text</strong>, <strong>html</strong>, or other
 options for the list item bullets.</p>
 </div>
 <div class='tags'>
@@ -217,7 +255,7 @@ options for the list item bullets.</p>
   <dd>
     <pre><code class='coffeescript'>undefined</code></pre>
     <div class='docstring'>
-  <p>[Boolean, {c3.selection.options}] Options for <strong>bullets</strong> of <em>nested</em> list items.
+  <p>[Boolean, <a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a>] Options for <strong>bullets</strong> of <em>nested</em> list items.
 This will default to <code>bullet_options</code> unless specified.</p>
 </div>
 <div class='tags'>

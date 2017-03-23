@@ -1,3 +1,5 @@
+* Cleanup legend interface and add accessor to get option object per list item.
+
 0.1.9
 * New Region chart layer
 * New Icicle chart layer for tree visualization.

@@ -17,7 +17,7 @@
 # `li` elements have spans with either the `content` or `bullet` class as appropriate.
 # @author Douglas Armstrong
 class c3.Legend extends c3.Base
-    @version: 0.1
+    @version: 0.2
     type: 'legend'
 
     # [Array] An array of data elements for the legend to display
@@ -38,20 +38,28 @@ class c3.Legend extends c3.Base
     # [Boolean] enables _hoverable_ behaviour for the legend such as highlighting when the
     # mouse hovers or with a touch event.
     hoverable: true
-    # [{c3.selection.options}] Options for the legend `ul` as a whole
+    # [{c3.Selection.Options}] Options for the legend `ul` as a whole
     list_options: undefined
-    # [{c3.selection.options}] Options to set the **text**, **html**, and other **styles** and
-    # **events** for the `li` items in the list.
+    # [{c3.Selection.Options}] Options to set the **styles** and **events** for the `li` items in the list.
+    list_item_options: undefined
+    # [{c3.Selection.Options}] Options to set the **text**, **html**, and other **styles** and
+    # **events** for the content span for items in the list.
     # By default it will display data elements by converting them to a string.
     item_options: undefined
-    # [{c3.selection.options}] Options for _nested_ `li` list items.
+    # [Function] A callback to get a {c3.Selection.Options} object for the content span
+    # based on a datum as an input parameter
+    item_option: undefined
+    # [{c3.Selection.Options}] Options for _nested_ `li` list items.
+    # These will default to `list_item_options` unless specified.
+    nested_list_item_options: undefined
+    # [{c3.Selection.Options}] Options for _nested_ content spans for list items.
     # These will default to `item_options` unless specified.
     nested_item_options: undefined
-    # [Boolean, {c3.selection.options}] Set to `false` to disable **bullets** for legend items.
-    # Otherwise it is the {c3.selection.options options} to set the **text**, **html**, or other
+    # [Boolean, {c3.Selection.Options}] Set to `false` to disable **bullets** for legend items.
+    # Otherwise it is the {c3.Selection.Options options} to set the **text**, **html**, or other
     # options for the list item bullets.
     bullet_options: undefined
-    # [Boolean, {c3.selection.options}] Options for **bullets** of _nested_ list items.
+    # [Boolean, {c3.Selection.Options}] Options for **bullets** of _nested_ list items.
     # This will default to `bullet_options` unless specified.
     nested_bullet_options: undefined
 
@@ -61,9 +69,11 @@ class c3.Legend extends c3.Base
         # * Arrays represent nested items
         # * Items with no name are not displayed.
         @nest ?= (d)-> if Array.isArray(d) then d else []
-        @filter ?= (d)=> @item_options.html?(d) ? @item_options.html ? @item_options.text?(d) ? @item_options.text
         @item_options ?= {}
-        @item_options.text ?= (d)-> if Array.isArray(d) then "#{d.length} items" else d
+        if not @item_option?
+          @item_options.text ?= (d)-> if Array.isArray(d) then "#{d.length} items" else d
+          @filter ?= (d)=> @item_options.html?(d) ? @item_options.html ? @item_options.text?(d) ? @item_options.text
+        @nested_list_item_options ?= @list_item_options
         @nested_item_options ?= @item_options
         @bullet_options ?= {}
         @bullet_options.text ?= "•"
@@ -77,44 +87,32 @@ class c3.Legend extends c3.Base
         # NOTE: This is done before we temporarily delete the text/html options!
         @current_data = if @filter then (datum for datum,i in @data when @filter(datum,i)) else @data
 
-        # Set the item content text/html using a nested span since we will create other
-        # bullets and nested lists in the li elements that we don't want to be overwritten.
-        item_content = {text:@item_options.text, html:@item_options.html}
-        nested_item_content = {text:@nested_item_options.text, html:@nested_item_options.html}
-        delete @item_options.html; delete @item_options.text
-        delete @nested_item_options.html; delete @nested_item_options.text
-        delete @list_options?.html; delete @list_options?.text
-
         # Set overall list options
         @list.options(@list_options).update()
 
         # Create the Legend List Items
-        @items = @list.select('ul:not(.child) > li').bind @current_data, @key
-        @items.options(@item_options).update()
-        @items.inherit('span.content').options(item_content).update()
+        @list_items = @list.select('ul:not(.child) > li').bind @current_data, @key
+        @list_items.options(@list_item_options).update()
+        @items = @list_items.inherit('span.content').options(@item_options, @item_option).update()
 
         # Create Bullets
         if @bullet_options
-            @bullets = @items.inherit('ul:not(.child) > li > span.bullet',true,true)
+            @bullets = @list_items.inherit('ul:not(.child) > li > span.bullet',true,true)
             @bullets.options(@bullet_options).update()
 
         # Handle nested legend items
         if @nest
-            @nested_items = @items.inherit('ul.child').select('li').bind @nest, @nest_key
-            @nested_items.options(@nested_item_options).update()
-            @nested_items.inherit('span.content').options(nested_item_content).update()
+            @nested_items = @list_items.inherit('ul.child').select('li').bind @nest, @nest_key
+            @nested_items.options(@nested_list_item_options).update()
+            @nested_items.inherit('span.content').options(@nested_item_options).update()
 
             # Nested Bullets
             if @nested_bullet_options
                 @nested_bullets = @nested_items.inherit('span.bullet',true,true)
                 @nested_bullets.options(@nested_bullet_options).update()
 
-        # Restore item text/html options
-        @item_options.text = item_content.text; @item_options.html = item_content.html
-        @nested_item_options.text = nested_item_content.text; @nested_item_options.html = nested_item_content.html
-
         # Give any list items that have children the class `parent`
-        @items.select('ul > li').all.each ->
+        @list_items.select('ul > li').all.each ->
             d3.select(this).node().parentNode.parentNode.classList.add('parent')
 
     _style: (style_new)=>
@@ -122,6 +120,7 @@ class c3.Legend extends c3.Base
             'c3': true
             'legend': true
             'hoverable': @hoverable
+        @list_items.style(style_new)
         @items.style(style_new)
         @nested_items?.style(style_new)
         @bullets?.style(style_new)
@@ -177,7 +176,9 @@ class c3.Legend.PlotLegend extends c3.Legend
         # Setup default data to refer to the layers and stacks in a C3 plot
         @key ?= (layer)-> layer.uid
         @nest ?= (layer)-> layer.stacks ? []
+        @list_item_options ?= {}
         @item_options ?= {}
+        @nested_list_item_options ?= {}
         @nested_item_options ?= {}
         @nest_key ?= (stack)-> stack.key ? stack.name
 
@@ -202,15 +203,15 @@ class c3.Legend.PlotLegend extends c3.Legend
 
         if @hoverable
             # Highlight the layers in the chart when hovering over the legend.
-            @item_options.events ?= {}
-            @item_options.events.mouseenter ?= (hover_layer, hover_layer_idx)=>
+            @list_item_options.events ?= {}
+            @list_item_options.events.mouseenter ?= (hover_layer, hover_layer_idx)=>
                 # Fade other layers
                 fade = @hover_fade
                 @plot.layers_selection.all.style 'opacity', (layer,i)->
                     old_opacity = d3.select(this).style('opacity') ? 1
                     if layer isnt hover_layer then fade * old_opacity else old_opacity
                 @trigger 'layer_mouseenter', hover_layer, hover_layer_idx
-            @item_options.events.mouseleave ?= (hover_layer, hover_layer_idx)=>
+            @list_item_options.events.mouseleave ?= (hover_layer, hover_layer_idx)=>
                 # Restore all layers to their proper opacity
                 @plot.layers_selection.all.style 'opacity', (layer,i)=>
                     layer.options?.styles?.opacity?(layer,i) ? layer.options?.styles?.opacity ?
@@ -218,8 +219,8 @@ class c3.Legend.PlotLegend extends c3.Legend
                 @trigger 'layer_mouseleave', hover_layer, hover_layer_idx
 
             # Highlight the stacks in the chart layer when hovering over nested items
-            @nested_item_options.events ?= {}
-            @nested_item_options.events.mouseenter ?= (hover_stack, hover_stack_idx, hover_layer_idx)=>
+            @nested_list_item_options.events ?= {}
+            @nested_list_item_options.events.mouseenter ?= (hover_stack, hover_stack_idx, hover_layer_idx)=>
                 layer = @plot.layers[hover_layer_idx]
 
                 # Fade other stacks
@@ -251,7 +252,7 @@ class c3.Legend.PlotLegend extends c3.Legend
 
                 @trigger 'stack_mouseenter', hover_stack, hover_stack_idx, hover_layer_idx
 
-            @nested_item_options.events.mouseleave ?= (hover_stack, hover_stack_idx, hover_layer_idx)=>
+            @nested_list_item_options.events.mouseleave ?= (hover_stack, hover_stack_idx, hover_layer_idx)=>
                 layer = @plot.layers[hover_layer_idx]
 
                 # Restore all stacks to their proper opacity
@@ -292,9 +293,9 @@ class c3.Legend.PlotLegend extends c3.Legend
         @data = @plot.layers
         super
         if @invert_layers
-            @items.all.order()
+            @list_items.all.order()
         else
-            @items.all.sort((a,b)=> @plot.layers.indexOf(a) < @plot.layers.indexOf(b))
+            @list_items.all.sort((a,b)=> @plot.layers.indexOf(a) < @plot.layers.indexOf(b))
 
         # Create an SVG glyph for each layer or stack.  Bind it to an example "node" in the
         # plot's actual layer that will represent what styles we should copy for the legend.
