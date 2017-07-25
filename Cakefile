@@ -19,8 +19,7 @@ call = (cmd, args...)->
 	return child
 	###
 
-# @todo Setup a LESS compiler
-task 'build', "Build C4", ->
+task 'build', "Build C3", ->
 	call 'coffee -c -m -o js js'
 	call 'node_modules/less/bin/lessc css/c3.less css/c3.css'
 	call 'node_modules/less/bin/lessc css/doc.less css/doc.css'
@@ -28,11 +27,11 @@ task 'build', "Build C4", ->
 task 'watch', "Watch for changes", ->
 	call 'coffee -w -c -m -o js js'
 
-task 'examples', "Build Exampels", ->
+task 'examples', "Build Examples", ->
 	call 'tsc'
 
-task 'doc', "Build Example Documentation", ->
-	# Generate C4 API documentation into the doc folder
+task 'doc', "Build Documentation", ->
+	# Generate C3 API documentation into the doc folder
 	call 'node_modules/codo/bin/codo -t "C3 Documentation" -o doc js'
 
 	# Generate annotated source documentation for the examples
