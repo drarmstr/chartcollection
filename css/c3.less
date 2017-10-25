@@ -205,8 +205,8 @@ svg.c3.global {
         display: none;
         position: fixed;
         z-index: 1000;
-        margin-top: 0.5em;
-        margin-left: -0.75em; // padding + border-width
+        margin-top: -0.5em;
+        margin-left: 0.5em;
         min-width: 3em;
         padding: 0.25em;
         border-radius: 0.25em;
@@ -220,9 +220,10 @@ svg.c3.global {
         position: absolute;
         width: 0;
         height: 0;
-        top: -1em; // border-width * 2
-        border: 0.5em solid transparent;
-        border-bottom-color: wheat;
+        left: -0.5em;
+        border-top: 0.5em solid transparent;
+        border-bottom: 0.5em solid transparent;
+        border-right: 0.5em solid wheat;
     }
 }
 

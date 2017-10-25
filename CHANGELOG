@@ -1,3 +1,4 @@
+* Move Icicle hover tooltip to right of cursor to avoid cursor covering contents
 * Cleanup legend interface and add accessor to get option object per list item.
 
 0.1.9
@@ -26,7 +27,7 @@
 * Sunburst node now places root node inside center circle.
 * Plots don't create redundant backgrounds/brushes when rerendered
 * Tables and selectable Plots can specify an initial selection when rendering
-* Sunburst can select an initial node to render as the root 
+* Sunburst can select an initial node to render as the root
 * Default selectable plots to have a visible unbrush without user styling
 * Fix unbrush for selectable plots with margin and non-0 minimum domains.
 
