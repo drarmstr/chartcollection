@@ -170,16 +170,16 @@ class c3.Plot extends c3.Chart
         refresh = false
         if @h_domain?
             h_domain = if typeof @h_domain is 'function' then @h_domain.call(this) else @h_domain[..]
-            if h_domain[0] is 'auto' then h_domain[0] = @min_x()
-            if h_domain[1] is 'auto' then h_domain[1] = @max_x()
+            if h_domain[0] is 'auto' then h_domain[0] = @min_x(true)
+            if h_domain[1] is 'auto' then h_domain[1] = @max_x(true)
             if h_domain[0]!=@h.domain()[0] or h_domain[1]!=@h.domain()[1]
                 @h.domain h_domain
                 @orig_h?.domain h_domain # TODO Ugly hack; need to cleanup zoom as a mixin
                 refresh = true
         if @v_domain?
             v_domain = if typeof @v_domain is 'function' then @v_domain.call(this) else @v_domain[..]
-            if v_domain[0] is 'auto' then v_domain[0] = @min_y()
-            if v_domain[1] is 'auto' then v_domain[1] = @max_y()
+            if v_domain[0] is 'auto' then v_domain[0] = @min_y(true)
+            if v_domain[1] is 'auto' then v_domain[1] = @max_y(true)
             if v_domain[0]!=@v.domain()[0] or v_domain[1]!=@v.domain()[1]
                 @v.domain v_domain
                 refresh = true
@@ -188,16 +188,22 @@ class c3.Plot extends c3.Chart
         return refresh
 
     # EXPERIMENTAL RESCALE
-    # An addition `re*` API which will adjust the scales for any domains with callbacks
+    # An additional `re*` API which will adjust the scales for any domains with callbacks
     # See `h_domain` and `v_domain`.
     rescale: =>
         if @scale() then @draw('rescale')
         return this
 
-    min_x: => d3.min @layers, (l)-> l.min_x()
-    max_x: => d3.max @layers, (l)-> l.max_x()
-    min_y: => d3.min @layers, (l)-> l.min_y()
-    max_y: => d3.max @layers, (l)-> l.max_y()
+    # If the auto parameter is true it will only get the value for layers which
+    # share the overall plot scale and don't overwrite it with its own.
+    min_x: (auto) =>
+      d3.min (if auto then (l for l in @layers when l.h == @h) else @layers), (l)-> l.min_x()
+    max_x: (auto) =>
+      d3.max (if auto then (l for l in @layers when l.h == @h) else @layers), (l)-> l.max_x()
+    min_y: (auto) =>
+      d3.min (if auto then (l for l in @layers when l.v == @v) else @layers), (l)-> l.min_y()
+    max_y: (auto) =>
+      d3.max (if auto then (l for l in @layers when l.v == @v) else @layers), (l)-> l.max_y()
 
 
 ###################################################################

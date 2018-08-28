@@ -1,3 +1,4 @@
+* Auto scaling a plot will not consider layers that specify their own scale
 * Move Icicle hover tooltip to right of cursor to avoid cursor covering contents
 * Cleanup legend interface and add accessor to get option object per list item.
 
