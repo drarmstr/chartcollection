@@ -4,7 +4,7 @@
 // Instead of attaching charts to existing div anchors in the html, this example
 // dynamically creates and attached them to the DOM.
 var div_selection = d3.select('#stack_example_plots');
-// Create **ordinal** scales to manage the _age group_ and _race_ 
+// Create **ordinal** scales to manage the _age group_ and _race_
 // categories provided by the CDC.
 var five_year_age_group_scale = d3.scale.ordinal().domain([
     '1', '1-4', '5-9', '10-14', '15-19', '20-24', '25-29', '30-34', '35-39',
@@ -31,10 +31,10 @@ div_selection.append('p').text("\
 var stacked_area_chart = new c3.Plot({
     anchor: div_selection.append('div').node(),
     height: 300,
-    // The **vertical scale** is a normal linear scale for the number of deaths.
-    // Note that for the **horizontal scale** we are using an **ordinal ** scale!
+    // The **horizontal scale** uses an **ordinal** scale of age categories.
+    // The **vertical scale** is automatically sized based on the data.
     h: five_year_age_group_scale,
-    v: d3.scale.linear().domain([0, 4500000]),
+    v_domain: [0, 'auto10'],
     // Accessors describing how to get the **x** and **y** values from the data.
     x: function (d) { return d.age_group; },
     y: function (d) { return d.deaths; },
@@ -59,7 +59,55 @@ var stacked_area_chart = new c3.Plot({
     margins: { right: 20 },
     axes: [
         new c3.Axis.X({
-            label: "Causes of Death",
+            label: "Causes of Death - Stacked Area Chart",
+            orient: 'top',
+            scale: false
+        }),
+        new c3.Axis.X({
+            label: "Age",
+            scale: d3.scale.linear().domain([0, 100]),
+            tick_size: 0
+        }),
+        new c3.Axis.Y({
+            label: "Deaths",
+            tick_label: function (d) { return (d / 1000000) + "m"; },
+            grid: true
+        }),
+    ]
+});
+// ## Grouped Line Chart
+div_selection.append('hr');
+// The second example is the same as the first except it **groups** the data
+// and draws a seperate line for each group.
+var grouped_line_chart = new c3.Plot({
+    anchor: div_selection.append('div').node(),
+    height: 300,
+    // The **horizontal scale** uses an **ordinal** scale of age categories.
+    // The **vertical scale** is automatically sized based on the data.
+    h: five_year_age_group_scale,
+    v_domain: [0, 'auto10'],
+    // Accessors describing how to get the **x** and **y** values from the data.
+    x: function (d) { return d.age_group; },
+    y: function (d) { return d.deaths; },
+    // Specify `offset: 'none'` here to avoid stacking the groups
+    layers: [
+        new c3.Plot.Layer.Line({
+            interpolate: 'cardinal',
+            stack_options: {
+                key: function (d) { return d.cause; },
+                offset: 'none',
+                styles: {
+                    'stroke': function (stack) { return cause_color(stack.key); },
+                    'stroke-width': 3
+                },
+                title: function (stack) { return stack.key; }
+            }
+        }),
+    ],
+    margins: { right: 20 },
+    axes: [
+        new c3.Axis.X({
+            label: "Causes of Death - Grouped Line Chart",
             orient: 'top',
             scale: false
         }),
@@ -77,7 +125,7 @@ var stacked_area_chart = new c3.Plot({
 });
 // ## Expanded Area Chart
 div_selection.append('hr');
-// The second example is the same as the first except it **expands** the stacked data
+// The third example is the same as the first except it **expands** the stacked data
 // to represent a breakdown of percentages of deaths instead of an absolute count of deaths.
 var expand_area_chart = new c3.Plot({
     anchor: div_selection.append('div').node(),
@@ -103,7 +151,7 @@ var expand_area_chart = new c3.Plot({
     margins: { right: 20 },
     axes: [
         new c3.Axis.X({
-            label: "Causes of Death",
+            label: "Causes of Death - Normalized by Percent",
             orient: 'top',
             scale: false
         }),
@@ -300,6 +348,7 @@ stacked_bar_chart.resize();
 // Resize the charts if the window resizes
 window.onresize = function () {
     stacked_area_chart.resize();
+    grouped_line_chart.resize();
     expand_area_chart.resize();
     stacked_bar_chart.resize();
 };
@@ -324,6 +373,8 @@ d3.tsv("data/injury_cause.tsv")
     // Bind **data** to the charts and render them.
     stacked_area_chart.data = data;
     stacked_area_chart.render();
+    grouped_line_chart.data = data;
+    grouped_line_chart.render();
     expand_area_chart.data = data;
     expand_area_chart.render();
 });

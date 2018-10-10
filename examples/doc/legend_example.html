@@ -414,7 +414,7 @@ layer types please see the <a href="../#stack_example">stacked charts examples</
             name: <span class="hljs-string">"Stacked Bar Chart"</span>,
             data: bar_data,
             x: (d, i) =&gt; i * <span class="hljs-number">4</span>,
-            y: (d, i, stack) =&gt; d[bar_layer.stacks.indexOf(stack)],
+            y: (d, i, stack) =&gt; d[stack],
             stacks: [
                 { name: <span class="hljs-string">"Blue Stack"</span>, options: { styles: { <span class="hljs-string">'fill'</span>: <span class="hljs-string">'slateblue'</span> } } },
                 { name: <span class="hljs-string">"Orange Stack"</span>, options: { styles: { <span class="hljs-string">'fill'</span>: <span class="hljs-string">'goldenrod'</span> } } },

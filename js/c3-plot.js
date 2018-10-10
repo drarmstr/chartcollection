@@ -239,8 +239,14 @@
         if (h_domain[0] === 'auto') {
           h_domain[0] = this.min_x(true);
         }
+        if (h_domain[0] === 'auto10') {
+          h_domain[0] = this.min_x(true) * 0.9;
+        }
         if (h_domain[1] === 'auto') {
           h_domain[1] = this.max_x(true);
+        }
+        if (h_domain[1] === 'auto10') {
+          h_domain[1] = this.max_x(true) * 1.1;
         }
         if (h_domain[0] !== this.h.domain()[0] || h_domain[1] !== this.h.domain()[1]) {
           this.h.domain(h_domain);
@@ -255,8 +261,14 @@
         if (v_domain[0] === 'auto') {
           v_domain[0] = this.min_y(true);
         }
+        if (v_domain[0] === 'auto10') {
+          v_domain[0] = this.min_y(true) * 0.9;
+        }
         if (v_domain[1] === 'auto') {
           v_domain[1] = this.max_y(true);
+        }
+        if (v_domain[1] === 'auto10') {
+          v_domain[1] = this.max_y(true) * 1.1;
         }
         if (v_domain[0] !== this.v.domain()[0] || v_domain[1] !== this.v.domain()[1]) {
           this.v.domain(v_domain);

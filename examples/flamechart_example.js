@@ -11,7 +11,8 @@ var flamechart_calltrace = new c3.Plot.Zoomable({
     // Setup the **horizontal scale** to cover the entire time duration of the call trace
     h: d3.scale.linear().domain([
         d3.min(calltrace, function (d) { return d.x; }),
-        d3.max(calltrace, function (d) { return d.x + d.dx; })]),
+        d3.max(calltrace, function (d) { return d.x + d.dx; })
+    ]),
     // Allow the timeline to be **zoomable** with mouse and touch events.
     zoomable: 'h',
     // Create a single **Flamechart** layer.
@@ -50,7 +51,7 @@ window.onresize = function () {
     flamechart_calltrace.resize();
 };
 // ## Modify Chart Options
-for (var _i = 0, _a = ['input', 'change']; _i < _a.length; _i++) {
+for (var _i = 0, _a = ['input', 'change']; _i < _a.length; _i++) { // 'input' event is not supported in IE
     var event_name_1 = _a[_i];
     // Decimate the number of elements drawn in the Call Trace
     $('#limit_elements').on(event_name_1, function () {

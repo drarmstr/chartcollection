@@ -108,7 +108,7 @@ window.onresize = function () {
     sunburst_calltree.resize();
 };
 // ## Modify Chart Options
-for (var _i = 0, _a = ['input', 'change']; _i < _a.length; _i++) {
+for (var _i = 0, _a = ['input', 'change']; _i < _a.length; _i++) { // 'input' event is not supported in IE
     var event_name_1 = _a[_i];
     // Decimate the number of elements drawn in the Call Tree
     $('#limit_icicle_elements').on(event_name_1, function () {

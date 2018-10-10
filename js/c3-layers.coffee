@@ -231,6 +231,7 @@ class c3.Plot.Layer.Stackable extends c3.Plot.Layer
     # * **name** [Function] A callback you define to set the name of a stack that is passed the stack key as an argument.
     # * **offset** [String, Function] The name or a function for the stacking algorithm used to place the data.
     #   See {https://github.com/mbostock/d3/wiki/Stack-Layout#wiki-offset d3.stack.offset()} for details.
+    # * * `none` - Do not stack the groups.  Useful for grouped line charts.
     # * * `zero` - The default for a zero baseline.
     # * * `expand` - Normalize all points to range from 0-1.
     # * **order** [String] Specify the mechanism to order the stacks.
@@ -264,13 +265,13 @@ class c3.Plot.Layer.Stackable extends c3.Plot.Layer
 
         # Helper function to setup the current stack data and populate a shadow structure
         # to hold the x, y, and y0 positioning so we avoid modifying the user's data.
-        add_value = (stack, datum, i)=>
+        add_value = (stack, datum, i, j)=>
             x = @x(datum,i); x_values_set[x] = x
             stack.y = stack.y ? @y ? throw Error "Y accessor must be defined in stack, layer, or chart"
-            y = stack.y(datum,i,stack)
+            y = stack.y(datum, i, j, stack)
             stack.values.push { x:x, y:y, datum:datum }
 
-        for stack in @stacks
+        for stack, j in @stacks
             stack.name ?= @stack_options?.name? stack.key
 
             # Clear any previous stacking
@@ -278,29 +279,33 @@ class c3.Plot.Layer.Stackable extends c3.Plot.Layer
 
             # Data was provided manually in the stack definition
             if stack.data? then for datum, i in stack.data
-                add_value stack, datum, i
+                add_value stack, datum, i, j
 
         # Data has been provided in @current_data that we need to assign it to a stack
         if @current_data.length
             # Use stack_options.key() to assign data to stacks
             if @stack_options?.key?
                 stack_map = {}
-                for stack in @stacks # Refer to hard-coded stacks if defined
+                stack_index = {}
+                for stack, j in @stacks # Refer to hard-coded stacks if defined
                     if stack_map[stack.key]? then throw Error "Stacks provided with duplicate keys: "+stack.key
                     stack_map[stack.key] = stack
+                    stack_index[stack.key] = j
                 for datum, i in @current_data
                     key = @stack_options.key(datum)
                     if stack_map[key]?
                         stack = stack_map[key]
+                        j = stack_index[key]
                     else
                         @stacks.push stack = stack_map[key] = {
                             key:key, name:@stack_options.name?(key), current_data:[], values:[] }
-                    add_value stack, datum, i
+                        j = @stacks.length
+                    add_value stack, datum, i, j
 
             # Otherwise, assign all data to all stacks using each stack's y() accessor
-            else if @stacks? then for stack in @stacks
+            else if @stacks? then for stack, j in @stacks
                 for datum, i in @current_data
-                    add_value stack, datum, i
+                    add_value stack, datum, i, j
 
             else throw Error "Either stacks or stack_options.key must be defined to create the set of stacks."
 
@@ -343,10 +348,15 @@ class c3.Plot.Layer.Stackable extends c3.Plot.Layer
             stack.current_data = stack.values.map (v)->v.datum
 
         # Configure and run the D3 stack layout to generate y0 and y layout data for the elements.
-        stacker = d3.layout.stack().values (stack)->stack.values
-        if @stack_options?.offset? then stacker.offset @stack_options.offset
-        if @stack_options?.order? then stacker.order @stack_options.order
-        stacker @stacks
+        if @stack_options?.offset == 'none'
+            for stack in @stacks
+                for value in stack.values
+                    value.y0 = 0
+        else
+            stacker = d3.layout.stack().values (stack)->stack.values
+            if @stack_options?.offset? then stacker.offset @stack_options.offset
+            if @stack_options?.order? then stacker.order @stack_options.order
+            stacker @stacks
 
     _update: =>
         # Ensure data is sorted and skip elements that do not have a defined x or y value
@@ -375,8 +385,7 @@ class c3.Plot.Layer.Stackable extends c3.Plot.Layer
     max_x: => if not @stacks? then super else d3.max @stacks[0]?.values, (v)-> v.x
     min_y: => if not @stacks? then super else 0
     max_y: => if not @stacks? then super else
-        d3.max ((d3.sum @stacks, (s)->s.values[i].y) for i in [0..@stacks[0]?.values.length-1])
-
+        d3.max @stacks, (stack)-> d3.max stack.values, (v)-> v.y0 + v.y
 
 # A _struct-type_ convention class to describe a stack when manually specifying the set of stacks
 # to use for a stackable chart layer.

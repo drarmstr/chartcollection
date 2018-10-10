@@ -1,4 +1,7 @@
 {
+    "compilerOptions": {
+        "lib": ["es5", "es2015", "dom", "scripthost"]
+    },
     "include": [
         "c3.d.ts",
         "examples/*.ts",

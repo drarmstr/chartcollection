@@ -54,12 +54,16 @@ class c3.Plot extends c3.Chart
     # [Function | Array<Number|String]] Automatic scaling for horizontal domain.  _EXPERIMENTAL_
     # Optional domain which is used to set the `h` scale at render time or with `rescale()`.
     # It may be a callback to allow for dynamic domains.
-    # Either min or max values may be `auto` which will map to `min_x()` or `max_x()`.
+    # Either min or max values may also be a enum to automatically size the domain:
+    # * `auto` will map to `min_y()` or `max_y()`.
+    # * `auto10` will map to `min_y()` or `max_y()` with a 10% buffer.
     h_domain: undefined
     # [Function | Array<Number|String]] Automatic scaling for vertical domain.  _EXPERIMENTAL_
     # Optional domain which is used to set the `v` scale at render time or with `rescale()`.
     # It may be a callback to allow for dynamic domains.
-    # Either min or max values may be `auto` which will map to `min_y()` or `max_y()`.
+    # Either min or max values may also be a enum to automatically size the domain:
+    # * `auto` will map to `min_y()` or `max_y()`.
+    # * `auto10` will map to `min_y()` or `max_y()` with a 10% buffer.
     v_domain: undefined
     # [Number, Object] Set margins around the plot in pixels.
     # Can either be a number to set all margins or an object to individually set the _top_, _bottom_, _left_, and _right_ margins.
@@ -171,7 +175,9 @@ class c3.Plot extends c3.Chart
         if @h_domain?
             h_domain = if typeof @h_domain is 'function' then @h_domain.call(this) else @h_domain[..]
             if h_domain[0] is 'auto' then h_domain[0] = @min_x(true)
+            if h_domain[0] is 'auto10' then h_domain[0] = @min_x(true) * 0.9
             if h_domain[1] is 'auto' then h_domain[1] = @max_x(true)
+            if h_domain[1] is 'auto10' then h_domain[1] = @max_x(true) * 1.1
             if h_domain[0]!=@h.domain()[0] or h_domain[1]!=@h.domain()[1]
                 @h.domain h_domain
                 @orig_h?.domain h_domain # TODO Ugly hack; need to cleanup zoom as a mixin
@@ -179,7 +185,9 @@ class c3.Plot extends c3.Chart
         if @v_domain?
             v_domain = if typeof @v_domain is 'function' then @v_domain.call(this) else @v_domain[..]
             if v_domain[0] is 'auto' then v_domain[0] = @min_y(true)
+            if v_domain[0] is 'auto10' then v_domain[0] = @min_y(true) * 0.9
             if v_domain[1] is 'auto' then v_domain[1] = @max_y(true)
+            if v_domain[1] is 'auto10' then v_domain[1] = @max_y(true) * 1.1
             if v_domain[0]!=@v.domain()[0] or v_domain[1]!=@v.domain()[1]
                 @v.domain v_domain
                 refresh = true

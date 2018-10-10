@@ -219,7 +219,11 @@ Some plots support calling this accessor with the index of the data as well as t
   <p>[Function | Array&lt;Number|String]] Automatic scaling for horizontal domain.  <em>EXPERIMENTAL</em>
 Optional domain which is used to set the <code>h</code> scale at render time or with <code>rescale()</code>.
 It may be a callback to allow for dynamic domains.
-Either min or max values may be <code>auto</code> which will map to <code>min_x()</code> or <code>max_x()</code>.</p>
+Either min or max values may also be a enum to automatically size the domain:</p><ul>
+<li><code>auto</code> will map to <code>min_y()</code> or <code>max_y()</code>.</li>
+<li><code>auto10</code> will map to <code>min_y()</code> or <code>max_y()</code> with a 10% buffer.</li>
+</ul>
+
 </div>
 <div class='tags'>
 </div>
@@ -234,7 +238,11 @@ Either min or max values may be <code>auto</code> which will map to <code>min_x(
   <p>[Function | Array&lt;Number|String]] Automatic scaling for vertical domain.  <em>EXPERIMENTAL</em>
 Optional domain which is used to set the <code>v</code> scale at render time or with <code>rescale()</code>.
 It may be a callback to allow for dynamic domains.
-Either min or max values may be <code>auto</code> which will map to <code>min_y()</code> or <code>max_y()</code>.</p>
+Either min or max values may also be a enum to automatically size the domain:</p><ul>
+<li><code>auto</code> will map to <code>min_y()</code> or <code>max_y()</code>.</li>
+<li><code>auto10</code> will map to <code>min_y()</code> or <code>max_y()</code> with a 10% buffer.</li>
+</ul>
+
 </div>
 <div class='tags'>
 </div>

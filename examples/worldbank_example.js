@@ -35,6 +35,8 @@ function download_data() {
             // ### Load World Bank Data **CSV**
             // Use _D3_ to download the GDP and other metrics from the **World Bank CSV** file.
             d3.csv('data/gdp.csv')
+                // The `row` callback is used to structure what the rows look like based on the CSV data.
+                // Notice that the numerical values use a `+` to parse the string to a numerical value.
                 .row(function (row) { return ({
                 country_name: row['Country Name'],
                 country_code: row['Country Code'],
@@ -42,6 +44,10 @@ function download_data() {
                 value: +row['Value'],
                 year: +row['Year']
             }); })
+                // The `get` callback is used to process the data once it is loaded.
+                // The World Bank provides the data in a format with a single value per row.
+                // This code translates that to a format with a row for each country and year combination and
+                // a column for each additional metric provided.
                 .get(function (error, rows) {
                 var tmp_map = {};
                 for (var _i = 0, rows_1 = rows; _i < rows_1.length; _i++) {
@@ -84,6 +90,9 @@ function download_data() {
                 // Countries include a link to their region.
                 region_id: +row['region-code']
             }); })
+                // When the raw CSV has been loaded convert it to an associative map based on country ID.
+                // Normally I found it more efficient to manage this data as an array where the index into the array cooresponds to the ID,
+                // but just keeping the example simple here.
                 .get(function (error, rows) {
                 rows.filter(function (row) { return !!row.code; }).forEach(function (row) {
                     countries[row.code] = row;
@@ -151,14 +160,14 @@ function render() {
     // lets the user indicate when that needs to be done.
     var charts = [];
     function redraw() {
-        for (var _i = 0, charts_1 = charts; _i < charts_1.length; _i++) {
-            var chart = charts_1[_i];
+        for (var _i = 0, charts_2 = charts; _i < charts_2.length; _i++) {
+            var chart = charts_2[_i];
             chart.redraw();
         }
     }
     function restyle() {
-        for (var _i = 0, charts_2 = charts; _i < charts_2.length; _i++) {
-            var chart = charts_2[_i];
+        for (var _i = 0, charts_3 = charts; _i < charts_3.length; _i++) {
+            var chart = charts_3[_i];
             chart.restyle();
         }
     }
@@ -236,7 +245,7 @@ function render() {
             new c3.Plot.Layer.Area({
                 options: {
                     title: "GDP",
-                    class: 'gdp'
+                    "class": 'gdp'
                 },
                 data: gdp_by_year_data,
                 v: d3.scale.linear().domain([0, d3.max(gdp_by_year_data, function (d) { return d.value; })]),
@@ -250,21 +259,21 @@ function render() {
             new c3.Plot.Layer.Line({
                 options: {
                     title: "% Services",
-                    class: 'services'
+                    "class": 'services'
                 },
                 data: services_by_year_data
             }),
             new c3.Plot.Layer.Line({
                 options: {
                     title: "% Manufacturing",
-                    class: 'manufacturing'
+                    "class": 'manufacturing'
                 },
                 data: manufacturing_by_year_data
             }),
             new c3.Plot.Layer.Line({
                 options: {
                     title: "% Agriculture",
-                    class: 'agriculture'
+                    "class": 'agriculture'
                 },
                 data: agriculture_by_year_data
             }),
@@ -274,7 +283,7 @@ function render() {
                 draggable: true,
                 options: {
                     title: "Selected Year",
-                    class: 'selected_year'
+                    "class": 'selected_year'
                 },
                 // Setup an **event handler** when the user drags the line
                 // to update the filtering to only show data for the selected year.
@@ -309,10 +318,10 @@ function render() {
         // data across the entire page and different visualizations.
         handlers: {
             'layer_mouseenter': function (layer) {
-                d3.selectAll('.' + layer.options.class).classed('legend_hover', true);
+                d3.selectAll('.' + layer.options["class"]).classed('legend_hover', true);
             },
             'layer_mouseleave': function (layer) {
-                d3.selectAll('.' + layer.options.class).classed('legend_hover', false);
+                d3.selectAll('.' + layer.options["class"]).classed('legend_hover', false);
             }
         }
     }));
@@ -574,7 +583,7 @@ function render() {
         selectable: 'h',
         data: gdp_by_urban_data,
         // Assign the **class** `urban` to this chart for styling using a stylesheet.
-        class: 'urban',
+        "class": 'urban',
         // Setup the **scales** for the chart.  The horizontal scale has a domain from 0-100 to
         // cover the different urbanization percentages.  With our dataset the data points will
         // only actually fall at intervals of 5.  Note that the domain isn't set here for the
@@ -678,7 +687,7 @@ function render() {
             // The `cardinal` interpolation ensures that the curve actually intersects each datapoint.
             layers: [
                 new c3.Plot.Layer.Area({
-                    class: name,
+                    "class": name,
                     interpolate: 'cardinal'
                 }),
             ],
@@ -868,8 +877,8 @@ function render() {
     // #########################################################################################
     // ### Initial Rendering
     // Perform the initial `render()`
-    for (var _i = 0, charts_3 = charts; _i < charts_3.length; _i++) {
-        var chart = charts_3[_i];
+    for (var _i = 0, charts_1 = charts; _i < charts_1.length; _i++) {
+        var chart = charts_1[_i];
         chart.render();
     }
     // **Resize** charts if the window is resized.

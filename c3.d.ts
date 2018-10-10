@@ -291,6 +291,10 @@ declare module c3 {
         v?: d3_Scale;
         x?: (d: D, i: number, stack?: number) => any;
         y?: (d: D, i: number, stack?: number) => any;
+        h_domain?: (number | string)[] | {(): (number | string)[]};
+        v_domain?: (number | string)[] | {(): (number | string)[]};
+        h_orient?: string;
+        v_orient?: string;
         margins?: number | { top?: number; bottom?: number; left?: number; right?: number };
         crop_margins?: boolean | string;
         layer_options?: c3.Selection.Options<c3.Plot.Layer<D & any>>;

@@ -155,7 +155,7 @@ dynamically creates and attached them to the DOM.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p>Create <strong>ordinal</strong> scales to manage the <em>age group</em> and <em>race</em> 
+              <p>Create <strong>ordinal</strong> scales to manage the <em>age group</em> and <em>race</em>
 categories provided by the CDC.</p>
 
             </div>
@@ -259,13 +259,13 @@ Create a <code>c3.Plot</code> and assign it to a newly attached div node.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
-              <p>The <strong>vertical scale</strong> is a normal linear scale for the number of deaths.
-Note that for the <strong>horizontal scale</strong> we are using an <strong>ordinal </strong> scale!</p>
+              <p>The <strong>horizontal scale</strong> uses an <strong>ordinal</strong> scale of age categories.
+The <strong>vertical scale</strong> is automatically sized based on the data.</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>    h: five_year_age_group_scale,
-    v: d3.scale.linear().domain([<span class="hljs-number">0</span>, <span class="hljs-number">4500000</span>]),</pre></div></div>
+    v_domain: [<span class="hljs-number">0</span>, <span class="hljs-string">'auto10'</span>],</pre></div></div>
             
         </li>
         
@@ -329,7 +329,7 @@ and custom <code>tick_label</code> formatters setup.</p>
             <div class="content"><div class='highlight'><pre>    margins: { right: <span class="hljs-number">20</span> },
     axes: [
         <span class="hljs-keyword">new</span> c3.Axis.X({
-            label: <span class="hljs-string">"Causes of Death"</span>,
+            label: <span class="hljs-string">"Causes of Death - Stacked Area Chart"</span>,
             orient: <span class="hljs-string">'top'</span>,
             scale: <span class="hljs-literal">false</span>,
         }),
@@ -355,7 +355,7 @@ and custom <code>tick_label</code> formatters setup.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-12">&#182;</a>
               </div>
-              <h2 id="expanded-area-chart">Expanded Area Chart</h2>
+              <h2 id="grouped-line-chart">Grouped Line Chart</h2>
 
             </div>
             
@@ -370,12 +370,12 @@ and custom <code>tick_label</code> formatters setup.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
-              <p>The second example is the same as the first except it <strong>expands</strong> the stacked data
-to represent a breakdown of percentages of deaths instead of an absolute count of deaths.</p>
+              <p>The second example is the same as the first except it <strong>groups</strong> the data
+and draws a seperate line for each group.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> expand_area_chart = <span class="hljs-keyword">new</span> c3.Plot&lt;CDCDeathData&gt;({
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> grouped_line_chart = <span class="hljs-keyword">new</span> c3.Plot&lt;CDCDeathData&gt;({
     anchor: &lt;HTMLElement&gt;div_selection.append(<span class="hljs-string">'div'</span>).node(),
     height: <span class="hljs-number">300</span>,</pre></div></div>
             
@@ -388,6 +388,120 @@ to represent a breakdown of percentages of deaths instead of an absolute count o
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
+              <p>The <strong>horizontal scale</strong> uses an <strong>ordinal</strong> scale of age categories.
+The <strong>vertical scale</strong> is automatically sized based on the data.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    h: five_year_age_group_scale,
+    v_domain: [<span class="hljs-number">0</span>, <span class="hljs-string">'auto10'</span>],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>Accessors describing how to get the <strong>x</strong> and <strong>y</strong> values from the data.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    x: (d) =&gt; d.age_group,
+    y: (d) =&gt; d.deaths,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>Specify <code>offset: &#39;none&#39;</code> here to avoid stacking the groups</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    layers: [
+        <span class="hljs-keyword">new</span> c3.Plot.Layer.Line&lt;CDCDeathData&gt;({
+            interpolate: <span class="hljs-string">'cardinal'</span>,
+            stack_options: {
+                key: (d) =&gt; &lt;<span class="hljs-built_in">any</span>&gt;d.cause,
+                offset: <span class="hljs-string">'none'</span>,
+                styles: {
+                  <span class="hljs-string">'stroke'</span>: (stack) =&gt; cause_color(stack.key),
+                  <span class="hljs-string">'stroke-width'</span>: <span class="hljs-number">3</span>,
+                },
+                title: (stack) =&gt; stack.key,  <span class="hljs-comment">// Setup tooltips</span>
+            },
+        }),
+    ],
+
+    margins: { right: <span class="hljs-number">20</span> },
+    axes: [
+        <span class="hljs-keyword">new</span> c3.Axis.X({
+            label: <span class="hljs-string">"Causes of Death - Grouped Line Chart"</span>,
+            orient: <span class="hljs-string">'top'</span>,
+            scale: <span class="hljs-literal">false</span>,
+        }),
+        <span class="hljs-keyword">new</span> c3.Axis.X({
+            label: <span class="hljs-string">"Age"</span>,
+            scale: d3.scale.linear().domain([<span class="hljs-number">0</span>, <span class="hljs-number">100</span>]),
+            tick_size: <span class="hljs-number">0</span>,
+        }),
+        <span class="hljs-keyword">new</span> c3.Axis.Y({
+            label: <span class="hljs-string">"Deaths"</span>,
+            tick_label: (d) =&gt; (d/<span class="hljs-number">1000000</span>)+<span class="hljs-string">"m"</span>,
+            grid: <span class="hljs-literal">true</span>,
+        }),
+    ],
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <h2 id="expanded-area-chart">Expanded Area Chart</h2>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>div_selection.append(<span class="hljs-string">'hr'</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>The third example is the same as the first except it <strong>expands</strong> the stacked data
+to represent a breakdown of percentages of deaths instead of an absolute count of deaths.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> expand_area_chart = <span class="hljs-keyword">new</span> c3.Plot&lt;CDCDeathData&gt;({
+    anchor: &lt;HTMLElement&gt;div_selection.append(<span class="hljs-string">'div'</span>).node(),
+    height: <span class="hljs-number">300</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
               <p>Note that since we are using percentages, the default vertical scale of 0-1 works fine.</p>
 
             </div>
@@ -399,11 +513,11 @@ to represent a breakdown of percentages of deaths instead of an absolute count o
         </li>
         
         
-        <li id="section-15">
+        <li id="section-20">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-15">&#182;</a>
+                <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
               <p>Specify <code>offset: &#39;expand&#39;</code> here to <strong>stack</strong> the data normalized from 0-1 instead of by
 absolute values.  This effectively provides a breakdown of the relative contribution
@@ -426,7 +540,7 @@ from each stack.</p>
     margins: { right: <span class="hljs-number">20</span> },
     axes: [
         <span class="hljs-keyword">new</span> c3.Axis.X({
-            label: <span class="hljs-string">"Causes of Death"</span>,
+            label: <span class="hljs-string">"Causes of Death - Normalized by Percent"</span>,
             orient: <span class="hljs-string">'top'</span>,
             scale: <span class="hljs-literal">false</span>,
         }),
@@ -441,11 +555,11 @@ from each stack.</p>
         </li>
         
         
-        <li id="section-16">
+        <li id="section-21">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-16">&#182;</a>
+                <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
               <p>Convert the factor to a percentage when displaying.</p>
 
@@ -460,11 +574,11 @@ from each stack.</p>
         </li>
         
         
-        <li id="section-17">
+        <li id="section-22">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-17">&#182;</a>
+                <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
               <h2 id="expanded-bar-chart">Expanded Bar Chart</h2>
 
@@ -478,11 +592,11 @@ div_selection.append(<span class="hljs-string">'p'</span>).text(<span class="hlj
         </li>
         
         
-        <li id="section-18">
+        <li id="section-23">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-18">&#182;</a>
+                <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
               <p>Create the <code>c3.Plot</code>.</p>
 
@@ -496,11 +610,11 @@ div_selection.append(<span class="hljs-string">'p'</span>).text(<span class="hlj
         </li>
         
         
-        <li id="section-19">
+        <li id="section-24">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-19">&#182;</a>
+                <a class="pilcrow" href="#section-24">&#182;</a>
               </div>
               <p>Sometimes we <em>don’t</em> have fully <strong>normalized data</strong>.  Here we have a dataset with one
 entry per x value (race), and each object contains the values for all of the stacks.</p>
@@ -517,11 +631,11 @@ entry per x value (race), and each object contains the values for all of the sta
         </li>
         
         
-        <li id="section-20">
+        <li id="section-25">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-20">&#182;</a>
+                <a class="pilcrow" href="#section-25">&#182;</a>
               </div>
               <p>Setup <strong>scales</strong> and <strong>x</strong> accessor.
 Note we are using an <em>ordinal</em> horizontal scale and the default vertical scale.</p>
@@ -534,11 +648,11 @@ Note we are using an <em>ordinal</em> horizontal scale and the default vertical 
         </li>
         
         
-        <li id="section-21">
+        <li id="section-26">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-21">&#182;</a>
+                <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
               <p>Create the <strong>stacked bar</strong> layer.
 Here we manually specify the set of stacks that are present.
@@ -582,11 +696,11 @@ particular value for that stack with the datum.</p>
         </li>
         
         
-        <li id="section-22">
+        <li id="section-27">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-22">&#182;</a>
+                <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
               <p><em>Alternatively</em>, instead of specifying a y accessor for each stack above,
 we could have just used this single <strong>y accessor</strong> for the layer:</p>
@@ -596,11 +710,11 @@ we could have just used this single <strong>y accessor</strong> for the layer:</
         </li>
         
         
-        <li id="section-23">
+        <li id="section-28">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-23">&#182;</a>
+                <a class="pilcrow" href="#section-28">&#182;</a>
               </div>
               <pre><code>   y: (d, i, stack) -&gt; d[stack.key]
 </code></pre>
@@ -609,11 +723,11 @@ we could have just used this single <strong>y accessor</strong> for the layer:</
         </li>
         
         
-        <li id="section-24">
+        <li id="section-29">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-24">&#182;</a>
+                <a class="pilcrow" href="#section-29">&#182;</a>
               </div>
               <p>Add <strong>margins </strong> and <strong>axes </strong> to polish the example</p>
 
@@ -639,11 +753,11 @@ we could have just used this single <strong>y accessor</strong> for the layer:</
         </li>
         
         
-        <li id="section-25">
+        <li id="section-30">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-25">&#182;</a>
+                <a class="pilcrow" href="#section-30">&#182;</a>
               </div>
               <p>Create an associated <strong>legend</strong> for this chart</p>
 
@@ -661,11 +775,11 @@ we could have just used this single <strong>y accessor</strong> for the layer:</
         </li>
         
         
-        <li id="section-26">
+        <li id="section-31">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-26">&#182;</a>
+                <a class="pilcrow" href="#section-31">&#182;</a>
               </div>
               <h2 id="stacked-bar-chart">Stacked Bar Chart</h2>
 
@@ -678,11 +792,11 @@ div_selection.append(<span class="hljs-string">'p'</span>).text(<span class="hlj
         </li>
         
         
-        <li id="section-27">
+        <li id="section-32">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-27">&#182;</a>
+                <a class="pilcrow" href="#section-32">&#182;</a>
               </div>
               <p>Format for death by age data</p>
 
@@ -696,11 +810,11 @@ div_selection.append(<span class="hljs-string">'p'</span>).text(<span class="hlj
         </li>
         
         
-        <li id="section-28">
+        <li id="section-33">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-28">&#182;</a>
+                <a class="pilcrow" href="#section-33">&#182;</a>
               </div>
               <p>Create the <code>c3.Plot</code>.
 Just for kicks this time we don’t attach it to an anchor at all.  In this case
@@ -714,11 +828,11 @@ C3 will create a div when we render which we will attach to the DOM later.</p>
         </li>
         
         
-        <li id="section-29">
+        <li id="section-34">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-29">&#182;</a>
+                <a class="pilcrow" href="#section-34">&#182;</a>
               </div>
               <p>Setup <strong>scales </strong> and <strong>x </strong> and <strong>y </strong> accessors.
 Note we are using an <em>ordinal</em> horizontal scale.</p>
@@ -733,11 +847,11 @@ Note we are using an <em>ordinal</em> horizontal scale.</p>
         </li>
         
         
-        <li id="section-30">
+        <li id="section-35">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-30">&#182;</a>
+                <a class="pilcrow" href="#section-35">&#182;</a>
               </div>
               <p>Add the <strong>stacked bar</strong> layer</p>
 
@@ -749,11 +863,11 @@ Note we are using an <em>ordinal</em> horizontal scale.</p>
         </li>
         
         
-        <li id="section-31">
+        <li id="section-36">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-31">&#182;</a>
+                <a class="pilcrow" href="#section-36">&#182;</a>
               </div>
               <p>This represents an <em>alternative</em> way to specify how to <strong>stack</strong> the data.
 Instead of providing layer <code>data</code> you can manually specify which <code>stacks</code>
@@ -786,11 +900,11 @@ should be present and a <code>data</code> array for each stack.</p>
         </li>
         
         
-        <li id="section-32">
+        <li id="section-37">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-32">&#182;</a>
+                <a class="pilcrow" href="#section-37">&#182;</a>
               </div>
               <p>I am manually entering the data here just as another perspective.
 <code>data</code> arrays can always be defined inline, passed as a variable,
@@ -825,11 +939,11 @@ and even dynamically updated followed with a call to <code>redraw()</code>.</p>
         </li>
         
         
-        <li id="section-33">
+        <li id="section-38">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-33">&#182;</a>
+                <a class="pilcrow" href="#section-38">&#182;</a>
               </div>
               <p>Setup <strong>margins </strong> and <strong>axes </strong> to polish up the example.</p>
 
@@ -856,11 +970,11 @@ and even dynamically updated followed with a call to <code>redraw()</code>.</p>
         </li>
         
         
-        <li id="section-34">
+        <li id="section-39">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-34">&#182;</a>
+                <a class="pilcrow" href="#section-39">&#182;</a>
               </div>
               <p>Attach chart to the DOM</p>
 
@@ -873,11 +987,11 @@ stacked_bar_chart.resize();</pre></div></div>
         </li>
         
         
-        <li id="section-35">
+        <li id="section-40">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-35">&#182;</a>
+                <a class="pilcrow" href="#section-40">&#182;</a>
               </div>
               <h2 id="resize-charts">Resize Charts</h2>
 
@@ -886,11 +1000,11 @@ stacked_bar_chart.resize();</pre></div></div>
         </li>
         
         
-        <li id="section-36">
+        <li id="section-41">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-36">&#182;</a>
+                <a class="pilcrow" href="#section-41">&#182;</a>
               </div>
               <p>Resize the charts if the window resizes</p>
 
@@ -898,6 +1012,7 @@ stacked_bar_chart.resize();</pre></div></div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-built_in">window</span>.onresize = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
     stacked_area_chart.resize();
+    grouped_line_chart.resize();
     expand_area_chart.resize();
     stacked_bar_chart.resize();
 };</pre></div></div>
@@ -905,11 +1020,11 @@ stacked_bar_chart.resize();</pre></div></div>
         </li>
         
         
-        <li id="section-37">
+        <li id="section-42">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-37">&#182;</a>
+                <a class="pilcrow" href="#section-42">&#182;</a>
               </div>
               <h2 id="load-the-tsv-data">Load the TSV data</h2>
 
@@ -918,11 +1033,11 @@ stacked_bar_chart.resize();</pre></div></div>
         </li>
         
         
-        <li id="section-38">
+        <li id="section-43">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-38">&#182;</a>
+                <a class="pilcrow" href="#section-43">&#182;</a>
               </div>
               <p>Use D3 to load the <strong>tsv</strong> data for the students using an AJAX request.
 The <code>row</code> callback is used to determine how to parse the rows based on the TSV data;
@@ -944,11 +1059,11 @@ rendering function with the loaded data.</p>
         </li>
         
         
-        <li id="section-39">
+        <li id="section-44">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-39">&#182;</a>
+                <a class="pilcrow" href="#section-44">&#182;</a>
               </div>
               <p>Filter invalid rows from the CDC’s tsv file.</p>
 
@@ -959,11 +1074,11 @@ rendering function with the loaded data.</p>
         </li>
         
         
-        <li id="section-40">
+        <li id="section-45">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-40">&#182;</a>
+                <a class="pilcrow" href="#section-45">&#182;</a>
               </div>
               <p>Bind <strong>data</strong> to the charts and render them.</p>
 
@@ -971,6 +1086,8 @@ rendering function with the loaded data.</p>
             
             <div class="content"><div class='highlight'><pre>        stacked_area_chart.data = data;
         stacked_area_chart.render();
+        grouped_line_chart.data = data;
+        grouped_line_chart.render();
         expand_area_chart.data = data;
         expand_area_chart.render();
     });</pre></div></div>

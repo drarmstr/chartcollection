@@ -265,14 +265,14 @@
     Stackable.prototype.safe = true;
 
     Stackable.prototype._stack = function() {
-      var add_value, base, datum, i, k, key, l, layer_h, len, len1, len2, len3, len4, len5, len6, len7, len8, len9, m, n, o, p, q, r, ref, ref1, ref10, ref11, ref12, ref13, ref14, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, stack, stack_h, stack_map, stacker, t, u, undef, v, w, x_values, x_values_set;
+      var add_value, base, datum, i, j, k, key, l, layer_h, len, len1, len10, len2, len3, len4, len5, len6, len7, len8, len9, m, n, o, p, q, r, ref, ref1, ref10, ref11, ref12, ref13, ref14, ref15, ref16, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, results, stack, stack_h, stack_index, stack_map, stacker, t, u, undef, v, value, w, x_values, x_values_set, z;
       if (this.stack_options || (this.stacks != null)) {
         if (this.stacks == null) {
           this.stacks = [];
         }
         x_values_set = {};
         add_value = (function(_this) {
-          return function(stack, datum, i) {
+          return function(stack, datum, i, j) {
             var ref, x, y;
             x = _this.x(datum, i);
             x_values_set[x] = x;
@@ -284,7 +284,7 @@
                 throw Error("Y accessor must be defined in stack, layer, or chart");
               }
             }).call(_this);
-            y = stack.y(datum, i, stack);
+            y = stack.y(datum, i, j, stack);
             return stack.values.push({
               x: x,
               y: y,
@@ -293,8 +293,8 @@
           };
         })(this);
         ref = this.stacks;
-        for (l = 0, len = ref.length; l < len; l++) {
-          stack = ref[l];
+        for (j = l = 0, len = ref.length; l < len; j = ++l) {
+          stack = ref[j];
           if (stack.name == null) {
             stack.name = (ref1 = this.stack_options) != null ? typeof ref1.name === "function" ? ref1.name(stack.key) : void 0 : void 0;
           }
@@ -303,20 +303,22 @@
             ref2 = stack.data;
             for (i = m = 0, len1 = ref2.length; m < len1; i = ++m) {
               datum = ref2[i];
-              add_value(stack, datum, i);
+              add_value(stack, datum, i, j);
             }
           }
         }
         if (this.current_data.length) {
           if (((ref3 = this.stack_options) != null ? ref3.key : void 0) != null) {
             stack_map = {};
+            stack_index = {};
             ref4 = this.stacks;
-            for (n = 0, len2 = ref4.length; n < len2; n++) {
-              stack = ref4[n];
+            for (j = n = 0, len2 = ref4.length; n < len2; j = ++n) {
+              stack = ref4[j];
               if (stack_map[stack.key] != null) {
                 throw Error("Stacks provided with duplicate keys: " + stack.key);
               }
               stack_map[stack.key] = stack;
+              stack_index[stack.key] = j;
             }
             ref5 = this.current_data;
             for (i = o = 0, len3 = ref5.length; o < len3; i = ++o) {
@@ -324,6 +326,7 @@
               key = this.stack_options.key(datum);
               if (stack_map[key] != null) {
                 stack = stack_map[key];
+                j = stack_index[key];
               } else {
                 this.stacks.push(stack = stack_map[key] = {
                   key: key,
@@ -331,17 +334,18 @@
                   current_data: [],
                   values: []
                 });
+                j = this.stacks.length;
               }
-              add_value(stack, datum, i);
+              add_value(stack, datum, i, j);
             }
           } else if (this.stacks != null) {
             ref6 = this.stacks;
-            for (p = 0, len4 = ref6.length; p < len4; p++) {
-              stack = ref6[p];
+            for (j = p = 0, len4 = ref6.length; p < len4; j = ++p) {
+              stack = ref6[j];
               ref7 = this.current_data;
               for (i = q = 0, len5 = ref7.length; q < len5; i = ++q) {
                 datum = ref7[i];
-                add_value(stack, datum, i);
+                add_value(stack, datum, i, j);
               }
             }
           } else {
@@ -416,16 +420,35 @@
             return v.datum;
           });
         }
-        stacker = d3.layout.stack().values(function(stack) {
-          return stack.values;
-        });
-        if (((ref13 = this.stack_options) != null ? ref13.offset : void 0) != null) {
-          stacker.offset(this.stack_options.offset);
+        if (((ref13 = this.stack_options) != null ? ref13.offset : void 0) === 'none') {
+          ref14 = this.stacks;
+          results = [];
+          for (z = 0, len10 = ref14.length; z < len10; z++) {
+            stack = ref14[z];
+            results.push((function() {
+              var i1, len11, ref15, results1;
+              ref15 = stack.values;
+              results1 = [];
+              for (i1 = 0, len11 = ref15.length; i1 < len11; i1++) {
+                value = ref15[i1];
+                results1.push(value.y0 = 0);
+              }
+              return results1;
+            })());
+          }
+          return results;
+        } else {
+          stacker = d3.layout.stack().values(function(stack) {
+            return stack.values;
+          });
+          if (((ref15 = this.stack_options) != null ? ref15.offset : void 0) != null) {
+            stacker.offset(this.stack_options.offset);
+          }
+          if (((ref16 = this.stack_options) != null ? ref16.order : void 0) != null) {
+            stacker.order(this.stack_options.order);
+          }
+          return stacker(this.stacks);
         }
-        if (((ref14 = this.stack_options) != null ? ref14.order : void 0) != null) {
-          stacker.order(this.stack_options.order);
-        }
-        return stacker(this.stacks);
       }
     };
 
@@ -531,20 +554,14 @@
     };
 
     Stackable.prototype.max_y = function() {
-      var i;
       if (this.stacks == null) {
         return Stackable.__super__.max_y.apply(this, arguments);
       } else {
-        return d3.max((function() {
-          var l, ref, ref1, results;
-          results = [];
-          for (i = l = 0, ref = ((ref1 = this.stacks[0]) != null ? ref1.values.length : void 0) - 1; 0 <= ref ? l <= ref : l >= ref; i = 0 <= ref ? ++l : --l) {
-            results.push(d3.sum(this.stacks, function(s) {
-              return s.values[i].y;
-            }));
-          }
-          return results;
-        }).call(this));
+        return d3.max(this.stacks, function(stack) {
+          return d3.max(stack.values, function(v) {
+            return v.y0 + v.y;
+          });
+        });
       }
     };
 

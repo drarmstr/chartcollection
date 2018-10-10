@@ -27,6 +27,8 @@
   },
   "homepage": "http://drarmstr.github.io/chartcollection/",
   "devDependencies": {
+    "coffee-script": "^1.12.7",
+    "typescript": "^3.0.3",
     "less": "^2.7.1",
     "docco": "^0.7",
     "codo": "^2.1.2"

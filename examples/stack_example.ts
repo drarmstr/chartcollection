@@ -6,7 +6,7 @@
 // dynamically creates and attached them to the DOM.
 var div_selection = d3.select('#stack_example_plots');
 
-// Create **ordinal** scales to manage the _age group_ and _race_ 
+// Create **ordinal** scales to manage the _age group_ and _race_
 // categories provided by the CDC.
 var five_year_age_group_scale = d3.scale.ordinal().domain([
     '1', '1-4', '5-9', '10-14', '15-19', '20-24', '25-29', '30-34', '35-39',
@@ -50,10 +50,10 @@ var stacked_area_chart = new c3.Plot<CDCDeathData>({
     anchor: <HTMLElement>div_selection.append('div').node(),
     height: 300,
 
-    // The **vertical scale** is a normal linear scale for the number of deaths.
-    // Note that for the **horizontal scale** we are using an **ordinal ** scale!
+    // The **horizontal scale** uses an **ordinal** scale of age categories.
+    // The **vertical scale** is automatically sized based on the data.
     h: five_year_age_group_scale,
-    v: d3.scale.linear().domain([0, 4500000]),
+    v_domain: [0, 'auto10'],
 
     // Accessors describing how to get the **x** and **y** values from the data.
     x: (d) => d.age_group,
@@ -81,7 +81,62 @@ var stacked_area_chart = new c3.Plot<CDCDeathData>({
     margins: { right: 20 },
     axes: [
         new c3.Axis.X({
-            label: "Causes of Death",
+            label: "Causes of Death - Stacked Area Chart",
+            orient: 'top',
+            scale: false,
+        }),
+        new c3.Axis.X({
+            label: "Age",
+            scale: d3.scale.linear().domain([0, 100]),
+            tick_size: 0,
+        }),
+        new c3.Axis.Y({
+            label: "Deaths",
+            tick_label: (d) => (d/1000000)+"m",
+            grid: true,
+        }),
+    ],
+});
+
+
+// ## Grouped Line Chart
+div_selection.append('hr')
+
+// The second example is the same as the first except it **groups** the data
+// and draws a seperate line for each group.
+var grouped_line_chart = new c3.Plot<CDCDeathData>({
+    anchor: <HTMLElement>div_selection.append('div').node(),
+    height: 300,
+
+    // The **horizontal scale** uses an **ordinal** scale of age categories.
+    // The **vertical scale** is automatically sized based on the data.
+    h: five_year_age_group_scale,
+    v_domain: [0, 'auto10'],
+
+    // Accessors describing how to get the **x** and **y** values from the data.
+    x: (d) => d.age_group,
+    y: (d) => d.deaths,
+
+    // Specify `offset: 'none'` here to avoid stacking the groups
+    layers: [
+        new c3.Plot.Layer.Line<CDCDeathData>({
+            interpolate: 'cardinal',
+            stack_options: {
+                key: (d) => <any>d.cause,
+                offset: 'none',
+                styles: {
+                  'stroke': (stack) => cause_color(stack.key),
+                  'stroke-width': 3,
+                },
+                title: (stack) => stack.key,  // Setup tooltips
+            },
+        }),
+    ],
+
+    margins: { right: 20 },
+    axes: [
+        new c3.Axis.X({
+            label: "Causes of Death - Grouped Line Chart",
             orient: 'top',
             scale: false,
         }),
@@ -102,7 +157,7 @@ var stacked_area_chart = new c3.Plot<CDCDeathData>({
 // ## Expanded Area Chart
 div_selection.append('hr')
 
-// The second example is the same as the first except it **expands** the stacked data
+// The third example is the same as the first except it **expands** the stacked data
 // to represent a breakdown of percentages of deaths instead of an absolute count of deaths.
 var expand_area_chart = new c3.Plot<CDCDeathData>({
     anchor: <HTMLElement>div_selection.append('div').node(),
@@ -131,7 +186,7 @@ var expand_area_chart = new c3.Plot<CDCDeathData>({
     margins: { right: 20 },
     axes: [
         new c3.Axis.X({
-            label: "Causes of Death",
+            label: "Causes of Death - Normalized by Percent",
             orient: 'top',
             scale: false,
         }),
@@ -213,7 +268,7 @@ var expanded_bar_chart = new c3.Plot({
     ],
     // _Alternatively_, instead of specifying a y accessor for each stack above,
     // we could have just used this single **y accessor** for the layer:
-        
+
     //        y: (d, i, stack) -> d[stack.key]
 
     // Add **margins ** and **axes ** to polish the example
@@ -323,7 +378,7 @@ var stacked_bar_chart = new c3.Plot<DeathByAgeData>({
             ],
         }),
     ],
-        
+
     // Setup **margins ** and **axes ** to polish up the example.
     margins: { right: 20 },
     axes: [
@@ -354,6 +409,7 @@ stacked_bar_chart.resize();
 // Resize the charts if the window resizes
 window.onresize = function () {
     stacked_area_chart.resize();
+    grouped_line_chart.resize();
     expand_area_chart.resize();
     stacked_bar_chart.resize();
 };
@@ -381,6 +437,8 @@ d3.tsv("data/injury_cause.tsv")
         // Bind **data** to the charts and render them.
         stacked_area_chart.data = data;
         stacked_area_chart.render();
+        grouped_line_chart.data = data;
+        grouped_line_chart.render();
         expand_area_chart.data = data;
         expand_area_chart.render();
     });

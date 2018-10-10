@@ -101,16 +101,16 @@ timelines.forEach(function (timeline) {
 // ## Resize the timelines
 // Resize the timelines to fit the window
 window.onresize = function () {
-    for (var _i = 0, timelines_1 = timelines; _i < timelines_1.length; _i++) {
-        var timeline = timelines_1[_i];
+    for (var _i = 0, timelines_2 = timelines; _i < timelines_2.length; _i++) {
+        var timeline = timelines_2[_i];
         timeline.resize();
     }
     timeline_axis_example.resize();
 };
 // ## Render the timelines!
 // Perform the initial rendering of the charts and add them to the global examples array.
-for (var _b = 0, timelines_2 = timelines; _b < timelines_2.length; _b++) {
-    var timeline = timelines_2[_b];
+for (var _b = 0, timelines_1 = timelines; _b < timelines_1.length; _b++) {
+    var timeline = timelines_1[_b];
     timeline.render();
 }
 timeline_axis_example.render();

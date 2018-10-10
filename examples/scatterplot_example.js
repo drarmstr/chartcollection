@@ -120,7 +120,7 @@ var my_chart = new c3.Plot({
             data: [],
             // Assign the layer with the CSS **class** `average-grade`.
             // There is a corresponding CSS rule in the HTML `<style>` to give this layer a purple stroke.
-            class: 'average-grade',
+            "class": 'average-grade',
             // Give the line a **label**.
             label_options: {
                 text: function (grade) { return "Avg Grade: " + grade.toFixed(2); }

@@ -109,7 +109,7 @@ plot.render({
             name: "Stacked Bar Chart",
             data: bar_data,
             x: function (d, i) { return i * 4; },
-            y: function (d, i, stack) { return d[bar_layer.stacks.indexOf(stack)]; },
+            y: function (d, i, stack) { return d[stack]; },
             stacks: [
                 { name: "Blue Stack", options: { styles: { 'fill': 'slateblue' } } },
                 { name: "Orange Stack", options: { styles: { 'fill': 'goldenrod' } } },
