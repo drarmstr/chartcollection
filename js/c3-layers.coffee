@@ -372,6 +372,7 @@ class c3.Plot.Layer.Stackable extends c3.Plot.Layer
                 if @stacks? or @stack_options? # Sorting handled by _stack()
                     c3.array.sort_up values, (v)=> @h v.x
                 (v.datum for v in values when v.x?)
+        @current_data ?= []
 
         @_stack()
         @groups = @content.select('g.stack')

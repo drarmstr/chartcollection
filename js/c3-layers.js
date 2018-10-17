@@ -508,6 +508,9 @@
         }
         return results;
       })()) : void 0;
+      if (this.current_data == null) {
+        this.current_data = [];
+      }
       this._stack();
       return this.groups = this.content.select('g.stack').bind((ref1 = this.stacks) != null ? ref1 : [null], ((ref2 = this.stacks) != null ? (ref3 = ref2[0]) != null ? ref3.key : void 0 : void 0) == null ? null : function(stack) {
         return stack.key;
