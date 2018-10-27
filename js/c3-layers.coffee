@@ -384,7 +384,8 @@ class c3.Plot.Layer.Stackable extends c3.Plot.Layer
 
     min_x: => if not @stacks? then super else d3.min @stacks[0]?.values, (v)-> v.x
     max_x: => if not @stacks? then super else d3.max @stacks[0]?.values, (v)-> v.x
-    min_y: => if not @stacks? then super else 0
+    min_y: => if not @stacks? then super else
+        d3.min @stacks, (stack)-> d3.min stack.values, (v)-> v.y0 + v.y
     max_y: => if not @stacks? then super else
         d3.max @stacks, (stack)-> d3.max stack.values, (v)-> v.y0 + v.y
 

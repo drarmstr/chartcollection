@@ -552,7 +552,11 @@
       if (this.stacks == null) {
         return Stackable.__super__.min_y.apply(this, arguments);
       } else {
-        return 0;
+        return d3.min(this.stacks, function(stack) {
+          return d3.min(stack.values, function(v) {
+            return v.y0 + v.y;
+          });
+        });
       }
     };
 
