@@ -1758,7 +1758,7 @@
         this.tip = c3.select(anchor, 'div.c3.hover').singleton();
         layer = this;
         mousemove = function() {
-          var hover_datum, hover_html, layerX, layerY, ref, swimlane, x;
+          var elt, hover_datum, hover_html, layerX, layerY, ref, swimlane, x, y;
           ref = d3.mouse(this), layerX = ref[0], layerY = ref[1];
           swimlane = Math.floor(layer.v.invert(layerY));
           swimlane = Math.min(swimlane, Math.max(layer.v.domain()[0], layer.v.domain()[1] - 1));
@@ -1769,10 +1769,16 @@
             return layer.tip.all.style('display', 'none');
           } else {
             layer.tip.all.html(hover_html);
+            elt = layer.tip.all[0][0];
+            x = d3.event.clientX;
+            y = d3.event.clientY;
+            if (x + elt.clientWidth > document.body.clientWidth) {
+              x = document.body.clientWidth - elt.clientWidth;
+            }
             return layer.tip.all.style({
               display: 'block',
-              left: d3.event.clientX + 'px',
-              top: d3.event.clientY + 'px'
+              left: x + 'px',
+              top: y + 'px'
             });
           }
         };
