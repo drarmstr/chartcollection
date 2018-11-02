@@ -1173,10 +1173,18 @@ class c3.Plot.Layer.Swimlane extends c3.Plot.Layer
                     layer.tip.all.style 'display', 'none'
                 else
                     layer.tip.all.html hover_html
+                    elt = layer.tip.all.node()
+                    x = d3.event.clientX
+                    y = d3.event.clientY
+
+                    if x + elt.clientWidth > document.body.clientWidth
+                        x = document.body.clientWidth - elt.clientWidth
+
                     layer.tip.all.style
                         display: 'block'
-                        left: d3.event.clientX+'px'
-                        top: d3.event.clientY+'px'
+                        left: x+'px'
+                        top: y+'px'
+
             # Manage tooltip event handlers, disable while zooming/panning
             @chart.content.all.on 'mouseleave.hover', => layer.tip.all.style 'display', 'none'
             @chart.content.all.on 'mousedown.hover', =>
