@@ -1769,7 +1769,7 @@
             return layer.tip.all.style('display', 'none');
           } else {
             layer.tip.all.html(hover_html);
-            elt = layer.tip.all[0][0];
+            elt = layer.tip.all.node();
             x = d3.event.clientX;
             y = d3.event.clientY;
             if (x + elt.clientWidth > document.body.clientWidth) {
