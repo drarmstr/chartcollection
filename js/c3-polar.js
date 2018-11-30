@@ -717,6 +717,8 @@
 
     Sunburst.prototype.type = 'sunburst';
 
+    Sunburst.prototype.value = void 0;
+
     Sunburst.prototype.self_value = void 0;
 
     Sunburst.prototype.sort = false;

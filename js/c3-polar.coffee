@@ -576,6 +576,10 @@ class c3.Polar.Layer.Sunburst extends c3.Polar.Layer.Segment
     @version: 0.1
     type: 'sunburst'
 
+    # [Function] Accessor to get the "_total_" value of the data element.
+    # That is the total value of the element itself inclusive of all of it's children's value.
+    # You can define either _value_ or _self_value_.
+    value: undefined
     # [Function] The `value` accessor defines the "total" value for an element, that is the value of
     # the element itself plus that of all of its children.  If you know the "self" value of an
     # element without the value of its children, then define this callback accessor instead.
