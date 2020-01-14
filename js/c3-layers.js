@@ -2157,6 +2157,8 @@
 
     Icicle.prototype.root_datum = null;
 
+    Icicle.prototype.set_root_on_click = true;
+
     Icicle.prototype.rect_options = void 0;
 
     Icicle.prototype.label_options = void 0;
@@ -2187,7 +2189,9 @@
           click: (function(_this) {
             return function(d) {
               var ref;
-              return _this.rebase(d !== _this.root_datum ? d : (ref = (_this.parent_key != null ? _this.nodes[_this.parent_key(d)] : _this.nodes[_this.key(d)].parent)) != null ? ref.datum : void 0);
+              if (_this.set_root_on_click) {
+                return _this.rebase(d !== _this.root_datum ? d : (ref = (_this.parent_key != null ? _this.nodes[_this.parent_key(d)] : _this.nodes[_this.key(d)].parent)) != null ? ref.datum : void 0);
+              }
             };
           })(this)
         }

@@ -119,7 +119,7 @@ The Icicle layer can use a more optimized algorithm in this situation.</p><h2 id
     <div class='docstring'>
   <p>[Function] Accessor to get the &quot;<em>total</em>&quot; value of the data element.
 That is the total value of the element itself inclusive of all of it&#39;s children&#39;s value.
-You can define either <em>value</em> or _self<em>value</em>.</p>
+You can define either <em>value</em> or <em>self_value</em>.</p>
 </div>
 <div class='tags'>
 </div>
@@ -232,6 +232,19 @@ percentage of the current domain focus. (1==100%)</p>
 If this is specified, then only this root and its parents and children will be rendered
 When {c3.Plot.Layer.Icicle#rebase rebase()} is called or a node is clicked on
 it will animate the transition to a new root node, if animation is enabled.</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='set_root_on_click-variable'>
+    set_root_on_click
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>true</code></pre>
+    <div class='docstring'>
+  <p>[Boolean] Set the root_datum on node click.
+This will also zoom the Icicle to that root.</p>
 </div>
 <div class='tags'>
 </div>
