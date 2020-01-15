@@ -1503,6 +1503,10 @@ class c3.Plot.Layer.Swimlane.Icicle extends c3.Plot.Layer.Swimlane
     # it will animate the transition to a new root node, if animation is enabled.
     root_datum: null
 
+    # [Boolean] Set the root_datum on node click.
+    # This will also zoom the Icicle to that root.
+    set_root_on_click: true
+
     # [{c3.Selection.Options}] Options for the svg:rect nodes for each segment
     rect_options: undefined
     # [{c3.Selection.Options}] Options for the label svg:text nodes for each segment
@@ -1519,8 +1523,9 @@ class c3.Plot.Layer.Swimlane.Icicle extends c3.Plot.Layer.Swimlane
         @segments_g = c3.select(@g, 'g.segments').singleton()
 
         @segment_options = { events: { click: (d)=>
-            @rebase if d isnt @root_datum then d
-            else (if @parent_key? then @nodes[@parent_key d] else @nodes[@key d].parent)?.datum
+            if @set_root_on_click
+                @rebase if d isnt @root_datum then d
+                else (if @parent_key? then @nodes[@parent_key d] else @nodes[@key d].parent)?.datum
         } }
         @label_clip_options = {}
         if @label_options?
