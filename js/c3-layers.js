@@ -44,6 +44,7 @@
       this.min_x = bind(this.min_x, this);
       this.scale = bind(this.scale, this);
       this.redraw = bind(this.redraw, this);
+      this.pan = bind(this.pan, this);
       this.zoom = bind(this.zoom, this);
       this.style = bind(this.style, this);
       this.draw = bind(this.draw, this);
@@ -158,6 +159,13 @@
     Layer.prototype.zoom = function() {
       if (typeof this.draw === "function") {
         this.draw('zoom');
+      }
+      return typeof this.style === "function" ? this.style(true) : void 0;
+    };
+
+    Layer.prototype.pan = function() {
+      if (typeof this.draw === "function") {
+        this.draw('pan');
       }
       return typeof this.style === "function" ? this.style(true) : void 0;
     };
@@ -1782,6 +1790,7 @@
             });
           }
         };
+        this.chart.v_orient = this.v_orient;
         this.chart.content.all.on('mouseleave.hover', (function(_this) {
           return function() {
             return layer.tip.all.style('display', 'none');
@@ -1948,7 +1957,7 @@
     };
 
     Segment.prototype._draw = function(origin) {
-      var current_labels, data, datum, dx, h, half_pixel_width, l, left_edge, len, ref, ref1, ref2, right_edge, self, x, zero_pos;
+      var current_labels, data, datum, dx, h, half_pixel_width, l, left_edge, len, ref, ref1, ref2, right_edge, self, translate, x, zero_pos;
       Segment.__super__._draw.apply(this, arguments);
       ref = this.h.domain(), left_edge = ref[0], right_edge = ref[1];
       half_pixel_width = (right_edge - left_edge) / ((this.h.range()[1] - this.h.range()[0]) || 1) / 2;
@@ -1972,10 +1981,14 @@
         }
       }
       this.rects = this.rects_group.select('rect.segment').options(this.rect_options).bind(data, this.key).update();
+      if (origin === 'pan') {
+        translate = (this.chart.v.domain()[0] - this.chart.orig_v.domain()[0]) * this.max_depth;
+        this.v.domain([translate, translate + this.max_depth]);
+      }
       h = this.scaled_g != null ? (ref2 = this.chart.orig_h) != null ? ref2 : this.h : this.h;
       zero_pos = h(0);
       (origin === 'resize' ? this.rects.all : this.rects["new"]).attr('height', this.dy);
-      (!scaled || (this.key == null) || origin === 'resize' || (origin === 'redraw' && this instanceof c3.Plot.Layer.Swimlane.Flamechart) ? this.rects.all : this.rects["new"]).attr({
+      (!scaled || (this.key == null) || origin === 'resize' || origin === 'pan' || (origin === 'redraw' && this instanceof c3.Plot.Layer.Swimlane.Flamechart) ? this.rects.all : this.rects["new"]).attr({
         x: (function(_this) {
           return function(d) {
             return h(_this.x(d));
@@ -2112,6 +2125,7 @@
         this.depths[this.key(datum)] = stack.length - 1;
       }
       this.v.domain([0, max_depth]);
+      this.max_depth = max_depth;
       return c3.Plot.Layer.Swimlane.prototype._update.call(this, origin);
     };
 

@@ -15,6 +15,8 @@ var flamechart_calltrace = new c3.Plot.Zoomable({
     ]),
     // Allow the timeline to be **zoomable** with mouse and touch events.
     zoomable: 'h',
+    // Allow the timeline to be pan vertically as well as horizontally.
+    pannable: 'hv',
     // Create a single **Flamechart** layer.
     layers: [
         flamechart_layer = new c3.Plot.Layer.Swimlane.Flamechart({
@@ -62,6 +64,7 @@ for (var _i = 0, _a = ['input', 'change']; _i < _a.length; _i++) { // 'input' ev
 // Grow chart bottom-up or top-down
 document.getElementById('bottom_up').addEventListener('change', function () {
     var element = this;
+    flamechart_calltrace.v_orient = element.checked ? 'bottom' : 'top';
     flamechart_layer.v_orient = element.checked ? 'bottom' : 'top';
-    flamechart_layer.redraw();
+    flamechart_calltrace.resize();
 });

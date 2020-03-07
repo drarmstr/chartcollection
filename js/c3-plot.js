@@ -489,6 +489,7 @@
 
     function Zoomable() {
       this._draw = bind(this._draw, this);
+      this.pan = bind(this.pan, this);
       this.focus = bind(this.focus, this);
       this._size = bind(this._size, this);
       this._init = bind(this._init, this);
@@ -503,6 +504,8 @@
 
     Zoomable.prototype.zoom_extent = void 0;
 
+    Zoomable.prototype.pannable = 'h';
+
     Zoomable.prototype._init = function() {
       var last_touch_event, touchstart;
       if (this.rendered) {
@@ -512,7 +515,11 @@
         if (this.zoomable !== 'h') {
           throw "Only horizontal zooming is currently supported";
         }
+        if (this.pannable !== 'hv' && this.pannable !== 'h') {
+          throw "Pannable options are either 'h' or 'hv'.";
+        }
         this.orig_h = this.h.copy();
+        this.orig_v = this.v.copy();
         this.zoomer = d3.behavior.zoom().on('zoom', (function(_this) {
           return function() {
             return _this.trigger('zoom', _this.focus(_this.h.domain()));
@@ -528,6 +535,16 @@
             }
           };
         })(this));
+        if (this.pannable === 'hv') {
+          this.prev_v_translate = 0;
+          this.dragger = d3.behavior.drag();
+          this.dragger.on('drag', (function(_this) {
+            return function() {
+              return _this.trigger('verticalPan', _this.pan(d3.event.dy));
+            };
+          })(this));
+          this.content.all.call(this.dragger);
+        }
         this.zoomer(this.content.all);
         this.content.all.on('dblclick.zoom', null);
         last_touch_event = void 0;
@@ -555,6 +572,7 @@
       var current_extent;
       Zoomable.__super__._size.apply(this, arguments);
       c3.d3.set_range(this.orig_h, this.h_orient === 'left' ? [0, this.content.width] : [this.content.width, 0]);
+      c3.d3.set_range(this.orig_v, this.v_orient === 'top' ? [this.content.height, 0] : [0, this.content.height]);
       current_extent = this.h.domain();
       this.h.domain(this.orig_h.domain());
       this.zoomer.x(this.h);
@@ -639,6 +657,26 @@
           return new_domain;
         }
       }
+    };
+
+    Zoomable.prototype.pan = function(dy) {
+      var i, layer, len, orig_v_domain_max, orig_v_domain_min, ref, translate, v;
+      orig_v_domain_min = this.orig_v.domain()[0];
+      orig_v_domain_max = this.orig_v.domain()[1];
+      v = (this.orig_v.invert(dy)) + this.prev_v_translate - (this.v_orient === 'top' ? orig_v_domain_max : 0);
+      translate = v > orig_v_domain_max ? orig_v_domain_max : v < orig_v_domain_min ? orig_v_domain_min : v;
+      this.v.domain([translate, translate + orig_v_domain_max]);
+      this.prev_v_translate = translate;
+      ref = this.layers;
+      for (i = 0, len = ref.length; i < len; i++) {
+        layer = ref[i];
+        if (layer.rendered) {
+          if (typeof layer.pan === "function") {
+            layer.pan();
+          }
+        }
+      }
+      return this.v(translate);
     };
 
     Zoomable.prototype._draw = function(origin) {
