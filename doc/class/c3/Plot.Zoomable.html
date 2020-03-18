@@ -61,7 +61,7 @@
 <li><strong>zoom</strong> - Triggered when the user starts to zoom or pan.  Passed with the current focus domain.</li>
 <li><strong>zoomend</strong> - Triggered when the user finishes zooming or panning.  Passed with the focus domain.</li>
 </ul>
-<h2 id="extensibility">Extensibility</h2><p>The <em>h</em> scale will adjust it&#39;s domain based on the current focus of the chart.  The original domain can be retreived using the _orig<em>h</em> scale.</p>
+<h2 id="extensibility">Extensibility</h2><p>The <em>h</em> scale will adjust it&#39;s domain based on the current focus of the chart.  The original domain can be retreived using the <em>orig_h</em> scale.</p>
 </div>
 <div class='tags'>
   <h3>Author:</h3>
@@ -110,6 +110,18 @@
     <div class='docstring'>
   <p>[Number, String] The maximum zoom factor the user is allowed to zoom in
 If set to <em>integer</em> then allow zooming only until pixels are integer values.</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='pannable-variable'>
+    pannable
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>&#39;h&#39;</code></pre>
+    <div class='docstring'>
+  <p>[String] Enables vertical panning. Horizontal panning is controlled by the zoomer. Values are either &#39;h&#39; or &#39;hv&#39;. &#39;h&#39; is the default. At the moment this only works reliably on the Flamechart</p>
 </div>
 <div class='tags'>
 </div>
@@ -184,6 +196,19 @@ If set to <em>integer</em> then allow zooming only until pixels are integer valu
     <span class='bound note title'>Bound</span>
     <span class='desc'>
       Zoom to a specified focus domain, but only if the domain actually changes 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#pan-dynamic'>
+        #
+(void)
+<b>pan</b><span>(dy)</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      Note: dx (horizontal panning) is controlled by the zoomer 
     </span>
   </li>
   <li>
@@ -276,6 +301,20 @@ If set to <em>integer</em> then allow zooming only until pixels are integer valu
       <span class='desc'>The domain to set the focus to. </span>
     </li>
   </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='pan-dynamic'>
+      #
+(void)
+<b>pan</b><span>(dy)</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Note: dx (horizontal panning) is controlled by the zoomer</p>
+</div>
+<div class='tags'>
 </div>
   </div>
   <div class='method_details'>

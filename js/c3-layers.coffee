@@ -144,6 +144,11 @@ class c3.Plot.Layer
         @draw?('zoom')
         @style?(true)
 
+    # Called when a layer needs to update from vertical panning
+    pan: =>
+        @draw?('pan')
+        @style?(true)
+
     # Redraw just this layer
     redraw: (origin='redraw')=>
         @update(origin)
@@ -1185,6 +1190,9 @@ class c3.Plot.Layer.Swimlane extends c3.Plot.Layer
                         left: x+'px'
                         top: y+'px'
 
+            # Set for vertical panning
+            @chart.v_orient = @v_orient
+
             # Manage tooltip event handlers, disable while zooming/panning
             @chart.content.all.on 'mouseleave.hover', => layer.tip.all.style 'display', 'none'
             @chart.content.all.on 'mousedown.hover', =>
@@ -1306,11 +1314,16 @@ class c3.Plot.Layer.Swimlane.Segment extends c3.Plot.Layer.Swimlane
         # Bind here because the current data set is dynamic based on zooming
         @rects = @rects_group.select('rect.segment').options(@rect_options).bind(data, @key).update()
 
+        # Get the vertical scale based on any possible vertical panning from a zoomable chart
+        if origin=='pan'
+            translate = (@chart.v.domain()[0] - @chart.orig_v.domain()[0]) * @max_depth # Assume V scale is 0-1
+            @v.domain [translate, translate+@max_depth]
+
         # Position the rects
         h = if @scaled_g? then (@chart.orig_h ? @h) else @h
         zero_pos = h(0)
         (if origin is 'resize' then @rects.all else @rects.new).attr 'height', @dy
-        (if !scaled or !@key? or origin=='resize' or (origin=='redraw' and this instanceof c3.Plot.Layer.Swimlane.Flamechart)
+        (if !scaled or !@key? or origin=='resize' or origin=='pan' or (origin=='redraw' and this instanceof c3.Plot.Layer.Swimlane.Flamechart)
         then @rects.all else @rects.new).attr
             x: (d)=> h @x(d)
             width: (d)=> (h @dx(d)) - zero_pos
@@ -1418,6 +1431,9 @@ class c3.Plot.Layer.Swimlane.Flamechart extends c3.Plot.Layer.Swimlane.Segment
 
         # Set the vertical domain and resize chart based on maximum flamechart depth
         @v.domain [0, max_depth]
+        # Set max depth here because at some point the v.domain gets reset to something incorrect in the initialization
+        # and we need this value for panning
+        @max_depth = max_depth
         c3.Plot.Layer.Swimlane::_update.call this, origin
 
 
