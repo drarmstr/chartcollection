@@ -363,11 +363,15 @@ class c3.Plot.Zoomable extends c3.Plot
     # [Number, String] The maximum zoom factor the user is allowed to zoom in
     # If set to _integer_ then allow zooming only until pixels are integer values.
     zoom_extent: undefined
+    # [String] Enables vertical panning. Horizontal panning is controlled by the zoomer. Values are either 'h' or 'hv'. 'h' is the default. At the moment this only works reliably on the Flamechart
+    pannable: 'h'
 
     _init: => if @rendered then super else
         super
         if @zoomable != 'h' then throw "Only horizontal zooming is currently supported"
+        if @pannable != 'hv' and @pannable != 'h' then throw "Pannable options are either 'h' or 'hv'."
         @orig_h = @h.copy()
+        @orig_v = @v.copy()
 
         # Make it zoomable!
         @zoomer = d3.behavior.zoom().on 'zoom', =>
@@ -377,6 +381,14 @@ class c3.Plot.Zoomable extends c3.Plot
         @zoomer.on 'zoomend', => if @h.domain()[0]!=@prev_zoomend_domain?[0] or @h.domain()[1]!=@prev_zoomend_domain?[1]
             @trigger 'zoomend', @h.domain()
             @prev_zoomend_domain = @h.domain()[..]
+
+        # Make it pannable
+        if @pannable=='hv'
+            @prev_v_translate = 0
+            @dragger = d3.behavior.drag()
+            @dragger.on 'drag', =>
+                @trigger 'verticalPan', @pan d3.event.dy
+            @content.all.call @dragger
 
         # Only zoom over g.content; if we cover the entire SVG, then axes cause zoom to be uncentered.
         @zoomer @content.all
@@ -404,6 +416,7 @@ class c3.Plot.Zoomable extends c3.Plot
     _size: =>
         super
         c3.d3.set_range @orig_h, if @h_orient is 'left' then [0, @content.width] else [@content.width, 0]
+        c3.d3.set_range @orig_v, if @v_orient is 'top' then [@content.height, 0] else [0, @content.height]
         # Update the zooming state for the new size
         current_extent = @h.domain()
         @h.domain @orig_h.domain()
@@ -469,6 +482,19 @@ class c3.Plot.Zoomable extends c3.Plot
             @trigger 'redraw', 'focus'
             @trigger 'restyle', true
         return if domain[0]==extent[0] and domain[1]==extent[1] then null else new_domain
+
+     # Note: dx (horizontal panning) is controlled by the zoomer
+     pan: (dy) =>
+        orig_v_domain_min = @orig_v.domain()[0]
+        orig_v_domain_max = @orig_v.domain()[1]
+        v = (@orig_v.invert dy) + @prev_v_translate - (if @v_orient == 'top' then orig_v_domain_max else 0)
+        translate = if v > orig_v_domain_max then orig_v_domain_max else if v < orig_v_domain_min then orig_v_domain_min else v
+        @v.domain [translate, translate+orig_v_domain_max]
+        @prev_v_translate = translate
+        # Pan all of the layers
+        for layer in @layers
+            if layer.rendered then layer.pan?()
+        @v translate
 
     _draw: (origin)=>
         super

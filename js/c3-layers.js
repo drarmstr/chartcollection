@@ -44,6 +44,7 @@
       this.min_x = bind(this.min_x, this);
       this.scale = bind(this.scale, this);
       this.redraw = bind(this.redraw, this);
+      this.pan = bind(this.pan, this);
       this.zoom = bind(this.zoom, this);
       this.style = bind(this.style, this);
       this.draw = bind(this.draw, this);
@@ -158,6 +159,13 @@
     Layer.prototype.zoom = function() {
       if (typeof this.draw === "function") {
         this.draw('zoom');
+      }
+      return typeof this.style === "function" ? this.style(true) : void 0;
+    };
+
+    Layer.prototype.pan = function() {
+      if (typeof this.draw === "function") {
+        this.draw('pan');
       }
       return typeof this.style === "function" ? this.style(true) : void 0;
     };
@@ -508,6 +516,9 @@
         }
         return results;
       })()) : void 0;
+      if (this.current_data == null) {
+        this.current_data = [];
+      }
       this._stack();
       return this.groups = this.content.select('g.stack').bind((ref1 = this.stacks) != null ? ref1 : [null], ((ref2 = this.stacks) != null ? (ref3 = ref2[0]) != null ? ref3.key : void 0 : void 0) == null ? null : function(stack) {
         return stack.key;
@@ -549,7 +560,11 @@
       if (this.stacks == null) {
         return Stackable.__super__.min_y.apply(this, arguments);
       } else {
-        return 0;
+        return d3.min(this.stacks, function(stack) {
+          return d3.min(stack.values, function(v) {
+            return v.y0 + v.y;
+          });
+        });
       }
     };
 
@@ -1751,7 +1766,7 @@
         this.tip = c3.select(anchor, 'div.c3.hover').singleton();
         layer = this;
         mousemove = function() {
-          var hover_datum, hover_html, layerX, layerY, ref, swimlane, x;
+          var elt, hover_datum, hover_html, layerX, layerY, ref, swimlane, x, y;
           ref = d3.mouse(this), layerX = ref[0], layerY = ref[1];
           swimlane = Math.floor(layer.v.invert(layerY));
           swimlane = Math.min(swimlane, Math.max(layer.v.domain()[0], layer.v.domain()[1] - 1));
@@ -1762,13 +1777,20 @@
             return layer.tip.all.style('display', 'none');
           } else {
             layer.tip.all.html(hover_html);
+            elt = layer.tip.all.node();
+            x = d3.event.clientX;
+            y = d3.event.clientY;
+            if (x + elt.clientWidth > document.body.clientWidth) {
+              x = document.body.clientWidth - elt.clientWidth;
+            }
             return layer.tip.all.style({
               display: 'block',
-              left: d3.event.clientX + 'px',
-              top: d3.event.clientY + 'px'
+              left: x + 'px',
+              top: y + 'px'
             });
           }
         };
+        this.chart.v_orient = this.v_orient;
         this.chart.content.all.on('mouseleave.hover', (function(_this) {
           return function() {
             return layer.tip.all.style('display', 'none');
@@ -1935,7 +1957,7 @@
     };
 
     Segment.prototype._draw = function(origin) {
-      var current_labels, data, datum, dx, h, half_pixel_width, l, left_edge, len, ref, ref1, ref2, right_edge, self, x, zero_pos;
+      var current_labels, data, datum, dx, h, half_pixel_width, l, left_edge, len, ref, ref1, ref2, right_edge, self, translate, x, zero_pos;
       Segment.__super__._draw.apply(this, arguments);
       ref = this.h.domain(), left_edge = ref[0], right_edge = ref[1];
       half_pixel_width = (right_edge - left_edge) / ((this.h.range()[1] - this.h.range()[0]) || 1) / 2;
@@ -1959,10 +1981,14 @@
         }
       }
       this.rects = this.rects_group.select('rect.segment').options(this.rect_options).bind(data, this.key).update();
+      if (origin === 'pan') {
+        translate = (this.chart.v.domain()[0] - this.chart.orig_v.domain()[0]) * this.max_depth;
+        this.v.domain([translate, translate + this.max_depth]);
+      }
       h = this.scaled_g != null ? (ref2 = this.chart.orig_h) != null ? ref2 : this.h : this.h;
       zero_pos = h(0);
       (origin === 'resize' ? this.rects.all : this.rects["new"]).attr('height', this.dy);
-      (!scaled || (this.key == null) || origin === 'resize' || (origin === 'redraw' && this instanceof c3.Plot.Layer.Swimlane.Flamechart) ? this.rects.all : this.rects["new"]).attr({
+      (!scaled || (this.key == null) || origin === 'resize' || origin === 'pan' || (origin === 'redraw' && this instanceof c3.Plot.Layer.Swimlane.Flamechart) ? this.rects.all : this.rects["new"]).attr({
         x: (function(_this) {
           return function(d) {
             return h(_this.x(d));
@@ -2099,6 +2125,7 @@
         this.depths[this.key(datum)] = stack.length - 1;
       }
       this.v.domain([0, max_depth]);
+      this.max_depth = max_depth;
       return c3.Plot.Layer.Swimlane.prototype._update.call(this, origin);
     };
 
@@ -2144,6 +2171,8 @@
 
     Icicle.prototype.root_datum = null;
 
+    Icicle.prototype.set_root_on_click = true;
+
     Icicle.prototype.rect_options = void 0;
 
     Icicle.prototype.label_options = void 0;
@@ -2174,7 +2203,9 @@
           click: (function(_this) {
             return function(d) {
               var ref;
-              return _this.rebase(d !== _this.root_datum ? d : (ref = (_this.parent_key != null ? _this.nodes[_this.parent_key(d)] : _this.nodes[_this.key(d)].parent)) != null ? ref.datum : void 0);
+              if (_this.set_root_on_click) {
+                return _this.rebase(d !== _this.root_datum ? d : (ref = (_this.parent_key != null ? _this.nodes[_this.parent_key(d)] : _this.nodes[_this.key(d)].parent)) != null ? ref.datum : void 0);
+              }
             };
           })(this)
         }

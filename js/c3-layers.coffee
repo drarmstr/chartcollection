@@ -144,6 +144,11 @@ class c3.Plot.Layer
         @draw?('zoom')
         @style?(true)
 
+    # Called when a layer needs to update from vertical panning
+    pan: =>
+        @draw?('pan')
+        @style?(true)
+
     # Redraw just this layer
     redraw: (origin='redraw')=>
         @update(origin)
@@ -372,6 +377,7 @@ class c3.Plot.Layer.Stackable extends c3.Plot.Layer
                 if @stacks? or @stack_options? # Sorting handled by _stack()
                     c3.array.sort_up values, (v)=> @h v.x
                 (v.datum for v in values when v.x?)
+        @current_data ?= []
 
         @_stack()
         @groups = @content.select('g.stack')
@@ -383,7 +389,8 @@ class c3.Plot.Layer.Stackable extends c3.Plot.Layer
 
     min_x: => if not @stacks? then super else d3.min @stacks[0]?.values, (v)-> v.x
     max_x: => if not @stacks? then super else d3.max @stacks[0]?.values, (v)-> v.x
-    min_y: => if not @stacks? then super else 0
+    min_y: => if not @stacks? then super else
+        d3.min @stacks, (stack)-> d3.min stack.values, (v)-> v.y0 + v.y
     max_y: => if not @stacks? then super else
         d3.max @stacks, (stack)-> d3.max stack.values, (v)-> v.y0 + v.y
 
@@ -1171,10 +1178,21 @@ class c3.Plot.Layer.Swimlane extends c3.Plot.Layer
                     layer.tip.all.style 'display', 'none'
                 else
                     layer.tip.all.html hover_html
+                    elt = layer.tip.all.node()
+                    x = d3.event.clientX
+                    y = d3.event.clientY
+
+                    if x + elt.clientWidth > document.body.clientWidth
+                        x = document.body.clientWidth - elt.clientWidth
+
                     layer.tip.all.style
                         display: 'block'
-                        left: d3.event.clientX+'px'
-                        top: d3.event.clientY+'px'
+                        left: x+'px'
+                        top: y+'px'
+
+            # Set for vertical panning
+            @chart.v_orient = @v_orient
+
             # Manage tooltip event handlers, disable while zooming/panning
             @chart.content.all.on 'mouseleave.hover', => layer.tip.all.style 'display', 'none'
             @chart.content.all.on 'mousedown.hover', =>
@@ -1296,11 +1314,16 @@ class c3.Plot.Layer.Swimlane.Segment extends c3.Plot.Layer.Swimlane
         # Bind here because the current data set is dynamic based on zooming
         @rects = @rects_group.select('rect.segment').options(@rect_options).bind(data, @key).update()
 
+        # Get the vertical scale based on any possible vertical panning from a zoomable chart
+        if origin=='pan'
+            translate = (@chart.v.domain()[0] - @chart.orig_v.domain()[0]) * @max_depth # Assume V scale is 0-1
+            @v.domain [translate, translate+@max_depth]
+
         # Position the rects
         h = if @scaled_g? then (@chart.orig_h ? @h) else @h
         zero_pos = h(0)
         (if origin is 'resize' then @rects.all else @rects.new).attr 'height', @dy
-        (if !scaled or !@key? or origin=='resize' or (origin=='redraw' and this instanceof c3.Plot.Layer.Swimlane.Flamechart)
+        (if !scaled or !@key? or origin=='resize' or origin=='pan' or (origin=='redraw' and this instanceof c3.Plot.Layer.Swimlane.Flamechart)
         then @rects.all else @rects.new).attr
             x: (d)=> h @x(d)
             width: (d)=> (h @dx(d)) - zero_pos
@@ -1408,6 +1431,9 @@ class c3.Plot.Layer.Swimlane.Flamechart extends c3.Plot.Layer.Swimlane.Segment
 
         # Set the vertical domain and resize chart based on maximum flamechart depth
         @v.domain [0, max_depth]
+        # Set max depth here because at some point the v.domain gets reset to something incorrect in the initialization
+        # and we need this value for panning
+        @max_depth = max_depth
         c3.Plot.Layer.Swimlane::_update.call this, origin
 
 
@@ -1493,6 +1519,10 @@ class c3.Plot.Layer.Swimlane.Icicle extends c3.Plot.Layer.Swimlane
     # it will animate the transition to a new root node, if animation is enabled.
     root_datum: null
 
+    # [Boolean] Set the root_datum on node click.
+    # This will also zoom the Icicle to that root.
+    set_root_on_click: true
+
     # [{c3.Selection.Options}] Options for the svg:rect nodes for each segment
     rect_options: undefined
     # [{c3.Selection.Options}] Options for the label svg:text nodes for each segment
@@ -1509,8 +1539,9 @@ class c3.Plot.Layer.Swimlane.Icicle extends c3.Plot.Layer.Swimlane
         @segments_g = c3.select(@g, 'g.segments').singleton()
 
         @segment_options = { events: { click: (d)=>
-            @rebase if d isnt @root_datum then d
-            else (if @parent_key? then @nodes[@parent_key d] else @nodes[@key d].parent)?.datum
+            if @set_root_on_click
+                @rebase if d isnt @root_datum then d
+                else (if @parent_key? then @nodes[@parent_key d] else @nodes[@key d].parent)?.datum
         } }
         @label_clip_options = {}
         if @label_options?
