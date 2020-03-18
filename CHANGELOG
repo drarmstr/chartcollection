@@ -1,3 +1,4 @@
+* Ability to vertically pan flame charts
 * Add grouped line chart by adding a 'none' stacking type
 * Add auto scaling option with 10% buffer
 * Fix callback parameter convention for stacked y accessor
