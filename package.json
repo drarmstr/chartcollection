@@ -1,6 +1,6 @@
 {
   "name": "chartcollection",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "Configurable Chart Collection - Declarative Charts using D3",
   "main": "js/index.js",
   "directories": {
