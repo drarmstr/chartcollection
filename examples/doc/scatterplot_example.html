@@ -25,6 +25,11 @@
                 </a>
               
                 
+                <a class="source" href="dark_example.html">
+                  dark_example.ts
+                </a>
+              
+                
                 <a class="source" href="flamechart_example.html">
                   flamechart_example.ts
                 </a>
@@ -179,11 +184,11 @@ API Overview.</em></p>
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> student_data = [
-    { name: <span class="hljs-string">"Joe"</span>, id: ++student_id, gender: <span class="hljs-string">"male"</span>, age: <span class="hljs-number">16</span>, grade: <span class="hljs-number">3.2</span> },
-    { name: <span class="hljs-string">"Lisa"</span>, id: ++student_id, gender: <span class="hljs-string">"female"</span>, age: <span class="hljs-number">18</span>, grade: <span class="hljs-number">2.3</span> },
-    { name: <span class="hljs-string">"Patrick"</span>, id: ++student_id, gender: <span class="hljs-string">"male"</span>, age: <span class="hljs-number">28</span>, grade: <span class="hljs-number">1.4</span> },
-    { name: <span class="hljs-string">"Mandy"</span>, id: ++student_id, gender: <span class="hljs-string">"female"</span>, age: <span class="hljs-number">32</span>, grade: <span class="hljs-number">3.8</span> },
-    { name: <span class="hljs-string">"Tommy"</span>, id: ++student_id, gender: <span class="hljs-string">"male"</span>, age: <span class="hljs-number">9</span>, grade: <span class="hljs-number">1.7</span> },
+    { name: <span class="hljs-string">&quot;Joe&quot;</span>, id: ++student_id, gender: <span class="hljs-string">&quot;male&quot;</span>, age: <span class="hljs-number">16</span>, grade: <span class="hljs-number">3.2</span> },
+    { name: <span class="hljs-string">&quot;Lisa&quot;</span>, id: ++student_id, gender: <span class="hljs-string">&quot;female&quot;</span>, age: <span class="hljs-number">18</span>, grade: <span class="hljs-number">2.3</span> },
+    { name: <span class="hljs-string">&quot;Patrick&quot;</span>, id: ++student_id, gender: <span class="hljs-string">&quot;male&quot;</span>, age: <span class="hljs-number">28</span>, grade: <span class="hljs-number">1.4</span> },
+    { name: <span class="hljs-string">&quot;Mandy&quot;</span>, id: ++student_id, gender: <span class="hljs-string">&quot;female&quot;</span>, age: <span class="hljs-number">32</span>, grade: <span class="hljs-number">3.8</span> },
+    { name: <span class="hljs-string">&quot;Tommy&quot;</span>, id: ++student_id, gender: <span class="hljs-string">&quot;male&quot;</span>, age: <span class="hljs-number">9</span>, grade: <span class="hljs-number">1.7</span> },
 ];</pre></div></div>
             
         </li>
@@ -213,9 +218,9 @@ API Overview.</em></p>
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> my_chart = <span class="hljs-keyword">new</span> c3.Plot&lt;StudentData&gt;({
-    anchor: <span class="hljs-string">'#scatter_plot_example'</span>,
+    anchor: <span class="hljs-string">&#x27;#scatter_plot_example&#x27;</span>,
     height: <span class="hljs-number">300</span>,
-    width: <span class="hljs-string">'50%'</span>,</pre></div></div>
+    width: <span class="hljs-string">&#x27;50%&#x27;</span>,</pre></div></div>
             
         </li>
         
@@ -291,7 +296,7 @@ API Overview.</em></p>
             <div class="content"><div class='highlight'><pre>    axes: [
         <span class="hljs-keyword">new</span> c3.Axis.X({
             grid: <span class="hljs-literal">true</span>,
-            label: <span class="hljs-string">"Age"</span>,
+            label: <span class="hljs-string">&quot;Age&quot;</span>,
         }),</pre></div></div>
             
         </li>
@@ -309,7 +314,7 @@ API Overview.</em></p>
             
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">new</span> c3.Axis.Y({
             grid: <span class="hljs-literal">true</span>,
-            label: <span class="hljs-string">"Grade"</span>,
+            label: <span class="hljs-string">&quot;Grade&quot;</span>,
             tick_values: [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>],</pre></div></div>
             
         </li>
@@ -327,7 +332,7 @@ API Overview.</em></p>
             
             <div class="content"><div class='highlight'><pre>            tick_label: d3.scale.quantize&lt;<span class="hljs-built_in">string</span>&gt;()
                 .domain([<span class="hljs-number">0</span>, <span class="hljs-number">4</span>])
-                .range([<span class="hljs-string">'F'</span>, <span class="hljs-string">'D'</span>, <span class="hljs-string">'C'</span>, <span class="hljs-string">'B'</span>, <span class="hljs-string">'A'</span>]),
+                .range([<span class="hljs-string">&#x27;F&#x27;</span>, <span class="hljs-string">&#x27;D&#x27;</span>, <span class="hljs-string">&#x27;C&#x27;</span>, <span class="hljs-string">&#x27;B&#x27;</span>, <span class="hljs-string">&#x27;A&#x27;</span>]),
         }),
     ],</pre></div></div>
             
@@ -416,7 +421,7 @@ This aids in animations when students are added and removed.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            key: (student) =&gt; student.id,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            key: <span class="hljs-function">(<span class="hljs-params">student</span>) =&gt;</span> student.id,</pre></div></div>
             
         </li>
         
@@ -431,8 +436,8 @@ This aids in animations when students are added and removed.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            x: (student) =&gt; student.age,
-            y: (student) =&gt; student.grade,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            x: <span class="hljs-function">(<span class="hljs-params">student</span>) =&gt;</span> student.age,
+            y: <span class="hljs-function">(<span class="hljs-params">student</span>) =&gt;</span> student.grade,</pre></div></div>
             
         </li>
         
@@ -462,7 +467,7 @@ This aids in animations when students are added and removed.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            filter: (student) =&gt; student.age &gt;= <span class="hljs-number">16</span>,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            filter: <span class="hljs-function">(<span class="hljs-params">student</span>) =&gt;</span> student.age &gt;= <span class="hljs-number">16</span>,</pre></div></div>
             
         </li>
         
@@ -509,10 +514,10 @@ This aids in animations when students are added and removed.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>            label_options: {
-                text: (student) =&gt; student.grade.toFixed(<span class="hljs-number">1</span>),
+                text: <span class="hljs-function">(<span class="hljs-params">student</span>) =&gt;</span> student.grade.toFixed(<span class="hljs-number">1</span>),
                 styles: {
-                    <span class="hljs-string">'fill'</span>: (student) =&gt; student.gender === <span class="hljs-string">'male'</span> ? <span class="hljs-string">"white"</span> : <span class="hljs-string">"black"</span>,
-                    <span class="hljs-string">'font-size'</span>: <span class="hljs-string">"x-small"</span>,
+                    <span class="hljs-string">&#x27;fill&#x27;</span>: <span class="hljs-function">(<span class="hljs-params">student</span>) =&gt;</span> student.gender === <span class="hljs-string">&#x27;male&#x27;</span> ? <span class="hljs-string">&quot;white&quot;</span> : <span class="hljs-string">&quot;black&quot;</span>,
+                    <span class="hljs-string">&#x27;font-size&#x27;</span>: <span class="hljs-string">&quot;x-small&quot;</span>,
                 },
             },
 
@@ -546,8 +551,8 @@ the <code>&lt;style&gt;</code> section of the example’s HTML to give failing s
             </div>
             
             <div class="content"><div class='highlight'><pre>                classes: {
-                    <span class="hljs-string">'passing'</span>: (student) =&gt; student.grade &gt;= <span class="hljs-number">2</span>,
-                    <span class="hljs-string">'failing'</span>: (student) =&gt; student.grade &lt; <span class="hljs-number">2</span>,
+                    <span class="hljs-string">&#x27;passing&#x27;</span>: <span class="hljs-function">(<span class="hljs-params">student</span>) =&gt;</span> student.grade &gt;= <span class="hljs-number">2</span>,
+                    <span class="hljs-string">&#x27;failing&#x27;</span>: <span class="hljs-function">(<span class="hljs-params">student</span>) =&gt;</span> student.grade &lt; <span class="hljs-number">2</span>,
                 },</pre></div></div>
             
         </li>
@@ -564,7 +569,7 @@ the <code>&lt;style&gt;</code> section of the example’s HTML to give failing s
             </div>
             
             <div class="content"><div class='highlight'><pre>                styles: {
-                    <span class="hljs-string">'fill'</span>: (student) =&gt; student.gender === <span class="hljs-string">'male'</span> ? <span class="hljs-string">"blue"</span> : <span class="hljs-string">"pink"</span>,
+                    <span class="hljs-string">&#x27;fill&#x27;</span>: <span class="hljs-function">(<span class="hljs-params">student</span>) =&gt;</span> student.gender === <span class="hljs-string">&#x27;male&#x27;</span> ? <span class="hljs-string">&quot;blue&quot;</span> : <span class="hljs-string">&quot;pink&quot;</span>,
                 },</pre></div></div>
             
         </li>
@@ -596,16 +601,16 @@ student in an info box elsewhere on the page.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>                events: {
-                    <span class="hljs-string">'mouseenter'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">student</span>) </span>{
-                        d3.select(<span class="hljs-string">'#info_box'</span>).html(<span class="hljs-string">"&lt;b&gt;"</span> + student.name + <span class="hljs-string">"&lt;/b&gt; "</span> +
-                            (student.gender === <span class="hljs-string">'male'</span> ? <span class="hljs-string">'m'</span> : <span class="hljs-string">'f'</span>) + <span class="hljs-string">"&lt;br/&gt;"</span> +
-                            <span class="hljs-string">"age: "</span> + <span class="hljs-built_in">Math</span>.round(student.age) + <span class="hljs-string">"&lt;br/&gt;"</span> +
-                            <span class="hljs-string">"grade: "</span> + <span class="hljs-built_in">Math</span>.round(student.grade * <span class="hljs-number">10</span>) / <span class="hljs-number">10</span>);
-                        d3.select(<span class="hljs-keyword">this</span>).transition().duration(<span class="hljs-number">500</span>).attr(<span class="hljs-string">'r'</span>, <span class="hljs-number">20</span>);
+                    <span class="hljs-string">&#x27;mouseenter&#x27;</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">student</span>) </span>{
+                        d3.select(<span class="hljs-string">&#x27;#info_box&#x27;</span>).html(<span class="hljs-string">&quot;&lt;b&gt;&quot;</span> + student.name + <span class="hljs-string">&quot;&lt;/b&gt; &quot;</span> +
+                            (student.gender === <span class="hljs-string">&#x27;male&#x27;</span> ? <span class="hljs-string">&#x27;m&#x27;</span> : <span class="hljs-string">&#x27;f&#x27;</span>) + <span class="hljs-string">&quot;&lt;br/&gt;&quot;</span> +
+                            <span class="hljs-string">&quot;age: &quot;</span> + <span class="hljs-built_in">Math</span>.round(student.age) + <span class="hljs-string">&quot;&lt;br/&gt;&quot;</span> +
+                            <span class="hljs-string">&quot;grade: &quot;</span> + <span class="hljs-built_in">Math</span>.round(student.grade * <span class="hljs-number">10</span>) / <span class="hljs-number">10</span>);
+                        d3.select(<span class="hljs-built_in">this</span>).transition().duration(<span class="hljs-number">500</span>).attr(<span class="hljs-string">&#x27;r&#x27;</span>, <span class="hljs-number">20</span>);
                     },
-                    <span class="hljs-string">'mouseleave'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
-                        d3.select(<span class="hljs-string">'#info_box'</span>).html(<span class="hljs-string">"&lt;i&gt;Hover over student to view info&lt;/i&gt;"</span>);
-                        d3.select(<span class="hljs-keyword">this</span>).transition().duration(<span class="hljs-number">500</span>).attr(<span class="hljs-string">'r'</span>, <span class="hljs-number">10</span>);
+                    <span class="hljs-string">&#x27;mouseleave&#x27;</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+                        d3.select(<span class="hljs-string">&#x27;#info_box&#x27;</span>).html(<span class="hljs-string">&quot;&lt;i&gt;Hover over student to view info&lt;/i&gt;&quot;</span>);
+                        d3.select(<span class="hljs-built_in">this</span>).transition().duration(<span class="hljs-number">500</span>).attr(<span class="hljs-string">&#x27;r&#x27;</span>, <span class="hljs-number">10</span>);
                     },</pre></div></div>
             
         </li>
@@ -622,10 +627,10 @@ student in an info box elsewhere on the page.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                    <span class="hljs-string">'click'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">student</span>) </span>{
+            <div class="content"><div class='highlight'><pre>                    <span class="hljs-string">&#x27;click&#x27;</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">student</span>) </span>{
                         <span class="hljs-keyword">var</span> index = student_data.indexOf(student);
                         <span class="hljs-keyword">if</span> (index &gt;= <span class="hljs-number">0</span>) {
-                            alert(<span class="hljs-string">"Deleting "</span> + student.name);
+                            alert(<span class="hljs-string">&quot;Deleting &quot;</span> + student.name);
                             student_data.splice(student_data.indexOf(student), <span class="hljs-number">1</span>);
                             my_chart.redraw();
                         }
@@ -665,7 +670,7 @@ There is a corresponding CSS rule in the HTML <code>&lt;style&gt;</code> to give
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">class</span>: <span class="hljs-string">'average-grade'</span>,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">class</span>: <span class="hljs-string">&#x27;average-grade&#x27;</span>,</pre></div></div>
             
         </li>
         
@@ -681,7 +686,7 @@ There is a corresponding CSS rule in the HTML <code>&lt;style&gt;</code> to give
             </div>
             
             <div class="content"><div class='highlight'><pre>            label_options: {
-                text: (grade)=&gt; <span class="hljs-string">"Avg Grade: "</span>+grade.toFixed(<span class="hljs-number">2</span>),
+                text: <span class="hljs-function">(<span class="hljs-params">grade</span>)=&gt;</span> <span class="hljs-string">&quot;Avg Grade: &quot;</span>+grade.toFixed(<span class="hljs-number">2</span>),
             },</pre></div></div>
             
         </li>
@@ -715,9 +720,9 @@ use it to update the dataset in advance.</p>
             
             <div class="content"><div class='highlight'><pre>            handlers: {
                 redraw_start: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-                    <span class="hljs-keyword">var</span> students = student_data.filter((student) =&gt; student.age &gt;= <span class="hljs-number">16</span>);
-                    <span class="hljs-keyword">var</span> average_grade = d3.sum(students, (student) =&gt; student.grade) / students.length;
-                    <span class="hljs-keyword">this</span>.data = <span class="hljs-built_in">isNaN</span>(average_grade) ? [] : [average_grade];
+                    <span class="hljs-keyword">var</span> students = student_data.filter(<span class="hljs-function">(<span class="hljs-params">student</span>) =&gt;</span> student.age &gt;= <span class="hljs-number">16</span>);
+                    <span class="hljs-keyword">var</span> average_grade = d3.sum(students, <span class="hljs-function">(<span class="hljs-params">student</span>) =&gt;</span> student.grade) / students.length;
+                    <span class="hljs-built_in">this</span>.data = <span class="hljs-built_in">isNaN</span>(average_grade) ? [] : [average_grade];
                 },
             }
         }),
@@ -753,13 +758,13 @@ use it to update the dataset in advance.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>        render: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-            <span class="hljs-keyword">this</span>.content.all.append(<span class="hljs-string">'line'</span>).attr(<span class="hljs-string">'class'</span>, <span class="hljs-string">'guideline x'</span>);
-            <span class="hljs-keyword">this</span>.content.all.append(<span class="hljs-string">'line'</span>).attr(<span class="hljs-string">'class'</span>, <span class="hljs-string">'guideline y'</span>);
-            <span class="hljs-keyword">this</span>.content.all.selectAll(<span class="hljs-string">'line.guideline'</span>)
-                .style(<span class="hljs-string">'display'</span>, <span class="hljs-string">'none'</span>)
-                .style(<span class="hljs-string">'stroke'</span>, <span class="hljs-string">'orange'</span>)
-                .style(<span class="hljs-string">'pointer-events'</span>, <span class="hljs-string">'none'</span>)
-                .style(<span class="hljs-string">'shape-rendering'</span>, <span class="hljs-string">'crispEdges'</span>);
+            <span class="hljs-built_in">this</span>.content.all.append(<span class="hljs-string">&#x27;line&#x27;</span>).attr(<span class="hljs-string">&#x27;class&#x27;</span>, <span class="hljs-string">&#x27;guideline x&#x27;</span>);
+            <span class="hljs-built_in">this</span>.content.all.append(<span class="hljs-string">&#x27;line&#x27;</span>).attr(<span class="hljs-string">&#x27;class&#x27;</span>, <span class="hljs-string">&#x27;guideline y&#x27;</span>);
+            <span class="hljs-built_in">this</span>.content.all.selectAll(<span class="hljs-string">&#x27;line.guideline&#x27;</span>)
+                .style(<span class="hljs-string">&#x27;display&#x27;</span>, <span class="hljs-string">&#x27;none&#x27;</span>)
+                .style(<span class="hljs-string">&#x27;stroke&#x27;</span>, <span class="hljs-string">&#x27;orange&#x27;</span>)
+                .style(<span class="hljs-string">&#x27;pointer-events&#x27;</span>, <span class="hljs-string">&#x27;none&#x27;</span>)
+                .style(<span class="hljs-string">&#x27;shape-rendering&#x27;</span>, <span class="hljs-string">&#x27;crispEdges&#x27;</span>);
         },</pre></div></div>
             
         </li>
@@ -777,8 +782,8 @@ use it to update the dataset in advance.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>        resize: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-            <span class="hljs-keyword">this</span>.content.all.selectAll(<span class="hljs-string">'line.guideline.x'</span>).attr(<span class="hljs-string">'y2'</span>, <span class="hljs-keyword">this</span>.content.height);
-            <span class="hljs-keyword">this</span>.content.all.selectAll(<span class="hljs-string">'line.guideline.y'</span>).attr(<span class="hljs-string">'x2'</span>, <span class="hljs-keyword">this</span>.content.width);
+            <span class="hljs-built_in">this</span>.content.all.selectAll(<span class="hljs-string">&#x27;line.guideline.x&#x27;</span>).attr(<span class="hljs-string">&#x27;y2&#x27;</span>, <span class="hljs-built_in">this</span>.content.height);
+            <span class="hljs-built_in">this</span>.content.all.selectAll(<span class="hljs-string">&#x27;line.guideline.y&#x27;</span>).attr(<span class="hljs-string">&#x27;x2&#x27;</span>, <span class="hljs-built_in">this</span>.content.width);
         },
     },
 
@@ -814,20 +819,20 @@ with the <em>guidelines</em>.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="hljs-string">'mousemove'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-                <span class="hljs-keyword">var</span> [x, y] = d3.mouse(<span class="hljs-keyword">this</span>);
-                my_chart.content.all.selectAll(<span class="hljs-string">'line.guideline.x'</span>)
-                    .style(<span class="hljs-string">'display'</span>, <span class="hljs-string">''</span>)
-                    .attr(<span class="hljs-string">'x1'</span>, x)
-                    .attr(<span class="hljs-string">'x2'</span>, x);
-                my_chart.content.all.selectAll(<span class="hljs-string">'line.guideline.y'</span>)
-                    .style(<span class="hljs-string">'display'</span>, <span class="hljs-string">''</span>)
-                    .attr(<span class="hljs-string">'y1'</span>, y)
-                    .attr(<span class="hljs-string">'y2'</span>, y);
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-string">&#x27;mousemove&#x27;</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+                <span class="hljs-keyword">var</span> [x, y] = d3.mouse(<span class="hljs-built_in">this</span>);
+                my_chart.content.all.selectAll(<span class="hljs-string">&#x27;line.guideline.x&#x27;</span>)
+                    .style(<span class="hljs-string">&#x27;display&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>)
+                    .attr(<span class="hljs-string">&#x27;x1&#x27;</span>, x)
+                    .attr(<span class="hljs-string">&#x27;x2&#x27;</span>, x);
+                my_chart.content.all.selectAll(<span class="hljs-string">&#x27;line.guideline.y&#x27;</span>)
+                    .style(<span class="hljs-string">&#x27;display&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>)
+                    .attr(<span class="hljs-string">&#x27;y1&#x27;</span>, y)
+                    .attr(<span class="hljs-string">&#x27;y2&#x27;</span>, y);
             },
-            <span class="hljs-string">'mouseleave'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-                my_chart.content.all.selectAll(<span class="hljs-string">'line.guideline'</span>)
-                    .style(<span class="hljs-string">'display'</span>, <span class="hljs-string">'none'</span>);
+            <span class="hljs-string">&#x27;mouseleave&#x27;</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+                my_chart.content.all.selectAll(<span class="hljs-string">&#x27;line.guideline&#x27;</span>)
+                    .style(<span class="hljs-string">&#x27;display&#x27;</span>, <span class="hljs-string">&#x27;none&#x27;</span>);
             },</pre></div></div>
             
         </li>
@@ -844,17 +849,17 @@ on where the user clicked.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="hljs-string">'click'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-string">&#x27;click&#x27;</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
 
-                <span class="hljs-keyword">var</span> [x, y] = d3.mouse(<span class="hljs-keyword">this</span>);
+                <span class="hljs-keyword">var</span> [x, y] = d3.mouse(<span class="hljs-built_in">this</span>);
                 <span class="hljs-keyword">var</span> student = {
-                    name: d3.scale.quantize&lt;<span class="hljs-built_in">string</span>&gt;().range([<span class="hljs-string">"Chris"</span>, <span class="hljs-string">"Alex"</span>, <span class="hljs-string">"Pat"</span>, <span class="hljs-string">"Ryan"</span>])(<span class="hljs-built_in">Math</span>.random()),
+                    name: d3.scale.quantize&lt;<span class="hljs-built_in">string</span>&gt;().range([<span class="hljs-string">&quot;Chris&quot;</span>, <span class="hljs-string">&quot;Alex&quot;</span>, <span class="hljs-string">&quot;Pat&quot;</span>, <span class="hljs-string">&quot;Ryan&quot;</span>])(<span class="hljs-built_in">Math</span>.random()),
                     id: ++student_id,
-                    gender: <span class="hljs-built_in">Math</span>.random() &gt; <span class="hljs-number">0.5</span> ? <span class="hljs-string">'male'</span> : <span class="hljs-string">'female'</span>,
+                    gender: <span class="hljs-built_in">Math</span>.random() &gt; <span class="hljs-number">0.5</span> ? <span class="hljs-string">&#x27;male&#x27;</span> : <span class="hljs-string">&#x27;female&#x27;</span>,
                     age: (&lt;d3.scale.Linear&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">number</span>&gt;&gt;my_chart.h).invert(x),
                     grade: (&lt;d3.scale.Linear&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">number</span>&gt;&gt;my_chart.v).invert(y),
                 };
-                <span class="hljs-keyword">if</span> (student.age &lt; <span class="hljs-number">16</span>) alert(<span class="hljs-string">"Student is too young to track"</span>);
+                <span class="hljs-keyword">if</span> (student.age &lt; <span class="hljs-number">16</span>) alert(<span class="hljs-string">&quot;Student is too young to track&quot;</span>);
                 <span class="hljs-keyword">else</span> {
                     student_data.push(student);
                     my_chart.redraw();
@@ -918,7 +923,7 @@ on where the user clicked.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">window</span>.onresize = () =&gt; {
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">window</span>.onresize = <span class="hljs-function">() =&gt;</span> {
     my_chart.resize();
 }</pre></div></div>
             
@@ -950,8 +955,8 @@ their new locations.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>d3.select(<span class="hljs-string">'#event_regrade_button'</span>).on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> student of student_data) {
+            <div class="content"><div class='highlight'><pre>d3.select(<span class="hljs-string">&#x27;#event_regrade_button&#x27;</span>).on(<span class="hljs-string">&#x27;click&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> student <span class="hljs-keyword">of</span> student_data) {
         student.grade += <span class="hljs-number">2</span> * <span class="hljs-built_in">Math</span>.random() - <span class="hljs-number">1</span>;
         <span class="hljs-keyword">if</span> (student.grade &gt; <span class="hljs-number">4</span>) student.grade -= (student.grade - <span class="hljs-number">4</span>) * <span class="hljs-number">2</span>;
         <span class="hljs-keyword">if</span> (student.grade &lt; <span class="hljs-number">0</span>) student.grade += -student.grade * <span class="hljs-number">2</span>;

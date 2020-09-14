@@ -25,6 +25,11 @@
                 </a>
               
                 
+                <a class="source" href="dark_example.html">
+                  dark_example.ts
+                </a>
+              
+                
                 <a class="source" href="flamechart_example.html">
                   flamechart_example.ts
                 </a>
@@ -189,7 +194,7 @@ variable and not the array that the charts are working with.  That’s why <code
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>$(<span class="hljs-string">'#sync_generate_button'</span>).on(<span class="hljs-string">'click'</span>, () =&gt; {
+            <div class="content"><div class='highlight'><pre>$(<span class="hljs-string">&#x27;#sync_generate_button&#x27;</span>).on(<span class="hljs-string">&#x27;click&#x27;</span>, <span class="hljs-function">() =&gt;</span> {
     generate_sync_data();
     select_chart.redraw();
     zoom_chart.redraw();
@@ -225,10 +230,10 @@ node, set the width and height, and bind it to the <code>random_data</code> we g
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> select_chart = <span class="hljs-keyword">new</span> c3.Plot.Selectable&lt;SyncPlotDatum&gt;({
-    anchor: <span class="hljs-string">'#sync_select_example_plot'</span>,
-    width: <span class="hljs-string">'90%'</span>,
+    anchor: <span class="hljs-string">&#x27;#sync_select_example_plot&#x27;</span>,
+    width: <span class="hljs-string">&#x27;90%&#x27;</span>,
     height: <span class="hljs-number">100</span>,
-    selectable: <span class="hljs-string">'h'</span>,
+    selectable: <span class="hljs-string">&#x27;h&#x27;</span>,
     drag_selections: <span class="hljs-literal">true</span>,
     
     data: random_sync_data,</pre></div></div>
@@ -262,8 +267,8 @@ node, set the width and height, and bind it to the <code>random_data</code> we g
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    x: (d)=&gt; d.x_value,
-    y: (d)=&gt; d.y_value,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    x: <span class="hljs-function">(<span class="hljs-params">d</span>)=&gt;</span> d.x_value,
+    y: <span class="hljs-function">(<span class="hljs-params">d</span>)=&gt;</span> d.y_value,</pre></div></div>
             
         </li>
         
@@ -281,7 +286,7 @@ node, set the width and height, and bind it to the <code>random_data</code> we g
             <div class="content"><div class='highlight'><pre>    axes: [
         <span class="hljs-keyword">new</span> c3.Axis.X({
             grid: <span class="hljs-literal">true</span>,
-            orient: <span class="hljs-string">'top'</span>
+            orient: <span class="hljs-string">&#x27;top&#x27;</span>
         }),
     ],</pre></div></div>
             
@@ -300,10 +305,10 @@ node, set the width and height, and bind it to the <code>random_data</code> we g
             
             <div class="content"><div class='highlight'><pre>    layers: [
         <span class="hljs-keyword">new</span> c3.Plot.Layer.Area&lt;SyncPlotDatum&gt;({
-            interpolate: <span class="hljs-string">'step-before'</span>,
+            interpolate: <span class="hljs-string">&#x27;step-before&#x27;</span>,
             options: {
                 styles: {
-                    <span class="hljs-string">'fill'</span>: <span class="hljs-string">'darkgreen'</span>
+                    <span class="hljs-string">&#x27;fill&#x27;</span>: <span class="hljs-string">&#x27;darkgreen&#x27;</span>
                 },
             },
         }),</pre></div></div>
@@ -322,11 +327,11 @@ node, set the width and height, and bind it to the <code>random_data</code> we g
             </div>
             
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">new</span> c3.Plot.Layer.Line&lt;SyncPlotDatum&gt;({
-            y: (d) =&gt; <span class="hljs-number">10</span> - d.y_value,
-            interpolate: <span class="hljs-string">'basis'</span>,
+            y: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> <span class="hljs-number">10</span> - d.y_value,
+            interpolate: <span class="hljs-string">&#x27;basis&#x27;</span>,
             options: {
                 styles: {
-                    <span class="hljs-string">'stroke'</span>: <span class="hljs-string">'orange'</span>,
+                    <span class="hljs-string">&#x27;stroke&#x27;</span>: <span class="hljs-string">&#x27;orange&#x27;</span>,
                 },
             },
         }),
@@ -360,18 +365,18 @@ node, set the width and height, and bind it to the <code>random_data</code> we g
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> zoom_chart = <span class="hljs-keyword">new</span> c3.Plot.Zoomable&lt;SyncPlotDatum&gt;({
-    anchor: <span class="hljs-string">'#sync_zoom_example_plot'</span>,
-    width: <span class="hljs-string">'90%'</span>,
+    anchor: <span class="hljs-string">&#x27;#sync_zoom_example_plot&#x27;</span>,
+    width: <span class="hljs-string">&#x27;90%&#x27;</span>,
     height: <span class="hljs-number">250</span>,
     data: random_sync_data,
-    zoomable: <span class="hljs-string">'h'</span>,
+    zoomable: <span class="hljs-string">&#x27;h&#x27;</span>,
     zoom_extent: <span class="hljs-number">16</span>,
     
     h: d3.scale.linear().domain([<span class="hljs-number">0</span>, <span class="hljs-number">100</span>]),
     v: d3.scale.linear().domain([<span class="hljs-number">0</span>, <span class="hljs-number">10</span>]),
 
-    x: (d) =&gt; d.x_value,
-    y: (d) =&gt; d.y_value,
+    x: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.x_value,
+    y: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.y_value,
 
     axes: [
         <span class="hljs-keyword">new</span> c3.Axis.X({
@@ -394,10 +399,10 @@ node, set the width and height, and bind it to the <code>random_data</code> we g
             
             <div class="content"><div class='highlight'><pre>    layers: [
         <span class="hljs-keyword">new</span> c3.Plot.Layer.Area&lt;SyncPlotDatum&gt;({
-            interpolate: <span class="hljs-string">'step-before'</span>,
+            interpolate: <span class="hljs-string">&#x27;step-before&#x27;</span>,
             options: {
                 styles: {
-                    <span class="hljs-string">'fill'</span>: <span class="hljs-string">'darkblue'</span>,
+                    <span class="hljs-string">&#x27;fill&#x27;</span>: <span class="hljs-string">&#x27;darkblue&#x27;</span>,
                 },
             },
         }),</pre></div></div>
@@ -416,11 +421,11 @@ node, set the width and height, and bind it to the <code>random_data</code> we g
             </div>
             
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">new</span> c3.Plot.Layer.Line&lt;SyncPlotDatum&gt;({
-            y: (d) =&gt; <span class="hljs-number">10</span> - d.y_value,
-            interpolate: <span class="hljs-string">'basis'</span>,
+            y: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> <span class="hljs-number">10</span> - d.y_value,
+            interpolate: <span class="hljs-string">&#x27;basis&#x27;</span>,
             options: {
                 styles: {
-                    <span class="hljs-string">'stroke'</span>: <span class="hljs-string">'orange'</span>,
+                    <span class="hljs-string">&#x27;stroke&#x27;</span>: <span class="hljs-string">&#x27;orange&#x27;</span>,
                 },
             },
         }),
@@ -469,7 +474,7 @@ zoom_chart.render();</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">window</span>.onresize = () =&gt; {
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">window</span>.onresize = <span class="hljs-function">() =&gt;</span> {
     select_chart.resize();
     zoom_chart.resize();
 }</pre></div></div>
@@ -487,8 +492,8 @@ zoom_chart.render();</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>$(<span class="hljs-string">'#move_selection'</span>).on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>{
-    select_chart.drag_selections = <span class="hljs-keyword">this</span>.checked;
+            <div class="content"><div class='highlight'><pre>$(<span class="hljs-string">&#x27;#move_selection&#x27;</span>).on(<span class="hljs-string">&#x27;change&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>{
+    select_chart.drag_selections = <span class="hljs-built_in">this</span>.checked;
     select_chart.resize();
 });</pre></div></div>
             
@@ -507,14 +512,14 @@ This can be beneficial when it is expensive to update everything.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>$(<span class="hljs-string">'#sync_end_select'</span>).on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">var</span> postfix = $(<span class="hljs-keyword">this</span>).val(); <span class="hljs-comment">// This is either "end" or ""</span>
-    select_chart.on(<span class="hljs-string">'select'</span>, <span class="hljs-literal">null</span>);
-    select_chart.on(<span class="hljs-string">'selectend'</span>, <span class="hljs-literal">null</span>);
-    zoom_chart.on(<span class="hljs-string">'zoom'</span>, <span class="hljs-literal">null</span>);
-    zoom_chart.on(<span class="hljs-string">'zoomend'</span>, <span class="hljs-literal">null</span>);
-    select_chart.on(<span class="hljs-string">'select'</span> + postfix, (extent) =&gt; { zoom_chart.focus(extent); });
-    zoom_chart.on(<span class="hljs-string">'zoom'</span> + postfix, (extent) =&gt; { select_chart.select(extent); });
+            <div class="content"><div class='highlight'><pre>$(<span class="hljs-string">&#x27;#sync_end_select&#x27;</span>).on(<span class="hljs-string">&#x27;change&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">var</span> postfix = $(<span class="hljs-built_in">this</span>).val(); <span class="hljs-comment">// This is either &quot;end&quot; or &quot;&quot;</span>
+    select_chart.on(<span class="hljs-string">&#x27;select&#x27;</span>, <span class="hljs-literal">null</span>);
+    select_chart.on(<span class="hljs-string">&#x27;selectend&#x27;</span>, <span class="hljs-literal">null</span>);
+    zoom_chart.on(<span class="hljs-string">&#x27;zoom&#x27;</span>, <span class="hljs-literal">null</span>);
+    zoom_chart.on(<span class="hljs-string">&#x27;zoomend&#x27;</span>, <span class="hljs-literal">null</span>);
+    select_chart.on(<span class="hljs-string">&#x27;select&#x27;</span> + postfix, <span class="hljs-function">(<span class="hljs-params">extent</span>) =&gt;</span> { zoom_chart.focus(extent); });
+    zoom_chart.on(<span class="hljs-string">&#x27;zoom&#x27;</span> + postfix, <span class="hljs-function">(<span class="hljs-params">extent</span>) =&gt;</span> { select_chart.select(extent); });
 });</pre></div></div>
             
         </li>
@@ -545,8 +550,8 @@ cause the other chart to <code>select()</code> or <code>focus()</code>.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>select_chart.on(<span class="hljs-string">'select'</span>, (extent) =&gt; { zoom_chart.focus(extent); });
-zoom_chart.on(<span class="hljs-string">'zoom'</span>, (extent) =&gt; { select_chart.select(extent); });</pre></div></div>
+            <div class="content"><div class='highlight'><pre>select_chart.on(<span class="hljs-string">&#x27;select&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">extent</span>) =&gt;</span> { zoom_chart.focus(extent); });
+zoom_chart.on(<span class="hljs-string">&#x27;zoom&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">extent</span>) =&gt;</span> { select_chart.select(extent); });</pre></div></div>
             
         </li>
         

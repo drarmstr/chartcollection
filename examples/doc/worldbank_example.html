@@ -25,6 +25,11 @@
                 </a>
               
                 
+                <a class="source" href="dark_example.html">
+                  dark_example.ts
+                </a>
+              
+                
                 <a class="source" href="flamechart_example.html">
                   flamechart_example.ts
                 </a>
@@ -125,8 +130,9 @@
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
               <h1 id="c3-crossfilter-dataset">C3 Crossfilter Dataset</h1>
-<p><em>An example the includes many plots and tables synchronized with a common dataset using <a href="http://square.github.io/crossfilter/" title="Crossfilter Library"><strong>Crossfilter </strong></a>.</em>
-<em>This example also includes more demonstration on how to style and extend custom charts.</em></p>
+<p><em>An example the includes many plots and tables synchronized with a common dataset using [**Crossfilter **][Crossfilter].</em>
+<em>This example also includes more demonstration on how to style and extend custom charts.</em>
+[Crossfilter]: <a href="http://square.github.io/crossfilter/">http://square.github.io/crossfilter/</a> “Crossfilter Library”</p>
 <p>Crossfilter is a great library for managing large multivariate datasets and filtering on multiple dimensions.</p>
 
             </div>
@@ -256,14 +262,14 @@ update the data or get new metrics from the World Bank.</p>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">download_data</span>(<span class="hljs-params"></span>) </span>{
     <span class="hljs-keyword">var</span> indicator_mapping = {
-        <span class="hljs-string">'SP.POP.TOTL'</span>: <span class="hljs-string">'population'</span>,
-        <span class="hljs-string">'EN.URB.MCTY.TL.ZS'</span>: <span class="hljs-string">'urban_population'</span>,
-        <span class="hljs-string">'NY.GDP.MKTP.CD'</span>: <span class="hljs-string">'gdp'</span>,
-        <span class="hljs-string">'NY.GDP.PCAP.CD'</span>: <span class="hljs-string">'gdp_per_capita'</span>,
-        <span class="hljs-string">'AG.LND.TOTL.K2'</span>: <span class="hljs-string">'land_area'</span>,
-        <span class="hljs-string">'NV.AGR.TOTL.CD'</span>: <span class="hljs-string">'agriculture'</span>,
-        <span class="hljs-string">'NV.IND.MANF.CD'</span>: <span class="hljs-string">'manufacturing'</span>,
-        <span class="hljs-string">'NV.SRV.TETC.CD'</span>: <span class="hljs-string">'services'</span>,
+        <span class="hljs-string">&#x27;SP.POP.TOTL&#x27;</span>: <span class="hljs-string">&#x27;population&#x27;</span>,
+        <span class="hljs-string">&#x27;EN.URB.MCTY.TL.ZS&#x27;</span>: <span class="hljs-string">&#x27;urban_population&#x27;</span>,
+        <span class="hljs-string">&#x27;NY.GDP.MKTP.CD&#x27;</span>: <span class="hljs-string">&#x27;gdp&#x27;</span>,
+        <span class="hljs-string">&#x27;NY.GDP.PCAP.CD&#x27;</span>: <span class="hljs-string">&#x27;gdp_per_capita&#x27;</span>,
+        <span class="hljs-string">&#x27;AG.LND.TOTL.K2&#x27;</span>: <span class="hljs-string">&#x27;land_area&#x27;</span>,
+        <span class="hljs-string">&#x27;NV.AGR.TOTL.CD&#x27;</span>: <span class="hljs-string">&#x27;agriculture&#x27;</span>,
+        <span class="hljs-string">&#x27;NV.IND.MANF.CD&#x27;</span>: <span class="hljs-string">&#x27;manufacturing&#x27;</span>,
+        <span class="hljs-string">&#x27;NV.SRV.TETC.CD&#x27;</span>: <span class="hljs-string">&#x27;services&#x27;</span>,
     };</pre></div></div>
             
         </li>
@@ -282,8 +288,8 @@ The user provides a callback to the promise that will exectute when the promise 
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">return</span> Promise.all([
-        <span class="hljs-keyword">new</span> Promise((resolve) =&gt; {</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">Promise</span>.all([
+        <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve</span>) =&gt;</span> {</pre></div></div>
             
         </li>
         
@@ -294,7 +300,7 @@ The user provides a callback to the promise that will exectute when the promise 
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
-              <h3 id="load-world-bank-data-csv-">Load World Bank Data <strong>CSV</strong></h3>
+              <h3 id="load-world-bank-data-csv">Load World Bank Data <strong>CSV</strong></h3>
 
             </div>
             
@@ -311,7 +317,7 @@ The user provides a callback to the promise that will exectute when the promise 
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            d3.csv(<span class="hljs-string">'data/gdp.csv'</span>)</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            d3.csv(<span class="hljs-string">&#x27;data/gdp.csv&#x27;</span>)</pre></div></div>
             
         </li>
         
@@ -327,12 +333,12 @@ Notice that the numerical values use a <code>+</code> to parse the string to a n
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                .row((row) =&gt; ({
-                    country_name: row[<span class="hljs-string">'Country Name'</span>],
-                    country_code: row[<span class="hljs-string">'Country Code'</span>],
-                    indicator: row[<span class="hljs-string">'Indicator Code'</span>],
-                    value: +row[<span class="hljs-string">'Value'</span>],
-                    year: +row[<span class="hljs-string">'Year'</span>],
+            <div class="content"><div class='highlight'><pre>                .row(<span class="hljs-function">(<span class="hljs-params">row</span>) =&gt;</span> ({
+                    country_name: row[<span class="hljs-string">&#x27;Country Name&#x27;</span>],
+                    country_code: row[<span class="hljs-string">&#x27;Country Code&#x27;</span>],
+                    indicator: row[<span class="hljs-string">&#x27;Indicator Code&#x27;</span>],
+                    value: +row[<span class="hljs-string">&#x27;Value&#x27;</span>],
+                    year: +row[<span class="hljs-string">&#x27;Year&#x27;</span>],
                 }))</pre></div></div>
             
         </li>
@@ -351,9 +357,9 @@ a column for each additional metric provided.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                .get((error, rows) =&gt; {
+            <div class="content"><div class='highlight'><pre>                .get(<span class="hljs-function">(<span class="hljs-params">error, rows</span>) =&gt;</span> {
                     <span class="hljs-keyword">var</span> tmp_map = {};
-                    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> row of rows) {
+                    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> row <span class="hljs-keyword">of</span> rows) {
                         <span class="hljs-keyword">if</span> (!row.country_code) <span class="hljs-keyword">continue</span>;
                         <span class="hljs-keyword">let</span> data_row;
                         <span class="hljs-keyword">if</span> (!(data_row = tmp_map[row.country_code + row.year]))
@@ -381,8 +387,8 @@ GDP isn’t 0 if the data is missing to avoid divide by zero problems.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> record of gdp_data) {
-                        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> metric of [<span class="hljs-string">'gdp'</span>, <span class="hljs-string">'agriculture'</span>, <span class="hljs-string">'manufacturing'</span>, <span class="hljs-string">'services'</span>])
+            <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> record <span class="hljs-keyword">of</span> gdp_data) {
+                        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> metric <span class="hljs-keyword">of</span> [<span class="hljs-string">&#x27;gdp&#x27;</span>, <span class="hljs-string">&#x27;agriculture&#x27;</span>, <span class="hljs-string">&#x27;manufacturing&#x27;</span>, <span class="hljs-string">&#x27;services&#x27;</span>])
                             record[metric] /= <span class="hljs-number">1000000000</span>;
                         <span class="hljs-keyword">if</span> (!record.gdp) record.gdp = <span class="hljs-number">1</span>;
                     }</pre></div></div>
@@ -413,15 +419,15 @@ GDP isn’t 0 if the data is missing to avoid divide by zero problems.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
-              <h3 id="load-the-country-data-csv-">Load the country data <strong>CSV</strong></h3>
+              <h3 id="load-the-country-data-csv">Load the country data <strong>CSV</strong></h3>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">new</span> Promise((resolve) =&gt; {
-            d3.csv(<span class="hljs-string">'data/countries.csv'</span>)
-                .row((row) =&gt; ({
-                    name: row[<span class="hljs-string">'name'</span>],
-                    code: row[<span class="hljs-string">'world_bank_code'</span>],</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve</span>) =&gt;</span> {
+            d3.csv(<span class="hljs-string">&#x27;data/countries.csv&#x27;</span>)
+                .row(<span class="hljs-function">(<span class="hljs-params">row</span>) =&gt;</span> ({
+                    name: row[<span class="hljs-string">&#x27;name&#x27;</span>],
+                    code: row[<span class="hljs-string">&#x27;world_bank_code&#x27;</span>],</pre></div></div>
             
         </li>
         
@@ -436,7 +442,7 @@ GDP isn’t 0 if the data is missing to avoid divide by zero problems.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                    region_id: +row[<span class="hljs-string">'region-code'</span>],
+            <div class="content"><div class='highlight'><pre>                    region_id: +row[<span class="hljs-string">&#x27;region-code&#x27;</span>],
                 }))</pre></div></div>
             
         </li>
@@ -454,8 +460,8 @@ but just keeping the example simple here.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                .get((error, rows) =&gt; {
-                    rows.filter((row) =&gt; !!row.code).forEach((row) =&gt; {
+            <div class="content"><div class='highlight'><pre>                .get(<span class="hljs-function">(<span class="hljs-params">error, rows</span>) =&gt;</span> {
+                    rows.filter(<span class="hljs-function">(<span class="hljs-params">row</span>) =&gt;</span> !!row.code).forEach(<span class="hljs-function">(<span class="hljs-params">row</span>) =&gt;</span> {
                         countries[row.code] = row;
                     });
                     resolve();
@@ -471,20 +477,20 @@ but just keeping the example simple here.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
-              <h3 id="load-the-region-info-csv-">Load the region info <strong>CSV</strong></h3>
+              <h3 id="load-the-region-info-csv">Load the region info <strong>CSV</strong></h3>
 <p>Convert it to an associative object, and resolve its promise when done.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">new</span> Promise((resolve) =&gt; {
-            d3.csv(<span class="hljs-string">'data/regions.csv'</span>)
-                .row((row) =&gt; ({
-                    name: row[<span class="hljs-string">'name'</span>],
-                    id: +row[<span class="hljs-string">'id'</span>],
-                    parent_id: +row[<span class="hljs-string">'parent_id'</span>],
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve</span>) =&gt;</span> {
+            d3.csv(<span class="hljs-string">&#x27;data/regions.csv&#x27;</span>)
+                .row(<span class="hljs-function">(<span class="hljs-params">row</span>) =&gt;</span> ({
+                    name: row[<span class="hljs-string">&#x27;name&#x27;</span>],
+                    id: +row[<span class="hljs-string">&#x27;id&#x27;</span>],
+                    parent_id: +row[<span class="hljs-string">&#x27;parent_id&#x27;</span>],
                 }))
-                .get((error, rows) =&gt; {
-                    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> row of rows)
+                .get(<span class="hljs-function">(<span class="hljs-params">error, rows</span>) =&gt;</span> {
+                    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> row <span class="hljs-keyword">of</span> rows)
                         regions[row.id] = row;
                     resolve();
                 });
@@ -505,10 +511,10 @@ the dataset if any countries referenced by the World Bank data are missing from 
             </div>
             
             <div class="content"><div class='highlight'><pre>    ]).then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-        d3.selectAll(<span class="hljs-string">'#waiting'</span>).remove();
-        d3.selectAll(<span class="hljs-string">'main'</span>).style(<span class="hljs-string">'display'</span>, <span class="hljs-string">''</span>);
-        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> record of gdp_data.filter((record) =&gt; !countries[record.country_code]))
-            <span class="hljs-keyword">throw</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Missing country: "</span> + record.country_code + <span class="hljs-string">" - "</span> + record.country_name);
+        d3.selectAll(<span class="hljs-string">&#x27;#waiting&#x27;</span>).remove();
+        d3.selectAll(<span class="hljs-string">&#x27;main&#x27;</span>).style(<span class="hljs-string">&#x27;display&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>);
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> record <span class="hljs-keyword">of</span> gdp_data.filter(<span class="hljs-function">(<span class="hljs-params">record</span>) =&gt;</span> !countries[record.country_code]))
+            <span class="hljs-keyword">throw</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">&quot;Missing country: &quot;</span> + record.country_code + <span class="hljs-string">&quot; - &quot;</span> + record.country_name);
     });
 }</pre></div></div>
             
@@ -555,9 +561,9 @@ the dataset if any countries referenced by the World Bank data are missing from 
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Data:"</span>, gdp_data);
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Regions:"</span>, regions);
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Countries:"</span>, countries);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;Data:&quot;</span>, gdp_data);
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;Regions:&quot;</span>, regions);
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;Countries:&quot;</span>, countries);</pre></div></div>
             
         </li>
         
@@ -588,8 +594,8 @@ In this case we do a reduction based on the total population.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> total_population = xf.groupAll&lt;<span class="hljs-built_in">number</span>&gt;().reduceSum((d) =&gt; d.population);
-    <span class="hljs-keyword">var</span> total_gdp = xf.groupAll&lt;<span class="hljs-built_in">number</span>&gt;().reduceSum((d) =&gt; d.gdp);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> total_population = xf.groupAll&lt;<span class="hljs-built_in">number</span>&gt;().reduceSum(<span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.population);
+    <span class="hljs-keyword">var</span> total_gdp = xf.groupAll&lt;<span class="hljs-built_in">number</span>&gt;().reduceSum(<span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.gdp);</pre></div></div>
             
         </li>
         
@@ -609,13 +615,13 @@ on their percentage of GDP instead of an absolute value.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> country_dim = xf.dimension((d) =&gt; d.country_code);
-    <span class="hljs-keyword">var</span> region_dim = xf.dimension((d) =&gt; countries[d.country_code].region_id);
-    <span class="hljs-keyword">var</span> year_dim = xf.dimension((d) =&gt; d.year);
-    <span class="hljs-keyword">var</span> urban_dim = xf.dimension((d) =&gt; d.urban_population);
-    <span class="hljs-keyword">var</span> agriculture_dim = xf.dimension((d) =&gt; <span class="hljs-built_in">Math</span>.min(d.agriculture / d.gdp * <span class="hljs-number">100</span>, <span class="hljs-number">100</span>));
-    <span class="hljs-keyword">var</span> services_dim = xf.dimension((d) =&gt; <span class="hljs-built_in">Math</span>.min(d.services / d.gdp * <span class="hljs-number">100</span>, <span class="hljs-number">100</span>));
-    <span class="hljs-keyword">var</span> manufacturing_dim = xf.dimension((d) =&gt; <span class="hljs-built_in">Math</span>.min(d.manufacturing / d.gdp * <span class="hljs-number">100</span>, <span class="hljs-number">100</span>));</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> country_dim = xf.dimension(<span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.country_code);
+    <span class="hljs-keyword">var</span> region_dim = xf.dimension(<span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> countries[d.country_code].region_id);
+    <span class="hljs-keyword">var</span> year_dim = xf.dimension(<span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.year);
+    <span class="hljs-keyword">var</span> urban_dim = xf.dimension(<span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.urban_population);
+    <span class="hljs-keyword">var</span> agriculture_dim = xf.dimension(<span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> <span class="hljs-built_in">Math</span>.min(d.agriculture / d.gdp * <span class="hljs-number">100</span>, <span class="hljs-number">100</span>));
+    <span class="hljs-keyword">var</span> services_dim = xf.dimension(<span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> <span class="hljs-built_in">Math</span>.min(d.services / d.gdp * <span class="hljs-number">100</span>, <span class="hljs-number">100</span>));
+    <span class="hljs-keyword">var</span> manufacturing_dim = xf.dimension(<span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> <span class="hljs-built_in">Math</span>.min(d.manufacturing / d.gdp * <span class="hljs-number">100</span>, <span class="hljs-number">100</span>));</pre></div></div>
             
         </li>
         
@@ -635,11 +641,11 @@ lets the user indicate when that needs to be done.</p>
             
             <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> charts: c3.Base[] = [];
     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">redraw</span>(<span class="hljs-params"></span>) </span>{
-        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> chart of charts)
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> chart <span class="hljs-keyword">of</span> charts)
             chart.redraw();
     }
     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">restyle</span>(<span class="hljs-params"></span>) </span>{
-        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> chart of charts)
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> chart <span class="hljs-keyword">of</span> charts)
             chart.restyle();
     }</pre></div></div>
             
@@ -694,10 +700,10 @@ based on the grouping’s reduction.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> gdp_by_year_data = year_dim.group().reduceSum((d) =&gt; d.gdp).all();
-    <span class="hljs-keyword">var</span> agriculture_by_year_data = year_dim.group().reduceSum((d) =&gt; d.agriculture).all();
-    <span class="hljs-keyword">var</span> manufacturing_by_year_data = year_dim.group().reduceSum((d) =&gt; d.manufacturing).all();
-    <span class="hljs-keyword">var</span> services_by_year_data = year_dim.group().reduceSum((d) =&gt; d.services).all();</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> gdp_by_year_data = year_dim.group().reduceSum(<span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.gdp).all();
+    <span class="hljs-keyword">var</span> agriculture_by_year_data = year_dim.group().reduceSum(<span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.agriculture).all();
+    <span class="hljs-keyword">var</span> manufacturing_by_year_data = year_dim.group().reduceSum(<span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.manufacturing).all();
+    <span class="hljs-keyword">var</span> services_by_year_data = year_dim.group().reduceSum(<span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.services).all();</pre></div></div>
             
         </li>
         
@@ -712,7 +718,7 @@ based on the grouping’s reduction.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"gdp_by_year_data"</span>, gdp_by_year_data);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;gdp_by_year_data&quot;</span>, gdp_by_year_data);</pre></div></div>
             
         </li>
         
@@ -729,7 +735,7 @@ based on the grouping’s reduction.</p>
             
             <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> timeline;
     charts.push(timeline = <span class="hljs-keyword">new</span> c3.Plot.Zoomable&lt;CrossFilter.Grouping&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">number</span>&gt;&gt;({
-        anchor: <span class="hljs-string">'#worldbank_timeline'</span>,
+        anchor: <span class="hljs-string">&#x27;#worldbank_timeline&#x27;</span>,
         height: <span class="hljs-number">300</span>,</pre></div></div>
             
         </li>
@@ -762,7 +768,7 @@ scale will go from 0-100 for percentages.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        x: (d) =&gt; d.key,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        x: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.key,</pre></div></div>
             
         </li>
         
@@ -779,7 +785,7 @@ provide for visualizing based on the data.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        y: (d) =&gt; d.value &gt; <span class="hljs-number">1</span> ? d.value / gdp_by_year_data[d.key - <span class="hljs-number">1970</span>].value * <span class="hljs-number">100</span> : <span class="hljs-number">0</span>,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        y: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.value &gt; <span class="hljs-number">1</span> ? d.value / gdp_by_year_data[d.key - <span class="hljs-number">1970</span>].value * <span class="hljs-number">100</span> : <span class="hljs-number">0</span>,</pre></div></div>
             
         </li>
         
@@ -794,7 +800,7 @@ provide for visualizing based on the data.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        zoomable: <span class="hljs-string">'h'</span>,
+            <div class="content"><div class='highlight'><pre>        zoomable: <span class="hljs-string">&#x27;h&#x27;</span>,
         zoom_extent: <span class="hljs-number">16</span>,</pre></div></div>
             
         </li>
@@ -827,7 +833,7 @@ provide for visualizing based on the data.</p>
             
             <div class="content"><div class='highlight'><pre>        axes: [
             <span class="hljs-keyword">new</span> c3.Axis.X({
-                label: <span class="hljs-string">"Year"</span>,
+                label: <span class="hljs-string">&quot;Year&quot;</span>,
                 grid: <span class="hljs-literal">true</span>,</pre></div></div>
             
         </li>
@@ -843,10 +849,10 @@ provide for visualizing based on the data.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                tick_label: d3.format(<span class="hljs-string">'f'</span>),
+            <div class="content"><div class='highlight'><pre>                tick_label: d3.format(<span class="hljs-string">&#x27;f&#x27;</span>),
             }),
             <span class="hljs-keyword">new</span> c3.Axis.Y({
-                label: <span class="hljs-string">"% of GDP"</span>,
+                label: <span class="hljs-string">&quot;% of GDP&quot;</span>,
                 grid: <span class="hljs-literal">true</span>,</pre></div></div>
             
         </li>
@@ -862,7 +868,7 @@ provide for visualizing based on the data.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                tick_label: (n) =&gt; n + <span class="hljs-string">"%"</span>,
+            <div class="content"><div class='highlight'><pre>                tick_label: <span class="hljs-function">(<span class="hljs-params">n</span>) =&gt;</span> n + <span class="hljs-string">&quot;%&quot;</span>,
             }),</pre></div></div>
             
         </li>
@@ -882,10 +888,10 @@ different units, trillions of dollars instead of billions.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">new</span> c3.Axis.Y({
-                label: <span class="hljs-string">"GDP in USD"</span>,
-                orient: <span class="hljs-string">'right'</span>,
-                scale: d3.scale.linear().domain([<span class="hljs-number">0</span>, d3.max(gdp_by_year_data, (d) =&gt; d.value / <span class="hljs-number">1000</span>)]),
-                tick_label: (n) =&gt; <span class="hljs-string">"$"</span> + n.toLocaleString() + <span class="hljs-string">"t"</span>,
+                label: <span class="hljs-string">&quot;GDP in USD&quot;</span>,
+                orient: <span class="hljs-string">&#x27;right&#x27;</span>,
+                scale: d3.scale.linear().domain([<span class="hljs-number">0</span>, d3.max(gdp_by_year_data, <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.value / <span class="hljs-number">1000</span>)]),
+                tick_label: <span class="hljs-function">(<span class="hljs-params">n</span>) =&gt;</span> <span class="hljs-string">&quot;$&quot;</span> + n.toLocaleString() + <span class="hljs-string">&quot;t&quot;</span>,
                 axis_size: <span class="hljs-number">75</span>,
             }),
         ],</pre></div></div>
@@ -922,13 +928,13 @@ GDP dollars.  The top of the chart is set to the maximum GDP value in our datase
             
             <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">new</span> c3.Plot.Layer.Area&lt;CrossFilter.Grouping&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">number</span>&gt;&gt;({
                 options: {
-                    title: <span class="hljs-string">"GDP"</span>,
-                    <span class="hljs-keyword">class</span>: <span class="hljs-string">'gdp'</span>,
+                    title: <span class="hljs-string">&quot;GDP&quot;</span>,
+                    <span class="hljs-keyword">class</span>: <span class="hljs-string">&#x27;gdp&#x27;</span>,
                 },
                 data: gdp_by_year_data,
-                v: d3.scale.linear().domain([<span class="hljs-number">0</span>, d3.max(gdp_by_year_data, (d) =&gt; d.value)]),
-                y: (d) =&gt; d.value,
-                interpolate: <span class="hljs-string">'cardinal'</span>,
+                v: d3.scale.linear().domain([<span class="hljs-number">0</span>, d3.max(gdp_by_year_data, <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.value)]),
+                y: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.value,
+                interpolate: <span class="hljs-string">&#x27;cardinal&#x27;</span>,
             }),</pre></div></div>
             
         </li>
@@ -949,22 +955,22 @@ hovering over the cooresponding legend item.</p>
             
             <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">new</span> c3.Plot.Layer.Line&lt;CrossFilter.Grouping&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">number</span>&gt;&gt;({
                 options: {
-                    title: <span class="hljs-string">"% Services"</span>,
-                    <span class="hljs-keyword">class</span>: <span class="hljs-string">'services'</span>,
+                    title: <span class="hljs-string">&quot;% Services&quot;</span>,
+                    <span class="hljs-keyword">class</span>: <span class="hljs-string">&#x27;services&#x27;</span>,
                 },
                 data: services_by_year_data,
             }),
             <span class="hljs-keyword">new</span> c3.Plot.Layer.Line&lt;CrossFilter.Grouping&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">number</span>&gt;&gt;({
                 options: {
-                    title: <span class="hljs-string">"% Manufacturing"</span>,
-                    <span class="hljs-keyword">class</span>: <span class="hljs-string">'manufacturing'</span>,
+                    title: <span class="hljs-string">&quot;% Manufacturing&quot;</span>,
+                    <span class="hljs-keyword">class</span>: <span class="hljs-string">&#x27;manufacturing&#x27;</span>,
                 },
                 data: manufacturing_by_year_data,
             }),
             <span class="hljs-keyword">new</span> c3.Plot.Layer.Line&lt;CrossFilter.Grouping&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">number</span>&gt;&gt;({
                 options: {
-                    title: <span class="hljs-string">"% Agriculture"</span>,
-                    <span class="hljs-keyword">class</span>: <span class="hljs-string">'agriculture'</span>,
+                    title: <span class="hljs-string">&quot;% Agriculture&quot;</span>,
+                    <span class="hljs-keyword">class</span>: <span class="hljs-string">&#x27;agriculture&#x27;</span>,
                 },
                 data: agriculture_by_year_data,
             }),</pre></div></div>
@@ -987,8 +993,8 @@ hovering over the cooresponding legend item.</p>
                 draggable: <span class="hljs-literal">true</span>,
 
                 options: {
-                    title: <span class="hljs-string">"Selected Year"</span>,
-                    <span class="hljs-keyword">class</span>: <span class="hljs-string">'selected_year'</span>,
+                    title: <span class="hljs-string">&quot;Selected Year&quot;</span>,
+                    <span class="hljs-keyword">class</span>: <span class="hljs-string">&#x27;selected_year&#x27;</span>,
                 },</pre></div></div>
             
         </li>
@@ -1008,12 +1014,12 @@ all charts to reflect the updated dataset filtering.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>                handlers: {
-                    <span class="hljs-string">'drag'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">year</span>) </span>{
-                        <span class="hljs-keyword">this</span>.data = [year];
+                    <span class="hljs-string">&#x27;drag&#x27;</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">year</span>) </span>{
+                        <span class="hljs-built_in">this</span>.data = [year];
                         year = <span class="hljs-built_in">Math</span>.round(year);
                         year_dim.filter(year);
-                        d3.selectAll(<span class="hljs-string">'#sync_example_year'</span>).text(year);
-                        d3.selectAll(<span class="hljs-string">'#total_population'</span>).text(d3.format(<span class="hljs-string">','</span>)(total_population.value()));
+                        d3.selectAll(<span class="hljs-string">&#x27;#sync_example_year&#x27;</span>).text(year);
+                        d3.selectAll(<span class="hljs-string">&#x27;#total_population&#x27;</span>).text(d3.format(<span class="hljs-string">&#x27;,&#x27;</span>)(total_population.value()));
                         redraw();
                     },</pre></div></div>
             
@@ -1030,8 +1036,8 @@ all charts to reflect the updated dataset filtering.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                    <span class="hljs-string">'render'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-                        <span class="hljs-keyword">this</span>.handlers[<span class="hljs-string">'drag'</span>](<span class="hljs-keyword">this</span>.data[<span class="hljs-number">0</span>]);
+            <div class="content"><div class='highlight'><pre>                    <span class="hljs-string">&#x27;render&#x27;</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+                        <span class="hljs-built_in">this</span>.handlers[<span class="hljs-string">&#x27;drag&#x27;</span>](<span class="hljs-built_in">this</span>.data[<span class="hljs-number">0</span>]);
                     },
                 },
             }),
@@ -1066,7 +1072,7 @@ all charts to reflect the updated dataset filtering.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>    charts.push(<span class="hljs-keyword">new</span> c3.Legend.PlotLegend({
-        anchor: <span class="hljs-string">'#worldbank_legend'</span>,
+        anchor: <span class="hljs-string">&#x27;#worldbank_legend&#x27;</span>,
         plot: timeline,</pre></div></div>
             
         </li>
@@ -1086,11 +1092,11 @@ data across the entire page and different visualizations.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>        handlers: {
-            <span class="hljs-string">'layer_mouseenter'</span>: (layer) =&gt; {
-                d3.selectAll(<span class="hljs-string">'.'</span> + layer.options.class).classed(<span class="hljs-string">'legend_hover'</span>, <span class="hljs-literal">true</span>);
+            <span class="hljs-string">&#x27;layer_mouseenter&#x27;</span>: <span class="hljs-function">(<span class="hljs-params">layer</span>) =&gt;</span> {
+                d3.selectAll(<span class="hljs-string">&#x27;.&#x27;</span> + layer.options.class).classed(<span class="hljs-string">&#x27;legend_hover&#x27;</span>, <span class="hljs-literal">true</span>);
             },
-            <span class="hljs-string">'layer_mouseleave'</span>: (layer) =&gt; {
-                d3.selectAll(<span class="hljs-string">'.'</span> + layer.options.class).classed(<span class="hljs-string">'legend_hover'</span>, <span class="hljs-literal">false</span>);
+            <span class="hljs-string">&#x27;layer_mouseleave&#x27;</span>: <span class="hljs-function">(<span class="hljs-params">layer</span>) =&gt;</span> {
+                d3.selectAll(<span class="hljs-string">&#x27;.&#x27;</span> + layer.options.class).classed(<span class="hljs-string">&#x27;legend_hover&#x27;</span>, <span class="hljs-literal">false</span>);
             },
         },
     }));</pre></div></div>
@@ -1124,7 +1130,7 @@ this grouping will reduce the value based on GDP.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> gdp_by_region_data = region_dim.group().reduceSum((d) =&gt; d.gdp).all();</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> gdp_by_region_data = region_dim.group().reduceSum(<span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.gdp).all();</pre></div></div>
             
         </li>
         
@@ -1157,7 +1163,7 @@ this grouping will reduce the value based on GDP.</p>
             <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> regions_table: c3.Table&lt;CrossFilter.Grouping&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">number</span>&gt;&gt;;
     <span class="hljs-keyword">var</span> gdp_column: c3.Table.Column&lt;CrossFilter.Grouping&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">number</span>&gt;&gt;;
     charts.push(regions_table = <span class="hljs-keyword">new</span> c3.Table&lt;CrossFilter.Grouping&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">number</span>&gt;&gt;({
-        anchor: <span class="hljs-string">'#worldbank_region_table'</span>,</pre></div></div>
+        anchor: <span class="hljs-string">&#x27;#worldbank_region_table&#x27;</span>,</pre></div></div>
             
         </li>
         
@@ -1169,7 +1175,7 @@ this grouping will reduce the value based on GDP.</p>
                 <a class="pilcrow" href="#section-54">&#182;</a>
               </div>
               <p>Bind it to the <strong>data</strong> prepared above.
-The <code>key</code>‘s represent region_id<code>s and the</code>value`’s represent gdp.</p>
+The <code>key</code>‘s represent region_id<code>s and the </code>value`’s represent gdp.</p>
 
             </div>
             
@@ -1190,11 +1196,11 @@ The <code>key</code>‘s represent region_id<code>s and the</code>value`’s rep
             
             <div class="content"><div class='highlight'><pre>        columns: [
             {
-                header: { text: <span class="hljs-string">"Region"</span> },
-                cells: { text: (d) =&gt; regions[d.key].name },
+                header: { text: <span class="hljs-string">&quot;Region&quot;</span> },
+                cells: { text: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> regions[d.key].name },
             },
             gdp_column = {
-                header: { text: <span class="hljs-string">"GDP in $b"</span> },</pre></div></div>
+                header: { text: <span class="hljs-string">&quot;GDP in $b&quot;</span> },</pre></div></div>
             
         </li>
         
@@ -1209,7 +1215,7 @@ The <code>key</code>‘s represent region_id<code>s and the</code>value`’s rep
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                cells: { html: (d) =&gt; d3.format(<span class="hljs-string">','</span>)(<span class="hljs-built_in">Math</span>.round(<span class="hljs-built_in">Math</span>.abs(d.value))) },</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                cells: { html: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d3.format(<span class="hljs-string">&#x27;,&#x27;</span>)(<span class="hljs-built_in">Math</span>.round(<span class="hljs-built_in">Math</span>.abs(d.value))) },</pre></div></div>
             
         </li>
         
@@ -1224,7 +1230,7 @@ The <code>key</code>‘s represent region_id<code>s and the</code>value`’s rep
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                value: (d) =&gt; <span class="hljs-built_in">Math</span>.abs(d.value),</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                value: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> <span class="hljs-built_in">Math</span>.abs(d.value),</pre></div></div>
             
         </li>
         
@@ -1241,10 +1247,10 @@ This will render a bar graph inside the table cell whose width is based on the c
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                vis: <span class="hljs-string">'bar'</span>,
+            <div class="content"><div class='highlight'><pre>                vis: <span class="hljs-string">&#x27;bar&#x27;</span>,
                 vis_options: {
                     styles: {
-                        <span class="hljs-string">'background-color'</span>: (d) =&gt; region_color(d.key),
+                        <span class="hljs-string">&#x27;background-color&#x27;</span>: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> region_color(d.key),
                     },
                 },
             },
@@ -1278,7 +1284,7 @@ This will render a bar graph inside the table cell whose width is based on the c
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        selectable: <span class="hljs-string">'multi'</span>,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        selectable: <span class="hljs-string">&#x27;multi&#x27;</span>,</pre></div></div>
             
         </li>
         
@@ -1300,7 +1306,7 @@ the class <code>hover</code> to have a wheat-colored background.</p>
             
             <div class="content"><div class='highlight'><pre>        row_options: {
             classes: {
-                <span class="hljs-string">'hover'</span>: (d) =&gt; regions[d.key] === hover_region || (hover_country &amp;&amp; d.key === hover_country.region_id),
+                <span class="hljs-string">&#x27;hover&#x27;</span>: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> regions[d.key] === hover_region || (hover_country &amp;&amp; d.key === hover_country.region_id),
             },</pre></div></div>
             
         </li>
@@ -1320,11 +1326,11 @@ can highlight or somehow indicate this region of interest.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>            events: {
-                mouseenter: (d) =&gt; {
+                mouseenter: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> {
                     hover_region = regions[d.key];
                     restyle();
                 },
-                mouseleave: (d) =&gt; {
+                mouseleave: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> {
                     hover_region = <span class="hljs-literal">null</span>;
                     restyle();
                 },
@@ -1349,9 +1355,9 @@ can highlight or somehow indicate this region of interest.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    regions_table.on(<span class="hljs-string">'select'</span>, (selections) =&gt; {
+            <div class="content"><div class='highlight'><pre>    regions_table.on(<span class="hljs-string">&#x27;select&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">selections</span>) =&gt;</span> {
         <span class="hljs-keyword">if</span> (selections &amp;&amp; selections.length)
-            region_dim.filter((key) =&gt; selections.map((d) =&gt; d.key).indexOf(key) &gt;= <span class="hljs-number">0</span>);
+            region_dim.filter(<span class="hljs-function">(<span class="hljs-params">key</span>) =&gt;</span> selections.map(<span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.key).indexOf(key) &gt;= <span class="hljs-number">0</span>);
         <span class="hljs-keyword">else</span>
             region_dim.filterAll();
         redraw();
@@ -1414,7 +1420,7 @@ on if that data item is filtered in or out.  <em>Crossfilter</em> is surprisingl
         },
         <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{ <span class="hljs-keyword">return</span> { gdp: <span class="hljs-number">0</span>, gdp_per_capita: <span class="hljs-number">0</span>, population: <span class="hljs-number">0</span>, land_area: <span class="hljs-number">0</span> }; }
     ).all();
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"country_data"</span>, country_data);</pre></div></div>
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;country_data&quot;</span>, country_data);</pre></div></div>
             
         </li>
         
@@ -1433,7 +1439,7 @@ the countries at once.  It’s a lie, but hey, isn’t that what data visualizat
             </div>
             
             <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> population_scale = d3.scale.pow()
-        .domain([<span class="hljs-number">1</span>, d3.max(gdp_data, (d) =&gt; d.population)])
+        .domain([<span class="hljs-number">1</span>, d3.max(gdp_data, <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.population)])
         .range([<span class="hljs-number">3</span>, <span class="hljs-number">3000</span>])
         .exponent(<span class="hljs-number">0.7</span>);</pre></div></div>
             
@@ -1453,7 +1459,7 @@ the countries at once.  It’s a lie, but hey, isn’t that what data visualizat
             <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> average_gdp_layer: c3.Plot.Layer.Line.Horizontal&lt;<span class="hljs-built_in">number</span>&gt;;
     <span class="hljs-keyword">var</span> average_gdp_per_capita_layer: c3.Plot.Layer.Line.Vertical&lt;<span class="hljs-built_in">number</span>&gt;;
     charts.push(<span class="hljs-keyword">new</span> c3.Plot({
-        anchor: <span class="hljs-string">'#worldbank_country_scatterplot'</span>,
+        anchor: <span class="hljs-string">&#x27;#worldbank_country_scatterplot&#x27;</span>,
         height: <span class="hljs-number">330</span>,</pre></div></div>
             
         </li>
@@ -1470,8 +1476,8 @@ Vertical is based on the country’s GDP while horizontal is based on GDP per ca
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        h: d3.scale.log().domain([<span class="hljs-number">1</span>, d3.max(gdp_data, (d) =&gt; d.gdp_per_capita)]),
-        v: d3.scale.log().domain([<span class="hljs-number">1</span>, d3.max(gdp_data, (d) =&gt; d.gdp)]),</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        h: d3.scale.log().domain([<span class="hljs-number">1</span>, d3.max(gdp_data, <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.gdp_per_capita)]),
+        v: d3.scale.log().domain([<span class="hljs-number">1</span>, d3.max(gdp_data, <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.gdp)]),</pre></div></div>
             
         </li>
         
@@ -1507,13 +1513,13 @@ tick marks and unit labels.</p>
             
             <div class="content"><div class='highlight'><pre>        axes: [
             <span class="hljs-keyword">new</span> c3.Axis.X({
-                label: <span class="hljs-string">"GDP per capita"</span>,
+                label: <span class="hljs-string">&quot;GDP per capita&quot;</span>,
                 grid: <span class="hljs-literal">true</span>,
                 tick_label: <span class="hljs-literal">false</span>,
                 tick_size: <span class="hljs-number">0</span>,
             }),
             <span class="hljs-keyword">new</span> c3.Axis.Y({
-                label: <span class="hljs-string">"GDP"</span>,
+                label: <span class="hljs-string">&quot;GDP&quot;</span>,
                 grid: <span class="hljs-literal">true</span>,
                 tick_label: <span class="hljs-literal">false</span>,
                 tick_size: <span class="hljs-number">0</span>,
@@ -1553,8 +1559,8 @@ some operations and provides consistency for animations and decimation.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>                data: country_data,
-                key: (d) =&gt; d.key,
-                filter: (d) =&gt; d.value.gdp_per_capita &gt; <span class="hljs-number">1</span>,</pre></div></div>
+                key: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.key,
+                filter: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.value.gdp_per_capita &gt; <span class="hljs-number">1</span>,</pre></div></div>
             
         </li>
         
@@ -1569,8 +1575,8 @@ some operations and provides consistency for animations and decimation.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                x: (d) =&gt; <span class="hljs-built_in">Math</span>.max(<span class="hljs-number">1</span>, d.value.gdp_per_capita),
-                y: (d) =&gt; <span class="hljs-built_in">Math</span>.max(<span class="hljs-number">1</span>, d.value.gdp),</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                x: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> <span class="hljs-built_in">Math</span>.max(<span class="hljs-number">1</span>, d.value.gdp_per_capita),
+                y: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> <span class="hljs-built_in">Math</span>.max(<span class="hljs-number">1</span>, d.value.gdp),</pre></div></div>
             
         </li>
         
@@ -1585,7 +1591,7 @@ some operations and provides consistency for animations and decimation.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                a: (d) =&gt; population_scale(<span class="hljs-built_in">Math</span>.max(<span class="hljs-number">1</span>, d.value.population)),</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                a: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> population_scale(<span class="hljs-built_in">Math</span>.max(<span class="hljs-number">1</span>, d.value.population)),</pre></div></div>
             
         </li>
         
@@ -1604,9 +1610,9 @@ unless this country matches the country or region the user is hovering over with
             
             <div class="content"><div class='highlight'><pre>                circle_options: {
                     styles: {
-                        <span class="hljs-string">'fill'</span>: (d) =&gt; region_color(countries[d.key].region_id),
-                        <span class="hljs-string">'stroke'</span>: (d) =&gt; region_color(countries[d.key].region_id),
-                        <span class="hljs-string">'fill-opacity'</span>: (d) =&gt;
+                        <span class="hljs-string">&#x27;fill&#x27;</span>: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> region_color(countries[d.key].region_id),
+                        <span class="hljs-string">&#x27;stroke&#x27;</span>: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> region_color(countries[d.key].region_id),
+                        <span class="hljs-string">&#x27;fill-opacity&#x27;</span>: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span>
                             hover_country === countries[d.key] || hover_region === regions[countries[d.key].region_id] ? <span class="hljs-number">1</span> : <span class="hljs-number">0.5</span>,
                     },</pre></div></div>
             
@@ -1628,18 +1634,18 @@ div in the right column to display information about this particular country.</p
             
             <div class="content"><div class='highlight'><pre>                    events: {
                         mouseenter: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">d</span>) </span>{
-                            d3.select(<span class="hljs-keyword">this</span>).style(<span class="hljs-string">'stroke-width'</span>, <span class="hljs-number">5</span>);
-                            d3.select(<span class="hljs-string">'#hover_country_info'</span>).html(<span class="hljs-string">"\
-                                &lt;b&gt;Country:&lt;/b&gt; "</span>+ countries[d.key].name + <span class="hljs-string">"&lt;br/&gt;\
-                               &lt;b&gt;Population:&lt;/b&gt; "</span>+ d.value.population + <span class="hljs-string">"&lt;br/&gt;\
-                               &lt;b&gt;GDP:&lt;/b&gt; $"</span>+ <span class="hljs-built_in">Math</span>.floor(<span class="hljs-built_in">Math</span>.abs(d.value.gdp)) + <span class="hljs-string">" billion&lt;br/&gt;\
-                               &lt;b&gt;GDP per capita:&lt;/b&gt; $"</span>+ <span class="hljs-built_in">Math</span>.floor(<span class="hljs-built_in">Math</span>.abs(d.value.gdp_per_capita)));
+                            d3.select(<span class="hljs-built_in">this</span>).style(<span class="hljs-string">&#x27;stroke-width&#x27;</span>, <span class="hljs-number">5</span>);
+                            d3.select(<span class="hljs-string">&#x27;#hover_country_info&#x27;</span>).html(<span class="hljs-string">&quot;\
+                                &lt;b&gt;Country:&lt;/b&gt; &quot;</span>+ countries[d.key].name + <span class="hljs-string">&quot;&lt;br/&gt;\
+                               &lt;b&gt;Population:&lt;/b&gt; &quot;</span>+ d.value.population + <span class="hljs-string">&quot;&lt;br/&gt;\
+                               &lt;b&gt;GDP:&lt;/b&gt; $&quot;</span>+ <span class="hljs-built_in">Math</span>.floor(<span class="hljs-built_in">Math</span>.abs(d.value.gdp)) + <span class="hljs-string">&quot; billion&lt;br/&gt;\
+                               &lt;b&gt;GDP per capita:&lt;/b&gt; $&quot;</span>+ <span class="hljs-built_in">Math</span>.floor(<span class="hljs-built_in">Math</span>.abs(d.value.gdp_per_capita)));
                             hover_country = countries[d.key];
                             restyle();
                         },
                         mouseleave: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
-                            d3.select(<span class="hljs-keyword">this</span>).style(<span class="hljs-string">'stroke-width'</span>, <span class="hljs-number">1</span>);
-                            d3.select(<span class="hljs-string">'#hover_country_info'</span>).html(<span class="hljs-string">"&lt;i&gt;Hover over dot to view country info.&lt;/i&gt;"</span>);
+                            d3.select(<span class="hljs-built_in">this</span>).style(<span class="hljs-string">&#x27;stroke-width&#x27;</span>, <span class="hljs-number">1</span>);
+                            d3.select(<span class="hljs-string">&#x27;#hover_country_info&#x27;</span>).html(<span class="hljs-string">&quot;&lt;i&gt;Hover over dot to view country info.&lt;/i&gt;&quot;</span>);
                             hover_country = <span class="hljs-literal">null</span>;
                             restyle();
                         },
@@ -1682,11 +1688,11 @@ Note how the data is actually set in the <code>redraw_start</code> event below.<
             
             <div class="content"><div class='highlight'><pre>            average_gdp_layer = <span class="hljs-keyword">new</span> c3.Plot.Layer.Line.Horizontal&lt;<span class="hljs-built_in">number</span>&gt;({
                 label_options: {
-                    text: (avg) =&gt; <span class="hljs-string">"Avg GDP: $"</span> + d3.format(<span class="hljs-string">','</span>)(<span class="hljs-built_in">Math</span>.floor(avg)) + <span class="hljs-string">"b"</span>,
-                    dx: <span class="hljs-string">'1em'</span>,
+                    text: <span class="hljs-function">(<span class="hljs-params">avg</span>) =&gt;</span> <span class="hljs-string">&quot;Avg GDP: $&quot;</span> + d3.format(<span class="hljs-string">&#x27;,&#x27;</span>)(<span class="hljs-built_in">Math</span>.floor(avg)) + <span class="hljs-string">&quot;b&quot;</span>,
+                    dx: <span class="hljs-string">&#x27;1em&#x27;</span>,
                 },
                 vector_options: {
-                    styles: { stroke: <span class="hljs-string">'purple'</span> },
+                    styles: { stroke: <span class="hljs-string">&#x27;purple&#x27;</span> },
                     animate: <span class="hljs-literal">true</span>,
                     duration: <span class="hljs-number">500</span>,
                 },
@@ -1708,7 +1714,7 @@ Note how the data is actually set in the <code>redraw_start</code> event below.<
             <div class="content"><div class='highlight'><pre>            average_gdp_per_capita_layer = <span class="hljs-keyword">new</span> c3.Plot.Layer.Line.Vertical&lt;<span class="hljs-built_in">number</span>&gt;({
                 vector_options: {
                     styles: {
-                        stroke: (d, i) =&gt; i ? <span class="hljs-string">'orange'</span> : <span class="hljs-string">'purple'</span>,
+                        stroke: <span class="hljs-function">(<span class="hljs-params">d, i</span>) =&gt;</span> i ? <span class="hljs-string">&#x27;orange&#x27;</span> : <span class="hljs-string">&#x27;purple&#x27;</span>,
                     },
                     animate: <span class="hljs-literal">true</span>,
                     duration: <span class="hljs-number">500</span>,
@@ -1732,11 +1738,11 @@ line layers before they are drawn based on the data set due to the current filte
             </div>
             
             <div class="content"><div class='highlight'><pre>        handlers: {
-            <span class="hljs-string">'redraw_start'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-                <span class="hljs-keyword">var</span> country_count = country_data.filter((d) =&gt; d.value.gdp_per_capita &gt; <span class="hljs-number">1</span>).length;
+            <span class="hljs-string">&#x27;redraw_start&#x27;</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+                <span class="hljs-keyword">var</span> country_count = country_data.filter(<span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.value.gdp_per_capita &gt; <span class="hljs-number">1</span>).length;
                 <span class="hljs-keyword">if</span> (country_count) {
                     <span class="hljs-keyword">var</span> average_gdp = total_gdp.value() / country_count;
-                    <span class="hljs-keyword">var</span> average_gdp_per_capita_by_country = d3.sum(country_data, (d) =&gt; d.value.gdp_per_capita) / country_count;
+                    <span class="hljs-keyword">var</span> average_gdp_per_capita_by_country = d3.sum(country_data, <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.value.gdp_per_capita) / country_count;
                     <span class="hljs-keyword">var</span> average_gdp_per_capita_by_pop = total_gdp.value() * <span class="hljs-number">1000000000</span> / total_population.value();
                     average_gdp_layer.data = [average_gdp];
                     average_gdp_per_capita_layer.data = [average_gdp_per_capita_by_pop, average_gdp_per_capita_by_country];
@@ -1784,8 +1790,8 @@ a second group and so on.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> gdp_by_urban_data = urban_dim
-        .group((key) =&gt; <span class="hljs-built_in">Math</span>.floor(key / <span class="hljs-number">5</span>) * <span class="hljs-number">5</span>)
-        .reduceSum((d) =&gt; d.gdp)
+        .group(<span class="hljs-function">(<span class="hljs-params">key</span>) =&gt;</span> <span class="hljs-built_in">Math</span>.floor(key / <span class="hljs-number">5</span>) * <span class="hljs-number">5</span>)
+        .reduceSum(<span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.gdp)
         .all();</pre></div></div>
             
         </li>
@@ -1803,9 +1809,9 @@ user to make horizontal selections in the chart.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>    charts.push(<span class="hljs-keyword">new</span> c3.Plot.Selectable&lt;CrossFilter.Grouping&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">number</span>&gt;&gt;({
-        anchor: <span class="hljs-string">'#worldbank_urbanization_histogram'</span>,
+        anchor: <span class="hljs-string">&#x27;#worldbank_urbanization_histogram&#x27;</span>,
         height: <span class="hljs-number">100</span>,
-        selectable: <span class="hljs-string">'h'</span>,
+        selectable: <span class="hljs-string">&#x27;h&#x27;</span>,
 
         data: gdp_by_urban_data,</pre></div></div>
             
@@ -1822,7 +1828,7 @@ user to make horizontal selections in the chart.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">class</span>: <span class="hljs-string">'urban'</span>,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">class</span>: <span class="hljs-string">&#x27;urban&#x27;</span>,</pre></div></div>
             
         </li>
         
@@ -1858,8 +1864,8 @@ in the <code>redraw_start</code> event handler.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        x: (d) =&gt; d.key,
-        y: (d) =&gt; d.value &gt; <span class="hljs-number">1</span> ? d.value : <span class="hljs-number">0</span>,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        x: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.key,
+        y: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.value &gt; <span class="hljs-number">1</span> ? d.value : <span class="hljs-number">0</span>,</pre></div></div>
             
         </li>
         
@@ -1895,10 +1901,10 @@ in the <code>redraw_start</code> event handler.</p>
             
             <div class="content"><div class='highlight'><pre>        axes: [
             <span class="hljs-keyword">new</span> c3.Axis.X({
-                label: <span class="hljs-string">"Urbanization %"</span>,
+                label: <span class="hljs-string">&quot;Urbanization %&quot;</span>,
             }),
             <span class="hljs-keyword">new</span> c3.Axis.Y({
-                label: <span class="hljs-string">"GDP"</span>,
+                label: <span class="hljs-string">&quot;GDP&quot;</span>,
                 tick_size: <span class="hljs-number">0</span>,
                 tick_label: <span class="hljs-literal">false</span>,
             }),
@@ -1924,10 +1930,10 @@ which is not the case with <code>basis</code> curve interpolation.</p>
             
             <div class="content"><div class='highlight'><pre>        layers: [
             <span class="hljs-keyword">new</span> c3.Plot.Layer.Area&lt;CrossFilter.Grouping&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">number</span>&gt;&gt;({
-                interpolate: <span class="hljs-string">'cardinal'</span>,
+                interpolate: <span class="hljs-string">&#x27;cardinal&#x27;</span>,
             }),
             <span class="hljs-keyword">new</span> c3.Plot.Layer.Line&lt;CrossFilter.Grouping&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">number</span>&gt;&gt;({
-                interpolate: <span class="hljs-string">'cardinal'</span>,
+                interpolate: <span class="hljs-string">&#x27;cardinal&#x27;</span>,
                 r: <span class="hljs-number">5</span>,
             }),
         ],</pre></div></div>
@@ -1963,7 +1969,7 @@ the top of the chart, no matter how the data is filtered.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>            redraw_start: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-                <span class="hljs-keyword">this</span>.v.domain([<span class="hljs-number">0</span>, d3.max(gdp_by_urban_data, (d) =&gt; d.value)]);
+                <span class="hljs-built_in">this</span>.v.domain([<span class="hljs-number">0</span>, d3.max(gdp_by_urban_data, <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.value)]);
             },</pre></div></div>
             
         </li>
@@ -2037,14 +2043,14 @@ with the cooresponding C3 histogram based on the dimension and histogram data pa
             <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">histogram_plot</span>(<span class="hljs-params">name: <span class="hljs-built_in">string</span>,
         dimension: CrossFilter.Dimension&lt;GDPData, <span class="hljs-built_in">number</span>&gt;,
         hist_data: CrossFilter.Grouping&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">number</span>&gt;[]</span>) </span>{
-        <span class="hljs-keyword">var</span> row = d3.selectAll(<span class="hljs-string">'#worldbank_histogram_table'</span>).append(<span class="hljs-string">'tr'</span>)
-            .style(<span class="hljs-string">'border-top'</span>, <span class="hljs-string">'1px solid black'</span>)
-            .style(<span class="hljs-string">'border-bottom'</span>, <span class="hljs-string">'1px solid black'</span>);
-        row.append(<span class="hljs-string">'td'</span>)
-            .style(<span class="hljs-string">'text-align'</span>, <span class="hljs-string">'center'</span>)
-            .style(<span class="hljs-string">'font-weight'</span>, <span class="hljs-string">'bold'</span>)
-            .style(<span class="hljs-string">'background-color'</span>, <span class="hljs-string">'lightgray'</span>)
-            .style(<span class="hljs-string">'width'</span>, <span class="hljs-string">'5em'</span>)
+        <span class="hljs-keyword">var</span> row = d3.selectAll(<span class="hljs-string">&#x27;#worldbank_histogram_table&#x27;</span>).append(<span class="hljs-string">&#x27;tr&#x27;</span>)
+            .style(<span class="hljs-string">&#x27;border-top&#x27;</span>, <span class="hljs-string">&#x27;1px solid black&#x27;</span>)
+            .style(<span class="hljs-string">&#x27;border-bottom&#x27;</span>, <span class="hljs-string">&#x27;1px solid black&#x27;</span>);
+        row.append(<span class="hljs-string">&#x27;td&#x27;</span>)
+            .style(<span class="hljs-string">&#x27;text-align&#x27;</span>, <span class="hljs-string">&#x27;center&#x27;</span>)
+            .style(<span class="hljs-string">&#x27;font-weight&#x27;</span>, <span class="hljs-string">&#x27;bold&#x27;</span>)
+            .style(<span class="hljs-string">&#x27;background-color&#x27;</span>, <span class="hljs-string">&#x27;lightgray&#x27;</span>)
+            .style(<span class="hljs-string">&#x27;width&#x27;</span>, <span class="hljs-string">&#x27;5em&#x27;</span>)
             .text(name);</pre></div></div>
             
         </li>
@@ -2061,9 +2067,9 @@ with the cooresponding C3 histogram based on the dimension and histogram data pa
             </div>
             
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> c3.Plot.Selectable&lt;CrossFilter.Grouping&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">number</span>&gt;&gt;({
-            anchor: &lt;HTMLElement&gt;row.append(<span class="hljs-string">'td'</span>).append(<span class="hljs-string">'div'</span>).node(),
+            anchor: &lt;HTMLElement&gt;row.append(<span class="hljs-string">&#x27;td&#x27;</span>).append(<span class="hljs-string">&#x27;div&#x27;</span>).node(),
             height: <span class="hljs-number">75</span>,
-            selectable: <span class="hljs-string">'h'</span>,
+            selectable: <span class="hljs-string">&#x27;h&#x27;</span>,
 
             data: hist_data,</pre></div></div>
             
@@ -2099,8 +2105,8 @@ dimension and <code>value</code> represents the count of countries with that per
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            x: (d) =&gt; d.key,
-            y: (d) =&gt; d.value,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            x: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.key,
+            y: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.value,</pre></div></div>
             
         </li>
         
@@ -2134,7 +2140,7 @@ The <code>cardinal</code> interpolation ensures that the curve actually intersec
             <div class="content"><div class='highlight'><pre>            layers: [
                 <span class="hljs-keyword">new</span> c3.Plot.Layer.Area&lt;CrossFilter.Grouping&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">number</span>&gt;&gt;({
                     <span class="hljs-keyword">class</span>: name,
-                    interpolate: <span class="hljs-string">'cardinal'</span>,
+                    interpolate: <span class="hljs-string">&#x27;cardinal&#x27;</span>,
                 }),
             ],</pre></div></div>
             
@@ -2169,7 +2175,7 @@ the top of the chart, no matter how the data is filtered.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>                redraw_start: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-                    <span class="hljs-keyword">this</span>.v.domain([<span class="hljs-number">0</span>, d3.max(hist_data, (d) =&gt; d.value)]);
+                    <span class="hljs-built_in">this</span>.v.domain([<span class="hljs-number">0</span>, d3.max(hist_data, <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.value)]);
                 },</pre></div></div>
             
         </li>
@@ -2216,9 +2222,9 @@ grouping function here will also group countries into groups of 5% just like the
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> services_hist = services_dim.group((key) =&gt; <span class="hljs-built_in">Math</span>.floor(key / <span class="hljs-number">5</span>) * <span class="hljs-number">5</span>).all();
-    <span class="hljs-keyword">var</span> agriculture_hist = agriculture_dim.group((key) =&gt; <span class="hljs-built_in">Math</span>.floor(key / <span class="hljs-number">5</span>) * <span class="hljs-number">5</span>).all();
-    <span class="hljs-keyword">var</span> manufacturing_hist = manufacturing_dim.group((key) =&gt; <span class="hljs-built_in">Math</span>.floor(key / <span class="hljs-number">5</span>) * <span class="hljs-number">5</span>).all();</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> services_hist = services_dim.group(<span class="hljs-function">(<span class="hljs-params">key</span>) =&gt;</span> <span class="hljs-built_in">Math</span>.floor(key / <span class="hljs-number">5</span>) * <span class="hljs-number">5</span>).all();
+    <span class="hljs-keyword">var</span> agriculture_hist = agriculture_dim.group(<span class="hljs-function">(<span class="hljs-params">key</span>) =&gt;</span> <span class="hljs-built_in">Math</span>.floor(key / <span class="hljs-number">5</span>) * <span class="hljs-number">5</span>).all();
+    <span class="hljs-keyword">var</span> manufacturing_hist = manufacturing_dim.group(<span class="hljs-function">(<span class="hljs-params">key</span>) =&gt;</span> <span class="hljs-built_in">Math</span>.floor(key / <span class="hljs-number">5</span>) * <span class="hljs-number">5</span>).all();</pre></div></div>
             
         </li>
         
@@ -2233,9 +2239,9 @@ grouping function here will also group countries into groups of 5% just like the
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    charts.push(histogram_plot(<span class="hljs-string">'services'</span>, services_dim, services_hist));
-    charts.push(histogram_plot(<span class="hljs-string">'manufacturing'</span>, manufacturing_dim, manufacturing_hist));
-    charts.push(histogram_plot(<span class="hljs-string">'agriculture'</span>, agriculture_dim, agriculture_hist));</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    charts.push(histogram_plot(<span class="hljs-string">&#x27;services&#x27;</span>, services_dim, services_hist));
+    charts.push(histogram_plot(<span class="hljs-string">&#x27;manufacturing&#x27;</span>, manufacturing_dim, manufacturing_hist));
+    charts.push(histogram_plot(<span class="hljs-string">&#x27;agriculture&#x27;</span>, agriculture_dim, agriculture_hist));</pre></div></div>
             
         </li>
         
@@ -2253,10 +2259,10 @@ table and thus shared by all three histograms.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> axis_row = d3.selectAll(<span class="hljs-string">'#worldbank_histogram_table'</span>).append(<span class="hljs-string">'tr'</span>);
-    axis_row.append(<span class="hljs-string">'td'</span>);
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> axis_row = d3.selectAll(<span class="hljs-string">&#x27;#worldbank_histogram_table&#x27;</span>).append(<span class="hljs-string">&#x27;tr&#x27;</span>);
+    axis_row.append(<span class="hljs-string">&#x27;td&#x27;</span>);
     charts.push(<span class="hljs-keyword">new</span> c3.Axis.X({
-        anchor: &lt;HTMLElement&gt;axis_row.append(<span class="hljs-string">'td'</span>).append(<span class="hljs-string">'div'</span>).node(),
+        anchor: &lt;HTMLElement&gt;axis_row.append(<span class="hljs-string">&#x27;td&#x27;</span>).append(<span class="hljs-string">&#x27;div&#x27;</span>).node(),
         height: <span class="hljs-number">30</span>,
         scale: d3.scale.linear().domain([<span class="hljs-number">0</span>, <span class="hljs-number">100</span>]),
     }));</pre></div></div>
@@ -2288,7 +2294,7 @@ table and thus shared by all three histograms.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> country_dim2 = xf.dimension((d) =&gt; d.country_code);
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> country_dim2 = xf.dimension(<span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.country_code);
     <span class="hljs-keyword">var</span> country_data2 = country_dim2.group().reduce&lt;CountryData&gt;(
         <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">p, v</span>) </span>{
             p.gdp += v.gdp;
@@ -2322,8 +2328,8 @@ table and thus shared by all three histograms.</p>
             
             <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> country_gdp_column: c3.Table.Column&lt;CrossFilter.Grouping&lt;<span class="hljs-built_in">string</span>, CountryData&gt;&gt;;
     charts.push(<span class="hljs-keyword">new</span> c3.Table&lt;CrossFilter.Grouping&lt;<span class="hljs-built_in">string</span>, CountryData&gt;&gt;({
-        anchor: <span class="hljs-string">'#worldbank_country_table'</span>,
-        width: <span class="hljs-string">'100%'</span>,
+        anchor: <span class="hljs-string">&#x27;#worldbank_country_table&#x27;</span>,
+        width: <span class="hljs-string">&#x27;100%&#x27;</span>,
         data: country_data2,</pre></div></div>
             
         </li>
@@ -2357,7 +2363,7 @@ that have a 0 value.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>        limit_rows: <span class="hljs-number">10</span>,
-        filter: (d) =&gt; d.value.gdp &gt; <span class="hljs-number">0.000000001</span>,</pre></div></div>
+        filter: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.value.gdp &gt; <span class="hljs-number">0.000000001</span>,</pre></div></div>
             
         </li>
         
@@ -2390,8 +2396,8 @@ that have a 0 value.</p>
             
             <div class="content"><div class='highlight'><pre>        columns: [
             {
-                header: { text: <span class="hljs-string">"Country"</span> },
-                cells: { html: (d) =&gt; <span class="hljs-string">'&lt;b&gt;'</span> + countries[d.key].name + <span class="hljs-string">'&lt;/b&gt;'</span> },
+                header: { text: <span class="hljs-string">&quot;Country&quot;</span> },
+                cells: { html: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> <span class="hljs-string">&#x27;&lt;b&gt;&#x27;</span> + countries[d.key].name + <span class="hljs-string">&#x27;&lt;/b&gt;&#x27;</span> },
             }, {</pre></div></div>
             
         </li>
@@ -2408,11 +2414,11 @@ region this country is in.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                header: { text: <span class="hljs-string">"Region"</span> },
+            <div class="content"><div class='highlight'><pre>                header: { text: <span class="hljs-string">&quot;Region&quot;</span> },
                 cells: {
-                    text: (d) =&gt; regions[countries[d.key].region_id].name,
+                    text: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> regions[countries[d.key].region_id].name,
                     styles: {
-                        <span class="hljs-string">'background-color'</span>: (d) =&gt; region_color(countries[d.key].region_id),
+                        <span class="hljs-string">&#x27;background-color&#x27;</span>: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> region_color(countries[d.key].region_id),
                     },
                 },
             }, {</pre></div></div>
@@ -2433,15 +2439,15 @@ graph based on the cell value.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                header: { text: <span class="hljs-string">"Population"</span> },
-                cells: { html: (d) =&gt; d3.format(<span class="hljs-string">','</span>)(d.value.population) },
-                sort: (d) =&gt; d.value.population,
-                vis: <span class="hljs-string">'bar'</span>,
+            <div class="content"><div class='highlight'><pre>                header: { text: <span class="hljs-string">&quot;Population&quot;</span> },
+                cells: { html: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d3.format(<span class="hljs-string">&#x27;,&#x27;</span>)(d.value.population) },
+                sort: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.value.population,
+                vis: <span class="hljs-string">&#x27;bar&#x27;</span>,
             }, {
-                header: { text: <span class="hljs-string">"Land Area"</span> },
-                cells: { html: (d) =&gt; (d3.format(<span class="hljs-string">','</span>)(<span class="hljs-built_in">Math</span>.round(d.value.land_area))) + <span class="hljs-string">"km&lt;sup&gt;2&lt;/sup&gt;"</span> },
-                sort: (d) =&gt; <span class="hljs-built_in">Math</span>.round(d.value.land_area),
-                vis: <span class="hljs-string">'bar'</span>,
+                header: { text: <span class="hljs-string">&quot;Land Area&quot;</span> },
+                cells: { html: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> (d3.format(<span class="hljs-string">&#x27;,&#x27;</span>)(<span class="hljs-built_in">Math</span>.round(d.value.land_area))) + <span class="hljs-string">&quot;km&lt;sup&gt;2&lt;/sup&gt;&quot;</span> },
+                sort: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> <span class="hljs-built_in">Math</span>.round(d.value.land_area),
+                vis: <span class="hljs-string">&#x27;bar&#x27;</span>,
             },</pre></div></div>
             
         </li>
@@ -2458,10 +2464,10 @@ graph based on the cell value.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>            country_gdp_column = {
-                header: { text: <span class="hljs-string">"GDP"</span> },
-                cells: { html: (d) =&gt; <span class="hljs-string">"$"</span> + (d3.format(<span class="hljs-string">','</span>)(<span class="hljs-built_in">Math</span>.round(d.value.gdp))) + <span class="hljs-string">"b"</span> },
-                sort: (d) =&gt; <span class="hljs-built_in">Math</span>.round(d.value.gdp),
-                vis: <span class="hljs-string">'bar'</span>,
+                header: { text: <span class="hljs-string">&quot;GDP&quot;</span> },
+                cells: { html: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> <span class="hljs-string">&quot;$&quot;</span> + (d3.format(<span class="hljs-string">&#x27;,&#x27;</span>)(<span class="hljs-built_in">Math</span>.round(d.value.gdp))) + <span class="hljs-string">&quot;b&quot;</span> },
+                sort: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> <span class="hljs-built_in">Math</span>.round(d.value.gdp),
+                vis: <span class="hljs-string">&#x27;bar&#x27;</span>,
             }, {</pre></div></div>
             
         </li>
@@ -2480,11 +2486,11 @@ per capita value.  Look out for Monaco!</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                header: { text: <span class="hljs-string">"GDP per capita"</span> },
-                cells: { html: (d) =&gt; <span class="hljs-string">"$"</span> + (d3.format(<span class="hljs-string">','</span>)(<span class="hljs-built_in">Math</span>.round(d.value.gdp_per_capita))) },
-                sort: (d) =&gt; <span class="hljs-built_in">Math</span>.round(d.value.gdp_per_capita),
-                vis: <span class="hljs-string">'bar'</span>,
-                total_value: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{ <span class="hljs-keyword">return</span> d3.max(country_data2, (d) =&gt; d.value.gdp_per_capita); },
+            <div class="content"><div class='highlight'><pre>                header: { text: <span class="hljs-string">&quot;GDP per capita&quot;</span> },
+                cells: { html: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> <span class="hljs-string">&quot;$&quot;</span> + (d3.format(<span class="hljs-string">&#x27;,&#x27;</span>)(<span class="hljs-built_in">Math</span>.round(d.value.gdp_per_capita))) },
+                sort: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> <span class="hljs-built_in">Math</span>.round(d.value.gdp_per_capita),
+                vis: <span class="hljs-string">&#x27;bar&#x27;</span>,
+                total_value: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{ <span class="hljs-keyword">return</span> d3.max(country_data2, <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.value.gdp_per_capita); },
             },
         ],</pre></div></div>
             
@@ -2518,7 +2524,7 @@ per capita value.  Look out for Monaco!</p>
             
             <div class="content"><div class='highlight'><pre>        cell_options: {
             styles: {
-                padding: <span class="hljs-string">"0 0.25em"</span>,
+                padding: <span class="hljs-string">&quot;0 0.25em&quot;</span>,
             },
         },</pre></div></div>
             
@@ -2541,7 +2547,7 @@ in this case giving them a wheat-colored background.</p>
             
             <div class="content"><div class='highlight'><pre>        row_options: {
             classes: {
-                hover: (d) =&gt; hover_country === countries[d.key] || hover_region === regions[countries[d.key].region_id],
+                hover: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> hover_country === countries[d.key] || hover_region === regions[countries[d.key].region_id],
             },</pre></div></div>
             
         </li>
@@ -2560,11 +2566,11 @@ for all charts to update based on this new focus country.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>            events: {
-                mouseenter: (d) =&gt; {
+                mouseenter: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> {
                     hover_country = countries[d.key];
                     restyle();
                 },
-                mouseleave: (d) =&gt; {
+                mouseleave: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> {
                     hover_country = <span class="hljs-literal">null</span>;
                     restyle();
                 },
@@ -2594,9 +2600,9 @@ the scatter plot and this table.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>        handlers: {
-            <span class="hljs-string">'select'</span>: (selections) =&gt; {
+            <span class="hljs-string">&#x27;select&#x27;</span>: <span class="hljs-function">(<span class="hljs-params">selections</span>) =&gt;</span> {
                 <span class="hljs-keyword">if</span> (selections.length)
-                    country_dim2.filter((key) =&gt; selections.map((d) =&gt; d.key).indexOf(key) &gt;= <span class="hljs-number">0</span>);
+                    country_dim2.filter(<span class="hljs-function">(<span class="hljs-params">key</span>) =&gt;</span> selections.map(<span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.key).indexOf(key) &gt;= <span class="hljs-number">0</span>);
                 <span class="hljs-keyword">else</span>
                     country_dim2.filterAll();
                 redraw();
@@ -2615,7 +2621,7 @@ the scatter plot and this table.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="hljs-string">'found'</span>: (search, d) =&gt; {
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-string">&#x27;found&#x27;</span>: <span class="hljs-function">(<span class="hljs-params">search, d</span>) =&gt;</span> {
                 hover_country = d != <span class="hljs-literal">null</span> ? countries[d.key] : <span class="hljs-literal">null</span>;
                 restyle();
             },
@@ -2649,7 +2655,7 @@ the scatter plot and this table.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> chart of charts)
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> chart <span class="hljs-keyword">of</span> charts)
         chart.render();</pre></div></div>
             
         </li>
@@ -2666,7 +2672,7 @@ the scatter plot and this table.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">window</span>.onresize = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> chart of charts)
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> chart <span class="hljs-keyword">of</span> charts)
             chart.resize();
     }
 }</pre></div></div>
@@ -2701,7 +2707,7 @@ calling the <code>render()</code> function.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>download_data().then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{ setTimeout(render, <span class="hljs-number">0</span>); });</pre></div></div>
+            <div class="content"><div class='highlight'><pre>download_data().then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{ <span class="hljs-built_in">setTimeout</span>(render, <span class="hljs-number">0</span>); });</pre></div></div>
             
         </li>
         
@@ -2733,8 +2739,8 @@ debugger.  In production code you could use this instead:</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-130">&#182;</a>
               </div>
-              <pre><code>download_data().then(render)
-</code></pre>
+              <pre><code>download_data().then(render)</code></pre>
+
             </div>
             
         </li>

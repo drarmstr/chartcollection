@@ -25,6 +25,11 @@
                 </a>
               
                 
+                <a class="source" href="dark_example.html">
+                  dark_example.ts
+                </a>
+              
+                
                 <a class="source" href="flamechart_example.html">
                   flamechart_example.ts
                 </a>
@@ -173,13 +178,13 @@ legend.render({</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    anchor: $(<span class="hljs-string">'&lt;div&gt;&lt;/div&gt;'</span>).css(<span class="hljs-string">'display'</span>, <span class="hljs-string">'inline-block'</span>).appendTo($(<span class="hljs-string">'#legend_examples'</span>))[<span class="hljs-number">0</span>],
+            <div class="content"><div class='highlight'><pre>    anchor: $(<span class="hljs-string">&#x27;&lt;div&gt;&lt;/div&gt;&#x27;</span>).css(<span class="hljs-string">&#x27;display&#x27;</span>, <span class="hljs-string">&#x27;inline-block&#x27;</span>).appendTo($(<span class="hljs-string">&#x27;#legend_examples&#x27;</span>))[<span class="hljs-number">0</span>],
     data: [
-        <span class="hljs-string">"Apples"</span>,
-        <span class="hljs-string">"Oranges"</span>,
-        [<span class="hljs-string">'foo'</span>, <span class="hljs-string">'bar'</span>],
-        <span class="hljs-string">"Really long item name"</span>,
-        <span class="hljs-string">"Spam"</span>
+        <span class="hljs-string">&quot;Apples&quot;</span>,
+        <span class="hljs-string">&quot;Oranges&quot;</span>,
+        [<span class="hljs-string">&#x27;foo&#x27;</span>, <span class="hljs-string">&#x27;bar&#x27;</span>],
+        <span class="hljs-string">&quot;Really long item name&quot;</span>,
+        <span class="hljs-string">&quot;Spam&quot;</span>
     ],
     width: <span class="hljs-number">150</span>,
 });</pre></div></div>
@@ -213,20 +218,20 @@ It also defines a custom <code>nest</code> callback to describe how to get array
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> legend2 = <span class="hljs-keyword">new</span> c3.Legend&lt;{ name: <span class="hljs-built_in">string</span>, types: <span class="hljs-built_in">string</span>[] }, <span class="hljs-built_in">string</span>&gt;({
-    anchor: $(<span class="hljs-string">'&lt;div&gt;&lt;/div&gt;'</span>).css(<span class="hljs-string">'display'</span>, <span class="hljs-string">'inline-block'</span>).appendTo($(<span class="hljs-string">'#legend_examples'</span>))[<span class="hljs-number">0</span>],
+    anchor: $(<span class="hljs-string">&#x27;&lt;div&gt;&lt;/div&gt;&#x27;</span>).css(<span class="hljs-string">&#x27;display&#x27;</span>, <span class="hljs-string">&#x27;inline-block&#x27;</span>).appendTo($(<span class="hljs-string">&#x27;#legend_examples&#x27;</span>))[<span class="hljs-number">0</span>],
     width: <span class="hljs-number">150</span>,
     data: [
         {
-            name: <span class="hljs-string">"Fruit"</span>,
-            types: [<span class="hljs-string">"Apples"</span>, <span class="hljs-string">"Oranges"</span>],
+            name: <span class="hljs-string">&quot;Fruit&quot;</span>,
+            types: [<span class="hljs-string">&quot;Apples&quot;</span>, <span class="hljs-string">&quot;Oranges&quot;</span>],
         }, {
-            name: <span class="hljs-string">"Minerals"</span>,
-            types: [<span class="hljs-string">"Gold"</span>, <span class="hljs-string">"Sulfur"</span>],
+            name: <span class="hljs-string">&quot;Minerals&quot;</span>,
+            types: [<span class="hljs-string">&quot;Gold&quot;</span>, <span class="hljs-string">&quot;Sulfur&quot;</span>],
         },
     ],
-    nest: (d) =&gt; d.types,
-    item_options: { text: (d) =&gt; d.name },
-    nested_item_options: { text: (d) =&gt; d },
+    nest: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.types,
+    item_options: { text: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.name },
+    nested_item_options: { text: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d },
     bullet_options: <span class="hljs-literal">false</span>,
 });
 legend2.render();</pre></div></div>
@@ -259,23 +264,23 @@ specify it’s own options object.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> legend3 = <span class="hljs-keyword">new</span> c3.Legend&lt;{ options: c3.Selection.Options&lt;<span class="hljs-built_in">any</span>&gt; }, <span class="hljs-built_in">void</span>&gt;({
-    anchor: $(<span class="hljs-string">'&lt;div&gt;&lt;/div&gt;'</span>).css(<span class="hljs-string">'display'</span>, <span class="hljs-string">'inline-block'</span>).appendTo($(<span class="hljs-string">'#legend_examples'</span>))[<span class="hljs-number">0</span>],
+    anchor: $(<span class="hljs-string">&#x27;&lt;div&gt;&lt;/div&gt;&#x27;</span>).css(<span class="hljs-string">&#x27;display&#x27;</span>, <span class="hljs-string">&#x27;inline-block&#x27;</span>).appendTo($(<span class="hljs-string">&#x27;#legend_examples&#x27;</span>))[<span class="hljs-number">0</span>],
     width: <span class="hljs-number">150</span>,
     data: [
         {
             options: {
-                text: <span class="hljs-string">"Red"</span>,
-                styles: { color: <span class="hljs-string">'red'</span> },
+                text: <span class="hljs-string">&quot;Red&quot;</span>,
+                styles: { color: <span class="hljs-string">&#x27;red&#x27;</span> },
             },
         },
         {
             options: {
-                text: <span class="hljs-string">"Blue"</span>,
-                styles: { color: <span class="hljs-string">'skyblue'</span> },
+                text: <span class="hljs-string">&quot;Blue&quot;</span>,
+                styles: { color: <span class="hljs-string">&#x27;skyblue&#x27;</span> },
             },
         },
     ],
-    item_option: (item) =&gt; item.options,
+    item_option: <span class="hljs-function">(<span class="hljs-params">item</span>) =&gt;</span> item.options,
 }).render();</pre></div></div>
             
         </li>
@@ -351,10 +356,10 @@ Notice how the <code>name</code> properties of each layer and stack is used in t
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> plot = <span class="hljs-keyword">new</span> c3.Plot();
 <span class="hljs-keyword">var</span> bar_layer: c3.Plot.Layer.Bar&lt;<span class="hljs-built_in">number</span>&gt;;
 plot.render({
-    anchor: $(<span class="hljs-string">'&lt;div&gt;&lt;/div&gt;'</span>).appendTo($(<span class="hljs-string">'#plot_legend_example'</span>))[<span class="hljs-number">0</span>],
-    anchor_styles: { <span class="hljs-string">'display'</span>: <span class="hljs-string">'inline-block'</span> },
+    anchor: $(<span class="hljs-string">&#x27;&lt;div&gt;&lt;/div&gt;&#x27;</span>).appendTo($(<span class="hljs-string">&#x27;#plot_legend_example&#x27;</span>))[<span class="hljs-number">0</span>],
+    anchor_styles: { <span class="hljs-string">&#x27;display&#x27;</span>: <span class="hljs-string">&#x27;inline-block&#x27;</span> },
     height: <span class="hljs-number">300</span>,
-    width: <span class="hljs-string">'80%'</span>,</pre></div></div>
+    width: <span class="hljs-string">&#x27;80%&#x27;</span>,</pre></div></div>
             
         </li>
         
@@ -372,8 +377,8 @@ index of the element as the X value.</p>
             
             <div class="content"><div class='highlight'><pre>    h: d3.scale.linear().domain([<span class="hljs-number">0</span>, <span class="hljs-number">100</span>]),
     v: d3.scale.linear().domain([<span class="hljs-number">0</span>, <span class="hljs-number">10</span>]),
-    x: (d, i) =&gt; i,
-    y: (d) =&gt; d,</pre></div></div>
+    x: <span class="hljs-function">(<span class="hljs-params">d, i</span>) =&gt;</span> i,
+    y: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d,</pre></div></div>
             
         </li>
         
@@ -411,14 +416,14 @@ layer types please see the <a href="../#stack_example">stacked charts examples</
             </div>
             
             <div class="content"><div class='highlight'><pre>        bar_layer = <span class="hljs-keyword">new</span> c3.Plot.Layer.Bar&lt;<span class="hljs-built_in">number</span>&gt;({
-            name: <span class="hljs-string">"Stacked Bar Chart"</span>,
+            name: <span class="hljs-string">&quot;Stacked Bar Chart&quot;</span>,
             data: bar_data,
-            x: (d, i) =&gt; i * <span class="hljs-number">4</span>,
-            y: (d, i, stack) =&gt; d[stack],
+            x: <span class="hljs-function">(<span class="hljs-params">d, i</span>) =&gt;</span> i * <span class="hljs-number">4</span>,
+            y: <span class="hljs-function">(<span class="hljs-params">d, i, stack</span>) =&gt;</span> d[stack],
             stacks: [
-                { name: <span class="hljs-string">"Blue Stack"</span>, options: { styles: { <span class="hljs-string">'fill'</span>: <span class="hljs-string">'slateblue'</span> } } },
-                { name: <span class="hljs-string">"Orange Stack"</span>, options: { styles: { <span class="hljs-string">'fill'</span>: <span class="hljs-string">'goldenrod'</span> } } },
-                { name: <span class="hljs-string">"Red Stack"</span>, options: { styles: { <span class="hljs-string">'fill'</span>: <span class="hljs-string">'firebrick'</span> } } },
+                { name: <span class="hljs-string">&quot;Blue Stack&quot;</span>, options: { styles: { <span class="hljs-string">&#x27;fill&#x27;</span>: <span class="hljs-string">&#x27;slateblue&#x27;</span> } } },
+                { name: <span class="hljs-string">&quot;Orange Stack&quot;</span>, options: { styles: { <span class="hljs-string">&#x27;fill&#x27;</span>: <span class="hljs-string">&#x27;goldenrod&#x27;</span> } } },
+                { name: <span class="hljs-string">&quot;Red Stack&quot;</span>, options: { styles: { <span class="hljs-string">&#x27;fill&#x27;</span>: <span class="hljs-string">&#x27;firebrick&#x27;</span> } } },
             ],
         }),</pre></div></div>
             
@@ -436,26 +441,26 @@ layer types please see the <a href="../#stack_example">stacked charts examples</
             </div>
             
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">new</span> c3.Plot.Layer.Line({
-            name: <span class="hljs-string">"Series 1"</span>,
+            name: <span class="hljs-string">&quot;Series 1&quot;</span>,
             data: generate_random_legend_data(),
             options: {
-                styles: { <span class="hljs-string">'stroke'</span>: <span class="hljs-string">'red'</span> },
+                styles: { <span class="hljs-string">&#x27;stroke&#x27;</span>: <span class="hljs-string">&#x27;red&#x27;</span> },
             },
         }),
 
         <span class="hljs-keyword">new</span> c3.Plot.Layer.Line({
-            name: <span class="hljs-string">"Series 2"</span>,
+            name: <span class="hljs-string">&quot;Series 2&quot;</span>,
             data: generate_random_legend_data(),
             options: {
-                styles: { <span class="hljs-string">'stroke'</span>: <span class="hljs-string">'blue'</span> },
+                styles: { <span class="hljs-string">&#x27;stroke&#x27;</span>: <span class="hljs-string">&#x27;blue&#x27;</span> },
             },
         }),
 
         <span class="hljs-keyword">new</span> c3.Plot.Layer.Line({
-            name: <span class="hljs-string">"Series 3"</span>,
+            name: <span class="hljs-string">&quot;Series 3&quot;</span>,
             data: generate_random_legend_data(),
             options: {
-                styles: { <span class="hljs-string">'stroke'</span>: <span class="hljs-string">'green'</span> },
+                styles: { <span class="hljs-string">&#x27;stroke&#x27;</span>: <span class="hljs-string">&#x27;green&#x27;</span> },
             },
         }),</pre></div></div>
             
@@ -473,21 +478,21 @@ layer types please see the <a href="../#stack_example">stacked charts examples</
             </div>
             
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">new</span> c3.Plot.Layer.Line.Horizontal({
-            name: <span class="hljs-string">"Horizontal Line"</span>,
+            name: <span class="hljs-string">&quot;Horizontal Line&quot;</span>,
             data: [<span class="hljs-number">7</span>],
             line_options: {
                 styles: {
-                    <span class="hljs-string">'stroke'</span>: <span class="hljs-string">'violet'</span>,
-                    <span class="hljs-string">'stroke-dasharray'</span>: <span class="hljs-string">'5 3'</span>,
-                    <span class="hljs-string">'opacity'</span>: <span class="hljs-number">0.75</span>,
+                    <span class="hljs-string">&#x27;stroke&#x27;</span>: <span class="hljs-string">&#x27;violet&#x27;</span>,
+                    <span class="hljs-string">&#x27;stroke-dasharray&#x27;</span>: <span class="hljs-string">&#x27;5 3&#x27;</span>,
+                    <span class="hljs-string">&#x27;opacity&#x27;</span>: <span class="hljs-number">0.75</span>,
                 },
             },
             label_options: {
-                text: <span class="hljs-string">"Horizontal Line"</span>,
+                text: <span class="hljs-string">&quot;Horizontal Line&quot;</span>,
             },
             grab_line_options: {
                 events: {
-                    <span class="hljs-string">'click'</span>: () =&gt; { alert(<span class="hljs-string">"Click on Horizontal Line"</span>); },
+                    <span class="hljs-string">&#x27;click&#x27;</span>: <span class="hljs-function">() =&gt;</span> { alert(<span class="hljs-string">&quot;Click on Horizontal Line&quot;</span>); },
                 },
             }
         }),</pre></div></div>
@@ -512,29 +517,29 @@ Note how this layer sets the <code>name</code> to false so it is not displayed i
             draggable: <span class="hljs-literal">true</span>,
             line_options: {
                 styles: {
-                    <span class="hljs-string">'stroke'</span>: <span class="hljs-string">'darkorange'</span>,
-                    <span class="hljs-string">'stroke-width'</span>: <span class="hljs-string">'1px'</span>,
+                    <span class="hljs-string">&#x27;stroke&#x27;</span>: <span class="hljs-string">&#x27;darkorange&#x27;</span>,
+                    <span class="hljs-string">&#x27;stroke-width&#x27;</span>: <span class="hljs-string">&#x27;1px&#x27;</span>,
                 },
             },
             label_options: {
-                text: (d, i) =&gt; <span class="hljs-string">"Event "</span> + i,
-                alignment: <span class="hljs-string">'top'</span>,
+                text: <span class="hljs-function">(<span class="hljs-params">d, i</span>) =&gt;</span> <span class="hljs-string">&quot;Event &quot;</span> + i,
+                alignment: <span class="hljs-string">&#x27;top&#x27;</span>,
             },
         }),
 
         <span class="hljs-keyword">new</span> c3.Plot.Layer.Scatter({
-            name: <span class="hljs-string">"The Sun"</span>,
+            name: <span class="hljs-string">&quot;The Sun&quot;</span>,
             data: [<span class="hljs-number">7</span>],
-            x: () =&gt; <span class="hljs-number">80</span>,
+            x: <span class="hljs-function">() =&gt;</span> <span class="hljs-number">80</span>,
             r: <span class="hljs-number">10</span>,
             options: {
-                styles: { <span class="hljs-string">'fill'</span>: <span class="hljs-string">'gold'</span> },
+                styles: { <span class="hljs-string">&#x27;fill&#x27;</span>: <span class="hljs-string">&#x27;gold&#x27;</span> },
             },
             label_options: {
-                text: <span class="hljs-string">"sun"</span>,
+                text: <span class="hljs-string">&quot;sun&quot;</span>,
                 styles: {
-                    <span class="hljs-string">'fill'</span>: <span class="hljs-string">'black'</span>,
-                    <span class="hljs-string">'font-size'</span>: <span class="hljs-string">'xx-small'</span>,
+                    <span class="hljs-string">&#x27;fill&#x27;</span>: <span class="hljs-string">&#x27;black&#x27;</span>,
+                    <span class="hljs-string">&#x27;font-size&#x27;</span>: <span class="hljs-string">&#x27;xx-small&#x27;</span>,
                 },
             },
         }),
@@ -556,12 +561,12 @@ Everything else is automatic, though we could override or extend the behaviour i
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> plot_legend = <span class="hljs-keyword">new</span> c3.Legend.PlotLegend({
-    anchor: $(<span class="hljs-string">'&lt;div&gt;&lt;/div&gt;'</span>).appendTo($(<span class="hljs-string">'#plot_legend_example'</span>))[<span class="hljs-number">0</span>],
+    anchor: $(<span class="hljs-string">&#x27;&lt;div&gt;&lt;/div&gt;&#x27;</span>).appendTo($(<span class="hljs-string">&#x27;#plot_legend_example&#x27;</span>))[<span class="hljs-number">0</span>],
     anchor_styles: {
-        <span class="hljs-string">'display'</span>: <span class="hljs-string">'inline-block'</span>,
-        <span class="hljs-string">'vertical-align'</span>: <span class="hljs-string">'top'</span>,
+        <span class="hljs-string">&#x27;display&#x27;</span>: <span class="hljs-string">&#x27;inline-block&#x27;</span>,
+        <span class="hljs-string">&#x27;vertical-align&#x27;</span>: <span class="hljs-string">&#x27;top&#x27;</span>,
     },
-    width: <span class="hljs-string">'20%'</span>,
+    width: <span class="hljs-string">&#x27;20%&#x27;</span>,
     plot: plot,
 }).render();</pre></div></div>
             
@@ -606,8 +611,8 @@ Everything else is automatic, though we could override or extend the behaviour i
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>$(<span class="hljs-string">'#invert_layers'</span>).on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-    (&lt;c3.Legend.PlotLegend&gt;plot_legend).invert_layers = <span class="hljs-keyword">this</span>.checked;
+            <div class="content"><div class='highlight'><pre>$(<span class="hljs-string">&#x27;#invert_layers&#x27;</span>).on(<span class="hljs-string">&#x27;change&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    (&lt;c3.Legend.PlotLegend&gt;plot_legend).invert_layers = <span class="hljs-built_in">this</span>.checked;
     plot_legend.redraw();
 });</pre></div></div>
             

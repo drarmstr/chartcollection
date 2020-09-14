@@ -25,6 +25,11 @@
                 </a>
               
                 
+                <a class="source" href="dark_example.html">
+                  dark_example.ts
+                </a>
+              
+                
                 <a class="source" href="flamechart_example.html">
                   flamechart_example.ts
                 </a>
@@ -160,7 +165,7 @@
             <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">generate_segment_data</span>(<span class="hljs-params">data: SwimlaneDatum[]</span>) </span>{
     data.length = <span class="hljs-number">0</span>;
     <span class="hljs-keyword">let</span> color_scale = d3.scale.category10();
-    <span class="hljs-keyword">let</span> color = color_scale(<span class="hljs-string">'seed'</span>);
+    <span class="hljs-keyword">let</span> color = color_scale(<span class="hljs-string">&#x27;seed&#x27;</span>);
     <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> swimlane = <span class="hljs-number">0</span>; swimlane &lt; <span class="hljs-number">4</span>; swimlane++)
         <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> time = <span class="hljs-built_in">Math</span>.random()*<span class="hljs-number">5</span>; time &lt; <span class="hljs-number">100</span>; time += <span class="hljs-built_in">Math</span>.random() * <span class="hljs-number">15</span>) {
             <span class="hljs-keyword">let</span> duration = <span class="hljs-built_in">Math</span>.random() * <span class="hljs-number">15</span>;
@@ -174,7 +179,7 @@
             });
             time += duration;
         }
-    c3.array.sort_up(data, (d) =&gt; d.time);
+    c3.array.sort_up(data, <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.time);
 }</pre></div></div>
             
         </li>
@@ -205,10 +210,10 @@
             
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> segment_layer: c3.Plot.Layer.Swimlane.Segment&lt;SwimlaneDatum&gt;;
 <span class="hljs-keyword">var</span> swimlane_timeline = <span class="hljs-keyword">new</span> c3.Plot.Zoomable&lt;SwimlaneDatum&gt;({
-    anchor: <span class="hljs-string">'#swimlanes_segment_plot'</span>,
-    width: <span class="hljs-string">'95%'</span>,
+    anchor: <span class="hljs-string">&#x27;#swimlanes_segment_plot&#x27;</span>,
+    width: <span class="hljs-string">&#x27;95%&#x27;</span>,
     height: <span class="hljs-number">300</span>,
-    zoomable: <span class="hljs-string">'h'</span>,
+    zoomable: <span class="hljs-string">&#x27;h&#x27;</span>,
 
     data: [],</pre></div></div>
             
@@ -278,9 +283,9 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            x: (d) =&gt; d.time,
-            dx: (d) =&gt; d.duration,
-            y: (d) =&gt; d.swimlane,
+            <div class="content"><div class='highlight'><pre>            x: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.time,
+            dx: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.duration,
+            y: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.swimlane,
 
             rect_options: {</pre></div></div>
             
@@ -298,11 +303,11 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>                styles: {
-                    <span class="hljs-string">'fill'</span>: (d) =&gt; d.color,
-                    <span class="hljs-string">'stroke'</span>: (d) =&gt; d3.rgb(d.color).darker().toString(),
-                    <span class="hljs-string">'stroke-width'</span>: <span class="hljs-number">2</span>,
-                    <span class="hljs-string">'rx'</span>: <span class="hljs-number">5</span>, <span class="hljs-comment">// rounded corners (Doesn't work in IE11)</span>
-                    <span class="hljs-string">'shape-rendering'</span>: <span class="hljs-string">'geometricPrecision'</span>,
+                    <span class="hljs-string">&#x27;fill&#x27;</span>: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.color,
+                    <span class="hljs-string">&#x27;stroke&#x27;</span>: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d3.rgb(d.color).darker().toString(),
+                    <span class="hljs-string">&#x27;stroke-width&#x27;</span>: <span class="hljs-number">2</span>,
+                    <span class="hljs-string">&#x27;rx&#x27;</span>: <span class="hljs-number">5</span>, <span class="hljs-comment">// rounded corners (Doesn&#x27;t work in IE11)</span>
+                    <span class="hljs-string">&#x27;shape-rendering&#x27;</span>: <span class="hljs-string">&#x27;geometricPrecision&#x27;</span>,
                 },
             },</pre></div></div>
             
@@ -320,10 +325,10 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>            label_options: {
-                text: (d) =&gt; <span class="hljs-built_in">Math</span>.round(d.duration),
+                text: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> <span class="hljs-built_in">Math</span>.round(d.duration),
                 styles: {
-                    <span class="hljs-string">'font-weight'</span>: <span class="hljs-string">'bold'</span>,
-                    <span class="hljs-string">'text-shadow'</span>: (d)=&gt; <span class="hljs-string">'1px 1px 1px '</span>+d3.rgb(d.color).brighter().toString(),
+                    <span class="hljs-string">&#x27;font-weight&#x27;</span>: <span class="hljs-string">&#x27;bold&#x27;</span>,
+                    <span class="hljs-string">&#x27;text-shadow&#x27;</span>: <span class="hljs-function">(<span class="hljs-params">d</span>)=&gt;</span> <span class="hljs-string">&#x27;1px 1px 1px &#x27;</span>+d3.rgb(d.color).brighter().toString(),
                 },
             },</pre></div></div>
             
@@ -340,7 +345,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            hover: (d) =&gt; d ? <span class="hljs-built_in">Math</span>.round(d.duration) : <span class="hljs-literal">null</span>,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            hover: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d ? <span class="hljs-built_in">Math</span>.round(d.duration) : <span class="hljs-literal">null</span>,</pre></div></div>
             
         </li>
         
@@ -357,8 +362,8 @@
             
             <div class="content"><div class='highlight'><pre>            lane_options: {
                 styles: {
-                    <span class="hljs-string">'fill'</span>: <span class="hljs-string">'none'</span>,
-                    <span class="hljs-string">'stroke'</span>: <span class="hljs-string">'gray'</span>,
+                    <span class="hljs-string">&#x27;fill&#x27;</span>: <span class="hljs-string">&#x27;none&#x27;</span>,
+                    <span class="hljs-string">&#x27;stroke&#x27;</span>: <span class="hljs-string">&#x27;gray&#x27;</span>,
                 },
             },
         }),
@@ -392,10 +397,10 @@
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> sampled_svg_timeline = <span class="hljs-keyword">new</span> c3.Plot.Zoomable&lt;SwimlaneDatum&gt;({
-    anchor: <span class="hljs-string">'#swimlanes_sampled_svg_plot'</span>,
-    width: <span class="hljs-string">'95%'</span>,
+    anchor: <span class="hljs-string">&#x27;#swimlanes_sampled_svg_plot&#x27;</span>,
+    width: <span class="hljs-string">&#x27;95%&#x27;</span>,
     height: <span class="hljs-number">300</span>,
-    zoomable: <span class="hljs-string">'h'</span>,
+    zoomable: <span class="hljs-string">&#x27;h&#x27;</span>,
 
     data: [],</pre></div></div>
             
@@ -467,14 +472,14 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            x: (d) =&gt; d.time,
-            dx: (d) =&gt; d.duration,
-            y: (d) =&gt; d.swimlane,
+            <div class="content"><div class='highlight'><pre>            x: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.time,
+            dx: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.duration,
+            y: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.swimlane,
 
             line_options: {
-                title: (d) =&gt; <span class="hljs-built_in">Math</span>.round(d.duration),
+                title: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> <span class="hljs-built_in">Math</span>.round(d.duration),
                 styles: {
-                    <span class="hljs-string">'stroke'</span>: (d) =&gt; d.color,
+                    <span class="hljs-string">&#x27;stroke&#x27;</span>: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.color,
                 },
             },</pre></div></div>
             
@@ -493,8 +498,8 @@
             
             <div class="content"><div class='highlight'><pre>            lane_options: {
                 styles: {
-                    <span class="hljs-string">'fill'</span>: <span class="hljs-string">'none'</span>,
-                    <span class="hljs-string">'stroke'</span>: <span class="hljs-string">'gray'</span>,
+                    <span class="hljs-string">&#x27;fill&#x27;</span>: <span class="hljs-string">&#x27;none&#x27;</span>,
+                    <span class="hljs-string">&#x27;stroke&#x27;</span>: <span class="hljs-string">&#x27;gray&#x27;</span>,
                 },
             },
         }),
@@ -503,10 +508,10 @@
 
 
 <span class="hljs-keyword">var</span> sampled_canvas_timeline = <span class="hljs-keyword">new</span> c3.Plot.Zoomable&lt;SwimlaneDatum&gt;({
-    anchor: <span class="hljs-string">'#swimlanes_sampled_canvas_plot'</span>,
-    width: <span class="hljs-string">'95%'</span>,
+    anchor: <span class="hljs-string">&#x27;#swimlanes_sampled_canvas_plot&#x27;</span>,
+    width: <span class="hljs-string">&#x27;95%&#x27;</span>,
     height: <span class="hljs-number">300</span>,
-    zoomable: <span class="hljs-string">'h'</span>,
+    zoomable: <span class="hljs-string">&#x27;h&#x27;</span>,
 
     data: [],</pre></div></div>
             
@@ -576,14 +581,14 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            x: (d) =&gt; d.time,
-            dx: (d) =&gt; d.duration,
-            y: (d) =&gt; d.swimlane,
+            <div class="content"><div class='highlight'><pre>            x: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.time,
+            dx: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.duration,
+            y: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.swimlane,
             safe: <span class="hljs-literal">false</span>,
 
             line_options: {
                 styles: {
-                    <span class="hljs-string">'stroke'</span>: (d) =&gt; d.color,
+                    <span class="hljs-string">&#x27;stroke&#x27;</span>: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.color,
                 },
             },</pre></div></div>
             
@@ -602,8 +607,8 @@
             
             <div class="content"><div class='highlight'><pre>            lane_options: {
                 styles: {
-                    <span class="hljs-string">'fill'</span>: <span class="hljs-string">'none'</span>,
-                    <span class="hljs-string">'stroke'</span>: <span class="hljs-string">'gray'</span>,
+                    <span class="hljs-string">&#x27;fill&#x27;</span>: <span class="hljs-string">&#x27;none&#x27;</span>,
+                    <span class="hljs-string">&#x27;stroke&#x27;</span>: <span class="hljs-string">&#x27;gray&#x27;</span>,
                 },
             },</pre></div></div>
             
@@ -620,7 +625,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            hover: (d) =&gt; d ? <span class="hljs-built_in">Math</span>.round(d.duration) : <span class="hljs-literal">null</span>,
+            <div class="content"><div class='highlight'><pre>            hover: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d ? <span class="hljs-built_in">Math</span>.round(d.duration) : <span class="hljs-literal">null</span>,
         }),
     ],
 });</pre></div></div>
@@ -688,7 +693,7 @@ variable and not the array that the charts are working with.  That’s why <code
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>$(<span class="hljs-string">'#sync_generate_button'</span>).on(<span class="hljs-string">'click'</span>, () =&gt; {
+            <div class="content"><div class='highlight'><pre>$(<span class="hljs-string">&#x27;#sync_generate_button&#x27;</span>).on(<span class="hljs-string">&#x27;click&#x27;</span>, <span class="hljs-function">() =&gt;</span> {
     generate_segment_data(swimlane_timeline.data);
     swimlane_timeline.redraw();
     sampled_svg_timeline.redraw();
@@ -709,12 +714,12 @@ longest segments first.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>$(<span class="hljs-string">'#limit_segments'</span>).on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.checked) {
-        $(<span class="hljs-string">'#limit_segment_count'</span>).prop(<span class="hljs-string">'disabled'</span>, <span class="hljs-literal">false</span>);
-        segment_layer.limit_elements = +$(<span class="hljs-string">'#limit_segment_count'</span>).val();
+            <div class="content"><div class='highlight'><pre>$(<span class="hljs-string">&#x27;#limit_segments&#x27;</span>).on(<span class="hljs-string">&#x27;change&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">this</span>.checked) {
+        $(<span class="hljs-string">&#x27;#limit_segment_count&#x27;</span>).prop(<span class="hljs-string">&#x27;disabled&#x27;</span>, <span class="hljs-literal">false</span>);
+        segment_layer.limit_elements = +$(<span class="hljs-string">&#x27;#limit_segment_count&#x27;</span>).val();
     } <span class="hljs-keyword">else</span> {
-        $(<span class="hljs-string">'#limit_segment_count'</span>).prop(<span class="hljs-string">'disabled'</span>, <span class="hljs-literal">true</span>);
+        $(<span class="hljs-string">&#x27;#limit_segment_count&#x27;</span>).prop(<span class="hljs-string">&#x27;disabled&#x27;</span>, <span class="hljs-literal">true</span>);
         segment_layer.limit_elements = <span class="hljs-literal">null</span>;
     }
     swimlane_timeline.redraw();
@@ -734,9 +739,9 @@ The <code>input</code> event not supported in IE</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> event_name of [<span class="hljs-string">'input'</span>, <span class="hljs-string">'change'</span>]) {
-    $(<span class="hljs-string">'#limit_segment_count'</span>).on(event_name, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-        segment_layer.limit_elements = +$(<span class="hljs-keyword">this</span>).val();
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> event_name <span class="hljs-keyword">of</span> [<span class="hljs-string">&#x27;input&#x27;</span>, <span class="hljs-string">&#x27;change&#x27;</span>]) {
+    $(<span class="hljs-string">&#x27;#limit_segment_count&#x27;</span>).on(event_name, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+        segment_layer.limit_elements = +$(<span class="hljs-built_in">this</span>).val();
         swimlane_timeline.redraw();
     });
 }</pre></div></div>
@@ -754,7 +759,7 @@ The <code>input</code> event not supported in IE</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">window</span>.onresize = () =&gt; {
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">window</span>.onresize = <span class="hljs-function">() =&gt;</span> {
     swimlane_timeline.resize();
     sampled_svg_timeline.resize();
     sampled_canvas_timeline.resize();

@@ -27,11 +27,11 @@
   },
   "homepage": "http://drarmstr.github.io/chartcollection/",
   "devDependencies": {
+    "codo": "^2.1.2",
     "coffee-script": "^1.12.7",
-    "typescript": "^3.0.3",
-    "less": "^2.7.1",
     "docco": "^0.7",
-    "codo": "^2.1.2"
+    "less": "^2.7.1",
+    "typescript": "^3.9.7"
   },
   "dependencies": {
     "d3": "^3.5.17"

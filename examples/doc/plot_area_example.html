@@ -25,6 +25,11 @@
                 </a>
               
                 
+                <a class="source" href="dark_example.html">
+                  dark_example.ts
+                </a>
+              
+                
                 <a class="source" href="flamechart_example.html">
                   flamechart_example.ts
                 </a>
@@ -203,16 +208,16 @@ are the x value cubed.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
-              <p>Create a <code>c3.Plot</code> chart and attach it to a specific <em>div</em> <strong>anchor </strong> in the DOM.  Assign it a specific
+              <p>Create a <code>c3.Plot</code> chart and attach it to a specific <em>div</em> **anchor ** in the DOM.  Assign it a specific
 height and a relative width and bind it to the generated <code>cubed_data</code>.  The height and width are optional
 and could be setup using CSS, JQuery, or any other DOM manipulation instead.</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> area_example = <span class="hljs-keyword">new</span> c3.Plot({
-    anchor: <span class="hljs-string">'#area_example_plot'</span>,
+    anchor: <span class="hljs-string">&#x27;#area_example_plot&#x27;</span>,
     height: <span class="hljs-number">300</span>,
-    width: <span class="hljs-string">"75%"</span>,
+    width: <span class="hljs-string">&quot;75%&quot;</span>,
     data: cubed_data,</pre></div></div>
             
         </li>
@@ -224,7 +229,7 @@ and could be setup using CSS, JQuery, or any other DOM manipulation instead.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
-              <p>Setup the horizontal and vertical <strong>scales </strong> for the plot.Scales are based on <em>D3 scales</em>.
+              <p>Setup the horizontal and vertical **scales ** for the plot.Scales are based on <em>D3 scales</em>.
 When preparing scales for C3 setup the domain based on your user units.  C3 will take 
 care of the range, which will represent pixels.</p>
 
@@ -246,8 +251,8 @@ care of the range, which will represent pixels.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    x: (d) =&gt; d.x_value,
-    y: (d) =&gt; d.y_value,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    x: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.x_value,
+    y: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.y_value,</pre></div></div>
             
         </li>
         
@@ -258,7 +263,7 @@ care of the range, which will represent pixels.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
-              <p>Reserve <strong>margins </strong> for the top and right of the plot.This is done to allow the axis labels
+              <p>Reserve **margins ** for the top and right of the plot.This is done to allow the axis labels
 to fully display.  This is needed because most browsers currently don’t support <em>overflow: visible</em>
 for <em>svg</em> elements.</p>
 
@@ -278,7 +283,7 @@ for <em>svg</em> elements.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
-              <p>Setup <code>c3.Axis</code> objects.  C3 plots may have up to 4 <strong>axes </strong> attached for the top, bottom,
+              <p>Setup <code>c3.Axis</code> objects.  C3 plots may have up to 4 **axes ** attached for the top, bottom,
 left, and right of plots.  Axes may also be created independent of plots for layout flexibility
 which is covered in another example.  These axes also enable grid lines in the plot.  They are 
 dotted lines because of styles setup in the <code>examples.less</code> stylesheet.</p>
@@ -304,7 +309,7 @@ dotted lines because of styles setup in the <code>examples.less</code> styleshee
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
-              <p>Plots do not render any data by themselves.  Instead, they host a set of <strong>layers </strong> which are
+              <p>Plots do not render any data by themselves.  Instead, they host a set of **layers ** which are
 superimposed on the plot to visualize the same or different data sets.  There are different 
 types of layers such as line graphs, scatter plots, swim - lane segments, etc.  This example 
 just uses a very simple area plot.  The <code>interpolate: &#39;basis&#39;</code> causes the rendered path to use 
@@ -314,7 +319,7 @@ a smooth curve based on the data points instead of straight linear sections.</p>
             
             <div class="content"><div class='highlight'><pre>    layers: [
         <span class="hljs-keyword">new</span> c3.Plot.Layer.Area({
-            interpolate: <span class="hljs-string">'basis'</span>, <span class="hljs-comment">// Make a smooth curve using "basis" interpolation</span>
+            interpolate: <span class="hljs-string">&#x27;basis&#x27;</span>, <span class="hljs-comment">// Make a smooth curve using &quot;basis&quot; interpolation</span>
         }),
     ],
 });</pre></div></div>
@@ -332,7 +337,7 @@ a smooth curve based on the data points instead of straight linear sections.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">window</span>.onresize = () =&gt; {
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">window</span>.onresize = <span class="hljs-function">() =&gt;</span> {
     area_example.resize();
 }</pre></div></div>
             

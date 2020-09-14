@@ -25,6 +25,11 @@
                 </a>
               
                 
+                <a class="source" href="dark_example.html">
+                  dark_example.ts
+                </a>
+              
+                
                 <a class="source" href="flamechart_example.html">
                   flamechart_example.ts
                 </a>
@@ -144,7 +149,7 @@
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> table = <span class="hljs-keyword">new</span> c3.Table({
-    anchor: <span class="hljs-string">'#table_example'</span>,</pre></div></div>
+    anchor: <span class="hljs-string">&#x27;#table_example&#x27;</span>,</pre></div></div>
             
         </li>
         
@@ -189,7 +194,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    filter: (d) =&gt; d &gt; <span class="hljs-number">0</span>,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    filter: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d &gt; <span class="hljs-number">0</span>,</pre></div></div>
             
         </li>
         
@@ -204,7 +209,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    selectable: <span class="hljs-string">'multi'</span>,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    selectable: <span class="hljs-string">&#x27;multi&#x27;</span>,</pre></div></div>
             
         </li>
         
@@ -215,7 +220,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
-              <p>Create an array of <strong>column </strong> objects to describe the table columns.</p>
+              <p>Create an array of **column ** objects to describe the table columns.</p>
 
             </div>
             
@@ -236,13 +241,13 @@ how to generate the text content for the cells based on the data.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>        {
-            header: { text: <span class="hljs-string">"x"</span> },
+            header: { text: <span class="hljs-string">&quot;x&quot;</span> },
             cells: {
-                text: (d) =&gt; d,
-                styles: { color: <span class="hljs-string">'darkblue'</span> }
+                text: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d,
+                styles: { color: <span class="hljs-string">&#x27;darkblue&#x27;</span> }
             },
-            value: (d) =&gt; d,
-            vis: <span class="hljs-string">'bar'</span>,
+            value: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d,
+            vis: <span class="hljs-string">&#x27;bar&#x27;</span>,
             total_value: <span class="hljs-number">5</span>,
         },</pre></div></div>
             
@@ -260,9 +265,9 @@ how to generate the text content for the cells based on the data.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>        {
-            header: { html: <span class="hljs-string">"x&lt;sup&gt;2&lt;/sup&gt;"</span> },
-            cells: { text: (d) =&gt; d * d },
-            value: (d) =&gt; d * d,
+            header: { html: <span class="hljs-string">&quot;x&lt;sup&gt;2&lt;/sup&gt;&quot;</span> },
+            cells: { text: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d * d },
+            value: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d * d,
         },</pre></div></div>
             
         </li>
@@ -279,9 +284,9 @@ how to generate the text content for the cells based on the data.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>        {
-            header: { text: <span class="hljs-string">"-x"</span> },
-            cells: { text: (d) =&gt; -d },
-            value: (d) =&gt; -d,
+            header: { text: <span class="hljs-string">&quot;-x&quot;</span> },
+            cells: { text: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> -d },
+            value: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> -d,
         },
     ],</pre></div></div>
             
@@ -300,8 +305,8 @@ This could also have been added imperatively with <code>table.on(&#39;select&#39
             </div>
             
             <div class="content"><div class='highlight'><pre>    handlers: {
-        <span class="hljs-string">'select'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">selections</span>) </span>{
-            (&lt;HTMLElement&gt;<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'#current_selection'</span>)).innerText = selections;
+        <span class="hljs-string">&#x27;select&#x27;</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">selections</span>) </span>{
+            (&lt;HTMLElement&gt;<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&#x27;#current_selection&#x27;</span>)).innerText = selections;
         }
     },
 });</pre></div></div>
@@ -347,11 +352,11 @@ This could also have been added imperatively with <code>table.on(&#39;select&#39
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>$(<span class="hljs-string">'input[name=selectable]'</span>).on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">var</span> value = $(<span class="hljs-string">'input[name=selectable]:checked'</span>).val();
+            <div class="content"><div class='highlight'><pre>$(<span class="hljs-string">&#x27;input[name=selectable]&#x27;</span>).on(<span class="hljs-string">&#x27;change&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">var</span> value = $(<span class="hljs-string">&#x27;input[name=selectable]:checked&#x27;</span>).val();
     <span class="hljs-keyword">switch</span> (value) {
-        <span class="hljs-keyword">case</span> <span class="hljs-string">'true'</span>: table.selectable = <span class="hljs-literal">true</span>; <span class="hljs-keyword">break</span>;
-        <span class="hljs-keyword">case</span> <span class="hljs-string">'false'</span>: table.selectable = <span class="hljs-literal">false</span>; <span class="hljs-keyword">break</span>;
+        <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;true&#x27;</span>: table.selectable = <span class="hljs-literal">true</span>; <span class="hljs-keyword">break</span>;
+        <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;false&#x27;</span>: table.selectable = <span class="hljs-literal">false</span>; <span class="hljs-keyword">break</span>;
         <span class="hljs-keyword">default</span>: table.selectable = value;
     }
     table.render();

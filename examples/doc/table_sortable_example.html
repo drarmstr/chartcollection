@@ -25,6 +25,11 @@
                 </a>
               
                 
+                <a class="source" href="dark_example.html">
+                  dark_example.ts
+                </a>
+              
+                
                 <a class="source" href="flamechart_example.html">
                   flamechart_example.ts
                 </a>
@@ -144,7 +149,7 @@
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> table = <span class="hljs-keyword">new</span> c3.Table({
-    anchor: <span class="hljs-string">'#table_example'</span>,</pre></div></div>
+    anchor: <span class="hljs-string">&#x27;#table_example&#x27;</span>,</pre></div></div>
             
         </li>
         
@@ -189,7 +194,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    filter: (d) =&gt; d &gt; <span class="hljs-number">0</span>,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    filter: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d &gt; <span class="hljs-number">0</span>,</pre></div></div>
             
         </li>
         
@@ -237,12 +242,12 @@ how to generate the text content for the cells based on the data.
             </div>
             
             <div class="content"><div class='highlight'><pre>        {
-            header: { text: <span class="hljs-string">"x"</span> },
+            header: { text: <span class="hljs-string">&quot;x&quot;</span> },
             cells: {
-                text: (d) =&gt; d,
-                styles: { color: <span class="hljs-string">'darkblue'</span> }
+                text: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d,
+                styles: { color: <span class="hljs-string">&#x27;darkblue&#x27;</span> }
             },
-            value: (d) =&gt; d,
+            value: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d,
             sortable: <span class="hljs-literal">true</span>,
         },</pre></div></div>
             
@@ -260,9 +265,9 @@ how to generate the text content for the cells based on the data.
             </div>
             
             <div class="content"><div class='highlight'><pre>        {
-            header: { html: <span class="hljs-string">"x&lt;sup&gt;2&lt;/sup&gt;"</span> },
-            cells: { text: (d) =&gt; d * d },
-            value: (d) =&gt; d * d,
+            header: { html: <span class="hljs-string">&quot;x&lt;sup&gt;2&lt;/sup&gt;&quot;</span> },
+            cells: { text: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d * d },
+            value: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d * d,
             sortable: <span class="hljs-literal">true</span>,
         },</pre></div></div>
             
@@ -280,9 +285,9 @@ how to generate the text content for the cells based on the data.
             </div>
             
             <div class="content"><div class='highlight'><pre>        {
-            header: { text: <span class="hljs-string">"-x"</span> },
-            cells: { text: (d) =&gt; -d },
-            value: (d) =&gt; -d,
+            header: { text: <span class="hljs-string">&quot;-x&quot;</span> },
+            cells: { text: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> -d },
+            value: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> -d,
             sortable: <span class="hljs-literal">true</span>,
         },
     ],</pre></div></div>
@@ -301,7 +306,7 @@ with the header text “x”.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    sort_column: <span class="hljs-string">'x'</span>,
+            <div class="content"><div class='highlight'><pre>    sort_column: <span class="hljs-string">&#x27;x&#x27;</span>,
 });</pre></div></div>
             
         </li>

@@ -25,6 +25,11 @@
                 </a>
               
                 
+                <a class="source" href="dark_example.html">
+                  dark_example.ts
+                </a>
+              
+                
                 <a class="source" href="flamechart_example.html">
                   flamechart_example.ts
                 </a>
@@ -144,7 +149,7 @@ dynamically creates and attached them to the DOM.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> div_selection = d3.select(<span class="hljs-string">'#stack_example_plots'</span>);</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> div_selection = d3.select(<span class="hljs-string">&#x27;#stack_example_plots&#x27;</span>);</pre></div></div>
             
         </li>
         
@@ -161,15 +166,15 @@ categories provided by the CDC.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> five_year_age_group_scale = d3.scale.ordinal().domain([
-    <span class="hljs-string">'1'</span>, <span class="hljs-string">'1-4'</span>, <span class="hljs-string">'5-9'</span>, <span class="hljs-string">'10-14'</span>, <span class="hljs-string">'15-19'</span>, <span class="hljs-string">'20-24'</span>, <span class="hljs-string">'25-29'</span>, <span class="hljs-string">'30-34'</span>, <span class="hljs-string">'35-39'</span>,
-    <span class="hljs-string">'40-44'</span>, <span class="hljs-string">'45-49'</span>, <span class="hljs-string">'50-54'</span>, <span class="hljs-string">'55-59'</span>, <span class="hljs-string">'60-64'</span>, <span class="hljs-string">'65-69'</span>, <span class="hljs-string">'70-74'</span>, <span class="hljs-string">'75-79'</span>,
-    <span class="hljs-string">'80-84'</span>, <span class="hljs-string">'85-89'</span>, <span class="hljs-string">'90-94'</span>, <span class="hljs-string">'95-99'</span>, <span class="hljs-string">'100+'</span>, <span class="hljs-string">'NS'</span>
+    <span class="hljs-string">&#x27;1&#x27;</span>, <span class="hljs-string">&#x27;1-4&#x27;</span>, <span class="hljs-string">&#x27;5-9&#x27;</span>, <span class="hljs-string">&#x27;10-14&#x27;</span>, <span class="hljs-string">&#x27;15-19&#x27;</span>, <span class="hljs-string">&#x27;20-24&#x27;</span>, <span class="hljs-string">&#x27;25-29&#x27;</span>, <span class="hljs-string">&#x27;30-34&#x27;</span>, <span class="hljs-string">&#x27;35-39&#x27;</span>,
+    <span class="hljs-string">&#x27;40-44&#x27;</span>, <span class="hljs-string">&#x27;45-49&#x27;</span>, <span class="hljs-string">&#x27;50-54&#x27;</span>, <span class="hljs-string">&#x27;55-59&#x27;</span>, <span class="hljs-string">&#x27;60-64&#x27;</span>, <span class="hljs-string">&#x27;65-69&#x27;</span>, <span class="hljs-string">&#x27;70-74&#x27;</span>, <span class="hljs-string">&#x27;75-79&#x27;</span>,
+    <span class="hljs-string">&#x27;80-84&#x27;</span>, <span class="hljs-string">&#x27;85-89&#x27;</span>, <span class="hljs-string">&#x27;90-94&#x27;</span>, <span class="hljs-string">&#x27;95-99&#x27;</span>, <span class="hljs-string">&#x27;100+&#x27;</span>, <span class="hljs-string">&#x27;NS&#x27;</span>
 ]);
 <span class="hljs-keyword">var</span> ten_year_age_group_scale = d3.scale.ordinal().domain([
-    <span class="hljs-string">'1'</span>, <span class="hljs-string">'1-4'</span>, <span class="hljs-string">'5-14'</span>, <span class="hljs-string">'15-24'</span>, <span class="hljs-string">'25-34'</span>, <span class="hljs-string">'35-44'</span>,
-    <span class="hljs-string">'45-54'</span>, <span class="hljs-string">'55-64'</span>, <span class="hljs-string">'65-74'</span>, <span class="hljs-string">'75-84'</span>, <span class="hljs-string">'85+'</span>
+    <span class="hljs-string">&#x27;1&#x27;</span>, <span class="hljs-string">&#x27;1-4&#x27;</span>, <span class="hljs-string">&#x27;5-14&#x27;</span>, <span class="hljs-string">&#x27;15-24&#x27;</span>, <span class="hljs-string">&#x27;25-34&#x27;</span>, <span class="hljs-string">&#x27;35-44&#x27;</span>,
+    <span class="hljs-string">&#x27;45-54&#x27;</span>, <span class="hljs-string">&#x27;55-64&#x27;</span>, <span class="hljs-string">&#x27;65-74&#x27;</span>, <span class="hljs-string">&#x27;75-84&#x27;</span>, <span class="hljs-string">&#x27;85+&#x27;</span>
 ]);
-<span class="hljs-keyword">var</span> race_scale = d3.scale.ordinal().domain([<span class="hljs-string">'native'</span>, <span class="hljs-string">'asian'</span>, <span class="hljs-string">'black'</span>, <span class="hljs-string">'white'</span>]);</pre></div></div>
+<span class="hljs-keyword">var</span> race_scale = d3.scale.ordinal().domain([<span class="hljs-string">&#x27;native&#x27;</span>, <span class="hljs-string">&#x27;asian&#x27;</span>, <span class="hljs-string">&#x27;black&#x27;</span>, <span class="hljs-string">&#x27;white&#x27;</span>]);</pre></div></div>
             
         </li>
         
@@ -212,12 +217,12 @@ It’s an array of records where each record has the following fields:</p>
     deaths: <span class="hljs-built_in">number</span>
 }
 
-div_selection.append(<span class="hljs-string">'p'</span>).text(<span class="hljs-string">"\
+div_selection.append(<span class="hljs-string">&#x27;p&#x27;</span>).text(<span class="hljs-string">&quot;\
     These stacked area charts use a single normalized data array.\
     Each element in the array is a data point for a particular age and stack.\
-    There is a key function to determine which stack each data item belongs to."</span>);
-div_selection.append(<span class="hljs-string">'p'</span>).text(<span class="hljs-string">"\
-    These examples also demonstrate loading chart data dynamically via AJAX."</span>);</pre></div></div>
+    There is a key function to determine which stack each data item belongs to.&quot;</span>);
+div_selection.append(<span class="hljs-string">&#x27;p&#x27;</span>).text(<span class="hljs-string">&quot;\
+    These examples also demonstrate loading chart data dynamically via AJAX.&quot;</span>);</pre></div></div>
             
         </li>
         
@@ -247,7 +252,7 @@ Create a <code>c3.Plot</code> and assign it to a newly attached div node.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> stacked_area_chart = <span class="hljs-keyword">new</span> c3.Plot&lt;CDCDeathData&gt;({
-    anchor: &lt;HTMLElement&gt;div_selection.append(<span class="hljs-string">'div'</span>).node(),
+    anchor: &lt;HTMLElement&gt;div_selection.append(<span class="hljs-string">&#x27;div&#x27;</span>).node(),
     height: <span class="hljs-number">300</span>,</pre></div></div>
             
         </li>
@@ -265,7 +270,7 @@ The <strong>vertical scale</strong> is automatically sized based on the data.</p
             </div>
             
             <div class="content"><div class='highlight'><pre>    h: five_year_age_group_scale,
-    v_domain: [<span class="hljs-number">0</span>, <span class="hljs-string">'auto10'</span>],</pre></div></div>
+    v_domain: [<span class="hljs-number">0</span>, <span class="hljs-string">&#x27;auto10&#x27;</span>],</pre></div></div>
             
         </li>
         
@@ -280,8 +285,8 @@ The <strong>vertical scale</strong> is automatically sized based on the data.</p
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    x: (d) =&gt; d.age_group,
-    y: (d) =&gt; d.deaths,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    x: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.age_group,
+    y: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.deaths,</pre></div></div>
             
         </li>
         
@@ -302,11 +307,11 @@ Here we stack the data based on cause of death.</p>
             
             <div class="content"><div class='highlight'><pre>    layers: [
         <span class="hljs-keyword">new</span> c3.Plot.Layer.Area&lt;CDCDeathData&gt;({
-            interpolate: <span class="hljs-string">'cardinal'</span>,
+            interpolate: <span class="hljs-string">&#x27;cardinal&#x27;</span>,
             stack_options: {
-                key: (d) =&gt; &lt;<span class="hljs-built_in">any</span>&gt;d.cause,
-                styles: { <span class="hljs-string">'fill'</span>: (stack) =&gt; cause_color(stack.key) },
-                title: (stack) =&gt; stack.key,  <span class="hljs-comment">// Setup tooltips</span>
+                key: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> &lt;<span class="hljs-built_in">any</span>&gt;d.cause,
+                styles: { <span class="hljs-string">&#x27;fill&#x27;</span>: <span class="hljs-function">(<span class="hljs-params">stack</span>) =&gt;</span> cause_color(stack.key) },
+                title: <span class="hljs-function">(<span class="hljs-params">stack</span>) =&gt;</span> stack.key,  <span class="hljs-comment">// Setup tooltips</span>
             },
         }),
     ],</pre></div></div>
@@ -329,18 +334,18 @@ and custom <code>tick_label</code> formatters setup.</p>
             <div class="content"><div class='highlight'><pre>    margins: { right: <span class="hljs-number">20</span> },
     axes: [
         <span class="hljs-keyword">new</span> c3.Axis.X({
-            label: <span class="hljs-string">"Causes of Death - Stacked Area Chart"</span>,
-            orient: <span class="hljs-string">'top'</span>,
+            label: <span class="hljs-string">&quot;Causes of Death - Stacked Area Chart&quot;</span>,
+            orient: <span class="hljs-string">&#x27;top&#x27;</span>,
             scale: <span class="hljs-literal">false</span>,
         }),
         <span class="hljs-keyword">new</span> c3.Axis.X({
-            label: <span class="hljs-string">"Age"</span>,
+            label: <span class="hljs-string">&quot;Age&quot;</span>,
             scale: d3.scale.linear().domain([<span class="hljs-number">0</span>, <span class="hljs-number">100</span>]),
             tick_size: <span class="hljs-number">0</span>,
         }),
         <span class="hljs-keyword">new</span> c3.Axis.Y({
-            label: <span class="hljs-string">"Deaths"</span>,
-            tick_label: (d) =&gt; (d/<span class="hljs-number">1000000</span>)+<span class="hljs-string">"m"</span>,
+            label: <span class="hljs-string">&quot;Deaths&quot;</span>,
+            tick_label: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> (d/<span class="hljs-number">1000000</span>)+<span class="hljs-string">&quot;m&quot;</span>,
             grid: <span class="hljs-literal">true</span>,
         }),
     ],
@@ -359,7 +364,7 @@ and custom <code>tick_label</code> formatters setup.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>div_selection.append(<span class="hljs-string">'hr'</span>)</pre></div></div>
+            <div class="content"><div class='highlight'><pre>div_selection.append(<span class="hljs-string">&#x27;hr&#x27;</span>)</pre></div></div>
             
         </li>
         
@@ -376,7 +381,7 @@ and draws a seperate line for each group.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> grouped_line_chart = <span class="hljs-keyword">new</span> c3.Plot&lt;CDCDeathData&gt;({
-    anchor: &lt;HTMLElement&gt;div_selection.append(<span class="hljs-string">'div'</span>).node(),
+    anchor: &lt;HTMLElement&gt;div_selection.append(<span class="hljs-string">&#x27;div&#x27;</span>).node(),
     height: <span class="hljs-number">300</span>,</pre></div></div>
             
         </li>
@@ -394,7 +399,7 @@ The <strong>vertical scale</strong> is automatically sized based on the data.</p
             </div>
             
             <div class="content"><div class='highlight'><pre>    h: five_year_age_group_scale,
-    v_domain: [<span class="hljs-number">0</span>, <span class="hljs-string">'auto10'</span>],</pre></div></div>
+    v_domain: [<span class="hljs-number">0</span>, <span class="hljs-string">&#x27;auto10&#x27;</span>],</pre></div></div>
             
         </li>
         
@@ -409,8 +414,8 @@ The <strong>vertical scale</strong> is automatically sized based on the data.</p
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    x: (d) =&gt; d.age_group,
-    y: (d) =&gt; d.deaths,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    x: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.age_group,
+    y: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.deaths,</pre></div></div>
             
         </li>
         
@@ -427,15 +432,15 @@ The <strong>vertical scale</strong> is automatically sized based on the data.</p
             
             <div class="content"><div class='highlight'><pre>    layers: [
         <span class="hljs-keyword">new</span> c3.Plot.Layer.Line&lt;CDCDeathData&gt;({
-            interpolate: <span class="hljs-string">'cardinal'</span>,
+            interpolate: <span class="hljs-string">&#x27;cardinal&#x27;</span>,
             stack_options: {
-                key: (d) =&gt; &lt;<span class="hljs-built_in">any</span>&gt;d.cause,
-                offset: <span class="hljs-string">'none'</span>,
+                key: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> &lt;<span class="hljs-built_in">any</span>&gt;d.cause,
+                offset: <span class="hljs-string">&#x27;none&#x27;</span>,
                 styles: {
-                  <span class="hljs-string">'stroke'</span>: (stack) =&gt; cause_color(stack.key),
-                  <span class="hljs-string">'stroke-width'</span>: <span class="hljs-number">3</span>,
+                  <span class="hljs-string">&#x27;stroke&#x27;</span>: <span class="hljs-function">(<span class="hljs-params">stack</span>) =&gt;</span> cause_color(stack.key),
+                  <span class="hljs-string">&#x27;stroke-width&#x27;</span>: <span class="hljs-number">3</span>,
                 },
-                title: (stack) =&gt; stack.key,  <span class="hljs-comment">// Setup tooltips</span>
+                title: <span class="hljs-function">(<span class="hljs-params">stack</span>) =&gt;</span> stack.key,  <span class="hljs-comment">// Setup tooltips</span>
             },
         }),
     ],
@@ -443,18 +448,18 @@ The <strong>vertical scale</strong> is automatically sized based on the data.</p
     margins: { right: <span class="hljs-number">20</span> },
     axes: [
         <span class="hljs-keyword">new</span> c3.Axis.X({
-            label: <span class="hljs-string">"Causes of Death - Grouped Line Chart"</span>,
-            orient: <span class="hljs-string">'top'</span>,
+            label: <span class="hljs-string">&quot;Causes of Death - Grouped Line Chart&quot;</span>,
+            orient: <span class="hljs-string">&#x27;top&#x27;</span>,
             scale: <span class="hljs-literal">false</span>,
         }),
         <span class="hljs-keyword">new</span> c3.Axis.X({
-            label: <span class="hljs-string">"Age"</span>,
+            label: <span class="hljs-string">&quot;Age&quot;</span>,
             scale: d3.scale.linear().domain([<span class="hljs-number">0</span>, <span class="hljs-number">100</span>]),
             tick_size: <span class="hljs-number">0</span>,
         }),
         <span class="hljs-keyword">new</span> c3.Axis.Y({
-            label: <span class="hljs-string">"Deaths"</span>,
-            tick_label: (d) =&gt; (d/<span class="hljs-number">1000000</span>)+<span class="hljs-string">"m"</span>,
+            label: <span class="hljs-string">&quot;Deaths&quot;</span>,
+            tick_label: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> (d/<span class="hljs-number">1000000</span>)+<span class="hljs-string">&quot;m&quot;</span>,
             grid: <span class="hljs-literal">true</span>,
         }),
     ],
@@ -473,7 +478,7 @@ The <strong>vertical scale</strong> is automatically sized based on the data.</p
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>div_selection.append(<span class="hljs-string">'hr'</span>)</pre></div></div>
+            <div class="content"><div class='highlight'><pre>div_selection.append(<span class="hljs-string">&#x27;hr&#x27;</span>)</pre></div></div>
             
         </li>
         
@@ -490,7 +495,7 @@ to represent a breakdown of percentages of deaths instead of an absolute count o
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> expand_area_chart = <span class="hljs-keyword">new</span> c3.Plot&lt;CDCDeathData&gt;({
-    anchor: &lt;HTMLElement&gt;div_selection.append(<span class="hljs-string">'div'</span>).node(),
+    anchor: &lt;HTMLElement&gt;div_selection.append(<span class="hljs-string">&#x27;div&#x27;</span>).node(),
     height: <span class="hljs-number">300</span>,</pre></div></div>
             
         </li>
@@ -507,8 +512,8 @@ to represent a breakdown of percentages of deaths instead of an absolute count o
             </div>
             
             <div class="content"><div class='highlight'><pre>    h: five_year_age_group_scale,
-    x: (d) =&gt; d.age_group,
-    y: (d) =&gt; d.deaths,</pre></div></div>
+    x: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.age_group,
+    y: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.deaths,</pre></div></div>
             
         </li>
         
@@ -527,12 +532,12 @@ from each stack.</p>
             
             <div class="content"><div class='highlight'><pre>    layers: [
         <span class="hljs-keyword">new</span> c3.Plot.Layer.Area&lt;CDCDeathData&gt;({
-            interpolate: <span class="hljs-string">'cardinal'</span>,
+            interpolate: <span class="hljs-string">&#x27;cardinal&#x27;</span>,
             stack_options: {
-                key: (d) =&gt; &lt;<span class="hljs-built_in">any</span>&gt;d.cause,
-                offset: <span class="hljs-string">'expand'</span>,
-                styles: { <span class="hljs-string">'fill'</span>: (stack) =&gt; cause_color(stack.key) },
-                title: (stack) =&gt; stack.key,  <span class="hljs-comment">// Setup tooltips</span>
+                key: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> &lt;<span class="hljs-built_in">any</span>&gt;d.cause,
+                offset: <span class="hljs-string">&#x27;expand&#x27;</span>,
+                styles: { <span class="hljs-string">&#x27;fill&#x27;</span>: <span class="hljs-function">(<span class="hljs-params">stack</span>) =&gt;</span> cause_color(stack.key) },
+                title: <span class="hljs-function">(<span class="hljs-params">stack</span>) =&gt;</span> stack.key,  <span class="hljs-comment">// Setup tooltips</span>
             },
         }),
     ],
@@ -540,17 +545,17 @@ from each stack.</p>
     margins: { right: <span class="hljs-number">20</span> },
     axes: [
         <span class="hljs-keyword">new</span> c3.Axis.X({
-            label: <span class="hljs-string">"Causes of Death - Normalized by Percent"</span>,
-            orient: <span class="hljs-string">'top'</span>,
+            label: <span class="hljs-string">&quot;Causes of Death - Normalized by Percent&quot;</span>,
+            orient: <span class="hljs-string">&#x27;top&#x27;</span>,
             scale: <span class="hljs-literal">false</span>,
         }),
         <span class="hljs-keyword">new</span> c3.Axis.X({
-            label: <span class="hljs-string">"Age"</span>,
+            label: <span class="hljs-string">&quot;Age&quot;</span>,
             scale: d3.scale.linear().domain([<span class="hljs-number">0</span>, <span class="hljs-number">100</span>]),
             tick_size: <span class="hljs-number">0</span>,
         }),
         <span class="hljs-keyword">new</span> c3.Axis.Y({
-            label: <span class="hljs-string">"Percentage of Deaths"</span>,</pre></div></div>
+            label: <span class="hljs-string">&quot;Percentage of Deaths&quot;</span>,</pre></div></div>
             
         </li>
         
@@ -565,7 +570,7 @@ from each stack.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            tick_label: (d) =&gt; (d * <span class="hljs-number">100</span>) + <span class="hljs-string">'%'</span>,
+            <div class="content"><div class='highlight'><pre>            tick_label: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> (d * <span class="hljs-number">100</span>) + <span class="hljs-string">&#x27;%&#x27;</span>,
             grid: <span class="hljs-literal">true</span>,
         }),
     ],
@@ -584,10 +589,10 @@ from each stack.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>div_selection.append(<span class="hljs-string">'hr'</span>)
-div_selection.append(<span class="hljs-string">'p'</span>).text(<span class="hljs-string">"\
+            <div class="content"><div class='highlight'><pre>div_selection.append(<span class="hljs-string">&#x27;hr&#x27;</span>)
+div_selection.append(<span class="hljs-string">&#x27;p&#x27;</span>).text(<span class="hljs-string">&quot;\
     This stacked bar chart has a single data array where each data item contains data for all stacks.\
-    Each stack is defined with a custom accessor to obtain its value from the data array."</span>);</pre></div></div>
+    Each stack is defined with a custom accessor to obtain its value from the data array.&quot;</span>);</pre></div></div>
             
         </li>
         
@@ -603,7 +608,7 @@ div_selection.append(<span class="hljs-string">'p'</span>).text(<span class="hlj
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> expanded_bar_chart = <span class="hljs-keyword">new</span> c3.Plot({
-    anchor: &lt;HTMLElement&gt;div_selection.append(<span class="hljs-string">'div'</span>).style(<span class="hljs-string">'display'</span>, <span class="hljs-string">'inline-block'</span>).node(),
+    anchor: &lt;HTMLElement&gt;div_selection.append(<span class="hljs-string">&#x27;div&#x27;</span>).style(<span class="hljs-string">&#x27;display&#x27;</span>, <span class="hljs-string">&#x27;inline-block&#x27;</span>).node(),
     height: <span class="hljs-number">300</span>,
     width: <span class="hljs-number">400</span>,</pre></div></div>
             
@@ -622,10 +627,10 @@ entry per x value (race), and each object contains the values for all of the sta
             </div>
             
             <div class="content"><div class='highlight'><pre>    data: [
-        { race: <span class="hljs-string">'native'</span>, northeast: <span class="hljs-number">6111</span>, midwest: <span class="hljs-number">29616</span>, south: <span class="hljs-number">43688</span>, west: <span class="hljs-number">81546</span> },
-        { race: <span class="hljs-string">'asian'</span>, northeast: <span class="hljs-number">71853</span>, midwest: <span class="hljs-number">37443</span>, south: <span class="hljs-number">68215</span>, west: <span class="hljs-number">328879</span> },
-        { race: <span class="hljs-string">'black'</span>, northeast: <span class="hljs-number">569686</span>, midwest: <span class="hljs-number">662679</span>, south: <span class="hljs-number">1940938</span>, west: <span class="hljs-number">288980</span> },
-        { race: <span class="hljs-string">'white'</span>, northeast: <span class="hljs-number">5041763</span>, midwest: <span class="hljs-number">6159459</span>, south: <span class="hljs-number">8954636</span>, west: <span class="hljs-number">4890548</span> },
+        { race: <span class="hljs-string">&#x27;native&#x27;</span>, northeast: <span class="hljs-number">6111</span>, midwest: <span class="hljs-number">29616</span>, south: <span class="hljs-number">43688</span>, west: <span class="hljs-number">81546</span> },
+        { race: <span class="hljs-string">&#x27;asian&#x27;</span>, northeast: <span class="hljs-number">71853</span>, midwest: <span class="hljs-number">37443</span>, south: <span class="hljs-number">68215</span>, west: <span class="hljs-number">328879</span> },
+        { race: <span class="hljs-string">&#x27;black&#x27;</span>, northeast: <span class="hljs-number">569686</span>, midwest: <span class="hljs-number">662679</span>, south: <span class="hljs-number">1940938</span>, west: <span class="hljs-number">288980</span> },
+        { race: <span class="hljs-string">&#x27;white&#x27;</span>, northeast: <span class="hljs-number">5041763</span>, midwest: <span class="hljs-number">6159459</span>, south: <span class="hljs-number">8954636</span>, west: <span class="hljs-number">4890548</span> },
     ],</pre></div></div>
             
         </li>
@@ -643,7 +648,7 @@ Note we are using an <em>ordinal</em> horizontal scale and the default vertical 
             </div>
             
             <div class="content"><div class='highlight'><pre>    h: race_scale,
-    x: (d) =&gt; d.race,</pre></div></div>
+    x: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.race,</pre></div></div>
             
         </li>
         
@@ -657,37 +662,37 @@ Note we are using an <em>ordinal</em> horizontal scale and the default vertical 
               <p>Create the <strong>stacked bar</strong> layer.
 Here we manually specify the set of stacks that are present.
 Because we don’t have a <code>stack_options.key</code> defined, each layer will get its own copy
-of the data.However, each stack can have its own <strong>y </strong> accessor to get its
+of the data.However, each stack can have its own **y ** accessor to get its
 particular value for that stack with the datum.</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>    layers: [
         <span class="hljs-keyword">new</span> c3.Plot.Layer.Bar({
-            name: <span class="hljs-string">"Region"</span>,
-            bar_width: <span class="hljs-string">'75%'</span>,
+            name: <span class="hljs-string">&quot;Region&quot;</span>,
+            bar_width: <span class="hljs-string">&#x27;75%&#x27;</span>,
             stack_options: {
-                offset: <span class="hljs-string">'expand'</span>,
-                styles: { <span class="hljs-string">'fill'</span>: (stack) =&gt; region_color(stack.key) },
-                title: (stack) =&gt; stack.key,  <span class="hljs-comment">// Setup tooltips</span>
-                name: (key) =&gt; key,
+                offset: <span class="hljs-string">&#x27;expand&#x27;</span>,
+                styles: { <span class="hljs-string">&#x27;fill&#x27;</span>: <span class="hljs-function">(<span class="hljs-params">stack</span>) =&gt;</span> region_color(stack.key) },
+                title: <span class="hljs-function">(<span class="hljs-params">stack</span>) =&gt;</span> stack.key,  <span class="hljs-comment">// Setup tooltips</span>
+                name: <span class="hljs-function">(<span class="hljs-params">key</span>) =&gt;</span> key,
             },
             stacks: [
                 <span class="hljs-keyword">new</span> c3.Plot.Layer.Stackable.Stack&lt;<span class="hljs-built_in">any</span>&gt;({
-                    key: &lt;<span class="hljs-built_in">any</span>&gt;<span class="hljs-string">'northeast'</span>,
-                    y: (d) =&gt; d.northeast
+                    key: &lt;<span class="hljs-built_in">any</span>&gt;<span class="hljs-string">&#x27;northeast&#x27;</span>,
+                    y: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.northeast
                 }),
                 <span class="hljs-keyword">new</span> c3.Plot.Layer.Stackable.Stack&lt;<span class="hljs-built_in">any</span>&gt;({
-                    key: &lt;<span class="hljs-built_in">any</span>&gt;<span class="hljs-string">'midwest'</span>,
-                    y: (d) =&gt; d.midwest,
+                    key: &lt;<span class="hljs-built_in">any</span>&gt;<span class="hljs-string">&#x27;midwest&#x27;</span>,
+                    y: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.midwest,
                 }),
                 <span class="hljs-keyword">new</span> c3.Plot.Layer.Stackable.Stack&lt;<span class="hljs-built_in">any</span>&gt;({
-                    key: &lt;<span class="hljs-built_in">any</span>&gt;<span class="hljs-string">'south'</span>,
-                    y: (d) =&gt; d.south,
+                    key: &lt;<span class="hljs-built_in">any</span>&gt;<span class="hljs-string">&#x27;south&#x27;</span>,
+                    y: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.south,
                 }),
                 <span class="hljs-keyword">new</span> c3.Plot.Layer.Stackable.Stack&lt;<span class="hljs-built_in">any</span>&gt;({
-                    key: &lt;<span class="hljs-built_in">any</span>&gt;<span class="hljs-string">'west'</span>,
-                    y: (d) =&gt; d.west,
+                    key: &lt;<span class="hljs-built_in">any</span>&gt;<span class="hljs-string">&#x27;west&#x27;</span>,
+                    y: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.west,
                 }),
             ],
         }),
@@ -716,8 +721,8 @@ we could have just used this single <strong>y accessor</strong> for the layer:</
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-28">&#182;</a>
               </div>
-              <pre><code>   y: (d, i, stack) -&gt; d[stack.key]
-</code></pre>
+              <pre><code>   y: (d, i, stack) -&gt; d[stack.key]</code></pre>
+
             </div>
             
         </li>
@@ -729,23 +734,23 @@ we could have just used this single <strong>y accessor</strong> for the layer:</
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-29">&#182;</a>
               </div>
-              <p>Add <strong>margins </strong> and <strong>axes </strong> to polish the example</p>
+              <p>Add **margins ** and **axes ** to polish the example</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>    margins: { top: <span class="hljs-number">10</span>, right: <span class="hljs-number">20</span> },
     axes: [
         <span class="hljs-keyword">new</span> c3.Axis.X({
-            label: <span class="hljs-string">"Where People Die"</span>,
-            orient: <span class="hljs-string">'top'</span>,
+            label: <span class="hljs-string">&quot;Where People Die&quot;</span>,
+            orient: <span class="hljs-string">&#x27;top&#x27;</span>,
             scale: <span class="hljs-literal">false</span>,
         }),
         <span class="hljs-keyword">new</span> c3.Axis.Y({
-            label: <span class="hljs-string">"Percentage of Deaths"</span>,
-            tick_label: (d) =&gt; (d * <span class="hljs-number">100</span>) + <span class="hljs-string">'%'</span>,
+            label: <span class="hljs-string">&quot;Percentage of Deaths&quot;</span>,
+            tick_label: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> (d * <span class="hljs-number">100</span>) + <span class="hljs-string">&#x27;%&#x27;</span>,
         }),
         <span class="hljs-keyword">new</span> c3.Axis.X({
-            label: <span class="hljs-string">"Race"</span>,
+            label: <span class="hljs-string">&quot;Race&quot;</span>,
         }),
     ],
 }).render();</pre></div></div>
@@ -764,10 +769,10 @@ we could have just used this single <strong>y accessor</strong> for the layer:</
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">new</span> c3.Legend.PlotLegend({
-    anchor: &lt;HTMLElement&gt;div_selection.append(<span class="hljs-string">'div'</span>).node(),
+    anchor: &lt;HTMLElement&gt;div_selection.append(<span class="hljs-string">&#x27;div&#x27;</span>).node(),
     anchor_styles: {
-        <span class="hljs-string">'display'</span>: <span class="hljs-string">'inline-block'</span>,
-        <span class="hljs-string">'vertical-align'</span>: <span class="hljs-string">'5em'</span>,
+        <span class="hljs-string">&#x27;display&#x27;</span>: <span class="hljs-string">&#x27;inline-block&#x27;</span>,
+        <span class="hljs-string">&#x27;vertical-align&#x27;</span>: <span class="hljs-string">&#x27;5em&#x27;</span>,
     },
     plot: expanded_bar_chart,
 }).render();</pre></div></div>
@@ -785,9 +790,9 @@ we could have just used this single <strong>y accessor</strong> for the layer:</
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>div_selection.append(<span class="hljs-string">'hr'</span>)
-div_selection.append(<span class="hljs-string">'p'</span>).text(<span class="hljs-string">"\
-    This stacked bar chart contains seperate data arrays for each stack."</span>);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>div_selection.append(<span class="hljs-string">&#x27;hr&#x27;</span>)
+div_selection.append(<span class="hljs-string">&#x27;p&#x27;</span>).text(<span class="hljs-string">&quot;\
+    This stacked bar chart contains seperate data arrays for each stack.&quot;</span>);</pre></div></div>
             
         </li>
         
@@ -834,15 +839,15 @@ C3 will create a div when we render which we will attach to the DOM later.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-34">&#182;</a>
               </div>
-              <p>Setup <strong>scales </strong> and <strong>x </strong> and <strong>y </strong> accessors.
+              <p>Setup **scales ** and **x ** and **y ** accessors.
 Note we are using an <em>ordinal</em> horizontal scale.</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>    v: d3.scale.linear().domain([<span class="hljs-number">0</span>, <span class="hljs-number">10000000</span>]),
     h: ten_year_age_group_scale,
-    x: (d) =&gt; d.age_group,
-    y: (d) =&gt; d.deaths,</pre></div></div>
+    x: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.age_group,
+    y: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> d.deaths,</pre></div></div>
             
         </li>
         
@@ -877,23 +882,23 @@ should be present and a <code>data</code> array for each stack.</p>
             
             <div class="content"><div class='highlight'><pre>            stacks: [
                 <span class="hljs-keyword">new</span> c3.Plot.Layer.Stackable.Stack({
-                    key: <span class="hljs-string">'Male'</span>,
+                    key: <span class="hljs-string">&#x27;Male&#x27;</span>,
                     options: {
-                        title: <span class="hljs-string">'Male'</span>,
-                        styles: { <span class="hljs-string">'fill'</span>: <span class="hljs-string">'blue'</span> },
+                        title: <span class="hljs-string">&#x27;Male&#x27;</span>,
+                        styles: { <span class="hljs-string">&#x27;fill&#x27;</span>: <span class="hljs-string">&#x27;blue&#x27;</span> },
                     },
                     data: [
-                        { age_group: <span class="hljs-string">'1'</span>, deaths: <span class="hljs-number">146034</span> },
-                        { age_group: <span class="hljs-string">'1-4'</span>, deaths: <span class="hljs-number">24962</span> },
-                        { age_group: <span class="hljs-string">'5-14'</span>, deaths: <span class="hljs-number">32467</span> },
-                        { age_group: <span class="hljs-string">'15-24'</span>, deaths: <span class="hljs-number">101373</span> },
-                        { age_group: <span class="hljs-string">'25-34'</span>, deaths: <span class="hljs-number">153299</span> },
-                        { age_group: <span class="hljs-string">'35-44'</span>, deaths: <span class="hljs-number">371670</span> },
-                        { age_group: <span class="hljs-string">'45-54'</span>, deaths: <span class="hljs-number">802359</span> },
-                        { age_group: <span class="hljs-string">'55-64'</span>, deaths: <span class="hljs-number">1300745</span> },
-                        { age_group: <span class="hljs-string">'65-74'</span>, deaths: <span class="hljs-number">2172914</span> },
-                        { age_group: <span class="hljs-string">'75-84'</span>, deaths: <span class="hljs-number">4139948</span> },
-                        { age_group: <span class="hljs-string">'85+'</span>, deaths: <span class="hljs-number">5520554</span> },
+                        { age_group: <span class="hljs-string">&#x27;1&#x27;</span>, deaths: <span class="hljs-number">146034</span> },
+                        { age_group: <span class="hljs-string">&#x27;1-4&#x27;</span>, deaths: <span class="hljs-number">24962</span> },
+                        { age_group: <span class="hljs-string">&#x27;5-14&#x27;</span>, deaths: <span class="hljs-number">32467</span> },
+                        { age_group: <span class="hljs-string">&#x27;15-24&#x27;</span>, deaths: <span class="hljs-number">101373</span> },
+                        { age_group: <span class="hljs-string">&#x27;25-34&#x27;</span>, deaths: <span class="hljs-number">153299</span> },
+                        { age_group: <span class="hljs-string">&#x27;35-44&#x27;</span>, deaths: <span class="hljs-number">371670</span> },
+                        { age_group: <span class="hljs-string">&#x27;45-54&#x27;</span>, deaths: <span class="hljs-number">802359</span> },
+                        { age_group: <span class="hljs-string">&#x27;55-64&#x27;</span>, deaths: <span class="hljs-number">1300745</span> },
+                        { age_group: <span class="hljs-string">&#x27;65-74&#x27;</span>, deaths: <span class="hljs-number">2172914</span> },
+                        { age_group: <span class="hljs-string">&#x27;75-84&#x27;</span>, deaths: <span class="hljs-number">4139948</span> },
+                        { age_group: <span class="hljs-string">&#x27;85+&#x27;</span>, deaths: <span class="hljs-number">5520554</span> },
                     ],
                 }),</pre></div></div>
             
@@ -913,23 +918,23 @@ and even dynamically updated followed with a call to <code>redraw()</code>.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">new</span> c3.Plot.Layer.Stackable.Stack({
-                    key: <span class="hljs-string">'Female'</span>,
+                    key: <span class="hljs-string">&#x27;Female&#x27;</span>,
                     options: {
-                        title: <span class="hljs-string">'Female'</span>,
-                        styles: { <span class="hljs-string">'fill'</span>: <span class="hljs-string">'pink'</span> },
+                        title: <span class="hljs-string">&#x27;Female&#x27;</span>,
+                        styles: { <span class="hljs-string">&#x27;fill&#x27;</span>: <span class="hljs-string">&#x27;pink&#x27;</span> },
                     },
                     data: [
-                        { age_group: <span class="hljs-string">'1'</span>, deaths: <span class="hljs-number">186663</span> },
-                        { age_group: <span class="hljs-string">'1-4'</span>, deaths: <span class="hljs-number">32567</span> },
-                        { age_group: <span class="hljs-string">'5-14'</span>, deaths: <span class="hljs-number">46053</span> },
-                        { age_group: <span class="hljs-string">'15-24'</span>, deaths: <span class="hljs-number">288145</span> },
-                        { age_group: <span class="hljs-string">'25-34'</span>, deaths: <span class="hljs-number">347909</span> },
-                        { age_group: <span class="hljs-string">'35-44'</span>, deaths: <span class="hljs-number">633523</span> },
-                        { age_group: <span class="hljs-string">'45-54'</span>, deaths: <span class="hljs-number">1316448</span> },
-                        { age_group: <span class="hljs-string">'55-64'</span>, deaths: <span class="hljs-number">1957880</span> },
-                        { age_group: <span class="hljs-string">'65-74'</span>, deaths: <span class="hljs-number">2775456</span> },
-                        { age_group: <span class="hljs-string">'75-84'</span>, deaths: <span class="hljs-number">3969547</span> },
-                        { age_group: <span class="hljs-string">'85+'</span>, deaths: <span class="hljs-number">2852141</span> },
+                        { age_group: <span class="hljs-string">&#x27;1&#x27;</span>, deaths: <span class="hljs-number">186663</span> },
+                        { age_group: <span class="hljs-string">&#x27;1-4&#x27;</span>, deaths: <span class="hljs-number">32567</span> },
+                        { age_group: <span class="hljs-string">&#x27;5-14&#x27;</span>, deaths: <span class="hljs-number">46053</span> },
+                        { age_group: <span class="hljs-string">&#x27;15-24&#x27;</span>, deaths: <span class="hljs-number">288145</span> },
+                        { age_group: <span class="hljs-string">&#x27;25-34&#x27;</span>, deaths: <span class="hljs-number">347909</span> },
+                        { age_group: <span class="hljs-string">&#x27;35-44&#x27;</span>, deaths: <span class="hljs-number">633523</span> },
+                        { age_group: <span class="hljs-string">&#x27;45-54&#x27;</span>, deaths: <span class="hljs-number">1316448</span> },
+                        { age_group: <span class="hljs-string">&#x27;55-64&#x27;</span>, deaths: <span class="hljs-number">1957880</span> },
+                        { age_group: <span class="hljs-string">&#x27;65-74&#x27;</span>, deaths: <span class="hljs-number">2775456</span> },
+                        { age_group: <span class="hljs-string">&#x27;75-84&#x27;</span>, deaths: <span class="hljs-number">3969547</span> },
+                        { age_group: <span class="hljs-string">&#x27;85+&#x27;</span>, deaths: <span class="hljs-number">2852141</span> },
                     ],
                 }),
             ],
@@ -945,24 +950,24 @@ and even dynamically updated followed with a call to <code>redraw()</code>.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-38">&#182;</a>
               </div>
-              <p>Setup <strong>margins </strong> and <strong>axes </strong> to polish up the example.</p>
+              <p>Setup **margins ** and **axes ** to polish up the example.</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>    margins: { right: <span class="hljs-number">20</span> },
     axes: [
         <span class="hljs-keyword">new</span> c3.Axis.X({
-            label: <span class="hljs-string">"Deaths by Gender"</span>,
-            orient: <span class="hljs-string">'top'</span>,
+            label: <span class="hljs-string">&quot;Deaths by Gender&quot;</span>,
+            orient: <span class="hljs-string">&#x27;top&#x27;</span>,
             scale: <span class="hljs-literal">false</span>,
         }),
         <span class="hljs-keyword">new</span> c3.Axis.Y({
-            label: <span class="hljs-string">"Deaths"</span>,
+            label: <span class="hljs-string">&quot;Deaths&quot;</span>,
             grid: <span class="hljs-literal">true</span>,
-            tick_label: (d) =&gt; (d/<span class="hljs-number">1000000</span>) + <span class="hljs-string">"m"</span>,
+            tick_label: <span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> (d/<span class="hljs-number">1000000</span>) + <span class="hljs-string">&quot;m&quot;</span>,
         }),
         <span class="hljs-keyword">new</span> c3.Axis.X({
-            label: <span class="hljs-string">"Age Group"</span>,
+            label: <span class="hljs-string">&quot;Age Group&quot;</span>,
         }),
     ],
 }).render();</pre></div></div>
@@ -980,8 +985,8 @@ and even dynamically updated followed with a call to <code>redraw()</code>.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'#stack_example_plots'</span>).appendChild(&lt;HTMLElement&gt;stacked_bar_chart.anchor);
-(&lt;HTMLElement&gt;stacked_bar_chart.anchor).style.width = <span class="hljs-string">'100%'</span>;
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&#x27;#stack_example_plots&#x27;</span>).appendChild(&lt;HTMLElement&gt;stacked_bar_chart.anchor);
+(&lt;HTMLElement&gt;stacked_bar_chart.anchor).style.width = <span class="hljs-string">&#x27;100%&#x27;</span>;
 stacked_bar_chart.resize();</pre></div></div>
             
         </li>
@@ -1047,14 +1052,14 @@ rendering function with the loaded data.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>d3.tsv(<span class="hljs-string">"data/injury_cause.tsv"</span>)
-    .row((row) =&gt; ({
-        age_group: row[<span class="hljs-string">"Five-Year Age Groups Code"</span>],
-        cause: row[<span class="hljs-string">"Injury Mechanism &amp; All Other Leading Causes"</span>],
-        deaths: +row[<span class="hljs-string">"Deaths"</span>],
+            <div class="content"><div class='highlight'><pre>d3.tsv(<span class="hljs-string">&quot;data/injury_cause.tsv&quot;</span>)
+    .row(<span class="hljs-function">(<span class="hljs-params">row</span>) =&gt;</span> ({
+        age_group: row[<span class="hljs-string">&quot;Five-Year Age Groups Code&quot;</span>],
+        cause: row[<span class="hljs-string">&quot;Injury Mechanism &amp; All Other Leading Causes&quot;</span>],
+        deaths: +row[<span class="hljs-string">&quot;Deaths&quot;</span>],
     }))
-    .get((error, data) =&gt; {
-        <span class="hljs-keyword">if</span> (error) alert(<span class="hljs-string">"AJAX error downloading CDC data: "</span>+error.statusText);</pre></div></div>
+    .get(<span class="hljs-function">(<span class="hljs-params">error, data</span>) =&gt;</span> {
+        <span class="hljs-keyword">if</span> (error) alert(<span class="hljs-string">&quot;AJAX error downloading CDC data: &quot;</span>+error.statusText);</pre></div></div>
             
         </li>
         
@@ -1069,7 +1074,7 @@ rendering function with the loaded data.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        data = data.filter((row) =&gt; !!row.cause);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        data = data.filter(<span class="hljs-function">(<span class="hljs-params">row</span>) =&gt;</span> !!row.cause);</pre></div></div>
             
         </li>
         

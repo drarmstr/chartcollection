@@ -133,7 +133,7 @@ tested yet, but I can fix any issues that come up if this is needed.</p><h2 id="
   <dd>
     <pre><code class='coffeescript'>[]</code></pre>
     <div class='docstring'>
-  <p>[Array<c3.Table.Column>] An array of column objects which describe how to construct the table.
+  <p>[Array&lt;c3.Table.Column&gt;] An array of column objects which describe how to construct the table.
 Column objects can contain the following members:</p><ul>
 <li><strong>header</strong> [<a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a>] Options to describe the header contents, styles, events, etc. Use <code>text</code> or <code>html</code> to define the content for the header. Column headers are optional.</li>
 <li><strong>cells</strong> [<a href='../../class/c3/Selection.Options.html'>c3.Selection.Options</a>] Options to describe the cell contents, styles, events, etc. Use <code>text</code> or <code>html</code> to define the cell contents.</li>
@@ -143,7 +143,7 @@ Column objects can contain the following members:</p><ul>
 <li><strong>sort_ascending</strong> [Boolean] - Sort the rows based on ascending value instead of descending.</li>
 <li><strong>vis</strong> [String] Optional type of visualization for the <em>value</em> of the cells in this column.  Options include:<ul>
 <li><em>bar</em> - The value is represented as a horizontal bar across the cell underlying the content html.
-The bars may be styled using _vis<em>options.styles</em>.</li>
+The bars may be styled using _vis_options.styles_.</li>
 </ul>
 </li>
 <li><strong>total_value</strong> [Number, Function] - Some visualizations, such as <em>bar</em>, show their values relative to some total value.  This number or callback provides for that value. If not set, the default is to use the sum of values for all the cells in the column.</li>
