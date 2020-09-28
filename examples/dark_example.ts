@@ -7,155 +7,159 @@
 interface Relation {
     parent: string;
     child: string;
+    season: number;
     type?: 'adopted';
 }
+
+var world = 'jonas';
+var season = 1;
 
 // Example data sets
 var family_datasets = {
     jonas: {
         relations: [
-            {parent: 'Elisabeth Doppler', child: 'Charlotte Doppler'},
-            {parent: 'Noah', child: 'Charlotte Doppler'},
-            {parent: 'Charlotte Doppler', child: 'Elisabeth Doppler'},
-            {parent: 'Peter Doppler', child: 'Elisabeth Doppler'},
-            {parent: 'Charlotte Doppler', child: 'Franziska Doppler'},
-            {parent: 'Peter Doppler', child: 'Franziska Doppler'},
-            {parent: 'Helge Doppler', child: 'Peter Doppler'},
-            {parent: 'Ulla Schmidt', child: 'Peter Doppler'},
-            {parent: 'Greta Doppler', child: 'Helge Doppler'},
-            {parent: 'Bernd Doppler', child: 'Helge Doppler'},
-            {parent: 'Katharina Nielsen', child: 'Magnus Nielsen'},
-            {parent: 'Ulrich Nielsen', child: 'Magnus Nielsen'},
-            {parent: 'Katharina Nielsen', child: 'Martha Nielsen'},
-            {parent: 'Ulrich Nielsen', child: 'Martha Nielsen'},
+            {parent: 'Elisabeth Doppler', child: 'Charlotte Doppler', season: 2},
+            {parent: 'Noah', child: 'Charlotte Doppler', season: 2},
+            {parent: 'Charlotte Doppler', child: 'Elisabeth Doppler', season: 1},
+            {parent: 'Peter Doppler', child: 'Elisabeth Doppler', season: 1},
+            {parent: 'Charlotte Doppler', child: 'Franziska Doppler', season: 1},
+            {parent: 'Peter Doppler', child: 'Franziska Doppler', season: 1},
+            {parent: 'Helge Doppler', child: 'Peter Doppler', season: 1},
+            {parent: 'Ulla Schmidt', child: 'Peter Doppler', season: 3},
+            {parent: 'Greta Doppler', child: 'Helge Doppler', season: 1},
+            {parent: 'Bernd Doppler', child: 'Helge Doppler', season: 1},
+            {parent: 'Katharina Nielsen', child: 'Magnus Nielsen', season: 1},
+            {parent: 'Ulrich Nielsen', child: 'Magnus Nielsen', season: 1},
+            {parent: 'Katharina Nielsen', child: 'Martha Nielsen', season: 1},
+            {parent: 'Ulrich Nielsen', child: 'Martha Nielsen', season: 1},
             {
               parent: 'Katharina Nielsen',
-              child: 'Mikkel Nielsen / Michael Kahnwald',
+              child: 'Mikkel Nielsen / Michael Kahnwald', season: 1
             },
             {
               parent: 'Ulrich Nielsen',
-              child: 'Mikkel Nielsen / Michael Kahnwald',
+              child: 'Mikkel Nielsen / Michael Kahnwald', season: 1
             },
             {
               parent: 'Mikkel Nielsen / Michael Kahnwald',
-              child: 'Jonas Kahnwald',
+              child: 'Jonas Kahnwald', season: 1
             },
-            {parent: 'Hannah Kahnwald', child: 'Jonas Kahnwald'},
+            {parent: 'Hannah Kahnwald', child: 'Jonas Kahnwald', season: 1},
             {
               parent: 'Ines Kahnwald',
-              child: 'Mikkel Nielsen / Michael Kahnwald',
+              child: 'Mikkel Nielsen / Michael Kahnwald', season: 1,
               type: 'adopted'
             },
-            {parent: 'Daniel Kahnwald', child: 'Ines Kahnwald'},
-            {parent: 'Helene Albers', child: 'Katharina Nielsen'},
-            {parent: 'Hermann Albers', child: 'Katharina Nielsen'},
-            {parent: 'Sebastian Kruger', child: 'Hannah Kahnwald'},
-            {parent: 'Hannah Kahnwald', child: 'Silja Tiedemann'},
-            {parent: 'Egon Tiedemann', child: 'Silja Tiedemann'},
-            {parent: 'Egon Tiedemann', child: 'Claudia Tiedemann'},
-            {parent: 'Doris Tiedemann', child: 'Claudia Tiedemann'},
-            {parent: 'Claudia Tiedemann', child: 'Regina Tiedemann'},
-            {parent: 'Bernd Doppler', child: 'Regina Tiedemann'},
-            {parent: 'Aleksander Tiedemann', child: 'Bartosz Tiedemann'},
-            {parent: 'Regina Tiedemann', child: 'Bartosz Tiedemann'},
-            {parent: 'Bartosz Tiedemann', child: 'Noah'},
-            {parent: 'Silja Tiedemann', child: 'Noah'},
-            {parent: 'Bartosz Tiedemann', child: 'Agnes Nielsen'},
-            {parent: 'Silja Tiedemann', child: 'Agnes Nielsen'},
-            {parent: 'Jana Nielsen', child: 'Ulrich Nielsen'},
-            {parent: 'Jana Nielsen', child: 'Mads Nielsen'},
-            {parent: 'Tronte Nielsen', child: 'Ulrich Nielsen'},
-            {parent: 'Tronte Nielsen', child: 'Mads Nielsen'},
-            {parent: 'Agnes Nielsen', child: 'Tronte Nielsen'},
-            {parent: 'The Unknown', child: 'Tronte Nielsen'},
-            {parent: 'Jonas Kahnwald', child: 'The Unknown'},
-            {parent: 'Martha Nielsen', child: 'The Unknown'},
-            {parent: 'Leopold Tannhaus', child: 'H.G. Tannhaus'},
-            {parent: 'Gustav Tannhaus', child: 'Leopold Tannhaus'},
-            {parent: 'Heinrich Tannhaus', child: 'Gustav Tannhaus'},
-            {parent: 'H.G. Tannhaus', child: 'Charlotte Doppler', type: 'adopted'},
-            {parent: 'H.G. Tannhaus', child: 'Marek Tannhaus'},
-            {parent: 'Marek Tannhaus', child: 'Charlotte Tannhaus'},
-            {parent: 'Sonja Tannhaus', child: 'Charlotte Tannhaus'},
+            {parent: 'Daniel Kahnwald', child: 'Ines Kahnwald', season: 1},
+            {parent: 'Helene Albers', child: 'Katharina Nielsen', season: 3},
+            {parent: 'Hermann Albers', child: 'Katharina Nielsen', season: 3},
+            {parent: 'Sebastian Kruger', child: 'Hannah Kahnwald', season: 3},
+            {parent: 'Hannah Kahnwald', child: 'Silja Tiedemann', season: 3},
+            {parent: 'Egon Tiedemann', child: 'Silja Tiedemann', season: 3},
+            {parent: 'Egon Tiedemann', child: 'Claudia Tiedemann', season: 1},
+            {parent: 'Doris Tiedemann', child: 'Claudia Tiedemann', season: 1},
+            {parent: 'Claudia Tiedemann', child: 'Regina Tiedemann', season: 1},
+            {parent: 'Bernd Doppler', child: 'Regina Tiedemann', season: 3},
+            {parent: 'Aleksander Tiedemann', child: 'Bartosz Tiedemann', season: 1},
+            {parent: 'Regina Tiedemann', child: 'Bartosz Tiedemann', season: 1},
+            {parent: 'Bartosz Tiedemann', child: 'Noah', season: 3},
+            {parent: 'Silja Tiedemann', child: 'Noah', season: 3},
+            {parent: 'Bartosz Tiedemann', child: 'Agnes Nielsen', season: 3},
+            {parent: 'Silja Tiedemann', child: 'Agnes Nielsen', season: 3},
+            {parent: 'Jana Nielsen', child: 'Ulrich Nielsen', season: 1},
+            {parent: 'Jana Nielsen', child: 'Mads Nielsen', season: 1},
+            {parent: 'Tronte Nielsen', child: 'Ulrich Nielsen', season: 1},
+            {parent: 'Tronte Nielsen', child: 'Mads Nielsen', season: 1},
+            {parent: 'Agnes Nielsen', child: 'Tronte Nielsen', season: 1},
+            {parent: 'The Unknown', child: 'Tronte Nielsen', season: 3},
+            {parent: 'Jonas Kahnwald', child: 'The Unknown', season: 3},
+            {parent: 'Martha Nielsen', child: 'The Unknown', season: 3},
+            {parent: 'Leopold Tannhaus', child: 'H.G. Tannhaus', season: 3},
+            {parent: 'Gustav Tannhaus', child: 'Leopold Tannhaus', season: 3},
+            {parent: 'Heinrich Tannhaus', child: 'Gustav Tannhaus', season: 3},
+            {parent: 'H.G. Tannhaus', child: 'Charlotte Doppler', season: 2, type: 'adopted'},
+            {parent: 'H.G. Tannhaus', child: 'Marek Tannhaus', season: 3},
+            {parent: 'Marek Tannhaus', child: 'Charlotte Tannhaus', season: 3},
+            {parent: 'Sonja Tannhaus', child: 'Charlotte Tannhaus', season: 3},
           ],
         names: [],
     },
     martha: {
         relations: [
-            {parent: 'Elisabeth Doppler', child: 'Charlotte Doppler'},
-            {parent: 'Noah', child: 'Charlotte Doppler'},
-            {parent: 'Charlotte Doppler', child: 'Elisabeth Doppler'},
-            {parent: 'Peter Doppler', child: 'Elisabeth Doppler'},
-            {parent: 'Charlotte Doppler', child: 'Franziska Doppler'},
-            {parent: 'Peter Doppler', child: 'Franziska Doppler'},
-            {parent: 'Helge Doppler', child: 'Peter Doppler'},
-            {parent: 'Ulla Schmidt', child: 'Peter Doppler'},
-            {parent: 'Greta Doppler', child: 'Helge Doppler'},
-            {parent: 'Bernd Doppler', child: 'Helge Doppler'},
-            {parent: 'Katharina Nielsen', child: 'Magnus Nielsen'},
-            {parent: 'Ulrich Nielsen', child: 'Magnus Nielsen'},
-            {parent: 'Katharina Nielsen', child: 'Martha Nielsen'},
-            {parent: 'Ulrich Nielsen', child: 'Martha Nielsen'},
+            {parent: 'Elisabeth Doppler', child: 'Charlotte Doppler', season: 3},
+            {parent: 'Noah', child: 'Charlotte Doppler', season: 3},
+            {parent: 'Charlotte Doppler', child: 'Elisabeth Doppler', season: 3},
+            {parent: 'Peter Doppler', child: 'Elisabeth Doppler', season: 3},
+            {parent: 'Charlotte Doppler', child: 'Franziska Doppler', season: 3},
+            {parent: 'Peter Doppler', child: 'Franziska Doppler', season: 3},
+            {parent: 'Helge Doppler', child: 'Peter Doppler', season: 3},
+            {parent: 'Ulla Schmidt', child: 'Peter Doppler', season: 3},
+            {parent: 'Greta Doppler', child: 'Helge Doppler', season: 3},
+            {parent: 'Bernd Doppler', child: 'Helge Doppler', season: 3},
+            {parent: 'Katharina Nielsen', child: 'Magnus Nielsen', season: 3},
+            {parent: 'Ulrich Nielsen', child: 'Magnus Nielsen', season: 3},
+            {parent: 'Katharina Nielsen', child: 'Martha Nielsen', season: 3},
+            {parent: 'Ulrich Nielsen', child: 'Martha Nielsen', season: 3},
             {
               parent: 'Katharina Nielsen',
-              child: 'Mikkel Nielsen / Michael Kahnwald',
+              child: 'Mikkel Nielsen / Michael Kahnwald', season: 3
             },
             {
               parent: 'Ulrich Nielsen',
-              child: 'Mikkel Nielsen / Michael Kahnwald',
+              child: 'Mikkel Nielsen / Michael Kahnwald', season: 3
             },
-            {parent: 'Daniel Kahnwald', child: 'Ines Kahnwald'},
-            {parent: 'Helene Albers', child: 'Katharina Nielsen'},
-            {parent: 'Hermann Albers', child: 'Katharina Nielsen'},
-            {parent: 'Sebastian Kruger', child: 'Hannah Kahnwald'},
-            {parent: 'Hannah Kahnwald', child: 'Silja Tiedemann'},
-            {parent: 'Egon Tiedemann', child: 'Silja Tiedemann'},
-            {parent: 'Egon Tiedemann', child: 'Claudia Tiedemann'},
-            {parent: 'Doris Tiedemann', child: 'Claudia Tiedemann'},
-            {parent: 'Claudia Tiedemann', child: 'Regina Tiedemann'},
-            {parent: 'Bernd Doppler', child: 'Regina Tiedemann'},
-            {parent: 'Aleksander Tiedemann', child: 'Bartosz Tiedemann'},
-            {parent: 'Regina Tiedemann', child: 'Bartosz Tiedemann'},
-            {parent: 'Bartosz Tiedemann', child: 'Noah'},
-            {parent: 'Silja Tiedemann', child: 'Noah'},
-            {parent: 'Bartosz Tiedemann', child: 'Agnes Nielsen'},
-            {parent: 'Silja Tiedemann', child: 'Agnes Nielsen'},
-            {parent: 'Jana Nielsen', child: 'Ulrich Nielsen'},
-            {parent: 'Jana Nielsen', child: 'Mads Nielsen'},
-            {parent: 'Tronte Nielsen', child: 'Ulrich Nielsen'},
-            {parent: 'Tronte Nielsen', child: 'Mads Nielsen'},
-            {parent: 'Agnes Nielsen', child: 'Tronte Nielsen'},
-            {parent: 'The Unknown', child: 'Tronte Nielsen'},
-            {parent: 'Martha Nielsen', child: 'The Unknown'},
-            {parent: 'Leopold Tannhaus', child: 'H.G. Tannhaus'},
-            {parent: 'Gustav Tannhaus', child: 'Leopold Tannhaus'},
-            {parent: 'Heinrich Tannhaus', child: 'Gustav Tannhaus'},
-            {parent: 'H.G. Tannhaus', child: 'Charlotte Doppler', type: 'adopted'},
-            {parent: 'H.G. Tannhaus', child: 'Marek Tannhaus'},
-            {parent: 'Marek Tannhaus', child: 'Charlotte Tannhaus'},
-            {parent: 'Sonja Tannhaus', child: 'Charlotte Tannhaus'},
+            {parent: 'Daniel Kahnwald', child: 'Ines Kahnwald', season: 3},
+            {parent: 'Helene Albers', child: 'Katharina Nielsen', season: 3},
+            {parent: 'Hermann Albers', child: 'Katharina Nielsen', season: 3},
+            {parent: 'Sebastian Kruger', child: 'Hannah Kahnwald', season: 3},
+            {parent: 'Hannah Kahnwald', child: 'Silja Tiedemann', season: 3},
+            {parent: 'Egon Tiedemann', child: 'Silja Tiedemann', season: 3},
+            {parent: 'Egon Tiedemann', child: 'Claudia Tiedemann', season: 3},
+            {parent: 'Doris Tiedemann', child: 'Claudia Tiedemann', season: 3},
+            {parent: 'Claudia Tiedemann', child: 'Regina Tiedemann', season: 3},
+            {parent: 'Bernd Doppler', child: 'Regina Tiedemann', season: 3},
+            {parent: 'Aleksander Tiedemann', child: 'Bartosz Tiedemann', season: 3},
+            {parent: 'Regina Tiedemann', child: 'Bartosz Tiedemann', season: 3},
+            {parent: 'Bartosz Tiedemann', child: 'Noah', season: 3},
+            {parent: 'Silja Tiedemann', child: 'Noah', season: 3},
+            {parent: 'Bartosz Tiedemann', child: 'Agnes Nielsen', season: 3},
+            {parent: 'Silja Tiedemann', child: 'Agnes Nielsen', season: 3},
+            {parent: 'Jana Nielsen', child: 'Ulrich Nielsen', season: 3},
+            {parent: 'Jana Nielsen', child: 'Mads Nielsen', season: 3},
+            {parent: 'Tronte Nielsen', child: 'Ulrich Nielsen', season: 3},
+            {parent: 'Tronte Nielsen', child: 'Mads Nielsen', season: 3},
+            {parent: 'Agnes Nielsen', child: 'Tronte Nielsen', season: 3},
+            {parent: 'The Unknown', child: 'Tronte Nielsen', season: 3},
+            {parent: 'Martha Nielsen', child: 'The Unknown', season: 3},
+            {parent: 'Leopold Tannhaus', child: 'H.G. Tannhaus', season: 3},
+            {parent: 'Gustav Tannhaus', child: 'Leopold Tannhaus', season: 3},
+            {parent: 'Heinrich Tannhaus', child: 'Gustav Tannhaus', season: 3},
+            {parent: 'H.G. Tannhaus', child: 'Charlotte Doppler', season: 3, type: 'adopted'},
+            {parent: 'H.G. Tannhaus', child: 'Marek Tannhaus', season: 3},
+            {parent: 'Marek Tannhaus', child: 'Charlotte Tannhaus', season: 3},
+            {parent: 'Sonja Tannhaus', child: 'Charlotte Tannhaus', season: 3},
         ],
     },
     origin: {
         relations: [
-            {parent: 'Helge Doppler', child: 'Peter Doppler'},
-            {parent: 'Ulla Schmidt', child: 'Peter Doppler'},
-            {parent: 'Greta Doppler', child: 'Helge Doppler'},
-            {parent: 'Bernd Doppler', child: 'Helge Doppler'},
-            {parent: 'Daniel Kahnwald', child: 'Ines Kahnwald'},
-            {parent: 'Helene Albers', child: 'Katharina Nielsen'},
-            {parent: 'Hermann Albers', child: 'Katharina Nielsen'},
-            {parent: 'Sebastian Kruger', child: 'Hannah Kahnwald'},
-            {parent: 'Egon Tiedemann', child: 'Claudia Tiedemann'},
-            {parent: 'Doris Tiedemann', child: 'Claudia Tiedemann'},
-            {parent: 'Claudia Tiedemann', child: 'Regina Tiedemann'},
-            {parent: 'Bernd Doppler', child: 'Regina Tiedemann'},
-            {parent: 'H.G. Tannhaus', child: 'Marek Tannhaus'},
-            {parent: 'Leopold Tannhaus', child: 'H.G. Tannhaus'},
-            {parent: 'Gustav Tannhaus', child: 'Leopold Tannhaus'},
-            {parent: 'Heinrich Tannhaus', child: 'Gustav Tannhaus'},
-            {parent: 'Marek Tannhaus', child: 'Charlotte Tannhaus'},
-            {parent: 'Sonja Tannhaus', child: 'Charlotte Tannhaus'},
+            {parent: 'Helge Doppler', child: 'Peter Doppler', season: 3},
+            {parent: 'Ulla Schmidt', child: 'Peter Doppler', season: 3},
+            {parent: 'Greta Doppler', child: 'Helge Doppler', season: 3},
+            {parent: 'Bernd Doppler', child: 'Helge Doppler', season: 3},
+            {parent: 'Daniel Kahnwald', child: 'Ines Kahnwald', season: 3},
+            {parent: 'Helene Albers', child: 'Katharina Nielsen', season: 3},
+            {parent: 'Hermann Albers', child: 'Katharina Nielsen', season: 3},
+            {parent: 'Sebastian Kruger', child: 'Hannah Kahnwald', season: 3},
+            {parent: 'Egon Tiedemann', child: 'Claudia Tiedemann', season: 3},
+            {parent: 'Doris Tiedemann', child: 'Claudia Tiedemann', season: 3},
+            {parent: 'Claudia Tiedemann', child: 'Regina Tiedemann', season: 3},
+            {parent: 'Bernd Doppler', child: 'Regina Tiedemann', season: 3},
+            {parent: 'H.G. Tannhaus', child: 'Marek Tannhaus', season: 3},
+            {parent: 'Leopold Tannhaus', child: 'H.G. Tannhaus', season: 3},
+            {parent: 'Gustav Tannhaus', child: 'Leopold Tannhaus', season: 3},
+            {parent: 'Heinrich Tannhaus', child: 'Gustav Tannhaus', season: 3},
+            {parent: 'Marek Tannhaus', child: 'Charlotte Tannhaus', season: 3},
+            {parent: 'Sonja Tannhaus', child: 'Charlotte Tannhaus', season: 3},
           ],
     },
 };
@@ -179,14 +183,10 @@ var name_color = (fullName) => {
 // # Create Butterfly visualization
 
 // Create `Butterfly` visualization object
-var family_tree = new c3.Sankey.Butterfly({
+var family_tree = new c3.Sankey.Butterfly<string, Relation>({
     // Bind to the DOM and set height.
     anchor: '#dark_tree',
     height: 800,
-
-    // Link to family tree **data**
-    data: family_datasets['jonas'].names,
-    links: family_datasets['jonas'].relations,
 
     // Define unique **key** accessors
     key: (name) => name,
@@ -244,8 +244,14 @@ var family_tree = new c3.Sankey.Butterfly({
         duration: 3000,
     },
 });
+
+function setData() {
+    family_tree.data = family_datasets[world].names;
+    family_tree.links = family_datasets[world].relations.filter(r => r.season <= season);
+}
+
+setData();
 family_tree.render();
-console.debug('RENDERED', family_tree);
 
 
 // ## Extend dynamic chart behavior
@@ -257,8 +263,16 @@ window.onresize = function () { family_tree.resize(); };
 // Select example **data set**
 document.getElementById('dataset').addEventListener('change', function () {
     let element = <HTMLInputElement>this;
-    family_tree.data = family_datasets[element.value].names;
-    family_tree.links = family_datasets[element.value].relations;
+    world = element.value;
+    setData();
+    family_tree.redraw();
+});
+
+// Select spoilers from season
+document.getElementById('season').addEventListener('change', function () {
+    let element = <HTMLInputElement>this;
+    season = +element.value;
+    setData();
     family_tree.redraw();
 });
 

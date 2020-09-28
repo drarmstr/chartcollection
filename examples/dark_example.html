@@ -44,10 +44,19 @@
             This flow chart represents the family tree for the TV Series
             <a href="http://dark.netflix.io">Dark</a> from Netflix.
             <br/><br/>
-            <b><i>*** SPOILER ALERT ***</i></b>: <b>This chart contains information from all three seasons</b>
+            <b><i>*** SPOILER ALERT ***</i></b>: <b>This chart contains spoilers!</b>
         </p>
 
         <form>
+            <label>
+                Spoilers from Season:
+                <select id="season">
+                    <option value="1" selected>1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </label>
+            <br/>
             <label>
                 World:
                 <select id="dataset">
@@ -56,13 +65,13 @@
                     <option value="origin">Origin</option>
                 </select>
             </label>
+            <br /><br />
+            <button id="view_full_tree" type="button">View Full Tree</button> or click on a name to view their parents and children.
             <br />
             <label>
-                Depth of Field
+                Depth of Field - Number of generations to show for selected name:
                 <input id="depth_of_field" type="range" min=1 max=5 value=2 />
             </label>
-            <br />
-            <button id="view_full_tree" type="button">View Full Tree</button> or click on a name to view their parents and children.
         </form>
     </div>
 
